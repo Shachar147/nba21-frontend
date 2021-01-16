@@ -1,44 +1,45 @@
 import React from "react";
 
-const PlayerCard = (props) => {
+export default class PlayerCard extends React.Component {
 
-    const details = [];
-    if (props.percents) details.push("3Pt Percents: " + props.percents);
-    if (props.height_meters) details.push("Height: " + props.height_meters + " meters");
-    if (props.weight_kgs) details.push("Weight: " + props.weight_kgs + " kgs")
-
-    const fallback_image = 'https://nba-players.herokuapp.com/players/' + props.name.replace(".","").split(' ').reverse().join('/');
-    const picture = props.picture || fallback_image;
-
-    const debut_year = props.debut_year || "N/A";
-
-    function addDefaultSrc(ev){
-        ev.target.src = ev.target.fallback;
+    state = {
+        players: []
     }
 
-    return (
-        <div className="card">
-            <div className="image">
-                <img src={picture} fallback={fallback_image} onError={addDefaultSrc} alt={props.name} />
-            </div>
-            <div className="content">
-                <div className="header">{props.name}</div>
-                <div className="meta">
-                    <a href="/">
-                        {props.team}
-                    </a>
-                </div>
-                <div className="description" dangerouslySetInnerHTML={{ __html: details.join("<br/>")}} />
-            </div>
-            <div className="extra content">
-                <span className="right floated">Joined in {debut_year}</span>
-                <span>
-                    <i className="user icon" />
-                    Position: {props.position}
-                </span>
-            </div>
-        </div>
-    );
-};
+    render()
+    {
+        const details = [];
+        if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
+        if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
+        if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs")
 
-export default PlayerCard;
+        const fallback_image = 'https://nba-players.herokuapp.com/players/' + this.props.name.replace(".", "").split(' ').reverse().join('/');
+        const picture = this.props.picture || fallback_image;
+
+        const debut_year = this.props.debut_year || "N/A";
+
+        return (
+            <div className="card" onClick={this.props.onClick} style={this.props.style}>
+                <div className="image">
+                    <img src={picture} fallback={fallback_image} alt={this.props.name}/>
+                </div>
+                <div className="content">
+                    <div className="header">{this.props.name}</div>
+                    <div className="meta">
+                        <a href="/">
+                            {this.props.team}
+                        </a>
+                    </div>
+                    <div className="description" dangerouslySetInnerHTML={{__html: details.join("<br/>")}}/>
+                </div>
+                <div className="extra content">
+                    <span className="right floated">Joined in {debut_year}</span>
+                    <span>
+                    <i className="user icon"/>
+                    Position: {this.props.position}
+                </span>
+                </div>
+            </div>
+        );
+    }
+};
