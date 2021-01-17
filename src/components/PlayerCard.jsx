@@ -5,11 +5,40 @@ export default class PlayerCard extends React.Component {
     constructor(props) {
         super(props);
 
+        const fallback_image = this.getFallbackImage(this.props.name)
+
         this.state = {
             players: [],
 
+            picture: this.props.picture,
+            fallback: 0,
+            fallbacks: [
+                this.props.picture,
+                fallback_image,
+                './nopic.png'
+            ],
+
             shoot_score: 0,
         };
+
+        this.onError = this.onError.bind(this);
+    }
+
+    getFallbackImage(name){
+        return 'https://nba-players.herokuapp.com/players/' + name.replace(".", "").split(' ').reverse().join('/');
+    }
+
+    onError(){
+        let fallback = this.state.fallback;
+        const fallbacks = this.state.fallbacks;
+
+        fallback++;
+
+        console.log("here", fallback, fallbacks.length-1);
+
+        if (fallback > fallbacks.length-1) return;
+        const picture = fallbacks[fallback];
+        this.setState({ picture, fallback });
     }
 
     render() {
@@ -18,8 +47,7 @@ export default class PlayerCard extends React.Component {
         if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
         if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs")
 
-        const fallback_image = 'https://nba-players.herokuapp.com/players/' + this.props.name.replace(".", "").split(' ').reverse().join('/');
-        const picture = this.props.picture || fallback_image;
+        const picture = this.state.picture;
 
         const debut_year = this.props.debut_year || "N/A";
 
@@ -59,7 +87,7 @@ export default class PlayerCard extends React.Component {
         // lost / win
         const lost = (this.props.lost) ? "Loser" : "";
         const lostImage = (this.props.lost) ? (
-            <img className="lost-image" src="https://icon-library.net/images/x-png-icon/x-png-icon-8.jpg" />
+            <img className="lost-image" src={"../x-png-icon-8.jpg"} />
         ) : "";
         const winner = (this.props.winner) ? "Winner!" : "";
 
@@ -67,7 +95,7 @@ export default class PlayerCard extends React.Component {
             <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>
                 {lostImage}
                 <div className="image">
-                    <img src={picture} fallback={fallback_image} alt={this.props.name}/>
+                    <img src={picture} onError={this.onError} alt={this.props.name}/>
                 </div>
                 <div className="content">
                     <div className="header">{this.props.name}</div>
