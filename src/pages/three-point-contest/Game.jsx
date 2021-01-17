@@ -117,9 +117,38 @@ export default class Game extends React.Component {
 
         const shoot_player = this.state.current_player;
 
+        let made_team1 = 0;
+        let attempt_team1 = 0;
+        let made_team2 = 0;
+        let attempt_team2 = 0;
+        const names1 = team1.map(x => x.name);
+        const names2 = team2.map(x => x.name);
+
+        for (let name in scores){
+            const total_made = scores[name].reduce((a, b) => a + b);
+            const total_attempt = scores[name].length * round_length;
+
+            if (names1.indexOf(name) !== -1){
+                made_team1 += total_made;
+                attempt_team1 += total_attempt;
+            }
+            else if (names2.indexOf(name) !== -1){
+                made_team2 += total_made;
+                attempt_team2 += total_attempt;
+            }
+        }
+
+        const per1 = (attempt_team1 === 0) ? '0%' : ((made_team1/attempt_team1)*100).toFixed(2) + "%";
+        const per2 = (attempt_team2 === 0) ? '0%' : ((made_team2/attempt_team2)*100).toFixed(2) + "%";
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
+                <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
+                    <div className="ui header" style={{fontSize: "14px", fontWeight: "normal"}}>
+                        {`Total: ` + made_team1 + `/` + attempt_team1 + ` - ` + per1}
+                    </div>
+                </div>
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     { team1.map((player,idx) => <PlayerCard
                         key={"team1-" + idx}
@@ -144,6 +173,11 @@ export default class Game extends React.Component {
                 <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
                     <div className="ui header" style={{lineHeight: "38px"}}>
                         Against
+                    </div>
+                </div>
+                <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
+                    <div className="ui header" style={{fontSize: "14px", fontWeight: "normal"}}>
+                        {`Total: ` + made_team2 + `/` + attempt_team2 + ` - ` + per2}
                     </div>
                 </div>
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
