@@ -5,3 +5,7 @@
 .card:hover {
     opacity:1 !important;
 }
+
+.selected-players .ui.avatar.image {
+    height: 1.4em !important;
+}

@@ -112,8 +112,8 @@ export default class ThreePointsContest extends React.Component {
         return (
             <div>
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginTop: "20px", marginBottom: "10px" }}>
-                    <SelectedPlayers title={"Team One"} team={this.state.teams[0]} onClear={() => this.onClear(0)} />
-                    <SelectedPlayers title={"Team Two"} team={this.state.teams[1]} onClear={() => this.onClear(1)} />
+                    <SelectedPlayers title={"Team One"} team={this.state.teams[0]} onClear={() => this.onClear(0)} toggle={this.toggleState} />
+                    <SelectedPlayers title={"Team Two"} team={this.state.teams[1]} onClear={() => this.onClear(1)} toggle={this.toggleState} />
                 </div>
 
                 <SearchInput onKeyUp={this.searchPlayers.bind(this)} />
