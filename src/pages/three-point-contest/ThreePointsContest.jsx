@@ -109,11 +109,19 @@ export default class ThreePointsContest extends React.Component {
     render() {
         const players = this.applyFilters();
 
+        const can_start = this.state.teams[0].length > 0 && this.state.teams[1].length > 0;
+
         return (
             <div>
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginTop: "20px", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"} team={this.state.teams[0]} onClear={() => this.onClear(0)} toggle={this.toggleState} />
                     <SelectedPlayers title={"Team Two"} team={this.state.teams[1]} onClear={() => this.onClear(1)} toggle={this.toggleState} />
+                </div>
+
+                <div className={"ui link cards basic buttons centered"} style={{ margin: "auto", marginBottom: "10px", width: "150px" }}>
+                    <button className={"ui button" + (can_start ? " basic blue" : "")} disabled={!can_start}>
+                        Start Game
+                    </button>
                 </div>
 
                 <SearchInput onKeyUp={this.searchPlayers.bind(this)} />
