@@ -1,25 +1,28 @@
 import React from 'react';
 import axios from 'axios';
-import PlayerCard from '../Components/PlayerCard';
+import PlayerCard from '../../components/PlayerCard';
+import SearchInput from '../../components/SearchInput';
+import SelectedPlayers from "../../components/SelectedPlayers";
+import './three.points.contest.css';
 
 export default class ThreePointsContest extends React.Component {
 
-    state = {
-        players: [],
-        teams: [
-            [],
-            []
-        ],
-        styles:[
-            {"border": "1px solid lightseagreen"},
-            {"border": "1px solid lightcoral"}
-        ],
-        idx: 0,
-        keyword: ""
-    }
-
     constructor(props) {
         super(props);
+
+        this.state = {
+            players: [],
+            teams: [
+                [],
+                []
+            ],
+            styles:[
+                {"border": "1px solid lightseagreen", opacity: 1},
+                {"border": "1px solid lightcoral", opacity: 1}
+            ],
+            idx: 0,
+            keyword: ""
+        };
 
         this.toggleState = this.toggleState.bind(this);
     }
@@ -37,15 +40,6 @@ export default class ThreePointsContest extends React.Component {
             });
     }
 
-    teamDetails (teams, idx){
-        let team = teams[idx-1];
-        return (
-            <div style={{margin: "20px"}}>
-                <div className="ui ordered list" dangerouslySetInnerHTML={{ __html: team.map(player => { return '<a class="item">' + player.name + '</a>' }).join("")} } />
-            </div>
-        );
-    }
-
     toggleState (player){
 
         let players = this.state.players;
@@ -56,12 +50,10 @@ export default class ThreePointsContest extends React.Component {
         for (let a in players){
             let iter = players[a];
             if (iter.name === player.name) {
-                if (iter.selected != undefined) {
-                    // alert("here");
+                if (typeof(iter.selected) != 'undefined') {
                     teams[iter.selected] = teams[iter.selected].filter(function(a) { return a.name !== player.name });
                     iter.selected = undefined;
                 } else {
-                    // alert("there");
                     iter.selected = idx;
                     teams[idx].push(player);
                     idx++;
@@ -78,53 +70,54 @@ export default class ThreePointsContest extends React.Component {
     }
 
     searchPlayers(event){
-        var keyword = event.target.value;
+        const keyword = event.target.value;
         this.setState({ keyword });
     }
 
     applyFilters(){
 
         const keyword = this.state.keyword;
-        const players = this.state.players.filter(function(iter) {
+        return this.state.players.filter(function(iter) {
             let isOk = false;
-            // console.log(Object.keys(iter));
             Object.keys(iter).forEach(function(a){
                 let val = (a === 'team') ? iter[a]["name"] : iter[a];
-                if (val != undefined && val.toString().toLowerCase().indexOf(keyword.toLowerCase()) != -1){
+                if (a === 'picture') val = '';
+                if (typeof(val) !== 'undefined' && val.toString().toLowerCase().indexOf(keyword.toLowerCase()) !== -1){
+                    // console.log(a, val);
                     isOk = true;
                     return;
                 }
             });
             return isOk;
         })
+    }
 
-        return players;
+    onClear (idx) {
+        const teams = this.state.teams;
+        const players = this.state.players.map(function(iter){
+            if (iter.selected === idx) iter.selected = undefined;
+            return iter;
+        })
+
+        teams[idx] = [];
+
+        this.setState({
+            teams, players
+        });
     }
 
     render() {
-        const names = ["Team One", "Team Two"];
-        const teams = this.state.teams;
-
         const players = this.applyFilters();
 
         return (
             <div>
-                <div className="ui centered" style={{ display: "flex", alignItems: "strech", margin: "auto", width: "80%", marginTop: "20px", marginBottom: "10px" }}>
-                    {
-                        names.map((value, index) => (
-                            <h2 className="ui header" style={{margin: "10px", width:"50%"}}>
-                                {value}
-                                <div className="sub header">Selected players for this team {this.teamDetails(teams,index+1)}</div>
-                            </h2>
-                        ))
-                    }
+                <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginTop: "20px", marginBottom: "10px" }}>
+                    <SelectedPlayers title={"Team One"} team={this.state.teams[0]} onClear={() => this.onClear(0)} />
+                    <SelectedPlayers title={"Team Two"} team={this.state.teams[1]} onClear={() => this.onClear(1)} />
                 </div>
-                <div className="ui link cards" style={{ margin: "auto", marginBottom: "5px" }}>
-                    <div className="ui icon input" style={{ margin: "auto", width: "40%" }}>
-                        <input type="text" placeholder="Search..." onKeyUp={this.searchPlayers.bind(this)} />
-                        <i className="search icon" />
-                    </div>
-                </div>
+
+                <SearchInput onKeyUp={this.searchPlayers.bind(this)} />
+
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     { players.map(player => <PlayerCard
                         name={player.name}
@@ -135,7 +128,7 @@ export default class ThreePointsContest extends React.Component {
                         debut_year={player.debut_year}
                         picture={player.picture}
                         percents={player['3pt_percents']}
-                        style={ (player.selected != undefined) ? this.state.styles[player.selected] : undefined }
+                        style={ (typeof(player.selected) !== 'undefined') ? this.state.styles[player.selected] : { opacity: 0.6 } }
                         onClick={() => this.toggleState(player)}
                     />)}
                 </div>

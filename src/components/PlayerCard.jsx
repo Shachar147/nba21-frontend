@@ -2,12 +2,15 @@ import React from "react";
 
 export default class PlayerCard extends React.Component {
 
-    state = {
-        players: []
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            players: []
+        };
     }
 
-    render()
-    {
+    render() {
         const details = [];
         if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
         if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");

@@ -1,0 +1,7 @@
+.selected-players h2.header:not(:first-child){
+    border-left:1px solid #eaeaea;
+}
+
+.card:hover {
+    opacity:1 !important;
+}
