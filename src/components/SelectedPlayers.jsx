@@ -12,7 +12,6 @@ export default class SelectedPlayers extends React.Component {
         return (
             <div>
                 <div style={{margin: "20px"}}>
-                    {/*<div className="ui ordered list" dangerouslySetInnerHTML={{ __html: team.map(player => { return '<a class="item"><span style="width:200px; display: inline-block; text-align:left;"><img class="ui avatar image" src="' + player.picture + '">' + player.name + '</span></a>' }).join("")} } />*/}
                     <div className="ui ordered list">
                         {team.map(player => (
                             <a className={"item"} title={"Click to remove"} onClick={() => (this.props.toggle) ? this.props.toggle(player) : undefined}>

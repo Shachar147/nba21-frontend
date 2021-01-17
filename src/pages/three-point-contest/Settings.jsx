@@ -3,12 +3,16 @@ import axios from 'axios';
 import PlayerCard from '../../components/PlayerCard';
 import SearchInput from '../../components/SearchInput';
 import SelectedPlayers from "../../components/SelectedPlayers";
+import Game from './Game';
 import './three.points.contest.css';
 
-export default class ThreePointsContest extends React.Component {
+export default class Settings extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const MIN_ROUND_LENGTH = 3;
+        const MAX_ROUND_LENGTH = 10;
 
         this.state = {
             players: [],
@@ -23,10 +27,12 @@ export default class ThreePointsContest extends React.Component {
             idx: 0,
             keyword: "",
 
-            round_length: 3
+            round_length: 3,
+            game_started: false
         };
 
         this.toggleState = this.toggleState.bind(this);
+        this.startGame = this.startGame.bind(this);
     }
 
     componentDidMount() {
@@ -109,9 +115,18 @@ export default class ThreePointsContest extends React.Component {
     }
 
     setRoundLength(event) {
-        const round_length = event.target.value;
+        let round_length = event.target.value;
+        round_length = Math.min(round_length,10);
+        round_length = Math.max(round_length,3);
+
         this.setState({
             round_length
+        });
+    }
+
+    startGame() {
+        this.setState({
+            game_started: true
         });
     }
 
@@ -119,6 +134,15 @@ export default class ThreePointsContest extends React.Component {
         const players = this.applyFilters();
 
         const can_start = this.state.teams[0].length > 0 && this.state.teams[1].length > 0;
+
+        if (this.state.game_started){
+            return (
+              <Game
+                teams={this.state.teams}
+                round_length={this.state.round_length}
+              />
+            );
+        }
 
         return (
             <div style={{ paddingTop: "20px" }}>
@@ -134,10 +158,10 @@ export default class ThreePointsContest extends React.Component {
 
                 <div className="ui link input cards centered" style={{ margin: "auto", width: "350px" }}>
                     <span style={{ lineHeight: "38px", marginRight: "10px"}} > Round Length: </span>
-                    <input type={"number"} value={this.state.round_length} min={3} max={10} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px" }}/>
+                    <input type={"number"} value={this.state.round_length} min={3} max={10} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
 
                     <div className={"ui basic buttons"} style={{ margin: "auto", marginBottom: "10px", width: "150px" }}>
-                        <button className={"ui button" + (can_start ? " basic blue" : "")} disabled={!can_start}>
+                        <button className={"ui button" + (can_start ? " basic blue" : "")} disabled={!can_start} onClick={this.startGame}>
                             Start Game
                         </button>
                     </div>

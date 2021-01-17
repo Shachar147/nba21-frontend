@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import ThreePointsContest from './pages/three-point-contest/ThreePointsContest';
+import Settings from './pages/three-point-contest/Settings';
 
 function App() {
 
     return (
-        <ThreePointsContest />
+        <Settings />
         // <div className="App">
         //     <header className="App-header dark-bg">
         //         <img src={"./logo.png"} className={"App-logo"} alt="logo" />
