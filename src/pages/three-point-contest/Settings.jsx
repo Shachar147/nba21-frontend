@@ -11,9 +11,6 @@ export default class Settings extends React.Component {
     constructor(props) {
         super(props);
 
-        const MIN_ROUND_LENGTH = 3;
-        const MAX_ROUND_LENGTH = 10;
-
         this.state = {
             players: [],
             teams: [

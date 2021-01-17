@@ -2,10 +2,20 @@
     border-left:1px solid #eaeaea;
 }
 
-.card:hover {
+.card:not(.in-game):hover {
     opacity:1 !important;
 }
 
 .selected-players .ui.avatar.image {
     height: 1.4em !important;
+}
+
+.lost-image {
+    z-index: 999;
+    float: right;
+    width: 230;
+    height: 185;
+    right: 0px;
+    top: -30px;
+    position: absolute;
 }
