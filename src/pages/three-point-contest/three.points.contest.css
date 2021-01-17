@@ -19,3 +19,7 @@
     top: -30px;
     position: absolute;
 }
+
+.card.in-game {
+    transform: unset !important;
+}
