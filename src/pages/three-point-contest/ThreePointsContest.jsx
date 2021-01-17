@@ -21,7 +21,9 @@ export default class ThreePointsContest extends React.Component {
                 {"border": "1px solid lightcoral", opacity: 1}
             ],
             idx: 0,
-            keyword: ""
+            keyword: "",
+
+            round_length: 3
         };
 
         this.toggleState = this.toggleState.bind(this);
@@ -106,6 +108,13 @@ export default class ThreePointsContest extends React.Component {
         });
     }
 
+    setRoundLength(event) {
+        const round_length = event.target.value;
+        this.setState({
+            round_length
+        });
+    }
+
     render() {
         const players = this.applyFilters();
 
@@ -113,15 +122,21 @@ export default class ThreePointsContest extends React.Component {
 
         return (
             <div>
+
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginTop: "20px", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"} team={this.state.teams[0]} onClear={() => this.onClear(0)} toggle={this.toggleState} />
                     <SelectedPlayers title={"Team Two"} team={this.state.teams[1]} onClear={() => this.onClear(1)} toggle={this.toggleState} />
                 </div>
 
-                <div className={"ui link cards basic buttons centered"} style={{ margin: "auto", marginBottom: "10px", width: "150px" }}>
-                    <button className={"ui button" + (can_start ? " basic blue" : "")} disabled={!can_start}>
-                        Start Game
-                    </button>
+                <div className="ui link input cards centered" style={{ margin: "auto", width: "450px" }}>
+                    <span style={{ lineHeight: "38px", marginRight: "10px"}} > Playing until: </span>
+                    <input type={"number"} value={this.state.round_length} min={3} max={10} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px" }}/>
+
+                    <div className={"ui basic buttons"} style={{ margin: "auto", marginBottom: "10px", width: "150px" }}>
+                        <button className={"ui button" + (can_start ? " basic blue" : "")} disabled={!can_start}>
+                            Start Game
+                        </button>
+                    </div>
                 </div>
 
                 <SearchInput onKeyUp={this.searchPlayers.bind(this)} />
