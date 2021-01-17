@@ -121,15 +121,19 @@ export default class ThreePointsContest extends React.Component {
         const can_start = this.state.teams[0].length > 0 && this.state.teams[1].length > 0;
 
         return (
-            <div>
+            <div style={{ paddingTop: "20px" }}>
 
-                <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginTop: "20px", marginBottom: "10px" }}>
+                {/*<div className="ui centered cards" style={{ marginBottom: "20px" }}>
+                    <img src={"https://breakinball.com/wp-content/uploads/2019/01/nba2.jpg"} style={{ align: "center", width: "60px" }} alt="logo" />
+                </div>*/}
+
+                <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"} team={this.state.teams[0]} onClear={() => this.onClear(0)} toggle={this.toggleState} />
                     <SelectedPlayers title={"Team Two"} team={this.state.teams[1]} onClear={() => this.onClear(1)} toggle={this.toggleState} />
                 </div>
 
-                <div className="ui link input cards centered" style={{ margin: "auto", width: "450px" }}>
-                    <span style={{ lineHeight: "38px", marginRight: "10px"}} > Playing until: </span>
+                <div className="ui link input cards centered" style={{ margin: "auto", width: "350px" }}>
+                    <span style={{ lineHeight: "38px", marginRight: "10px"}} > Round Length: </span>
                     <input type={"number"} value={this.state.round_length} min={3} max={10} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px" }}/>
 
                     <div className={"ui basic buttons"} style={{ margin: "auto", marginBottom: "10px", width: "150px" }}>
