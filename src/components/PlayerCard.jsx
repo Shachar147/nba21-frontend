@@ -24,6 +24,12 @@ export default class PlayerCard extends React.Component {
         this.onError = this.onError.bind(this);
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.picture){
+            this.setState({ picture: nextProps.picture })
+        }
+    }
+
     getFallbackImage(name){
         return 'https://nba-players.herokuapp.com/players/' + name.replace(".", "").split(' ').reverse().join('/');
     }

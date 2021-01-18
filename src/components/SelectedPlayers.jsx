@@ -16,6 +16,9 @@ export default class SelectedPlayers extends React.Component {
         return (
             <div>
                 <div style={{margin: "20px"}}>
+                    <a className={"item"} style={{color: "#2d2d2d", cursor: "pointer"}} onClick={this.props.onAddRandom}><span style={{ marginRight: "5px", top: "-2px", position: "relative", fontSize: "10px" }}>+</span>Add Random Player</a>
+                </div>
+                <div style={{margin: "20px"}}>
                     <div className="ui ordered list">
                         {team.map((player) => (
                             <a key={player.name} className={"item"} title={"Click to remove"} onClick={() => (this.props.toggle) ? this.props.toggle(player) : undefined}>

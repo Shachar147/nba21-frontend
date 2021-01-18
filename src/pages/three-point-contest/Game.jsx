@@ -8,8 +8,9 @@ export default class Game extends React.Component {
         super(props);
 
         this.state = {
-            round_players: this.props.teams[0].concat(this.props.teams[1]),
-            played_players: [],
+            all_players: this.props.all_players, // for random
+            round_players: this.props.teams[0].concat(this.props.teams[1]), // who left to play in this round
+            played_players: [], // who already played in this round
             teams: this.props.teams,
             scores: {},
             current_player: {},
@@ -24,16 +25,56 @@ export default class Game extends React.Component {
         this.StartRound();
     }
 
+    getRandomPlayer() {
+        let players = shuffle(this.state.all_players);
+        return players[0];
+    }
+
     StartRound() {
         let round_players = this.state.round_players;
-        // alert("round players - " + round_players.length)
         if (round_players.length === 0) {
             this.EndRound();
 
         } else {
             round_players = shuffle(round_players);
-            const current_player = round_players[0];
-            this.setState({ current_player });
+            let current_player = round_players[0];
+
+            if (current_player.name.indexOf("Random Player") !== -1){
+                let random_name = current_player.name;
+                current_player = this.getRandomPlayer();
+                current_player.name += " (" + random_name.replace("Random Player","Random") + ")";
+
+                let teams = this.state.teams;
+                let round_players = this.state.round_players;
+
+                teams = teams.map(arr => {
+                   return arr.map(iter => {
+                       // console.log(iter.name,"<>",random_name);
+                       if (iter.name === random_name){
+                           // console.log("here!");
+                           iter = current_player
+                       }
+                       return iter;
+                   })
+                });
+                // console.log(teams);
+
+                round_players = round_players.map(iter => {
+                    // console.log(iter.name,"<>",random_name);
+                    if (iter.name === random_name){
+                        // console.log("here2!");
+                        iter = current_player
+                    }
+                    return iter;
+                });
+
+                // console.log(round_players);
+
+                this.setState({ teams, round_players, current_player });
+            }
+            else {
+                this.setState({ current_player });
+            }
         }
     }
 
@@ -42,10 +83,8 @@ export default class Game extends React.Component {
         let scores = this.state.scores;
 
         let played_players = this.state.played_players;
-        // console.log("played players:" + played_players.map(function(iter){ return iter.name }).join(", "));
 
         const worst_score = played_players.reduce((min, iter) => scores[iter.name].reduce((a, b) => a + b) < min ? scores[iter.name].reduce((a, b) => a + b) : min, scores[played_players[0].name].reduce((a, b) => a + b));
-        // console.log("worst score: " + worst_score);
 
         let lost = this.state.lost;
 
@@ -72,7 +111,6 @@ export default class Game extends React.Component {
             let current_player = round_players.concat(played_players).map(function(iter){ return iter })[0];
             let winner = current_player.name;
             this.setState({ current_player, winner });
-
         }
         else {
             this.StartRound();
@@ -83,8 +121,6 @@ export default class Game extends React.Component {
         let current_player_name = this.state.current_player.name;
 
         let scores = this.state.scores;
-
-        // console.log(current_player_name + " - " + score);
 
         let played_players = this.state.played_players;
         const round_players = this.state.round_players.filter(function(iter){
@@ -97,9 +133,6 @@ export default class Game extends React.Component {
                 return true;
             }
         });
-
-        // console.log("rp - " + round_players.length);
-        // console.log("pp - " + played_players.length);
 
         await this.setState({ played_players, round_players, scores });
 

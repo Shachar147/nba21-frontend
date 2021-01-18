@@ -17,6 +17,10 @@ export default class Settings extends React.Component {
                 [],
                 []
             ],
+            randoms: [
+                [],
+                []
+            ],
             styles:[
                 {"border": "1px solid lightseagreen", opacity: 1},
                 {"border": "1px solid lightcoral", opacity: 1}
@@ -48,6 +52,12 @@ export default class Settings extends React.Component {
     toggleState (player){
 
         let players = this.state.players;
+
+        if (player.name.indexOf('Random Player') !== -1){
+            // console.log(player.name);
+            this.onRemoveRandom(player.name);
+            return;
+        }
 
         let teams = this.state.teams;
         let idx = this.state.idx;
@@ -99,15 +109,17 @@ export default class Settings extends React.Component {
 
     onClear (idx) {
         const teams = this.state.teams;
+        const randoms = this.state.randoms;
         const players = this.state.players.map(function(iter){
             if (iter.selected === idx) iter.selected = undefined;
             return iter;
         })
 
         teams[idx] = [];
+        randoms[idx] = [];
 
         this.setState({
-            teams, players
+            teams, players, randoms
         });
     }
 
@@ -127,15 +139,56 @@ export default class Settings extends React.Component {
         });
     }
 
+    onAddRandom(idx) {
+
+        const randoms = this.state.randoms;
+
+        randoms[idx].push({
+            name: "Random Player " + parseInt(idx+1) + ' - ' + parseInt(randoms[idx].length+1),
+            picture: './nopic.png',
+            team: { name: 'Random' }
+        })
+
+        this.setState({
+            randoms
+        });
+    }
+
+    onRemoveRandom(name) {
+        let randoms = this.state.randoms;
+
+        let team_idx;
+
+        randoms.forEach(function(arr, idx){
+           arr.forEach(function(iter, i){
+               if (name === iter.name){
+                   team_idx = idx;
+               }
+           })
+        });
+
+        if (team_idx != undefined){
+            randoms[team_idx].splice(randoms[team_idx].length-1, 1);
+        }
+
+        this.setState({
+            randoms
+        });
+    }
+
     render() {
         const players = this.applyFilters();
 
-        const can_start = this.state.teams[0].length > 0 && this.state.teams[1].length > 0;
+        const can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0) &&
+                          (this.state.teams[1].length > 0 || this.state.randoms[1].length > 0);
 
         if (this.state.game_started){
+
+            let game_teams = [this.state.teams[0].concat(this.state.randoms[0]),this.state.teams[1].concat(this.state.randoms[1])];
             return (
               <Game
-                teams={this.state.teams}
+                all_players={this.state.players}
+                teams={game_teams}
                 round_length={this.state.round_length}
               />
             );
@@ -149,8 +202,8 @@ export default class Settings extends React.Component {
                 </div>*/}
 
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
-                    <SelectedPlayers title={"Team One"} team={this.state.teams[0]} onClear={() => this.onClear(0)} toggle={this.toggleState} />
-                    <SelectedPlayers title={"Team Two"} team={this.state.teams[1]} onClear={() => this.onClear(1)} toggle={this.toggleState} />
+                    <SelectedPlayers title={"Team One"} team={this.state.teams[0].concat(this.state.randoms[0])} onClear={() => this.onClear(0)} toggle={this.toggleState} onAddRandom={() => this.onAddRandom(0)}/>
+                    <SelectedPlayers title={"Team Two"} team={this.state.teams[1].concat(this.state.randoms[1])} onClear={() => this.onClear(1)} toggle={this.toggleState} onAddRandom={() => this.onAddRandom(1)} />
                 </div>
 
                 <div className="ui link input cards centered" style={{ margin: "auto", width: "350px" }}>
