@@ -1,4 +1,5 @@
 import React from "react";
+import {LOST_X_IMAGE, PLAYER_NO_PICTURE} from "../helpers/consts";
 
 export default class PlayerCard extends React.Component {
 
@@ -15,7 +16,7 @@ export default class PlayerCard extends React.Component {
             fallbacks: [
                 this.props.picture,
                 fallback_image,
-                './nopic.png'
+                PLAYER_NO_PICTURE
             ],
 
             shoot_score: 0,
@@ -39,9 +40,7 @@ export default class PlayerCard extends React.Component {
         const fallbacks = this.state.fallbacks;
 
         fallback++;
-
-        console.log("here", fallback, fallbacks.length-1);
-
+        // console.log("here", fallback, fallbacks.length-1);
         if (fallback > fallbacks.length-1) return;
         const picture = fallbacks[fallback];
         this.setState({ picture, fallback });
@@ -92,9 +91,7 @@ export default class PlayerCard extends React.Component {
 
         // lost / win
         const lost = (this.props.lost) ? "Loser" : "";
-        const lostImage = (this.props.lost) ? (
-            <img className="lost-image" src={"../x-png-icon-8.jpg"} />
-        ) : "";
+        const lostImage = (this.props.lost) ? (<img className="lost-image" alt={"lost"} src={LOST_X_IMAGE} />) : undefined;
         const winner = (this.props.winner) ? "Winner!" : "";
 
         return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shuffle } from "../../shared/utils";
+import { shuffle } from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
 
 export default class Game extends React.Component {

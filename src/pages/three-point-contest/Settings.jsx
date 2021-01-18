@@ -11,8 +11,8 @@ import {
     RANDOM_PLAYER_PICTURE,
     ROUND_DEFAULT_LENGTH,
     TEAM1_COLOR, TEAM2_COLOR
-} from "../../shared/consts";
-import {isDefined} from "../../shared/utils";
+} from "../../helpers/consts";
+import {isDefined} from "../../helpers/utils";
 import {SERVER_ADDRESS} from "../../config/config";
 
 export default class Settings extends React.Component {
