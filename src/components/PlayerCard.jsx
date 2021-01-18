@@ -123,4 +123,4 @@ export default class PlayerCard extends React.Component {
             </div>
         );
     }
-};
+}

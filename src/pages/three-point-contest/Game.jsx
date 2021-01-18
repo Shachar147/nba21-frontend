@@ -141,99 +141,79 @@ export default class Game extends React.Component {
 
     render(){
 
-        const team1 = this.state.teams[0];
-        const team2 = this.state.teams[1];
-        const scores = this.state.scores;
+        // variables
         const lost = this.state.lost;
-
         const round_length = this.props.round_length;
-
         const shoot_player = this.state.current_player;
 
-        let made_team1 = 0;
-        let attempt_team1 = 0;
-        let made_team2 = 0;
-        let attempt_team2 = 0;
-        const names1 = team1.map(x => x.name);
-        const names2 = team2.map(x => x.name);
+        // calculate percents
+        const percents = [];
+        const teams_players = [];
+        this.state.teams.forEach((arr,idx) => teams_players.push(arr.map(iter => iter.name)));
+        this.state.teams.forEach((arr,idx) => percents.push({ made: 0, attempt: 0, percents: 0 }));
+        const scores = this.state.scores;
+        Object.keys(scores).forEach(function(name){
 
-        for (let name in scores){
             const total_made = scores[name].reduce((a, b) => a + b);
             const total_attempt = scores[name].length * round_length;
 
-            if (names1.indexOf(name) !== -1){
-                made_team1 += total_made;
-                attempt_team1 += total_attempt;
-            }
-            else if (names2.indexOf(name) !== -1){
-                made_team2 += total_made;
-                attempt_team2 += total_attempt;
-            }
-        }
+            teams_players.forEach((arr,idx) => {
 
-        const per1 = (attempt_team1 === 0) ? '0%' : ((made_team1/attempt_team1)*100).toFixed(2) + "%";
-        const per2 = (attempt_team2 === 0) ? '0%' : ((made_team2/attempt_team2)*100).toFixed(2) + "%";
+                if (arr.indexOf(name) !== -1){
+                    percents[idx]["attempt"] += total_attempt;
+                    percents[idx]["made"] += total_made;
+                    percents[idx]["percents"] = ((percents[idx]["made"]/percents[idx]["attempt"])*100).toFixed(2);
+                }
+            });
+        });
+
+        // build teams blocks
+        const teams_blocks = [];
+        const teams = this.state.teams;
+        for (let team_idx=0; team_idx < percents.length; team_idx++) {
+            const team = percents[team_idx];
+            teams_blocks.push(
+                <div key={"team_block_" + team_idx}>
+                    <div className={"ui link cards centered"} style={{marginTop: "5px", marginBottom: "5px"}}>
+                        <div className="ui header" style={{fontSize: "14px", fontWeight: "normal"}}>
+                            {`Total: ` + team.made + `/` + team.attempt + ` - ` + team.percents + `%`}
+                        </div>
+                    </div>
+                    <div className="ui link cards centered" style={{margin: "auto"}}>
+                        {teams[team_idx].map((player, idx) => <PlayerCard
+                            key={"team" + team_idx + "-" + idx}
+                            name={player.name}
+                            team={player.team.name}
+                            position={player.position}
+                            // weight_kgs={player.weight_kgs}
+                            // height_meters={player.height_meters}
+                            shoot={player.name === shoot_player.name}
+                            style={(player.name !== shoot_player.name) ? {opacity: 0.6} : undefined}
+                            debut_year={player.debut_year}
+                            picture={player.picture}
+                            percents={player['3pt_percents']}
+                            round_length={round_length}
+                            onScore={this.onScore}
+                            className={"in-game"}
+                            rounds={scores[player.name]}
+                            lost={lost[player.name]}
+                            winner={this.state.winner === player.name}
+                        />)}
+                    </div>
+                </div>
+            );
+        }
 
         return (
 
             <div style={{ paddingTop: "20px" }}>
-                <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
-                    <div className="ui header" style={{fontSize: "14px", fontWeight: "normal"}}>
-                        {`Total: ` + made_team1 + `/` + attempt_team1 + ` - ` + per1}
-                    </div>
-                </div>
-                <div className="ui link cards centered" style={{ margin: "auto" }}>
-                    { team1.map((player,idx) => <PlayerCard
-                        key={"team1-" + idx}
-                        name={player.name}
-                        team={player.team.name}
-                        position={player.position}
-                        // weight_kgs={player.weight_kgs}
-                        // height_meters={player.height_meters}
-                        shoot={player.name === shoot_player.name}
-                        style={ (player.name !== shoot_player.name) ? { opacity: 0.6 } : undefined }
-                        debut_year={player.debut_year}
-                        picture={player.picture}
-                        percents={player['3pt_percents']}
-                        round_length={round_length}
-                        onScore={this.onScore}
-                        className={"in-game"}
-                        rounds={scores[player.name]}
-                        lost={lost[player.name]}
-                        winner={this.state.winner === player.name}
-                    />)}
-                </div>
+                {teams_blocks[0]}
                 <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
                     <div className="ui header" style={{lineHeight: "38px"}}>
                         Against
                     </div>
                 </div>
-                <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
-                    <div className="ui header" style={{fontSize: "14px", fontWeight: "normal"}}>
-                        {`Total: ` + made_team2 + `/` + attempt_team2 + ` - ` + per2}
-                    </div>
-                </div>
-                <div className="ui link cards centered" style={{ margin: "auto" }}>
-                    { team2.map((player,idx) => <PlayerCard
-                        key={"team2-" + idx}
-                        name={player.name}
-                        team={player.team.name}
-                        position={player.position}
-                        // weight_kgs={player.weight_kgs}
-                        // height_meters={player.height_meters}
-                        shoot={player.name === shoot_player.name}
-                        style={ (player.name !== shoot_player.name) ? { opacity: 0.6 } : undefined }
-                        className={"in-game"}
-                        debut_year={player.debut_year}
-                        picture={player.picture}
-                        percents={player['3pt_percents']}
-                        round_length={round_length}
-                        onScore={this.onScore}
-                        rounds={scores[player.name]}
-                        lost={lost[player.name]}
-                        winner={this.state.winner === player.name}
-                    />)}
-                </div>
+                {teams_blocks[1]}
             </div>
 
         );
