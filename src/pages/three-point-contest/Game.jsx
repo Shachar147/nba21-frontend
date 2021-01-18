@@ -188,7 +188,7 @@ export default class Game extends React.Component {
                             // weight_kgs={player.weight_kgs}
                             // height_meters={player.height_meters}
                             shoot={player.name === shoot_player.name}
-                            style={(player.name !== shoot_player.name) ? {opacity: 0.6} : undefined}
+                            style={(player.name !== shoot_player.name) ? {opacity: 0.6, cursor: "default" } : undefined}
                             debut_year={player.debut_year}
                             picture={player.picture}
                             percents={player['3pt_percents']}
