@@ -65,7 +65,7 @@ export default class PlayerCard extends React.Component {
                 <span style={{ margin: "0px 5px" }} > / </span>
                 <input type={"number"} value={this.props.round_length} disabled style={input_style}/>
                 <div className={"ui basic buttons"} style={{ marginLeft: "10px" }}>
-                    <input type={"button"} className={"ui basic button"} value={"Go"} onClick={() => this.props.onScore(this.state.shoot_score)} />
+                    <input type={"button"} className={"ui basic button"} value={"Go"} onClick={() => { this.props.onScore(this.state.shoot_score); this.setState({ shoot_score: 0}); }} />
                 </div>
             </div>
         ) : undefined;

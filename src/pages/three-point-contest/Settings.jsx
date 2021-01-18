@@ -245,7 +245,8 @@ export default class Settings extends React.Component {
 
     restart() {
         this.setState({
-            game_started: false
+            game_started: false,
+            keyword: "",
         });
     }
 
