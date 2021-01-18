@@ -1,8 +1,8 @@
-function deepClone(obj){
+export function deepClone(obj){
     return JSON.parse(JSON.stringify(obj));
 }
 
-function shuffle(array) {
+export function shuffle(array) {
     let counter = array.length;
 
     // While there are elements in the array
@@ -22,4 +22,6 @@ function shuffle(array) {
     return array;
 }
 
-export { deepClone , shuffle };
+export function isDefined(value){
+    return typeof(value) !== 'undefined';
+}

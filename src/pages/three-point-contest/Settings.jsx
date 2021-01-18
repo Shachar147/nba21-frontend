@@ -5,6 +5,15 @@ import SearchInput from '../../components/SearchInput';
 import SelectedPlayers from "../../components/SelectedPlayers";
 import Game from './Game';
 import './three.points.contest.css';
+import {
+    MAX_ROUND_LENGTH,
+    MIN_ROUND_LENGTH,
+    RANDOM_PLAYER_PICTURE,
+    ROUND_DEFAULT_LENGTH,
+    TEAM1_COLOR, TEAM2_COLOR
+} from "../../shared/consts";
+import {isDefined} from "../../shared/utils";
+import {SERVER_ADDRESS} from "../../config/config";
 
 export default class Settings extends React.Component {
 
@@ -22,13 +31,13 @@ export default class Settings extends React.Component {
                 []
             ],
             styles:[
-                {"border": "1px solid lightseagreen", opacity: 1},
-                {"border": "1px solid lightcoral", opacity: 1}
+                {"border": "1px solid " + TEAM1_COLOR, opacity: 1},
+                {"border": "1px solid " + TEAM2_COLOR, opacity: 1}
             ],
             idx: 0,
             keyword: "",
 
-            round_length: 3,
+            round_length: ROUND_DEFAULT_LENGTH,
             game_started: false
         };
 
@@ -38,7 +47,7 @@ export default class Settings extends React.Component {
 
     componentDidMount() {
 
-        axios.get(`http://localhost:3000/player/3pts`,{
+        axios.get(SERVER_ADDRESS + `/player/3pts`,{
             headers: {
                 'Access-Control-Allow-Origin': '*',
             }})
@@ -54,7 +63,6 @@ export default class Settings extends React.Component {
         let players = this.state.players;
 
         if (player.name.indexOf('Random Player') !== -1){
-            // console.log(player.name);
             this.onRemoveRandom(player.name);
             return;
         }
@@ -65,7 +73,7 @@ export default class Settings extends React.Component {
         for (let a in players){
             let iter = players[a];
             if (iter.name === player.name) {
-                if (typeof(iter.selected) != 'undefined') {
+                if (isDefined(iter.selected)) {
                     teams[iter.selected] = teams[iter.selected].filter(function(a) { return a.name !== player.name });
                     iter.selected = undefined;
                 } else {
@@ -97,8 +105,7 @@ export default class Settings extends React.Component {
             Object.keys(iter).forEach(function(a){
                 let val = (a === 'team') ? iter[a]["name"] : iter[a];
                 if (a === 'picture') val = '';
-                if (typeof(val) !== 'undefined' && val.toString().toLowerCase().indexOf(keyword.toLowerCase()) !== -1){
-                    // console.log(a, val);
+                if (isDefined(val) && val.toString().toLowerCase().indexOf(keyword.toLowerCase()) !== -1){
                     isOk = true;
                     return;
                 }
@@ -125,8 +132,8 @@ export default class Settings extends React.Component {
 
     setRoundLength(event) {
         let round_length = event.target.value;
-        round_length = Math.min(round_length,10);
-        round_length = Math.max(round_length,3);
+        round_length = Math.min(round_length,MAX_ROUND_LENGTH);
+        round_length = Math.max(round_length,MIN_ROUND_LENGTH);
 
         this.setState({
             round_length
@@ -145,7 +152,7 @@ export default class Settings extends React.Component {
 
         randoms[idx].push({
             name: "Random Player " + parseInt(idx+1) + ' - ' + parseInt(randoms[idx].length+1),
-            picture: './nopic.png',
+            picture: RANDOM_PLAYER_PICTURE,
             team: { name: 'Random' }
         })
 
@@ -167,7 +174,7 @@ export default class Settings extends React.Component {
            })
         });
 
-        if (team_idx != undefined){
+        if (isDefined(team_idx)){
             randoms[team_idx].splice(randoms[team_idx].length-1, 1);
         }
 
@@ -197,10 +204,6 @@ export default class Settings extends React.Component {
         return (
             <div style={{ paddingTop: "20px" }}>
 
-                {/*<div className="ui centered cards" style={{ marginBottom: "20px" }}>
-                    <img src={"https://breakinball.com/wp-content/uploads/2019/01/nba2.jpg"} style={{ align: "center", width: "60px" }} alt="logo" />
-                </div>*/}
-
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"} team={this.state.teams[0].concat(this.state.randoms[0])} onClear={() => this.onClear(0)} toggle={this.toggleState} onAddRandom={() => this.onAddRandom(0)}/>
                     <SelectedPlayers title={"Team Two"} team={this.state.teams[1].concat(this.state.randoms[1])} onClear={() => this.onClear(1)} toggle={this.toggleState} onAddRandom={() => this.onAddRandom(1)} />
@@ -229,7 +232,7 @@ export default class Settings extends React.Component {
                         debut_year={player.debut_year}
                         picture={player.picture}
                         percents={player['3pt_percents']}
-                        style={ (typeof(player.selected) !== 'undefined') ? this.state.styles[player.selected] : { opacity: 0.6 } }
+                        style={ isDefined(player.selected) ? this.state.styles[player.selected] : { opacity: 0.6 } }
                         onClick={() => this.toggleState(player)}
                     />)}
                 </div>
