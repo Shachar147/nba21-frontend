@@ -261,6 +261,7 @@ export default class Settings extends React.Component {
                 round_length={this.state.round_length}
                 computer_level={this.state.computer_level}
                 have_computers={(this.state.computers[0].length + this.state.computers[1].length > 0)}
+                goHome={() => this.setState({ game_started: false })}
               />
             );
         }

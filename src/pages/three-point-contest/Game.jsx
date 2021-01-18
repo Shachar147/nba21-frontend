@@ -310,6 +310,9 @@ export default class Game extends React.Component {
                     <button className={"ui button basic blue"} onClick={this.restart}>
                         Rematch
                     </button>
+                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.props.goHome}>
+                        Go Home
+                    </button>
                 </div>
                 {computers_block}
                 {teams_blocks[0]}
