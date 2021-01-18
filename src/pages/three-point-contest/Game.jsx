@@ -19,6 +19,7 @@ export default class Game extends React.Component {
         };
 
         this.onScore = this.onScore.bind(this);
+        this.restart = this.restart.bind(this);
     }
 
     componentDidMount() {
@@ -139,6 +140,21 @@ export default class Game extends React.Component {
         this.StartRound();
     }
 
+    restart(){
+        this.setState({
+            all_players: this.props.all_players,
+            round_players: this.props.teams[0].concat(this.props.teams[1]),
+            played_players: [],
+            teams: this.props.teams,
+            scores: {},
+            current_player: {},
+            lost: {},
+            winner: "",
+        });
+
+        this.StartRound();
+    }
+
     render(){
 
         // variables
@@ -207,6 +223,11 @@ export default class Game extends React.Component {
         return (
 
             <div style={{ paddingTop: "20px" }}>
+                <div className="ui link cards centered" style={{margin: "auto", marginBottom:"20px"}}>
+                    <button className={"ui button basic blue"} onClick={this.restart}>
+                        Rematch
+                    </button>
+                </div>
                 {teams_blocks[0]}
                 <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
                     <div className="ui header" style={{lineHeight: "38px"}}>
@@ -215,7 +236,6 @@ export default class Game extends React.Component {
                 </div>
                 {teams_blocks[1]}
             </div>
-
         );
 
     }
