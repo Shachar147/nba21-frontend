@@ -13,7 +13,7 @@ import {
     ROUND_DEFAULT_LENGTH,
     TEAM1_COLOR, TEAM2_COLOR
 } from "../../helpers/consts";
-import {isDefined} from "../../helpers/utils";
+import {deepClone, isDefined} from "../../helpers/utils";
 import {SERVER_ADDRESS} from "../../config/config";
 
 export default class Settings extends React.Component {
@@ -50,6 +50,7 @@ export default class Settings extends React.Component {
         this.toggleState = this.toggleState.bind(this);
         this.startGame = this.startGame.bind(this);
         this.setComputerLevel = this.setComputerLevel.bind(this);
+        this.restart = this.restart.bind(this);
     }
 
     componentDidMount() {
@@ -164,7 +165,7 @@ export default class Settings extends React.Component {
 
     startGame() {
         this.setState({
-            game_started: true
+            game_started: true,
         });
     }
 
@@ -242,6 +243,12 @@ export default class Settings extends React.Component {
         });
     }
 
+    restart() {
+        this.setState({
+            game_started: false
+        });
+    }
+
     render() {
         const players = this.applyFilters();
 
@@ -256,12 +263,12 @@ export default class Settings extends React.Component {
 
             return (
               <Game
-                all_players={this.state.players}
-                teams={game_teams}
+                all_players={deepClone(this.state.players)}
+                teams={deepClone(game_teams)}
                 round_length={this.state.round_length}
                 computer_level={this.state.computer_level}
                 have_computers={(this.state.computers[0].length + this.state.computers[1].length > 0)}
-                goHome={() => this.setState({ game_started: false })}
+                goHome={this.restart}
               />
             );
         }
