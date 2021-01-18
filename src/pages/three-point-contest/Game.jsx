@@ -16,6 +16,7 @@ export default class Game extends React.Component {
             current_player: {},
             lost: {},
             winner: "",
+            leaderboard: [],
         };
 
         this.onScore = this.onScore.bind(this);
@@ -81,27 +82,36 @@ export default class Game extends React.Component {
 
     async EndRound() {
 
-        let scores = this.state.scores;
-
         let played_players = this.state.played_players;
 
-        const worst_score = played_players.reduce((min, iter) => scores[iter.name].reduce((a, b) => a + b) < min ? scores[iter.name].reduce((a, b) => a + b) : min, scores[played_players[0].name].reduce((a, b) => a + b));
+        // let scores = this.state.scores;
 
+        // const worst_score = played_players.reduce((min, iter) => scores[iter.name].reduce((a, b) => a + b) < min ? scores[iter.name].reduce((a, b) => a + b) : min, scores[played_players[0].name].reduce((a, b) => a + b));
+        //
+        // let lost = this.state.lost;
+        //
+        // console.log(this.state.leaderboard);
+        //
+        // played_players = shuffle(played_players);
+        // let foundLost = false;
+        // let round_players = played_players.filter(function(iter){
+        //     const total = scores[iter.name].reduce((a, b) => a + b);
+        //     if (!foundLost && total === worst_score){
+        //         // alert("lost - " + iter.name);
+        //         lost[iter.name] = true;
+        //         foundLost = true;
+        //         return false;
+        //     } else {
+        //         return true;
+        //     }
+        // });
+        // played_players = [];
+
+        const leaderboard = this.state.leaderboard;
+        const lost_player = leaderboard[leaderboard.length-1];
+        let round_players = played_players.filter(function(iter){ return (iter.name !== lost_player) });
         let lost = this.state.lost;
-
-        played_players = shuffle(played_players);
-        let foundLost = false;
-        let round_players = played_players.filter(function(iter){
-            const total = scores[iter.name].reduce((a, b) => a + b);
-            if (!foundLost && total === worst_score){
-                // alert("lost - " + iter.name);
-                lost[iter.name] = true;
-                foundLost = true;
-                return false;
-            } else {
-                return true;
-            }
-        });
+        lost[lost_player] = true;
         played_players = [];
 
         await this.setState({ played_players, round_players, lost });
@@ -135,9 +145,35 @@ export default class Game extends React.Component {
             }
         });
 
-        await this.setState({ played_players, round_players, scores });
+        // leaderboard
+        const leaderboard = this.buildLeaderBoard(scores);
+
+        await this.setState({ played_players, round_players, scores, leaderboard });
 
         this.StartRound();
+    }
+
+    buildLeaderBoard(scores){
+
+        const lost = this.state.lost;
+        const round_length = this.state.round_length;
+
+        let leaderboard = [];
+        Object.keys(scores).forEach(function(name){
+            if(lost[name]) return;
+
+            const total_made = scores[name].reduce((a, b) => a + b);
+            const total_attempt = scores[name].length * round_length
+            const percents = (total_attempt) ? ((total_made/total_attempt)*100).toFixed(2) : 0;
+            leaderboard.push({
+                name: name,
+                percents: percents
+            });
+        })
+        leaderboard = leaderboard.sort(function(a,b){ return b.percents - a.percents });
+        leaderboard = leaderboard.map(x => x.name);
+
+        return leaderboard;
     }
 
     restart(){
@@ -150,6 +186,7 @@ export default class Game extends React.Component {
             current_player: {},
             lost: {},
             winner: "",
+            leaderboard: []
         });
 
         this.StartRound();
@@ -161,6 +198,7 @@ export default class Game extends React.Component {
         const lost = this.state.lost;
         const round_length = this.props.round_length;
         const shoot_player = this.state.current_player;
+        const teams = this.state.teams;
 
         // calculate percents
         const percents = [];
@@ -185,7 +223,6 @@ export default class Game extends React.Component {
 
         // build teams blocks
         const teams_blocks = [];
-        const teams = this.state.teams;
         for (let team_idx=0; team_idx < percents.length; team_idx++) {
             const team = percents[team_idx];
             teams_blocks.push(
@@ -214,6 +251,7 @@ export default class Game extends React.Component {
                             rounds={scores[player.name]}
                             lost={lost[player.name]}
                             winner={this.state.winner === player.name}
+                            place={this.state.leaderboard.indexOf(player.name)+1}
                         />)}
                     </div>
                 </div>

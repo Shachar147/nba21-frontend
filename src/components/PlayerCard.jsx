@@ -1,5 +1,6 @@
 import React from "react";
 import {LOST_X_IMAGE, PLAYER_NO_PICTURE} from "../helpers/consts";
+import {nth} from "../helpers/utils";
 
 export default class PlayerCard extends React.Component {
 
@@ -69,6 +70,9 @@ export default class PlayerCard extends React.Component {
             </div>
         ) : undefined;
 
+        // place
+        const place = (this.props.place) ? "Place: " + this.props.place + nth(this.props.place) : "";
+
         // rounds
         const round_length = this.props.round_length;
         const total_made = (!this.props.rounds || !this.props.rounds.length) ? 0 : this.props.rounds.reduce((a, b) => a + b);
@@ -78,6 +82,7 @@ export default class PlayerCard extends React.Component {
                 { <div style={{ marginBottom: "5px", fontWeight: "bold" }}>
                     Total: {total_made}/{total_attempt} - { ( (total_made/total_attempt)* 100).toFixed(2) + "%" }
                 </div> }
+                {place}
                 { this.props.rounds.map(function(iter) {
                     return (
                         <div>
