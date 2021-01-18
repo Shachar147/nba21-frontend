@@ -6,5 +6,8 @@ export const RANDOM_PLAYER_PICTURE = '/nopic.png';
 export const PLAYER_NO_PICTURE = '/nopic.png';
 export const LOST_X_IMAGE = '/x-png-icon-8.jpg';
 
+export const COMPUTER_PLAYER_PICTURE = '/computer.png';
+export const DEFAULT_COMPUTER_LEVEL = 'Normal';
+
 export const TEAM1_COLOR = 'lightseagreen';
 export const TEAM2_COLOR = 'lightcoral';

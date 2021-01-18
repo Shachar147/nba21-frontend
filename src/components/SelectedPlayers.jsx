@@ -17,6 +17,8 @@ export default class SelectedPlayers extends React.Component {
             <div>
                 <div style={{margin: "20px"}}>
                     <a className={"item"} style={{color: "#2d2d2d", cursor: "pointer"}} onClick={this.props.onAddRandom}><span style={{ marginRight: "5px", top: "-2px", position: "relative", fontSize: "10px" }}>+</span>Add Random Player</a>
+                    <br />
+                    <a className={"item"} style={{color: "#2d2d2d", cursor: "pointer"}} onClick={this.props.onAddComputer}><span style={{ marginRight: "5px", top: "-2px", position: "relative", fontSize: "10px" }}>+</span>Add Computer Player</a>
                 </div>
                 <div style={{margin: "20px"}}>
                     <div className="ui ordered list">

@@ -6,6 +6,7 @@ import SelectedPlayers from "../../components/SelectedPlayers";
 import Game from './Game';
 import './three.points.contest.css';
 import {
+    COMPUTER_PLAYER_PICTURE, DEFAULT_COMPUTER_LEVEL,
     MAX_ROUND_LENGTH,
     MIN_ROUND_LENGTH,
     RANDOM_PLAYER_PICTURE,
@@ -30,6 +31,10 @@ export default class Settings extends React.Component {
                 [],
                 []
             ],
+            computers: [
+                [],
+                []
+            ],
             styles:[
                 {"border": "1px solid " + TEAM1_COLOR, opacity: 1},
                 {"border": "1px solid " + TEAM2_COLOR, opacity: 1}
@@ -37,12 +42,14 @@ export default class Settings extends React.Component {
             idx: 0,
             keyword: "",
 
+            computer_level: DEFAULT_COMPUTER_LEVEL,
             round_length: ROUND_DEFAULT_LENGTH,
             game_started: false
         };
 
         this.toggleState = this.toggleState.bind(this);
         this.startGame = this.startGame.bind(this);
+        this.setComputerLevel = this.setComputerLevel.bind(this);
     }
 
     componentDidMount() {
@@ -64,6 +71,11 @@ export default class Settings extends React.Component {
 
         if (player.name.indexOf('Random Player') !== -1){
             this.onRemoveRandom(player.name);
+            return;
+        }
+
+        if (player.name.indexOf('Computer Player') !== -1){
+            this.onRemoveComputer(player.name);
             return;
         }
 
@@ -117,6 +129,7 @@ export default class Settings extends React.Component {
     onClear (idx) {
         const teams = this.state.teams;
         const randoms = this.state.randoms;
+        const computers = this.state.computers;
         const players = this.state.players.map(function(iter){
             if (iter.selected === idx) iter.selected = undefined;
             return iter;
@@ -124,9 +137,10 @@ export default class Settings extends React.Component {
 
         teams[idx] = [];
         randoms[idx] = [];
+        computers[idx] = [];
 
         this.setState({
-            teams, players, randoms
+            teams, players, randoms, computers
         });
     }
 
@@ -137,6 +151,14 @@ export default class Settings extends React.Component {
 
         this.setState({
             round_length
+        });
+    }
+
+    setComputerLevel(event) {
+        let computer_level = event.target.value;
+
+        this.setState({
+            computer_level
         });
     }
 
@@ -158,6 +180,21 @@ export default class Settings extends React.Component {
 
         this.setState({
             randoms
+        });
+    }
+
+    onAddComputer(idx) {
+
+        const computers = this.state.computers;
+
+        computers[idx].push({
+            name: "Computer Player " + parseInt(idx+1) + ' - ' + parseInt(computers[idx].length+1),
+            picture: COMPUTER_PLAYER_PICTURE,
+            team: { name: 'Computer' }
+        })
+
+        this.setState({
+            computers
         });
     }
 
@@ -183,30 +220,69 @@ export default class Settings extends React.Component {
         });
     }
 
+    onRemoveComputer(name){
+        let computers = this.state.computers;
+
+        let team_idx;
+
+        computers.forEach(function(arr, idx){
+            arr.forEach(function(iter, i){
+                if (name === iter.name){
+                    team_idx = idx;
+                }
+            })
+        });
+
+        if (isDefined(team_idx)){
+            computers[team_idx].splice(computers[team_idx].length-1, 1);
+        }
+
+        this.setState({
+            computers
+        });
+    }
+
     render() {
         const players = this.applyFilters();
 
-        const can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0) &&
-                          (this.state.teams[1].length > 0 || this.state.randoms[1].length > 0);
+        const can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0 || this.state.computers[0].length > 0) &&
+                          (this.state.teams[1].length > 0 || this.state.randoms[1].length > 0 || this.state.computers[1].length > 0);
 
         if (this.state.game_started){
 
-            let game_teams = [this.state.teams[0].concat(this.state.randoms[0]),this.state.teams[1].concat(this.state.randoms[1])];
+            let game_teams = [
+                this.state.teams[0].concat(this.state.randoms[0]).concat(this.state.computers[0]),
+                this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])];
+
             return (
               <Game
                 all_players={this.state.players}
                 teams={game_teams}
                 round_length={this.state.round_length}
+                computer_level={this.state.computer_level}
+                have_computers={(this.state.computers[0].length + this.state.computers[1].length > 0)}
               />
             );
         }
+
+        const computer_level = this.state.computer_level;
 
         return (
             <div style={{ paddingTop: "20px" }}>
 
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
-                    <SelectedPlayers title={"Team One"} team={this.state.teams[0].concat(this.state.randoms[0])} onClear={() => this.onClear(0)} toggle={this.toggleState} onAddRandom={() => this.onAddRandom(0)}/>
-                    <SelectedPlayers title={"Team Two"} team={this.state.teams[1].concat(this.state.randoms[1])} onClear={() => this.onClear(1)} toggle={this.toggleState} onAddRandom={() => this.onAddRandom(1)} />
+                    <SelectedPlayers title={"Team One"}
+                                     team={this.state.teams[0].concat(this.state.randoms[0]).concat(this.state.computers[0])}
+                                     onClear={() => this.onClear(0)} toggle={this.toggleState}
+                                     onAddRandom={() => this.onAddRandom(0)}
+                                     onAddComputer={() => this.onAddComputer(0)}
+                    />
+                    <SelectedPlayers title={"Team Two"}
+                                     team={this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])}
+                                     onClear={() => this.onClear(1)} toggle={this.toggleState}
+                                     onAddRandom={() => this.onAddRandom(1)}
+                                     onAddComputer={() => this.onAddComputer(1)}
+                    />
                 </div>
 
                 <div className="ui link input cards centered" style={{ margin: "auto", width: "350px" }}>
@@ -221,6 +297,15 @@ export default class Settings extends React.Component {
                 </div>
 
                 <SearchInput onKeyUp={this.searchPlayers.bind(this)} />
+
+                <div className="ui link cards centered" style={{ margin: "auto" }}>
+                    <span style={{ lineHeight: "38px", marginRight: "10px"}} > Select Computer Level: </span>
+                    <select style={{ border: "1px solid #eaeaea", borderRadius: "5px", padding: "5px" }} onChange={this.setComputerLevel}>
+                        {
+                            ["Easy", "Normal", "Hard", "Very Hard"].map(x => <option value={x} selected={computer_level === x} >{x}</option>)
+                        }
+                    </select>
+                </div>
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     { players.map(player => <PlayerCard

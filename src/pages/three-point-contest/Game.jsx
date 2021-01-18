@@ -1,6 +1,7 @@
 import React from 'react';
 import { shuffle } from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
+import {DEFAULT_COMPUTER_LEVEL} from "../../helpers/consts";
 
 export default class Game extends React.Component {
 
@@ -17,6 +18,14 @@ export default class Game extends React.Component {
             lost: {},
             winner: "",
             leaderboard: [],
+
+            computer_level: this.props.computer_level,
+            levels: {
+                'Easy': 0.7,
+                'Normal': 0.6,
+                'Hard': 0.5,
+                'Very Hard': 0.3
+            }
         };
 
         this.onScore = this.onScore.bind(this);
@@ -32,6 +41,35 @@ export default class Game extends React.Component {
         return players[0];
     }
 
+    // computer
+    randNum(){
+        const level = this.state.levels[this.state.computer_level];
+        let y = Math.random();
+        if(y <= level){
+            y = Math.floor(y)
+        }
+        else {
+            y= Math.ceil(y)
+        }
+        return y;
+    }
+
+    getComputerScoreResult(){
+        let scored = 0;
+        const from = this.props.round_length;
+        for (let i=0; i<from; i++){
+            scored += this.randNum();
+        }
+
+        // easy
+        if (scored === 1) {
+            if (["Easy","Normal"].indexOf(this.state.computer_level) !== -1){
+                scored -= this.randNum();
+            }
+        }
+        return scored;
+    }
+
     StartRound() {
         let round_players = this.state.round_players;
         if (round_players.length === 0) {
@@ -41,41 +79,38 @@ export default class Game extends React.Component {
             round_players = shuffle(round_players);
             let current_player = round_players[0];
 
-            if (current_player.name.indexOf("Random Player") !== -1){
+            if (current_player.name.indexOf("Random Player") !== -1 || current_player.name.indexOf("Computer Player") !== -1){
                 let random_name = current_player.name;
                 current_player = this.getRandomPlayer();
-                current_player.name += " (" + random_name.replace("Random Player","Random") + ")";
+                current_player.name += " (" + random_name.replace("Random Player","Random").replace("Computer Player","Computer") + ")";
 
                 let teams = this.state.teams;
                 let round_players = this.state.round_players;
 
                 teams = teams.map(arr => {
                    return arr.map(iter => {
-                       // console.log(iter.name,"<>",random_name);
                        if (iter.name === random_name){
-                           // console.log("here!");
                            iter = current_player
                        }
                        return iter;
                    })
                 });
-                // console.log(teams);
 
                 round_players = round_players.map(iter => {
-                    // console.log(iter.name,"<>",random_name);
                     if (iter.name === random_name){
-                        // console.log("here2!");
                         iter = current_player
                     }
                     return iter;
                 });
 
-                // console.log(round_players);
-
                 this.setState({ teams, round_players, current_player });
             }
             else {
                 this.setState({ current_player });
+            }
+
+            if (current_player && current_player.name.indexOf("Computer") !== -1){
+                setTimeout(() => this.onScore(this.getComputerScoreResult()),1000);
             }
         }
     }
@@ -156,7 +191,7 @@ export default class Game extends React.Component {
     buildLeaderBoard(scores){
 
         const lost = this.state.lost;
-        const round_length = this.state.round_length;
+        const round_length = this.props.round_length;
 
         let leaderboard = [];
         Object.keys(scores).forEach(function(name){
@@ -258,6 +293,16 @@ export default class Game extends React.Component {
             );
         }
 
+        // computer level
+        const computers_block = (this.props.have_computers) ?
+            (
+                <div className="ui link cards centered" style={{margin: "auto", marginBottom:"20px"}}>
+                    <div className="ui header" style={{lineHeight: "38px"}}>
+                        Computer Level: {this.props.computer_level}
+                    </div>
+                </div>
+            ): "";
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
@@ -266,6 +311,7 @@ export default class Game extends React.Component {
                         Rematch
                     </button>
                 </div>
+                {computers_block}
                 {teams_blocks[0]}
                 <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
                     <div className="ui header" style={{lineHeight: "38px"}}>
