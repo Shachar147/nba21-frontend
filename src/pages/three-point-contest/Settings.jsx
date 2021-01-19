@@ -14,7 +14,7 @@ import {
     TEAM1_COLOR, TEAM2_COLOR
 } from "../../helpers/consts";
 import {deepClone, isDefined} from "../../helpers/utils";
-import {SERVER_ADDRESS} from "../../config/config";
+import {getServerAddress} from "../../config/config";
 
 export default class Settings extends React.Component {
 
@@ -55,7 +55,7 @@ export default class Settings extends React.Component {
 
     componentDidMount() {
 
-        axios.get(SERVER_ADDRESS + `/player/3pts`,{
+        axios.get(getServerAddress() + `/player/3pts`,{
             headers: {
                 'Access-Control-Allow-Origin': '*',
             }})
