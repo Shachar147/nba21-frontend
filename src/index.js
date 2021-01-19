@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+alert(process.env.NODE_ENV);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
