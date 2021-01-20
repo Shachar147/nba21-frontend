@@ -83,9 +83,9 @@ export default class PlayerCard extends React.Component {
                     Total: {total_made}/{total_attempt} - { ( (total_made/total_attempt)* 100).toFixed(2) + "%" }
                 </div> }
                 {place}
-                { this.props.rounds.map(function(iter) {
+                { this.props.rounds.map(function(iter,idx) {
                     return (
-                        <div>
+                        <div key={`round-` + idx}>
                             <span>{iter}/{round_length}</span>
                         </div>
                     );

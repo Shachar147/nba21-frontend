@@ -1,5 +1,5 @@
 import React from 'react';
-import { shuffle } from "../../helpers/utils";
+import {deepClone, shuffle} from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
 import {DEFAULT_COMPUTER_LEVEL} from "../../helpers/consts";
 
@@ -20,16 +20,13 @@ export default class Game extends React.Component {
             leaderboard: [],
 
             computer_level: this.props.computer_level,
-            levels: {
-                'Easy': 0.7,
-                'Normal': 0.6,
-                'Hard': 0.5,
-                'Very Hard': 0.3
-            }
+            levels: this.props.computer_levels,
+            game_started: true,
         };
 
         this.onScore = this.onScore.bind(this);
         this.restart = this.restart.bind(this);
+        this.goHome = this.goHome.bind(this);
     }
 
     componentDidMount() {
@@ -43,8 +40,10 @@ export default class Game extends React.Component {
 
     // computer
     randNum(){
-        const level = this.state.levels[this.state.computer_level];
+        const level = (this.state.computer_level === 'Real Life') ? (1 - (parseFloat(this.state.current_player["3pt_percents"].replace("%",""))/100)) : this.state.levels[this.state.computer_level];
+        // console.log("player - " + this.state.current_player.name + " - level - " + level);
         let y = Math.random();
+        // console.log(y);
         if(y <= level){
             y = Math.floor(y)
         }
@@ -71,6 +70,11 @@ export default class Game extends React.Component {
     }
 
     StartRound() {
+
+        if (!this.state.game_started){
+            return;
+        }
+
         let round_players = this.state.round_players;
         if (round_players.length === 0) {
             this.EndRound();
@@ -81,7 +85,7 @@ export default class Game extends React.Component {
 
             if (current_player.name.indexOf("Random Player") !== -1 || current_player.name.indexOf("Computer Player") !== -1){
                 let random_name = current_player.name;
-                current_player = this.getRandomPlayer();
+                current_player = deepClone(this.getRandomPlayer());
                 current_player.name += " (" + random_name.replace("Random Player","Random").replace("Computer Player","Computer") + ")";
 
                 let teams = this.state.teams;
@@ -164,6 +168,11 @@ export default class Game extends React.Component {
     }
 
     async onScore(score){
+
+        if(!this.state.game_started){
+            return;
+        }
+
         let current_player_name = this.state.current_player.name;
 
         let scores = this.state.scores;
@@ -225,6 +234,11 @@ export default class Game extends React.Component {
         });
 
         this.StartRound();
+    }
+
+    async goHome(){
+        await this.setState({ game_started: false });
+        this.props.goHome();
     }
 
     render(){
@@ -310,7 +324,7 @@ export default class Game extends React.Component {
                     <button className={"ui button basic blue"} onClick={this.restart}>
                         Rematch
                     </button>
-                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.props.goHome}>
+                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.goHome}>
                         Go Home
                     </button>
                 </div>

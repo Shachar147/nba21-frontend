@@ -43,6 +43,13 @@ export default class Settings extends React.Component {
             keyword: "",
 
             computer_level: DEFAULT_COMPUTER_LEVEL,
+            computer_levels: {
+                'Easy': 0.7,
+                'Normal': 0.6,
+                'Hard': 0.5,
+                'Very Hard': 0.3,
+                'Real Life': undefined,
+            },
             round_length: ROUND_DEFAULT_LENGTH,
             game_started: false
         };
@@ -309,15 +316,16 @@ export default class Settings extends React.Component {
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     <span style={{ lineHeight: "38px", marginRight: "10px"}} > Select Computer Level: </span>
-                    <select style={{ border: "1px solid #eaeaea", borderRadius: "5px", padding: "5px" }} onChange={this.setComputerLevel}>
+                    <select style={{ border: "1px solid #eaeaea", borderRadius: "5px", padding: "5px" }} onChange={this.setComputerLevel} value={computer_level}>
                         {
-                            ["Easy", "Normal", "Hard", "Very Hard"].map(x => <option value={x} selected={computer_level === x} >{x}</option>)
+                            Object.keys(this.state.computer_levels).map((x,idx) => <option key={idx} value={x}>{x}</option>)
                         }
                     </select>
                 </div>
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
-                    { players.map(player => <PlayerCard
+                    { players.map((player,idx) => <PlayerCard
+                        key={idx}
                         name={player.name}
                         team={player.team.name}
                         position={player.position}
