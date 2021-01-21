@@ -17,11 +17,11 @@ export default class SelectedPlayers extends React.Component {
             <div>
                 <div style={{margin: "20px"}}>
 
-                    <button className={"ui button basic tiny blue"} style={{ margin:"0px 5px" }} onClick={this.props.onAddRandom}>
+                    <button className={"ui button basic tiny blue"} style={{ margin:"0px 5px" }} disabled={!this.props.enabled} onClick={this.props.onAddRandom}>
                         + Random
                     </button>
 
-                    <button className={"ui button basic tiny blue"} style={{ margin:"0px px" }} onClick={this.props.onAddComputer}>
+                    <button className={"ui button basic tiny blue"} style={{ margin:"0px px" }} disabled={!this.props.enabled} onClick={this.props.onAddComputer}>
                         + Computer
                     </button>
                 </div>

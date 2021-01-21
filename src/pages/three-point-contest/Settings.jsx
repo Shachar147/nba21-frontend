@@ -13,8 +13,10 @@ import {
     ROUND_DEFAULT_LENGTH,
     TEAM1_COLOR, TEAM2_COLOR
 } from "../../helpers/consts";
-import {deepClone, isDefined} from "../../helpers/utils";
+import {deepClone, isDefined, uiError} from "../../helpers/utils";
 import {getServerAddress} from "../../config/config";
+import ErrorBox from "../../components/ErrorBox";
+import LoadingBox from "../../components/LoadingBox";
 
 export default class Settings extends React.Component {
 
@@ -51,7 +53,10 @@ export default class Settings extends React.Component {
                 'Real Life': undefined,
             },
             round_length: ROUND_DEFAULT_LENGTH,
-            game_started: false
+            game_started: false,
+
+            loaded: false,
+            error: undefined
         };
 
         this.toggleState = this.toggleState.bind(this);
@@ -62,6 +67,9 @@ export default class Settings extends React.Component {
 
     componentDidMount() {
 
+        let req_error = undefined;
+        let self = this;
+
         axios.get(getServerAddress() + `/player/3pts`,{
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -70,6 +78,14 @@ export default class Settings extends React.Component {
                 let players = res.data;
                 players = players.sort(function(a,b) { return parseFloat(b['3pt_percents'].replace('%','')) - parseFloat(a['3pt_percents'].replace('%','')); })
                 this.setState({ players });
+            }).catch(function (error) {
+                // Request made and server responded
+                console.log(error);
+                req_error = error.message;
+            })
+            .then(function () {
+                // console.log("finished");
+                self.setState({ loaded: true, error: req_error })
             });
     }
 
@@ -260,8 +276,9 @@ export default class Settings extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        const can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0 || this.state.computers[0].length > 0) &&
+        let can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0 || this.state.computers[0].length > 0) &&
                           (this.state.teams[1].length > 0 || this.state.randoms[1].length > 0 || this.state.computers[1].length > 0);
+        if (this.state.error) can_start = false;
 
         if (this.state.game_started){
 
@@ -286,18 +303,23 @@ export default class Settings extends React.Component {
         return (
             <div style={{ paddingTop: "20px" }}>
 
+                {(!this.state.loaded) ? <LoadingBox message={"Please wait while loading players..."} style={{ margin: "10px 0px", marginTop: "0px" }} /> : ""}
+                {(this.state.loaded && this.state.error) ? <ErrorBox message={uiError(this.state.error)} title={"Error Loading Players"} style={{ margin: "10px 0px", marginTop: "0px" }} /> : "" }
+
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"}
                                      team={this.state.teams[0].concat(this.state.randoms[0]).concat(this.state.computers[0])}
                                      onClear={() => this.onClear(0)} toggle={this.toggleState}
                                      onAddRandom={() => this.onAddRandom(0)}
                                      onAddComputer={() => this.onAddComputer(0)}
+                                     enabled={can_start}
                     />
                     <SelectedPlayers title={"Team Two"}
                                      team={this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])}
                                      onClear={() => this.onClear(1)} toggle={this.toggleState}
                                      onAddRandom={() => this.onAddRandom(1)}
                                      onAddComputer={() => this.onAddComputer(1)}
+                                     enabled={can_start}
                     />
                 </div>
 

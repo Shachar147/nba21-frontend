@@ -10,8 +10,6 @@ export default class PlayerCard extends React.Component {
         const fallback_image = this.getFallbackImage(this.props.name)
 
         this.state = {
-            players: [],
-
             picture: this.props.picture,
             fallback: 0,
             fallbacks: [
@@ -51,7 +49,7 @@ export default class PlayerCard extends React.Component {
         const details = [];
         if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
         if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
-        if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs")
+        if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs");
 
         const picture = this.state.picture;
 

@@ -32,6 +32,15 @@ export function nth(d) {
     }
 }
 
+export function uiError(error){
+
+    if (error.indexOf("Network Error") !== -1){
+        return "Oops, it seems like there was some kind of a network error." + '<br>' +
+            "Please make sure your server is up and running."
+    }
+    return error;
+}
+
 export function isDefined(value){
     return typeof(value) !== 'undefined';
 }
