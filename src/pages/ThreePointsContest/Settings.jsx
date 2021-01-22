@@ -370,6 +370,7 @@ export default class Settings extends React.Component {
                         style={ isDefined(player.selected) ? this.state.styles[player.selected] : { opacity: 0.6 } }
                         onClick={() => this.toggleState(player)}
                     />)}
+                    {(players.length === 0) ? <div style={{ marginTop: "20px"}}>No Results Found for "{this.state.keyword}"</div> : "" }
                 </div>
             </div>
         )
