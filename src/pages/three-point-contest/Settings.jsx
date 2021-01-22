@@ -13,10 +13,10 @@ import {
     ROUND_DEFAULT_LENGTH,
     TEAM1_COLOR, TEAM2_COLOR
 } from "../../helpers/consts";
-import {deepClone, isDefined, uiError} from "../../helpers/utils";
+import {deepClone, isDefined} from "../../helpers/utils";
 import {getServerAddress} from "../../config/config";
-import ErrorBox from "../../components/ErrorBox";
-import LoadingBox from "../../components/LoadingBox";
+import LoadingPage from "../LoadingPage";
+import ErrorPage from "../ErrorPage";
 
 export default class Settings extends React.Component {
 
@@ -276,8 +276,7 @@ export default class Settings extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        let can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0 || this.state.computers[0].length > 0) &&
-                          (this.state.teams[1].length > 0 || this.state.randoms[1].length > 0 || this.state.computers[1].length > 0);
+        let can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0 || this.state.computers[0].length > 0) && (this.state.teams[1].length > 0 || this.state.randoms[1].length > 0 || this.state.computers[1].length > 0);
         if (this.state.error) can_start = false;
 
         if (this.state.game_started){
@@ -293,6 +292,7 @@ export default class Settings extends React.Component {
                 round_length={this.state.round_length}
                 computer_level={this.state.computer_level}
                 have_computers={(this.state.computers[0].length + this.state.computers[1].length > 0)}
+                computer_levels={this.state.computer_levels}
                 goHome={this.restart}
               />
             );
@@ -300,11 +300,22 @@ export default class Settings extends React.Component {
 
         const computer_level = this.state.computer_level;
 
+        const error = this.state.error;
+        const is_loading = this.state.loading;
+        if (is_loading) {
+            return (
+                <LoadingPage message={"Please wait while loading players..."} />
+            );
+        } else if (error || players.length === 0) {
+            return (
+                <ErrorPage message={"Oops, it seems like no players loaded :(<Br>It's probably related to a server error"} />
+            );
+        }
+
         return (
             <div style={{ paddingTop: "20px" }}>
 
-                {(!this.state.loaded) ? <LoadingBox message={"Please wait while loading players..."} style={{ margin: "10px 0px", marginTop: "0px" }} /> : ""}
-                {(this.state.loaded && this.state.error) ? <ErrorBox message={uiError(this.state.error)} title={"Error Loading Players"} style={{ margin: "10px 0px", marginTop: "0px" }} /> : "" }
+                {/*{(this.state.loaded && this.state.error) ? <ErrorBox message={uiError(this.state.error)} title={"Error Loading Players"} style={{ margin: "10px 0px", marginTop: "0px" }} /> : "" }*/}
 
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"}
@@ -312,14 +323,14 @@ export default class Settings extends React.Component {
                                      onClear={() => this.onClear(0)} toggle={this.toggleState}
                                      onAddRandom={() => this.onAddRandom(0)}
                                      onAddComputer={() => this.onAddComputer(0)}
-                                     enabled={can_start}
+                                     enabled={this.state.players.length > 0}
                     />
                     <SelectedPlayers title={"Team Two"}
                                      team={this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])}
                                      onClear={() => this.onClear(1)} toggle={this.toggleState}
                                      onAddRandom={() => this.onAddRandom(1)}
                                      onAddComputer={() => this.onAddComputer(1)}
-                                     enabled={can_start}
+                                     enabled={this.state.players.length > 0}
                     />
                 </div>
 
