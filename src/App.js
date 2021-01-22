@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import Settings from './pages/three-point-contest/Settings';
+import Settings from './pages/ThreePointsContest/Settings';
 
 function App() {
 

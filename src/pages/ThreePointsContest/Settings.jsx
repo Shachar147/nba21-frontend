@@ -301,12 +301,12 @@ export default class Settings extends React.Component {
         const computer_level = this.state.computer_level;
 
         const error = this.state.error;
-        const is_loading = this.state.loading;
+        const is_loading = !this.state.loaded;
         if (is_loading) {
             return (
                 <LoadingPage message={"Please wait while loading players..."} />
             );
-        } else if (error || players.length === 0) {
+        } else if (error || this.state.players.length === 0) {
             return (
                 <ErrorPage message={"Oops, it seems like no players loaded :(<Br>It's probably related to a server error"} />
             );
