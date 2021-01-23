@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import {getServerAddress} from "../config/config";
-import {setToken} from "../helpers/auth";
+import {getToken, setToken} from "../helpers/auth";
 import { Redirect } from 'react-router'
 
 export default class LoginPage extends React.Component {
@@ -62,6 +62,9 @@ export default class LoginPage extends React.Component {
                 if (res && res.data && res.data.accessToken){
                     token = res.data.accessToken;
                     setToken(token);
+
+                    axios.defaults.headers.Authorization = `Bearer ${token}`;
+
                     message = "Logged in successfully!";
                     setTimeout(function(self){
                         self.setState({ redirect: true })

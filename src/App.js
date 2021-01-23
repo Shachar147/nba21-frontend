@@ -12,9 +12,6 @@ import LogoutPage from "./pages/Logout";
 
 function App() {
 
-    const token = getToken();
-    axios.defaults.headers.Authorization = `Bearer ${token}`;
-
     return (
         <div className={"wrapper"}>
             <BrowserRouter>
