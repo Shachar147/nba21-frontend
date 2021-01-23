@@ -22,6 +22,11 @@ export default class LoginPage extends React.Component {
         };
 
         this.login = this.login.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
+    }
+
+    onKeyDown(e){
+        if(e.keyCode === 13) this.login();
     }
 
     login(){
@@ -118,13 +123,13 @@ export default class LoginPage extends React.Component {
                             <div className="field">
                                 <div className="ui left icon input" style={{ width: "100%", marginBottom: "10px" }}>
                                     <i className="user icon" />
-                                    <input type="text" name="username" placeholder="Username" style={userStyle} value={this.state.username} onChange={(e) => { let errorField = this.state.errorField; errorField.username = false; this.setState({ username: e.target.value, errorField: errorField }) } } />
+                                    <input type="text" name="username" placeholder="Username" style={userStyle} value={this.state.username} onChange={(e) => { let errorField = this.state.errorField; errorField.username = false; this.setState({ username: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
                                 </div>
                             </div>
                             <div className="field">
                                 <div className="ui left icon input" style={{ width: "100%", marginBottom: "10px" }}>
                                     <i className="lock icon" />
-                                    <input type="password" name="password" placeholder="Password" style={passStyle} value={this.state.password} onChange={(e) => { let errorField = this.state.errorField; errorField.password = false; this.setState({ password: e.target.value, errorField: errorField }) } } onKeyDown={(e) => { if(e.keyCode === 13) this.login(); }} />
+                                    <input type="password" name="password" placeholder="Password" style={passStyle} value={this.state.password} onChange={(e) => { let errorField = this.state.errorField; errorField.password = false; this.setState({ password: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
                                 </div>
                             </div>
                             <div className="ui fluid large blue submit button" onClick={this.login} >Login</div>
