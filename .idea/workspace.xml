@@ -7,7 +7,6 @@
       <change beforePath="$PROJECT_DIR$/src/components/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Card.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/LoadingPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoadingPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ThreePointsContest/Settings.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +57,7 @@
       <updated>1610571997497</updated>
       <workItem from="1610572030591" duration="2321000" />
       <workItem from="1610702572979" duration="43598000" />
-      <workItem from="1610883426321" duration="98097000" />
+      <workItem from="1610883426321" duration="98241000" />
     </task>
     <servers />
   </component>
