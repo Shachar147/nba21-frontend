@@ -9,7 +9,7 @@ export default class LogoutPage extends React.Component {
     }
 
     componentDidMount() {
-        setToken(undefined);
+        setToken("");
     }
 
     render() {

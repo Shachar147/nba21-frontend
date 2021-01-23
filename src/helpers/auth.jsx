@@ -11,5 +11,5 @@ export function getToken(){
 
 export function isLoggedOn(){
     // todo complete - check that token is valid, and not expired
-    return isDefined(Cookies.get('token')) && Cookies.get('token') !== "undefined";
+    return isDefined(Cookies.get('token')) && Cookies.get('token') !== "";
 }

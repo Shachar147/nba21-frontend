@@ -9,7 +9,6 @@ import {isLoggedOn} from "../helpers/auth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
-    // Add your own authentication on the below line.
     const isLoggedIn = isLoggedOn();
 
     return (
