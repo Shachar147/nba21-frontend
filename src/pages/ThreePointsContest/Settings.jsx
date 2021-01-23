@@ -17,6 +17,9 @@ import {deepClone, isDefined} from "../../helpers/utils";
 import {getServerAddress} from "../../config/config";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
+import {getToken} from "../../helpers/auth";
+import Cookies from 'js-cookie';
+import Header from "../../components/Header";
 
 export default class Settings extends React.Component {
 
@@ -82,6 +85,8 @@ export default class Settings extends React.Component {
                 // Request made and server responded
                 console.log(error);
                 req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
             })
             .then(function () {
                 // console.log("finished");
@@ -300,20 +305,23 @@ export default class Settings extends React.Component {
 
         const computer_level = this.state.computer_level;
 
-        const error = this.state.error;
+        let error = this.state.error;
         const is_loading = !this.state.loaded;
         if (is_loading) {
             return (
                 <LoadingPage message={"Please wait while loading players..."} />
             );
         } else if (error || this.state.players.length === 0) {
+            error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
             return (
-                <ErrorPage message={"Oops, it seems like no players loaded :(<Br>It's probably related to a server error"} />
+                <ErrorPage message={error} />
             );
         }
 
         return (
             <div style={{ paddingTop: "20px" }}>
+
+                <Header />
 
                 {/*{(this.state.loaded && this.state.error) ? <ErrorBox message={uiError(this.state.error)} title={"Error Loading Players"} style={{ margin: "10px 0px", marginTop: "0px" }} /> : "" }*/}
 

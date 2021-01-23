@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
 import {getServerAddress} from "../config/config";
-import Cookies from 'js-cookie';
+import {setToken} from "../helpers/auth";
+import { Redirect } from 'react-router'
 
 export default class LoginPage extends React.Component {
 
@@ -22,10 +23,6 @@ export default class LoginPage extends React.Component {
 
         this.login = this.login.bind(this);
     }
-
-    setToken (token) {
-        Cookies.set('token', token);
-    };
 
     login(){
 
@@ -57,9 +54,18 @@ export default class LoginPage extends React.Component {
             })
             .then(res => {
                 // console.log(res);
-                token = res.data.accessToken;
-                this.setToken(token);
-                message = "Logged in successfully!"
+                if (res && res.data && res.data.accessToken){
+                    token = res.data.accessToken;
+                    setToken(token);
+                    message = "Logged in successfully!";
+                    setTimeout(function(self){
+                        self.setState({ redirect: true })
+                    }, 2000, self);
+                }
+                else {
+                    error = "Oops, something went wrong";
+                }
+
             }).catch(function (err) {
                 if (err.response && err.response.data && err.response.data.message) {
                     error = "Username or Password are incorrect.";
@@ -70,23 +76,22 @@ export default class LoginPage extends React.Component {
                 }
             })
             .then(function () {
-                console.log(error);
-                // console.log("finished");
                 self.setState({error, message, token, errorField });
             });
         }
-        console.log(error);
     }
 
     render() {
+
+        if (this.state.redirect){
+            return <Redirect to="/" />;
+        }
 
         let error = (this.state.error !== '') ? (
             <div className="field" style={{ marginBottom: "10px", color: "#F10B45" }}>
                 {this.state.error}
             </div>
         ) : "";
-
-        console.log(error);
 
         let message = (this.state.message !== '') ? (
             <div className="field" style={{ marginBottom: "10px", color: "#0068BB" }}>
@@ -100,6 +105,8 @@ export default class LoginPage extends React.Component {
 
         let userStyle = (this.state.errorField.username) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
         let passStyle = (this.state.errorField.password) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
+
+
 
         return (
             <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >

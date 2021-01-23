@@ -2,6 +2,7 @@ import React from 'react';
 import {deepClone, shuffle} from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
 import {DEFAULT_COMPUTER_LEVEL} from "../../helpers/consts";
+import Header from "../../components/Header";
 
 export default class Game extends React.Component {
 
@@ -320,6 +321,8 @@ export default class Game extends React.Component {
         return (
 
             <div style={{ paddingTop: "20px" }}>
+                <Header />
+
                 <div className="ui link cards centered" style={{margin: "auto", marginBottom:"20px"}}>
                     <button className={"ui button basic blue"} onClick={this.restart}>
                         Rematch
