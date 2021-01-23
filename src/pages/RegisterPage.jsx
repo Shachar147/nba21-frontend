@@ -6,7 +6,7 @@ import { Redirect } from 'react-router'
 import Logo from "../components/Logo";
 import {Link} from "react-router-dom";
 
-export default class LoginPage extends React.Component {
+export default class RegisterPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,18 +20,19 @@ export default class LoginPage extends React.Component {
             errorField: {
                 username: false,
                 password: false,
+                passwordAgain: false,
             }
         };
 
-        this.login = this.login.bind(this);
+        this.register = this.register.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
     }
 
     onKeyDown(e){
-        if(e.keyCode === 13) this.login();
+        if(e.keyCode === 13) this.register();
     }
 
-    login(){
+    register(){
 
         let message = "";
         let error = "";
@@ -53,54 +54,59 @@ export default class LoginPage extends React.Component {
             errorField.password = true;
             self.setState({error, errorField});
         }
+        else if (this.state.password !== this.state.passwordAgain) {
+            error = "Passwords do not match";
+            errorField.password = true;
+            errorField.passwordAgain = true;
+            self.setState({error, errorField});
+        }
         else {
 
-            axios.post(getServerAddress() + `/auth/signin`, {
+            axios.post(getServerAddress() + `/auth/signup`, {
                 username: this.state.username,
                 password: this.state.password,
             })
-            .then(res => {
-                // console.log(res);
-                if (res && res.data && res.data.accessToken){
-                    token = res.data.accessToken;
-                    setToken(token);
+                .then(res => {
+                    console.log(res);
+                    if (res && res.error) {
+                        error = res.error
+                    }
+                    else{
+                        message = "Registered successfully!";
+                        setTimeout(function(self){
+                            self.setState({ redirect: true })
+                        }, 2000, self);
+                    }
 
-                    axios.defaults.headers.Authorization = `Bearer ${token}`;
+                }).catch(function (err) {
+                    if (err.response && err.response.data && err.response.data.message) {
+                        const message = err.response.data.message;
+                        error = (typeof (message) === "object") ? message.join("<br>") : message;
 
-                    message = "Logged in successfully!";
-                    setTimeout(function(self){
-                        self.setState({ redirect: true })
-                    }, 2000, self);
-                }
-                else {
-                    error = "Oops, something went wrong";
-                }
+                        if (err.response.data.statusCode && [404].indexOf(err.response.data.statusCode) != -1){
+                            error = "Network Error";
+                        }
 
-            }).catch(function (err) {
-                if (err.response && err.response.data && err.response.data.message) {
-                    error = "Username or Password are incorrect.";
-                    // errorField.username = true;
-                    // errorField.password = true;
-                } else {
-                    error = "Network Error";
-                }
-            })
-            .then(function () {
-                self.setState({error, message, token, errorField });
-            });
+                        // errorField.username = true;
+                        // errorField.password = true;
+                    } else {
+                        error = "Network Error";
+                    }
+                })
+                .then(function () {
+                    self.setState({error, message, token, errorField });
+                });
         }
     }
 
     render() {
 
         if (this.state.redirect){
-            return <Redirect to="/" />;
+            return <Redirect to="/login" />;
         }
 
         let error = (this.state.error !== '') ? (
-            <div className="field" style={{ marginBottom: "10px", color: "#F10B45" }}>
-                {this.state.error}
-            </div>
+            <div className="field" style={{ marginBottom: "10px", color: "#F10B45" }} dangerouslySetInnerHTML={{ __html: this.state.error }} />
         ) : "";
 
         let message = (this.state.message !== '') ? (
@@ -115,8 +121,7 @@ export default class LoginPage extends React.Component {
 
         let userStyle = (this.state.errorField.username) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
         let passStyle = (this.state.errorField.password) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
-
-
+        let passAgainStyle = (this.state.errorField.passwordAgain) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
 
         return (
             <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >
@@ -138,10 +143,16 @@ export default class LoginPage extends React.Component {
                                     <input type="password" name="password" placeholder="Password" style={passStyle} value={this.state.password} onChange={(e) => { let errorField = this.state.errorField; errorField.password = false; this.setState({ password: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
                                 </div>
                             </div>
-                            <div className="ui fluid large blue submit button" onClick={this.login} >Login</div>
+                            <div className="field">
+                                <div className="ui left icon input" style={{ width: "100%", marginBottom: "10px" }}>
+                                    <i className="lock icon" />
+                                    <input type="password" name="password" placeholder="Repeat Passowrd" style={passAgainStyle} value={this.state.passwordAgain} onChange={(e) => { let errorField = this.state.errorField; errorField.passwordAgain = false; this.setState({ passwordAgain: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
+                                </div>
+                            </div>
+                            <div className="ui fluid large blue submit button" onClick={this.register} >Register</div>
                         </div>
                         <div style={{ fontWeight: "normal", fontSize: "16px" }}>
-                            Not a member? <Link to={"/register"}>register!</Link>
+                            Already a member? <Link to={"/login"}>login!</Link>
                         </div>
                     </div>
                 </div>
