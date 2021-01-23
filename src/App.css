@@ -39,3 +39,12 @@
     transform: rotate(360deg);
   }
 }
+
+.ui.cards a.card.disabled:hover, .ui.link.card.disabled:hover, .ui.link.cards .card.disabled:hover, a.ui.card.disabled:hover {
+  opacity:0.6 !important;
+  cursor: default !important;
+  transform: unset !important;
+}
+.ui.card.disabled a, .ui.cards>.card.disabled a {
+  cursor:default !important;
+}

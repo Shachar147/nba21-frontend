@@ -83,7 +83,7 @@ export default class RegisterPage extends React.Component {
                         const message = err.response.data.message;
                         error = (typeof (message) === "object") ? message.join("<br>") : message;
 
-                        if (err.response.data.statusCode && [404].indexOf(err.response.data.statusCode) != -1){
+                        if (err.response.data.statusCode && [404].indexOf(err.response.data.statusCode) !== -1){
                             error = "Network Error";
                         }
 

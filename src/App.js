@@ -8,8 +8,12 @@ import PrivateRoute from "./components/PrivateRoute";
 import MainPage from "./pages/MainPage";
 import LogoutPage from "./pages/Logout";
 import RegisterPage from "./pages/RegisterPage";
+import axios from "axios";
+import {getToken} from "./helpers/auth";
 
 function App() {
+
+    axios.defaults.headers.Authorization = `Bearer ${getToken()}`;
 
     return (
         <div className={"wrapper"}>
