@@ -12,32 +12,26 @@ export default class Card extends React.Component {
     }
 
     render() {
-
-        // picture
-        // name
-        // description
-
-        // class
-        // onclick
-        // style
-
         let className = "card";
         if (this.props.className){
             className += ' ' + this.props.className;
         }
 
+        let alt = this.props.name;
+
         let style = this.props.style || {};
         if (this.props.disabled){
-            style["opacity"] = "0.5";
+            style.opacity = "0.5";
             className += " disabled";
+            alt += " (not available yet)"
         }
 
         return (
             <div className={className}
                  style={style}>
                 <div className="image">
-                    <Link to={this.props.href} className={"image"} style={{ display: "block", width: "100%", position:"relative" }} disabled={this.props.disabled}>
-                        <img src={this.props.picture} alt={this.props.name} style={{ width: "60%" }} />
+                    <Link to={this.props.href} title={alt}  className={"image"} style={{ display: "block", width: "100%", position:"relative" }} disabled={this.props.disabled}>
+                        <img src={this.props.picture} alt={alt} style={{ width: "60%" }} />
                     </Link>
                 </div>
                 <div className="content">

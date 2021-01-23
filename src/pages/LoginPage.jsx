@@ -20,7 +20,8 @@ export default class LoginPage extends React.Component {
             errorField: {
                 username: false,
                 password: false,
-            }
+            },
+            validating: false,
         };
 
         this.login = this.login.bind(this);
@@ -32,6 +33,8 @@ export default class LoginPage extends React.Component {
     }
 
     login(){
+
+        if (this.state.validating) return;
 
         let message = "";
         let error = "";
@@ -54,6 +57,8 @@ export default class LoginPage extends React.Component {
             self.setState({error, errorField});
         }
         else {
+
+            this.setState({ validating: true });
 
             axios.post(getServerAddress() + `/auth/signin`, {
                 username: this.state.username,
@@ -86,7 +91,7 @@ export default class LoginPage extends React.Component {
                 }
             })
             .then(function () {
-                self.setState({error, message, token, errorField });
+                self.setState({error, message, token, errorField, validating: false });
             });
         }
     }
@@ -116,7 +121,7 @@ export default class LoginPage extends React.Component {
         let userStyle = (this.state.errorField.username) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
         let passStyle = (this.state.errorField.password) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
 
-
+        let buttonStyle = (this.state.validating) ? { opacity: 0.6 , cursor: "default" } : {};
 
         return (
             <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >
@@ -129,16 +134,16 @@ export default class LoginPage extends React.Component {
                             <div className="field">
                                 <div className="ui left icon input" style={{ width: "100%", marginBottom: "10px" }}>
                                     <i className="user icon" />
-                                    <input type="text" name="username" placeholder="Username" style={userStyle} value={this.state.username} onChange={(e) => { let errorField = this.state.errorField; errorField.username = false; this.setState({ username: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
+                                    <input disabled={this.state.validating} type="text" name="username" placeholder="Username" style={userStyle} value={this.state.username} onChange={(e) => { let errorField = this.state.errorField; errorField.username = false; this.setState({ username: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
                                 </div>
                             </div>
                             <div className="field">
                                 <div className="ui left icon input" style={{ width: "100%", marginBottom: "10px" }}>
                                     <i className="lock icon" />
-                                    <input type="password" name="password" placeholder="Password" style={passStyle} value={this.state.password} onChange={(e) => { let errorField = this.state.errorField; errorField.password = false; this.setState({ password: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
+                                    <input disabled={this.state.validating} type="password" name="password" placeholder="Password" style={passStyle} value={this.state.password} onChange={(e) => { let errorField = this.state.errorField; errorField.password = false; this.setState({ password: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
                                 </div>
                             </div>
-                            <div className="ui fluid large blue submit button" onClick={this.login} >Login</div>
+                            <div className="ui fluid large blue submit button" onClick={this.login} style={buttonStyle}>Login</div>
                         </div>
                         <div style={{ fontWeight: "normal", fontSize: "16px" }}>
                             Not a member? <Link to={"/register"}>register!</Link>

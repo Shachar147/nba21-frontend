@@ -1,4 +1,6 @@
 import React from "react";
+import Header from "../components/Header";
+import Logo from "../components/Logo";
 
 export default class LoadingPage extends React.Component {
 
@@ -15,13 +17,19 @@ export default class LoadingPage extends React.Component {
         const message = this.props.message || "Please wait while loading...";
 
         return (
-            <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#F0F0F0" }} >
-                <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", backgroundImage: `url("/loading.gif")`, width: "800px", height: "600px" }}>
-                    <div className="sub header content" style={{ width:"100%", bottom: "20%", textAlign: "center", position: "absolute", fontSize: "20px", fontWeight: "bold" }}>
-                        <div className="header">
-                            {title}
+            <div>
+                <Header />
+                <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#F0F0F0" }} >
+                    <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                        <div>
+                            <img src={"/loading.gif"} style={{ width: "80%", maxWidth: "800px" }} />
+                            <div className="sub header content" style={{ width:"100%", textAlign: "center", top: "-100px", fontSize: "20px", fontWeight: "bold", position: "relative"}}>
+                                <div className="header">
+                                    {title}
+                                </div>
+                                <p style={{ fontWeight: "normal" }} dangerouslySetInnerHTML={{ __html: message }} />
+                            </div>
                         </div>
-                        <p style={{ fontWeight: "normal" }} dangerouslySetInnerHTML={{ __html: message }} />
                     </div>
                 </div>
             </div>
