@@ -20,6 +20,7 @@ import ErrorPage from "../ErrorPage";
 import {getToken} from "../../helpers/auth";
 import Cookies from 'js-cookie';
 import Header from "../../components/Header";
+import {apiGet} from "../../helpers/api";
 
 export default class Settings extends React.Component {
 
@@ -70,28 +71,46 @@ export default class Settings extends React.Component {
 
     componentDidMount() {
 
-        let req_error = undefined;
+        // let req_error = undefined;
         let self = this;
-
-        axios.get(getServerAddress() + `/player/3pts`,{
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-            }})
-            .then(res => {
+        apiGet(this,
+            `/player/3pts`,
+            function(res) {
                 let players = res.data;
                 players = players.sort(function(a,b) { return parseFloat(b['3pt_percents'].replace('%','')) - parseFloat(a['3pt_percents'].replace('%','')); })
-                this.setState({ players });
-            }).catch(function (error) {
-                // Request made and server responded
+                self.setState({ players });
+            },
+            function(error) {
                 console.log(error);
-                req_error = error.message;
+                let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-            })
-            .then(function () {
-                // console.log("finished");
-                self.setState({ loaded: true, error: req_error })
-            });
+                self.setState({ error: req_error });
+            },
+            function() {
+                self.setState({ loaded: true });
+            }
+        );
+
+        // axios.get(getServerAddress() + `/player/3pts`,{
+        //     headers: {
+        //         'Access-Control-Allow-Origin': '*',
+        //     }})
+        //     .then(res => {
+        //         let players = res.data;
+        //         players = players.sort(function(a,b) { return parseFloat(b['3pt_percents'].replace('%','')) - parseFloat(a['3pt_percents'].replace('%','')); })
+        //         this.setState({ players });
+        //     }).catch(function (error) {
+        //         // Request made and server responded
+        //         console.log(error);
+        //         req_error = error.message;
+        //         if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+        //         if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
+        //     })
+        //     .then(function () {
+        //         // console.log("finished");
+        //         self.setState({ loaded: true, error: req_error })
+        //     });
     }
 
     toggleState (player){

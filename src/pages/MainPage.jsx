@@ -55,8 +55,7 @@ export default class MainPage extends React.Component {
                                 name={"One on One"}
                                 picture={"/ball (1).png"}
                                 style={{ width: "160px" }}
-                                href={"/"} // todo complete
-                                disabled={true}
+                                href={"/1on1"}
                             />
                             <Card
                                 name={"Stopwatch Shootout"}

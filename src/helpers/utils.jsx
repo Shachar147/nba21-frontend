@@ -44,3 +44,8 @@ export function uiError(error){
 export function isDefined(value){
     return typeof(value) !== 'undefined';
 }
+
+export function getRandomElement(arr) {
+    let shuffled = shuffle(arr);
+    return shuffled[0];
+}

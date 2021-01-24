@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/helpers/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Card.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoadingPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoadingPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PlayerCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PlayerCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/utils.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/utils.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ThreePointsContest/Game.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ThreePointsContest/Settings.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +62,7 @@
       <updated>1610571997497</updated>
       <workItem from="1610572030591" duration="2321000" />
       <workItem from="1610702572979" duration="43598000" />
-      <workItem from="1610883426321" duration="98241000" />
+      <workItem from="1610883426321" duration="105650000" />
     </task>
     <servers />
   </component>

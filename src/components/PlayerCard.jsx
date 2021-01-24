@@ -1,6 +1,6 @@
 import React from "react";
 import {LOST_X_IMAGE, PLAYER_NO_PICTURE} from "../helpers/consts";
-import {nth} from "../helpers/utils";
+import {isDefined, nth} from "../helpers/utils";
 
 export default class PlayerCard extends React.Component {
 
@@ -56,8 +56,8 @@ export default class PlayerCard extends React.Component {
         const debut_year = this.props.debut_year || "N/A";
 
         // shoot
-        const input_style= { height: "38px", width: "30%", border: "1px solid #eaeaea", padding:"0px 5px" }
-        const shoot = (this.props.shoot && !this.props.winner) ? (
+        let input_style= { height: "38px", width: "30%", border: "1px solid #eaeaea", padding:"0px 5px" };
+        let shoot = (this.props.shoot && !this.props.winner) ? (
             <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea"}}>
                 <input type={"number"} value={this.state.shoot_score} min={0} max={this.props.round_length} onChange={(e) => { this.setState({ shoot_score: Math.min(this.props.round_length,e.target.value) }) }} style={input_style}/>
                 <span style={{ margin: "0px 5px" }} > / </span>
@@ -68,6 +68,16 @@ export default class PlayerCard extends React.Component {
             </div>
         ) : undefined;
 
+        // single shoot (one on one)
+        if (isDefined(this.props.singleShot)) {
+            input_style.width = "100%";
+            shoot = (
+               <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", paddingBottom: "10px", marginBottom: "10px", borderTop: "1px solid #eaeaea", borderBottom: "1px solid #eaeaea", width: "100%"}}>
+                   <input type={"number"} value={this.props.singleShot} min={0} onChange={this.props.onChange} style={input_style}/>
+               </div>
+            );
+        }
+
         // place
         const place = (this.props.place) ? "Place: " + this.props.place + nth(this.props.place) : "";
 
@@ -75,7 +85,7 @@ export default class PlayerCard extends React.Component {
         const round_length = this.props.round_length;
         const total_made = (!this.props.rounds || !this.props.rounds.length) ? 0 : this.props.rounds.reduce((a, b) => a + b);
         const total_attempt = (!this.props.rounds || !this.props.rounds.length) ? 0 : this.props.rounds.length * round_length;
-        const rounds = (this.props.rounds) ? (
+        let rounds = (this.props.rounds) ? (
             <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
                 { <div style={{ marginBottom: "5px", fontWeight: "bold" }}>
                     Total: {total_made}/{total_attempt} - { ( (total_made/total_attempt)* 100).toFixed(2) + "%" }
@@ -91,6 +101,25 @@ export default class PlayerCard extends React.Component {
 
             </div>
         ) : undefined;
+
+        // Single Rounds (one oo One)
+        if (this.props.singleRounds){
+            rounds = (
+                <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
+                    { <div style={{ marginBottom: "5px", fontWeight: "bold" }}>
+                        Total: {this.props.singleRounds.reduce((a, b) => a + b, 0) } Points
+                    </div> }
+                    { this.props.singleRounds.map(function(iter,idx) {
+                        return (
+                            <div key={`round-` + idx}>
+                                <span>{iter} Points</span>
+                            </div>
+                        );
+                    }) }
+
+                </div>
+            );
+        }
 
         // lost / win
         const lost = (this.props.lost) ? "Loser" : "";
