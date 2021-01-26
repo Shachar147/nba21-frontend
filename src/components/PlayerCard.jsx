@@ -1,6 +1,6 @@
 import React from "react";
 import {LOST_X_IMAGE, PLAYER_NO_PICTURE} from "../helpers/consts";
-import {isDefined, nth} from "../helpers/utils";
+import {isDefined, nth, toPascalCase} from "../helpers/utils";
 
 export default class PlayerCard extends React.Component {
 
@@ -46,10 +46,15 @@ export default class PlayerCard extends React.Component {
     }
 
     render() {
-        const details = [];
+        let details = [];
         if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
         if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
         if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs");
+
+        // team
+        if (this.props.details){
+            details = this.props.details;
+        }
 
         const picture = this.state.picture;
 
@@ -126,6 +131,10 @@ export default class PlayerCard extends React.Component {
         const lostImage = (this.props.lost) ? (<img className="lost-image" alt={"lost"} src={LOST_X_IMAGE} />) : undefined;
         const winner = (this.props.winner) ? "Winner!" : "";
 
+        let position = <div />
+        if (this.props.position) position = `Position: ${this.props.position}`;
+        if (this.props.team_division) position = `Division: ${this.props.team_division}`;
+
         return (
             <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>
                 {lostImage}
@@ -149,7 +158,7 @@ export default class PlayerCard extends React.Component {
                     <span className="right floated">Joined in {debut_year}</span>
                     <span>
                     <i className="user icon"/>
-                    Position: {this.props.position}
+                        {position}
                 </span>
                 </div>
             </div>

@@ -11,6 +11,7 @@ import RegisterPage from "./pages/RegisterPage";
 import axios from "axios";
 import {getToken} from "./helpers/auth";
 import OneOnOne from "./pages/OneOnOne/OneOnOne";
+import Random from "./pages/Random/Random";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/logout" component={LogoutPage} />
                     <PrivateRoute path ="/three-points/" component={Settings} />
                     <PrivateRoute path ="/1on1/" component={OneOnOne} />
+                    <PrivateRoute path ="/random/" component={Random} />
                     <PrivateRoute path ="/" component={MainPage} />
                 </Switch>
             </BrowserRouter>
