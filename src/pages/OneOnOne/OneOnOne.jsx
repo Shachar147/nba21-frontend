@@ -144,7 +144,7 @@ export default class OneOnOne extends React.Component {
                         singleRounds={self.state.scores_history[player.name]}
                         onChange={(e) => {
                             let scores = self.state.scores;
-                            scores[player.name] = e.target.value;
+                            scores[player.name] = Math.max(0,e.target.value);
                             self.setState({ scores });
                         }}
                         lost={(self.state.saved && self.state.loser === player.name)}

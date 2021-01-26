@@ -5,6 +5,7 @@ import {apiGet} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
+import {PLAYER_NO_PICTURE} from "../../helpers/consts";
 
 export default class Random extends React.Component {
 
@@ -124,10 +125,14 @@ export default class Random extends React.Component {
 
         const self = this;
 
+        const maxPlayers = Math.max(this.state.team1.players.length, this.state.team2.players.length);
+        const minHeight = maxPlayers * 51;
+
         const blocks =
             [this.state.team1, this.state.team2].map(function(team, idx){
 
-                let details = ["Players:"];
+                let details_title = "<div style='border-top:1px solid #ccc; width:100%; margin: 10px 0px; padding-top: 10px;'>Players:</div>";
+                let details = [];
 
                 team.players.forEach(function(player){
                     let rate = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
@@ -140,9 +145,16 @@ export default class Random extends React.Component {
                     let rate2 = (b["rate"] === "N/A") ? 0 : Number(b["rate"]);
 
                     return rate2 - rate1;
-
-                }).map(x => `> ${x.name} <span style='opacity:0.6'>(2k rating: ${x.rate})</span>`);
+                }).map((x) => {
+                    return (
+                        `<div>
+                            <img class="ui avatar image" src=${x.picture} onError="this.src='${PLAYER_NO_PICTURE}';" style="width: 39px;" />
+                            <span>${x.name} <span style='opacity:0.6'>(2k rating: ${x.rate})</span></span>
+                        </div>`
+                    )
+                });
                 details = details.concat(...arr);
+                // }).map(x => `> ${x.name} <span style='opacity:0.6'>(2k rating: ${x.rate})</span>`);
 
                 return <PlayerCard
                     key={"team" + "-" + idx}
@@ -150,6 +162,7 @@ export default class Random extends React.Component {
                     team={team.conference}
                     team_conference={team.conference}
                     team_division={team.division}
+                    details_title={details_title}
                     details={details}
                     // weight_kgs={player.weight_kgs}
                     // height_meters={player.height_meters}
@@ -157,12 +170,13 @@ export default class Random extends React.Component {
                     picture={team.logo}
                     // percents={player['3pt_percents']}
                     className={"in-game"}
-                    style={{ cursor: "default", textAlign: "left" }}
+                    style={{ cursor: "default", textAlign: "left", width: 400 }}
+                    descriptionStyle={{ minHeight: minHeight }}
                     singleShot={self.state.scores[team.name]}
                     singleRounds={self.state.scores_history[team.name]}
                     onChange={(e) => {
                         let scores = self.state.scores;
-                        scores[team.name] = e.target.value;
+                        scores[team.name] = Math.max(0,e.target.value);
                         self.setState({ scores });
                     }}
                     lost={(self.state.saved && self.state.loser === team.name)}

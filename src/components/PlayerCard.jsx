@@ -59,7 +59,7 @@ export default class PlayerCard extends React.Component {
 
         const picture = this.state.picture;
 
-        const debut_year = this.props.debut_year || "N/A";
+        const debut_year = (this.props.debut_year !== undefined) ? `Joined in ${this.props.debut_year}` : "";
 
         // shoot
         let input_style= { height: "38px", width: "30%", border: "1px solid #eaeaea", padding:"0px 5px" };
@@ -144,6 +144,8 @@ export default class PlayerCard extends React.Component {
         //         </span>
         //     );
 
+        let title = (this.props.details_title) ? this.props.details_title : "";
+
         return (
             <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>
                 {lostImage}
@@ -153,18 +155,18 @@ export default class PlayerCard extends React.Component {
                 <div className="content">
                     <div className="header">{this.props.name}</div>
                     <div className="meta">
-                        <a href="/">
+                        <a disabled={true} style={{ cursor: "default" }}>
                             {this.props.team}
                         </a>
                     </div>
-                    <div className="description" dangerouslySetInnerHTML={{__html: details.join("<br/>")}}/>
+                    <div className="description" style={this.props.descriptionStyle} dangerouslySetInnerHTML={{__html: title + details.join("<br/>")}}/>
                     {rounds}
                     {shoot}
                     {lost}
                     {winner}
                 </div>
                 <div className="extra content">
-                    <span className="right floated">Joined in {debut_year}</span>
+                    <span className="right floated">{debut_year}</span>
                     <span>
                     <i className="user icon"/>
                         {position}
