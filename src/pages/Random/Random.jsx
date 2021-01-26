@@ -167,6 +167,8 @@ export default class Random extends React.Component {
                     }}
                     lost={(self.state.saved && self.state.loser === team.name)}
                     winner={(self.state.saved && self.state.winner === team.name)}
+                    imageStyle={{ backgroundColor: "#F2F2F2" }}
+                    imgStyle={{ width: 200, margin: "auto", padding: "20px" }}
                 />
             })
 
@@ -196,9 +198,9 @@ export default class Random extends React.Component {
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 150, boxShadow: "unset", cursor: "default" }}>
                         <div className="ui header" style={againstStyle}>
-                            Against
+                            V.S.
                         </div>
-                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: "0px" }}>
+                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", top: "-20px" }}>
                             Save Result
                         </button>
                     </div>

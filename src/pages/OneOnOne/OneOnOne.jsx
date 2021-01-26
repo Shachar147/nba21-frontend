@@ -156,6 +156,7 @@ export default class OneOnOne extends React.Component {
             margin: 0,
             position: "absolute",
             top: "50%",
+            // top: "10px",
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "auto",
@@ -178,9 +179,9 @@ export default class OneOnOne extends React.Component {
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 150, boxShadow: "unset", cursor: "default" }}>
                         <div className="ui header" style={againstStyle}>
-                            Against
+                            V.S.
                         </div>
-                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: "0px" }}>
+                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", top: "-20px" }}>
                             Save Result
                         </button>
                     </div>

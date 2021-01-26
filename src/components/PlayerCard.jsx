@@ -147,8 +147,8 @@ export default class PlayerCard extends React.Component {
         return (
             <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>
                 {lostImage}
-                <div className="image">
-                    <img src={picture} onError={this.onError} alt={this.props.name}/>
+                <div className="image" style={this.props.imageStyle}>
+                    <img src={picture} onError={this.onError} alt={this.props.name} style={this.props.imgStyle} />
                 </div>
                 <div className="content">
                     <div className="header">{this.props.name}</div>
