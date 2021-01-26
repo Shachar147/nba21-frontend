@@ -170,7 +170,7 @@ export default class Random extends React.Component {
                     picture={team.logo}
                     // percents={player['3pt_percents']}
                     className={"in-game"}
-                    style={{ cursor: "default", textAlign: "left", width: 400 }}
+                    style={{ cursor: "default", textAlign: "left" }}
                     descriptionStyle={{ minHeight: minHeight }}
                     singleShot={self.state.scores[team.name]}
                     singleRounds={self.state.scores_history[team.name]}
@@ -195,6 +195,15 @@ export default class Random extends React.Component {
             width: "auto",
         };
 
+        // let history_rounds = 0;
+        // let teams = Object.keys(this.state.scores_history);
+        // if (teams.length > 0) {
+        //     history_rounds = this.state.scores_history[teams[0]].length;
+        //     alert(history_rounds);
+        //     if (history_rounds > 0) history_rounds *= 10;
+        // }
+        let bottom = 75;
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
@@ -214,7 +223,7 @@ export default class Random extends React.Component {
                         <div className="ui header" style={againstStyle}>
                             V.S.
                         </div>
-                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", top: "-20px" }}>
+                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: bottom }}>
                             Save Result
                         </button>
                     </div>
