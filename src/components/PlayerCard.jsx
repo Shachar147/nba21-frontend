@@ -48,6 +48,7 @@ export default class PlayerCard extends React.Component {
     render() {
         let details = [];
         if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
+        if (this.props._2k_rating) details.push(`2K Rating: ${this.props._2k_rating}`);
         if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
         if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs");
 
@@ -134,6 +135,14 @@ export default class PlayerCard extends React.Component {
         let position = <div />
         if (this.props.position) position = `Position: ${this.props.position}`;
         if (this.props.team_division) position = `Division: ${this.props.team_division}`;
+
+        // let _2k_rating = <span />;
+        // if (this.props._2k_rating)
+        //     _2k_rating = (
+        //         <span style={{ opacity: "0.6", fontWeight: "normal", marginLeft: "5px" }}>
+        //             (2k rating: {this.props._2k_rating})
+        //         </span>
+        //     );
 
         return (
             <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>

@@ -35,7 +35,7 @@ export default class Random extends React.Component {
     componentDidMount() {
         let self = this;
         apiGet(this,
-            `/team/extended`,
+            `/team`,
             function(res) {
                 let teams = res.data.data;
                 self.setState({ teams });
@@ -130,7 +130,7 @@ export default class Random extends React.Component {
                 let details = ["Players:"];
 
                 team.players.forEach(function(player){
-                    let rate = (player["extended"] && player["extended"]["2k_rating"]) ? Number(player["extended"]["2k_rating"]) : "N/A";
+                    let rate = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
                     player["rate"] = rate;
                 })
 

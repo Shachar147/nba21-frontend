@@ -126,6 +126,7 @@ export default class OneOnOne extends React.Component {
 
         const blocks =
         [this.state.player1, this.state.player2].map(function(player, idx){
+            const _2k_rating = player['_2k_rating'] || 'N/A';
             return <PlayerCard
                         key={"player" + "-" + idx}
                         name={player.name}
@@ -135,6 +136,7 @@ export default class OneOnOne extends React.Component {
                         height_meters={player.height_meters}
                         debut_year={player.debut_year}
                         picture={player.picture}
+                        _2k_rating={_2k_rating}
                         percents={player['3pt_percents']}
                         className={"in-game"}
                         style={{ cursor: "default", textAlign: "left" }}

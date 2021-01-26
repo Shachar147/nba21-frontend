@@ -384,19 +384,25 @@ export default class Settings extends React.Component {
                 </div>
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
-                    { players.map((player,idx) => <PlayerCard
-                        key={idx}
-                        name={player.name}
-                        team={player.team.name}
-                        position={player.position}
-                        weight_kgs={player.weight_kgs}
-                        height_meters={player.height_meters}
-                        debut_year={player.debut_year}
-                        picture={player.picture}
-                        percents={player['3pt_percents']}
-                        style={ isDefined(player.selected) ? this.state.styles[player.selected] : { opacity: 0.6 } }
-                        onClick={() => this.toggleState(player)}
-                    />)}
+                    { players.map(function(player,idx) {
+                        const _2k_rating = player['_2k_rating'] || 'N/A';
+
+                        return (<PlayerCard
+                                key={idx}
+                                name={player.name}
+                                team={player.team.name}
+                                position={player.position}
+                                _2k_rating={_2k_rating}
+                                weight_kgs={player.weight_kgs}
+                                height_meters={player.height_meters}
+                                debut_year={player.debut_year}
+                                picture={player.picture}
+                                percents={player['3pt_percents']}
+                                style={isDefined(player.selected) ? this.state.styles[player.selected] : {opacity: 0.6}}
+                                onClick={() => this.toggleState(player)}
+                            />
+                        );
+                    })}
                     {(players.length === 0) ? <div style={{ marginTop: "20px"}}>No Results Found for "{this.state.keyword}"</div> : "" }
                 </div>
             </div>

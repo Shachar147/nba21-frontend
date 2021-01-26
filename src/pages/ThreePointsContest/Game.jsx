@@ -269,6 +269,7 @@ export default class Game extends React.Component {
         const teams_blocks = [];
         for (let team_idx=0; team_idx < percents.length; team_idx++) {
             const team = percents[team_idx];
+
             teams_blocks.push(
                 <div key={"team_block_" + team_idx}>
                     <div className={"ui link cards centered"} style={{marginTop: "5px", marginBottom: "5px"}}>
@@ -277,26 +278,33 @@ export default class Game extends React.Component {
                         </div>
                     </div>
                     <div className="ui link cards centered" style={{margin: "auto"}}>
-                        {teams[team_idx].map((player, idx) => <PlayerCard
-                            key={"team" + team_idx + "-" + idx}
-                            name={player.name}
-                            team={player.team.name}
-                            position={player.position}
-                            // weight_kgs={player.weight_kgs}
-                            // height_meters={player.height_meters}
-                            shoot={player.name === shoot_player.name}
-                            style={(player.name !== shoot_player.name) ? {opacity: 0.6, cursor: "default" } : undefined}
-                            debut_year={player.debut_year}
-                            picture={player.picture}
-                            percents={player['3pt_percents']}
-                            round_length={round_length}
-                            onScore={this.onScore}
-                            className={"in-game"}
-                            rounds={scores[player.name]}
-                            lost={lost[player.name]}
-                            winner={this.state.winner === player.name}
-                            place={this.state.leaderboard.indexOf(player.name)+1}
-                        />)}
+                        {teams[team_idx].map(function(player, idx){
+                            const _2k_rating = player['_2k_rating'] || 'N/A';
+
+                            return (
+                                <PlayerCard
+                                    key={"team" + team_idx + "-" + idx}
+                                    name={player.name}
+                                    team={player.team.name}
+                                    position={player.position}
+                                    // weight_kgs={player.weight_kgs}
+                                    // height_meters={player.height_meters}
+                                    _2k_rating={_2k_rating}
+                                    shoot={player.name === shoot_player.name}
+                                    style={(player.name !== shoot_player.name) ? {opacity: 0.6, cursor: "default" } : undefined}
+                                    debut_year={player.debut_year}
+                                    picture={player.picture}
+                                    percents={player['3pt_percents']}
+                                    round_length={round_length}
+                                    onScore={this.onScore}
+                                    className={"in-game"}
+                                    rounds={scores[player.name]}
+                                    lost={lost[player.name]}
+                                    winner={this.state.winner === player.name}
+                                    place={this.state.leaderboard.indexOf(player.name)+1}
+                                />
+                            );
+                        })}
                     </div>
                 </div>
             );
