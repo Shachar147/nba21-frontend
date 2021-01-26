@@ -35,7 +35,7 @@ export default class Random extends React.Component {
     componentDidMount() {
         let self = this;
         apiGet(this,
-            `/team`,
+            `/team/extended`,
             function(res) {
                 let teams = res.data.data;
                 self.setState({ teams });
@@ -127,8 +127,21 @@ export default class Random extends React.Component {
         const blocks =
             [this.state.team1, this.state.team2].map(function(team, idx){
 
-                let details = ["Players:"]
-                const arr = team.players.map(x => "> " + x.name);
+                let details = ["Players:"];
+
+                team.players.forEach(function(player){
+                    let rate = (player["extended"] && player["extended"]["2k_rating"]) ? Number(player["extended"]["2k_rating"]) : "N/A";
+                    player["rate"] = rate;
+                })
+
+                const arr = team.players.sort((a,b) => {
+
+                    let rate1 = (a["rate"] === "N/A") ? 0 : Number(a["rate"]);
+                    let rate2 = (b["rate"] === "N/A") ? 0 : Number(b["rate"]);
+
+                    return rate2 - rate1;
+
+                }).map(x => `> ${x.name} <span style='opacity:0.6'>(2k rating: ${x.rate})</span>`);
                 details = details.concat(...arr);
 
                 return <PlayerCard
