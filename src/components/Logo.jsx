@@ -1,5 +1,6 @@
 import React from "react";
 import {LOGO_IMAGE} from "../helpers/consts";
+import {Link} from "react-router-dom";
 
 export default class Logo extends React.Component {
 
@@ -15,7 +16,9 @@ export default class Logo extends React.Component {
 
         return (
             <div>
-                <img src={LOGO_IMAGE} style={{ width: "80%", maxWidth: maxWidth }} />
+                <Link to={"/"}>
+                    <img src={LOGO_IMAGE} style={{ width: "80%", maxWidth: maxWidth }} />
+                </Link>
             </div>
         );
     }

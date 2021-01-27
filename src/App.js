@@ -19,7 +19,7 @@ function App() {
     axios.defaults.headers.Authorization = `Bearer ${getToken()}`;
 
     return (
-        <div className={"wrapper"} style={{ backgroundColor: APP_BACKGROUND_COLOR }}>
+        <div className={"wrapper"} style={{ backgroundColor: APP_BACKGROUND_COLOR, height: '100hv' }}>
             <BrowserRouter>
                 <Switch>
                     <Route path="/login" component={LoginPage} />

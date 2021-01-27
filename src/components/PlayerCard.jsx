@@ -146,11 +146,19 @@ export default class PlayerCard extends React.Component {
 
         let title = (this.props.details_title) ? this.props.details_title : "";
 
+        let replace = (this.props.onReplace) ? (
+            // <button className={"ui button basic blue tiny"} onClick={this.props.onReplace} style={{ position: "absolute", bottom: "10px", right: "5px" }}>
+            //     Replace
+            // </button>
+            <a onClick={this.props.onReplace} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
+        ) : "";
+
         return (
             <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>
                 {lostImage}
                 <div className="image" style={this.props.imageStyle}>
                     <img src={picture} onError={this.onError} alt={this.props.name} style={this.props.imgStyle} />
+                    {replace}
                 </div>
                 <div className="content">
                     <div className="header">{this.props.name}</div>

@@ -31,6 +31,7 @@ export default class Random extends React.Component {
         this.restart = this.restart.bind(this);
         this.init = this.init.bind(this);
         this.saveResult = this.saveResult.bind(this);
+        this.replaceOne = this.replaceOne.bind(this);
     }
 
     componentDidMount() {
@@ -60,6 +61,27 @@ export default class Random extends React.Component {
         let scores_history = {};
         const team1 = getRandomElement(this.state.teams);
         const team2 = getRandomElement(this.state.teams);
+        scores[team1.name] = 0;
+        scores[team2.name] = 0;
+        scores_history[team1.name] = [];
+        scores_history[team2.name] = [];
+        this.setState({
+            team1, team2, scores, saved: false, winner: "", loser: "", scores_history
+        })
+    }
+
+    replaceOne(idx){
+        let scores = {};
+        let scores_history = {};
+        let team1 = this.state.team1;
+        let team2 = this.state.team2;
+
+        if (idx === 0){
+            team1 = getRandomElement(this.state.teams);
+        } else if (idx === 1){
+            team2 = getRandomElement(this.state.teams);
+        }
+
         scores[team1.name] = 0;
         scores[team2.name] = 0;
         scores_history[team1.name] = [];
@@ -183,6 +205,9 @@ export default class Random extends React.Component {
                     winner={(self.state.saved && self.state.winner === team.name)}
                     imageStyle={{ backgroundColor: "#F2F2F2" }}
                     imgStyle={{ width: 200, margin: "auto", padding: "20px" }}
+                    onReplace={(e) => {
+                        self.replaceOne(idx);
+                    }}
                 />
             })
 
