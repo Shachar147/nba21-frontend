@@ -337,6 +337,8 @@ export default class Settings extends React.Component {
             );
         }
 
+        const self = this;
+
         return (
             <div style={{ paddingTop: "20px" }}>
 
@@ -398,8 +400,10 @@ export default class Settings extends React.Component {
                                 debut_year={player.debut_year}
                                 picture={player.picture}
                                 percents={player['3pt_percents']}
-                                style={isDefined(player.selected) ? this.state.styles[player.selected] : {opacity: 0.6}}
-                                onClick={() => this.toggleState(player)}
+                                style={isDefined(player.selected) ? self.state.styles[player.selected] : {opacity: 0.6}}
+                                onClick={() => {
+                                    self.toggleState(player);
+                                }}
                             />
                         );
                     })}
