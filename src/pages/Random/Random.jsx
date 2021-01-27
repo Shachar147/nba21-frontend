@@ -149,11 +149,11 @@ export default class Random extends React.Component {
                     return (
                         `<div>
                             <img class="ui avatar image" src=${x.picture} onError="this.src='${PLAYER_NO_PICTURE}';" style="width: 39px;" />
-                            <span>${x.name} <span style='opacity:0.6'>(2k rating: ${x.rate})</span></span>
+                            <span>${x.name} <span style='opacity:0.6; display:block; padding-left: 45px;top: -8px;position: relative;'>2K Rating: ${x.rate}</span></span>
                         </div>`
                     )
                 });
-                details = details.concat(...arr);
+                details = [details.concat(...arr).join("")];
                 // }).map(x => `> ${x.name} <span style='opacity:0.6'>(2k rating: ${x.rate})</span>`);
 
                 return <PlayerCard
@@ -200,7 +200,7 @@ export default class Random extends React.Component {
         if (teams.length > 0) {
             let team1 = this.state.scores_history[teams[0]];
             let team2 = this.state.scores_history[teams[1]];
-            if (team1[team1.length-1] !== team2[team2.length-1]){
+            if (team1.length > 0 && team2.length > 0 && team1[team1.length-1] !== team2[team2.length-1]){
                 bottom += 21;
             }
         }

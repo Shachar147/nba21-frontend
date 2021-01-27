@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ui.basic.button, .ui.basic.buttons .button {
+  background-color: white !important;
+}

@@ -168,7 +168,7 @@ export default class OneOnOne extends React.Component {
         if (teams.length > 0) {
             let team1 = this.state.scores_history[teams[0]];
             let team2 = this.state.scores_history[teams[1]];
-            if (team1[team1.length-1] !== team2[team2.length-1]){
+            if (team1.length > 0 && team2.length > 0 && team1[team1.length-1] !== team2[team2.length-1]){
                 bottom += 21;
             }
         }
