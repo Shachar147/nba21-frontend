@@ -1,4 +1,5 @@
 import React from "react";
+import {LOGO_IMAGE} from "../helpers/consts";
 
 export default class Logo extends React.Component {
 
@@ -9,9 +10,12 @@ export default class Logo extends React.Component {
     }
 
     render() {
+
+        const maxWidth = this.props.maxWidth || 400;
+
         return (
             <div>
-                <img src={"/logo-new.png"} style={{ width: "80%", maxWidth: "800px" }} />
+                <img src={LOGO_IMAGE} style={{ width: "80%", maxWidth: maxWidth }} />
             </div>
         );
     }

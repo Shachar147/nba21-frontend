@@ -12,13 +12,14 @@ import axios from "axios";
 import {getToken} from "./helpers/auth";
 import OneOnOne from "./pages/OneOnOne/OneOnOne";
 import Random from "./pages/Random/Random";
+import {APP_BACKGROUND_COLOR} from "./helpers/consts";
 
 function App() {
 
     axios.defaults.headers.Authorization = `Bearer ${getToken()}`;
 
     return (
-        <div className={"wrapper"}>
+        <div className={"wrapper"} style={{ backgroundColor: APP_BACKGROUND_COLOR }}>
             <BrowserRouter>
                 <Switch>
                     <Route path="/login" component={LoginPage} />

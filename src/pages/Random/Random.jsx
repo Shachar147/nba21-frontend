@@ -5,7 +5,7 @@ import {apiGet} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
-import {PLAYER_NO_PICTURE} from "../../helpers/consts";
+import {APP_BACKGROUND_COLOR, PLAYER_NO_PICTURE} from "../../helpers/consts";
 
 export default class Random extends React.Component {
 
@@ -195,21 +195,22 @@ export default class Random extends React.Component {
             width: "auto",
         };
 
-        // let history_rounds = 0;
-        // let teams = Object.keys(this.state.scores_history);
-        // if (teams.length > 0) {
-        //     history_rounds = this.state.scores_history[teams[0]].length;
-        //     alert(history_rounds);
-        //     if (history_rounds > 0) history_rounds *= 10;
-        // }
         let bottom = 75;
+        let teams = Object.keys(this.state.scores_history);
+        if (teams.length > 0) {
+            let team1 = this.state.scores_history[teams[0]];
+            let team2 = this.state.scores_history[teams[1]];
+            if (team1[team1.length-1] !== team2[team2.length-1]){
+                bottom += 21;
+            }
+        }
 
         return (
 
             <div style={{ paddingTop: "20px" }}>
                 <Header />
 
-                <div className="ui link cards centered" style={{margin: "auto", marginBottom:"20px"}}>
+                <div className="ui link cards centered" style={{margin: "auto", marginBottom:"5px"}}>
                     <button className={"ui button basic blue"} onClick={this.restart}>
                         Restart Game
                     </button>
@@ -219,12 +220,12 @@ export default class Random extends React.Component {
                 </div>
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
                     {blocks[0]}
-                    <div className={"card in-game"} style={{ border:0, width: 150, boxShadow: "unset", cursor: "default" }}>
-                        <div className="ui header" style={againstStyle}>
-                            V.S.
-                        </div>
+                    <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
+                        {/*<div className="ui header" style={againstStyle}>*/}
+                        {/*    V.S.*/}
+                        {/*</div>*/}
                         <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: bottom }}>
-                            Save Result
+                            Save
                         </button>
                     </div>
                     {blocks[1]}

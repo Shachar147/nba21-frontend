@@ -5,6 +5,8 @@ export const ROUND_DEFAULT_LENGTH = 3;
 export const RANDOM_PLAYER_PICTURE = '/nopic.png';
 export const PLAYER_NO_PICTURE = '/nopic.png';
 export const LOST_X_IMAGE = '/x-png-icon-8.jpg';
+export const APP_BACKGROUND_COLOR = '#FAFAFB';
+export const LOGO_IMAGE = '/logo-new.png';
 
 export const COMPUTER_PLAYER_PICTURE = '/computer.png';
 export const DEFAULT_COMPUTER_LEVEL = 'Real Life'; // 'Normal';

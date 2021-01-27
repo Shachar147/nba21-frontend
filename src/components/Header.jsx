@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Logo from "./Logo";
 
 export default class Header extends React.Component {
 
@@ -18,6 +19,15 @@ export default class Header extends React.Component {
                     <Link to={"/logout"}>Logout</Link>
                 </div>
                 <br/><br/>
+                {
+                    (this.props.nologo) ?
+                        "" :
+                        (
+                            <div className={"ui header cards centered"} style={{ width: "100%", backgroundColor: "#FAFAFB" }} >
+                                <Logo />
+                            </div>
+                        )
+                }
             </div>
         );
     }
