@@ -150,7 +150,7 @@ export default class PlayerCard extends React.Component {
             // <button className={"ui button basic blue tiny"} onClick={this.props.onReplace} style={{ position: "absolute", bottom: "10px", right: "5px" }}>
             //     Replace
             // </button>
-            <a onClick={this.props.onReplace} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
+            <a onClick={this.props.onReplace} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
         ) : "";
 
         return (

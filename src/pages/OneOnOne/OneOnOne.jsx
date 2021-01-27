@@ -31,6 +31,7 @@ export default class OneOnOne extends React.Component {
         this.restart = this.restart.bind(this);
         this.init = this.init.bind(this);
         this.saveResult = this.saveResult.bind(this);
+        this.replaceOne = this.replaceOne.bind(this);
     }
 
     componentDidMount() {
@@ -60,6 +61,27 @@ export default class OneOnOne extends React.Component {
         let scores_history = {};
         const player1 = getRandomElement(this.state.players);
         const player2 = getRandomElement(this.state.players);
+        scores[player1.name] = 0;
+        scores[player2.name] = 0;
+        scores_history[player1.name] = [];
+        scores_history[player2.name] = [];
+        this.setState({
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history
+        })
+    }
+
+    replaceOne(idx){
+        let scores = {};
+        let scores_history = {};
+        let player1 = this.state.player1;
+        let player2 = this.state.player2;
+
+        if (idx === 0){
+            player1 = getRandomElement(this.state.players);
+        } else if (idx === 1){
+            player2 = getRandomElement(this.state.players);
+        }
+
         scores[player1.name] = 0;
         scores[player2.name] = 0;
         scores_history[player1.name] = [];
@@ -150,6 +172,9 @@ export default class OneOnOne extends React.Component {
                         }}
                         lost={(self.state.saved && self.state.loser === player.name)}
                         winner={(self.state.saved && self.state.winner === player.name)}
+                        onReplace={(e) => {
+                            self.replaceOne(idx);
+                        }}
                     />
         })
 
