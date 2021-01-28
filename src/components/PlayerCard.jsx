@@ -78,7 +78,7 @@ export default class PlayerCard extends React.Component {
         if (isDefined(this.props.singleShot)) {
             input_style.width = "100%";
             shoot = (
-               <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", paddingBottom: "10px", marginBottom: "10px", borderTop: "1px solid #eaeaea", borderBottom: "1px solid #eaeaea", width: "100%"}}>
+               <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", paddingBottom: "10px", marginBottom: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
                    <input type={"number"} value={this.props.singleShot} min={0} onChange={this.props.onChange} style={input_style}/>
                </div>
             );
@@ -173,7 +173,7 @@ export default class PlayerCard extends React.Component {
                     {lost}
                     {winner}
                 </div>
-                <div className="extra content">
+                <div className="extra content" style={this.props.extraContentStyle}>
                     <span className="right floated">{debut_year}</span>
                     <span>
                     <i className="user icon"/>

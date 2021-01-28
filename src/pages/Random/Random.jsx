@@ -153,7 +153,7 @@ export default class Random extends React.Component {
         const blocks =
             [this.state.team1, this.state.team2].map(function(team, idx){
 
-                let details_title = "<div style='border-top:1px solid #ccc; width:100%; margin: 10px 0px; padding-top: 10px;'>Players:</div>";
+                let details_title = "<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>Players:</div>";
                 let details = [];
 
                 team.players.forEach(function(player){
@@ -181,9 +181,9 @@ export default class Random extends React.Component {
                 return <PlayerCard
                     key={"team" + "-" + idx}
                     name={team.name}
-                    team={team.conference}
-                    team_conference={team.conference}
-                    team_division={team.division}
+                    team={team.conference + ' - ' + team.division}
+                    // team_conference={team.conference}
+                    // team_division={team.division}
                     details_title={details_title}
                     details={details}
                     // weight_kgs={player.weight_kgs}
@@ -205,6 +205,7 @@ export default class Random extends React.Component {
                     winner={(self.state.saved && self.state.winner === team.name)}
                     imageStyle={{ backgroundColor: "#F2F2F2" }}
                     imgStyle={{ width: 200, margin: "auto", padding: "20px" }}
+                    extraContentStyle={{ display: "none" }}
                     onReplace={(e) => {
                         self.replaceOne(idx);
                     }}
@@ -220,7 +221,7 @@ export default class Random extends React.Component {
             width: "auto",
         };
 
-        let bottom = 75;
+        let bottom = 35;
         let teams = Object.keys(this.state.scores_history);
         if (teams.length > 0) {
             let team1 = this.state.scores_history[teams[0]];

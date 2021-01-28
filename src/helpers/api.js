@@ -15,3 +15,15 @@ export function apiGet(self, url, onSuccess, onError, onFinish){
             onFinish();
         });
 }
+
+export function apiPost(self, url, data, onSuccess, onError, onFinish){
+    axios.post(getServerAddress() + url, data)
+        .then(res => {
+            onSuccess(res);
+        }).catch(function (error) {
+        onError(error);
+    })
+        .then(function () {
+            onFinish();
+        });
+}
