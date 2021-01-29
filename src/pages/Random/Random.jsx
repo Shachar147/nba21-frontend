@@ -60,7 +60,15 @@ export default class Random extends React.Component {
         let scores = {};
         let scores_history = {};
         const team1 = getRandomElement(this.state.teams);
-        const team2 = getRandomElement(this.state.teams);
+        let team2 = getRandomElement(this.state.teams);
+
+        // prevent same team
+        if (this.state.teams.length >= 2) {
+            while (team1.name === team2.name) {
+                team2 = getRandomElement(this.state.teams);
+            }
+        }
+
         scores[team1.name] = 0;
         scores[team2.name] = 0;
         scores_history[team1.name] = [];
@@ -78,8 +86,22 @@ export default class Random extends React.Component {
 
         if (idx === 0){
             team1 = getRandomElement(this.state.teams);
+
+            // prevent same team
+            if (this.state.teams.length >= 2) {
+                while (team1.name === team2.name) {
+                    team1 = getRandomElement(this.state.teams);
+                }
+            }
         } else if (idx === 1){
             team2 = getRandomElement(this.state.teams);
+
+            // prevent same team
+            if (this.state.teams.length >= 2) {
+                while (team1.name === team2.name) {
+                    team2 = getRandomElement(this.state.teams);
+                }
+            }
         }
 
         scores[team1.name] = 0;
