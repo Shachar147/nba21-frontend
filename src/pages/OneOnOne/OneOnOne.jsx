@@ -42,9 +42,9 @@ export default class OneOnOne extends React.Component {
     componentDidMount() {
         let self = this;
         apiGet(this,
-            // `/player/popular`,
+            `/player/popular`,
             // `/player/popular?names=James Harden,Stephen Curry,LeBron James,Klay Thompson,Tristan Thompson,Kevin Durant`,
-            `/player/popular?names=Kevin Durant,James Harden`,
+            // `/player/popular?names=Kevin Durant,James Harden`,
             function(res) {
                 let players = res.data;
                 self.setState({ players });
