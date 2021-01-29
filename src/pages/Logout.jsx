@@ -13,7 +13,6 @@ export default class LogoutPage extends React.Component {
     }
 
     render() {
-        // setToken(undefined);
         return <Redirect to="/login" />;
     }
 }

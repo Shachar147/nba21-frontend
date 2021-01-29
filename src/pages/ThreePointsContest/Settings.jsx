@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import PlayerCard from '../../components/PlayerCard';
 import SearchInput from '../../components/SearchInput';
 import SelectedPlayers from "../../components/SelectedPlayers";
@@ -14,11 +13,9 @@ import {
     TEAM1_COLOR, TEAM2_COLOR
 } from "../../helpers/consts";
 import {deepClone, isDefined} from "../../helpers/utils";
-import {getServerAddress} from "../../config/config";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
-import {getToken} from "../../helpers/auth";
-import Cookies from 'js-cookie';
+
 import Header from "../../components/Header";
 import {apiGet} from "../../helpers/api";
 
@@ -71,7 +68,6 @@ export default class Settings extends React.Component {
 
     componentDidMount() {
 
-        // let req_error = undefined;
         let self = this;
         apiGet(this,
             `/player/3pts`,
@@ -91,26 +87,6 @@ export default class Settings extends React.Component {
                 self.setState({ loaded: true });
             }
         );
-
-        // axios.get(getServerAddress() + `/player/3pts`,{
-        //     headers: {
-        //         'Access-Control-Allow-Origin': '*',
-        //     }})
-        //     .then(res => {
-        //         let players = res.data;
-        //         players = players.sort(function(a,b) { return parseFloat(b['3pt_percents'].replace('%','')) - parseFloat(a['3pt_percents'].replace('%','')); })
-        //         this.setState({ players });
-        //     }).catch(function (error) {
-        //         // Request made and server responded
-        //         console.log(error);
-        //         req_error = error.message;
-        //         if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
-        //         if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-        //     })
-        //     .then(function () {
-        //         // console.log("finished");
-        //         self.setState({ loaded: true, error: req_error })
-        //     });
     }
 
     toggleState (player){
@@ -233,7 +209,7 @@ export default class Settings extends React.Component {
 
     onAddComputer(idx) {
 
-        const computers = this.state.computers;
+        const { computers } = this.state;
 
         computers[idx].push({
             name: "Computer Player " + parseInt(idx+1) + ' - ' + parseInt(computers[idx].length+1),
@@ -247,7 +223,7 @@ export default class Settings extends React.Component {
     }
 
     onRemoveRandom(name) {
-        let randoms = this.state.randoms;
+        let { randoms } = this.state;
 
         let team_idx;
 
@@ -269,7 +245,7 @@ export default class Settings extends React.Component {
     }
 
     onRemoveComputer(name){
-        let computers = this.state.computers;
+        let { computers } = this.state;
 
         let team_idx;
 
@@ -341,10 +317,7 @@ export default class Settings extends React.Component {
 
         return (
             <div style={{ paddingTop: "20px" }}>
-
                 <Header />
-
-                {/*{(this.state.loaded && this.state.error) ? <ErrorBox message={uiError(this.state.error)} title={"Error Loading Players"} style={{ margin: "10px 0px", marginTop: "0px" }} /> : "" }*/}
 
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"}

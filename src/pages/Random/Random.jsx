@@ -204,15 +204,9 @@ export default class Random extends React.Component {
                     key={"team" + "-" + idx}
                     name={team.name}
                     team={team.conference + ' - ' + team.division}
-                    // team_conference={team.conference}
-                    // team_division={team.division}
                     details_title={details_title}
                     details={details}
-                    // weight_kgs={player.weight_kgs}
-                    // height_meters={player.height_meters}
-                    // debut_year={player.debut_year}
                     picture={team.logo}
-                    // percents={player['3pt_percents']}
                     className={"in-game"}
                     style={{ cursor: "default", textAlign: "left" }}
                     descriptionStyle={{ minHeight: minHeight }}
@@ -269,9 +263,6 @@ export default class Random extends React.Component {
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
-                        {/*<div className="ui header" style={againstStyle}>*/}
-                        {/*    V.S.*/}
-                        {/*</div>*/}
                         <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: bottom }}>
                             Save
                         </button>

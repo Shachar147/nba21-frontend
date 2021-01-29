@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRandomElement, isDefined, shuffle} from "../../helpers/utils";
+import {getRandomElement, isDefined} from "../../helpers/utils";
 import Header from "../../components/Header";
 import {apiGet, apiPost} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
@@ -105,8 +105,6 @@ export default class OneOnOne extends React.Component {
 
         arr.forEach((record) => {
             if ((record.player1_name === player1.name && record.player2_name === player2.name) || (record.player1_name === player2.name && record.player2_name === player1.name)) {
-
-                console.log(record);
 
                 // met each other
                 met_each_other += 1;
@@ -433,9 +431,6 @@ export default class OneOnOne extends React.Component {
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
-                        {/*<div className="ui header" style={againstStyle}>*/}
-                        {/*    V.S.*/}
-                        {/*</div>*/}
                         <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: bottom }}>
                             Save
                         </button>

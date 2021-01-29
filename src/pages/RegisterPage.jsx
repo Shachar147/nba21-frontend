@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import {getServerAddress} from "../config/config";
-import {getToken, setToken} from "../helpers/auth";
 import { Redirect } from 'react-router'
 import Logo from "../components/Logo";
 import {Link} from "react-router-dom";
@@ -89,9 +88,6 @@ export default class RegisterPage extends React.Component {
                         if (err.response.data.statusCode && [404].indexOf(err.response.data.statusCode) !== -1){
                             error = "Network Error";
                         }
-
-                        // errorField.username = true;
-                        // errorField.password = true;
                     } else {
                         error = "Network Error";
                     }

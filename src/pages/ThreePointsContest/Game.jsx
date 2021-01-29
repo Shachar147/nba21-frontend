@@ -18,7 +18,6 @@ export default class Game extends React.Component {
             lost: {},
             winner: "",
             leaderboard: [],
-
             computer_level: this.props.computer_level,
             levels: this.props.computer_levels,
             game_started: true,
@@ -36,9 +35,7 @@ export default class Game extends React.Component {
     // computer
     randNum(){
         const level = (this.state.computer_level === 'Real Life') ? (1 - (parseFloat(this.state.current_player["3pt_percents"].replace("%",""))/100)) : this.state.levels[this.state.computer_level];
-        // console.log("player - " + this.state.current_player.name + " - level - " + level);
         let y = Math.random();
-        // console.log(y);
         if(y <= level){
             y = Math.floor(y)
         }
@@ -118,29 +115,6 @@ export default class Game extends React.Component {
 
         let played_players = this.state.played_players;
 
-        // let scores = this.state.scores;
-
-        // const worst_score = played_players.reduce((min, iter) => scores[iter.name].reduce((a, b) => a + b) < min ? scores[iter.name].reduce((a, b) => a + b) : min, scores[played_players[0].name].reduce((a, b) => a + b));
-        //
-        // let lost = this.state.lost;
-        //
-        // console.log(this.state.leaderboard);
-        //
-        // played_players = shuffle(played_players);
-        // let foundLost = false;
-        // let round_players = played_players.filter(function(iter){
-        //     const total = scores[iter.name].reduce((a, b) => a + b);
-        //     if (!foundLost && total === worst_score){
-        //         // alert("lost - " + iter.name);
-        //         lost[iter.name] = true;
-        //         foundLost = true;
-        //         return false;
-        //     } else {
-        //         return true;
-        //     }
-        // });
-        // played_players = [];
-
         const leaderboard = this.state.leaderboard;
         const lost_player = leaderboard[leaderboard.length-1];
         let round_players = played_players.filter(function(iter){ return (iter.name !== lost_player) });
@@ -151,8 +125,7 @@ export default class Game extends React.Component {
         await this.setState({ played_players, round_players, lost });
 
         if (round_players.length + played_players.length === 1){
-            // alert("Game Over!!");
-
+            // game over!
             let current_player = round_players.concat(played_players).map(function(iter){ return iter })[0];
             let winner = current_player.name;
             this.setState({ current_player, winner });

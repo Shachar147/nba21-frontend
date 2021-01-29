@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import {getServerAddress} from "../config/config";
-import {getToken, setToken} from "../helpers/auth";
+import {setToken} from "../helpers/auth";
 import { Redirect } from 'react-router'
 import Logo from "../components/Logo";
 import {Link} from "react-router-dom";
@@ -84,8 +84,6 @@ export default class LoginPage extends React.Component {
             }).catch(function (err) {
                 if (err.response && err.response.data && err.response.data.message) {
                     error = "Username or Password are incorrect.";
-                    // errorField.username = true;
-                    // errorField.password = true;
                 } else {
                     error = "Network Error";
                 }
