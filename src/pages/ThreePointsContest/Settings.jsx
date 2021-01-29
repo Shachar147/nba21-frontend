@@ -338,7 +338,7 @@ export default class Settings extends React.Component {
 
                 <div className="ui link input cards centered" style={{ margin: "auto", width: "350px" }}>
                     <span style={{ lineHeight: "38px", marginRight: "10px"}} > Round Length: </span>
-                    <input type={"number"} value={this.state.round_length} min={3} max={10} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
+                    <input type={"number"} value={this.state.round_length} min={MIN_ROUND_LENGTH} max={MAX_ROUND_LENGTH} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
 
                     <div className={"ui basic buttons"} style={{ margin: "auto", marginBottom: "10px", width: "150px" }}>
                         <button className={"ui button" + (can_start ? " basic blue" : "")} disabled={!can_start} onClick={this.startGame}>
