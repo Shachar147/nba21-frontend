@@ -25,6 +25,60 @@ export default class OneOnOneStats extends React.Component {
         };
 
         this.applyFilters = this.applyFilters.bind(this);
+        this.loadRecords = this.loadRecords.bind(this);
+    }
+
+    loadRecords(){
+        const self = this;
+
+        apiGet(this,
+            `/records/one-on-one/by-player`,
+            function(res) {
+                let records = res.data.data;
+
+                let leaderboard = Object.keys(records).sort(function(a,b){
+
+                    // first sort
+                    const percent1 = parseFloat(records[b]['total_win_percents'].replace('%',''));
+                    const percent2 = parseFloat(records[a]['total_win_percents'].replace('%',''));
+
+                    // second sort
+                    const total_games1 = parseFloat(records[b]['total_games']);
+                    const total_games2 = parseFloat(records[a]['total_games']);
+
+                    // second sort
+                    const diff1 = parseFloat(records[b]['total_diff_per_game']);
+                    const diff2 = parseFloat(records[a]['total_diff_per_game']);
+
+                    // // third sort
+                    const total_knockouts1 = parseFloat(records[b]['total_knockouts']);
+                    const total_knockouts2 = parseFloat(records[a]['total_knockouts']);
+
+                    if (percent1 > percent2) return 1;
+                    else if (percent1 < percent2) return -1;
+
+                    if (diff1 > diff2) return 1;
+                    else if (diff1 < diff2) return -1;
+
+                    if (total_knockouts1 > total_knockouts2) return 1;
+                    else if (total_knockouts1 < total_knockouts2) return -1;
+
+                    return 0;
+                });
+
+                self.setState({ records, leaderboard });
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
+                self.setState({ error: req_error });
+            },
+            function() {
+                self.setState({ loaded2: true });
+            }
+        );
     }
 
     componentDidMount() {
@@ -48,50 +102,7 @@ export default class OneOnOneStats extends React.Component {
             }
         );
 
-        apiGet(this,
-            `/records/one-on-one/by-player`,
-            function(res) {
-                let records = res.data.data;
-
-                let leaderboard = Object.keys(records).sort(function(a,b){
-
-                    // first sort
-                    const percent1 = parseFloat(records[b]['total_win_percents'].replace('%',''));
-                    const percent2 = parseFloat(records[a]['total_win_percents'].replace('%',''));
-
-                    // second sort
-                    const diff1 = parseFloat(records[b]['total_diff']);
-                    const diff2 = parseFloat(records[a]['total_diff']);
-
-                    // third sort
-                    const games_count1 = parseFloat(records[b]['total_games']);
-                    const games_count2 = parseFloat(records[a]['total_games']);
-
-                    if (percent1 > percent2) return 1;
-                    else if (percent1 < percent2) return -1;
-
-                    if (diff1 > diff2) return 1;
-                    else if (diff1 < diff2) return -1;
-
-                    if (games_count1 > games_count2) return 1;
-                    else if (games_count1 < games_count2) return -1;
-
-                    return 0;
-                });
-
-                self.setState({ records, leaderboard });
-            },
-            function(error) {
-                console.log(error);
-                let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
-                if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-                self.setState({ error: req_error });
-            },
-            function() {
-                self.setState({ loaded2: true });
-            }
-        );
+        this.loadRecords();
     }
 
     merge(){
@@ -174,6 +185,25 @@ export default class OneOnOneStats extends React.Component {
             <div style={{ paddingTop: "20px" }}>
                 <Header />
 
+                <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px" }}>
+                    <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
+                        1 on 1 Stats
+                    </h2>
+                    <div style={{ color:"rgba(0,0,0,.6)" }}>
+                         Here you can see all  NBA players that played on 1on1, ordered from the one with best percentages to the worst.
+                    </div>
+                </div>
+
+                <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px" }}>
+                    <button className={"ui button basic blue"} onClick={(e) => { self.setState({ loaded2: false, merged: false }); this.loadRecords(); }}>
+                        Reload Stats
+                    </button>
+
+                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }}>
+                        <Link to={"/1on1"}>Go Back</Link>
+                    </button>
+                </div>
+
                 <SearchInput onKeyUp={this.searchPlayers.bind(this)} />
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
@@ -199,7 +229,7 @@ export default class OneOnOneStats extends React.Component {
                                 percents={player['3pt_percents']}
                                 style={isDefined(player.selected) ? self.state.styles[player.selected] : {opacity: 0.6}}
                                 onClick={() => {
-                                    self.toggleState(player);
+                                    // todo complete - show complete statistics
                                 }}
                             />
                         );
