@@ -17,3 +17,10 @@ code {
 .ui.basic.button, .ui.basic.buttons .button {
   background-color: white !important;
 }
+
+ul li.arrow:before {
+  content: "\00BB";
+  padding-right:5px;
+  top: -2px;
+  position: relative;
+}

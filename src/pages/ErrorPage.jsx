@@ -24,6 +24,10 @@ export default class ErrorPage extends React.Component {
                                 {title}
                             </div>
                             <p style={{ fontWeight: "normal" }} dangerouslySetInnerHTML={{ __html: message }} />
+
+                            {/*<button className={"ui button basic blue"} onClick={() => { window.history.back();}}>*/}
+                            {/*    Go Back*/}
+                            {/*</button>*/}
                         </div>
                     </div>
                 </div>
