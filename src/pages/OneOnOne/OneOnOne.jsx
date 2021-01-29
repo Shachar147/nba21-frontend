@@ -137,13 +137,13 @@ export default class OneOnOne extends React.Component {
         }
 
         // player stats
-        player_stats.push(`Current Win Streak: ${stats[player1.name].win_streak} - ${stats[player2.name].win_streak}`);
-        player_stats.push(`Current Lose Streak: ${stats[player1.name].lose_streak} - ${stats[player2.name].lose_streak}`);
-        player_stats.push(`Best Win Streak: ${stats[player1.name].max_win_streak} - ${stats[player2.name].max_win_streak}`);
-        player_stats.push(`Worst Lose Streak: ${stats[player1.name].max_lose_streak} - ${stats[player2.name].max_lose_streak}`);
-        player_stats.push(`Total Knockouts: ${stats[player1.name].total_knockouts} - ${stats[player2.name].total_knockouts}`);
-        player_stats.push(`Total Diff: ${stats[player1.name].total_diff} / ${stats[player2.name].total_diff}`);
-        player_stats.push(`Total Diff Per Game: ${stats[player1.name].total_diff_per_game} / ${stats[player2.name].total_diff_per_game}`);
+        player_stats.push(`Current Win Streak: ${stats1.win_streak} - ${stats2.win_streak}`);
+        player_stats.push(`Current Lose Streak: ${stats1.lose_streak} - ${stats2.lose_streak}`);
+        player_stats.push(`Best Win Streak: ${stats1.max_win_streak} - ${stats2.max_win_streak}`);
+        player_stats.push(`Worst Lose Streak: ${stats1.max_lose_streak} - ${stats2.max_lose_streak}`);
+        player_stats.push(`Total Knockouts: ${stats1.total_knockouts} - ${stats2.total_knockouts}`);
+        player_stats.push(`Total Diff: ${stats1.total_diff} / ${stats2.total_diff}`);
+        player_stats.push(`Total Diff Per Game: ${stats1.total_diff_per_game} / ${stats2.total_diff_per_game}`);
 
         this.setState({ curr_stats, player_stats })
     }
