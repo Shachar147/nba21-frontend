@@ -32,6 +32,26 @@ export default class OneOnOne extends React.Component {
             stats: [], // all players stats
             curr_stats: ["Loading Stats..."],
             player_stats: ["Loading Stats..."],
+
+            matchups_values: {
+                'Total Previous Matchups': [],
+                'Wins': [],
+                'Total Scored': [],
+                'Total Diff': [],
+                'Knockouts': [],
+            },
+            player_stats_values: {
+                'Total Played Games': [],
+                'Standing': [],
+                'Current Win Streak': [],
+                'Current Lose Streak': [],
+                'Best Win Streak': [],
+                'Worst Lose Streak': [],
+                'Total Knockouts': [],
+                'Total Diff': [],
+                'Total Diff Per Game': [],
+            },
+            met_each_other: 0,
         };
 
         this.restart = this.restart.bind(this);
@@ -84,7 +104,7 @@ export default class OneOnOne extends React.Component {
 
     initStats(){
 
-        const { player1, player2, stats } = this.state;
+        const { player1, player2, stats, player_stats_values, matchups_values } = this.state;
 
         const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0, total_games:0, total_wins: 0, total_lost: 0, total_win_percents: "" };
 
@@ -151,11 +171,19 @@ export default class OneOnOne extends React.Component {
                 mutual_games_wins2 = met_each_other;
             }
 
+            // matchups stats
             curr_stats.push(`These players met each other ${met_each_other} time${plural}.`);
             curr_stats.push(`Wins: ${mutual_games_wins1} - ${mutual_games_wins2}`);
             curr_stats.push(`Total Scored: ${mutual_scored1} - ${mutual_scored2}`);
             curr_stats.push(`Total Diff: ${Math.max(0,mutual_scored1-mutual_scored2)} - ${Math.max(0,mutual_scored2-mutual_scored1)}`);
             curr_stats.push(`Knockouts: ${mutual_knockouts1} - ${mutual_knockouts2}`);
+
+            // matchups stats - table
+            // matchups_values['Total Previous Matchups'] = [met_each_other,met_each_other];
+            matchups_values['Wins'] = [mutual_games_wins1,mutual_games_wins2];
+            matchups_values['Total Scored'] = [mutual_scored1,mutual_scored2];
+            matchups_values['Total Diff'] = [Math.max(0,mutual_scored1-mutual_scored2), Math.max(0,mutual_scored2-mutual_scored1)];
+            matchups_values['Knockouts'] = [mutual_knockouts1, mutual_knockouts2];
         }
 
         // player stats
@@ -169,7 +197,18 @@ export default class OneOnOne extends React.Component {
         player_stats.push(`Total Diff: ${stats1.total_diff} / ${stats2.total_diff}`);
         player_stats.push(`Total Diff Per Game: ${stats1.total_diff_per_game} / ${stats2.total_diff_per_game}`);
 
-        this.setState({ curr_stats, player_stats })
+        // player stats - table
+        player_stats_values['Total Played Games'] = [stats1.total_games, stats2.total_games];
+        player_stats_values['Standing'] = [`${stats1.total_wins}W ${stats1.total_lost}L ${(stats1.total_win_percents)}`, `${stats2.total_wins}W ${stats2.total_lost}L ${(stats2.total_win_percents)}`];
+        player_stats_values['Current Win Streak'] = [stats1.win_streak, stats2.win_streak];
+        player_stats_values['Current Lose Streak'] = [stats1.lose_streak, stats2.lose_streak];
+        player_stats_values['Best Win Streak'] = [stats1.max_win_streak, stats2.max_win_streak];
+        player_stats_values['Worst Lose Streak'] = [stats1.max_lose_streak, stats2.max_lose_streak];
+        player_stats_values['Total Knockouts'] = [stats1.total_knockouts, stats2.total_knockouts];
+        player_stats_values['Total Diff'] = [stats1.total_diff, stats2.total_diff];
+        player_stats_values['Total Diff Per Game'] = [stats1.total_diff_per_game, stats2.total_diff_per_game];
+
+        this.setState({ curr_stats, player_stats, player_stats_values, matchups_values, met_each_other })
     }
 
     async init(){
@@ -384,7 +423,7 @@ export default class OneOnOne extends React.Component {
             }
         }
 
-        const { curr_stats, player_stats } = this.state;
+        // const { curr_stats, player_stats } = this.state;
 
         const statsStyle = {
             margin: "30px auto 20px",
@@ -395,27 +434,84 @@ export default class OneOnOne extends React.Component {
             borderRadius: "20px",
         }
 
+        const { met_each_other } = this.state;
+        const plural = (met_each_other > 1) ? "s" : "";
+        let matchups_title = `These players met each other ${met_each_other} time${plural}.`;
+        if (met_each_other === 0) matchups_title = "This is the first time these players meet each other.";
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
                 <Header />
 
                 <div className="ui link cards centered" style={statsStyle}>
+
+                    {/*matchups stats*/}
                     <div className="ui header" style={{ width:"100%", textAlign: "center", marginBottom: "0px" }}>Previous Matchups Stats</div>
-                    <div style={{ display: "block", width: "50%", textAlign: "center" }}>
+                    <div style={{ display: "block", width: "100%", textAlign: "center" }}>
                         <ul style={{ padding: "0px", }}>
-                            {curr_stats.map((iter, idx) => {
-                                return (<li key={idx} className={(iter === "<br>") ? "" : "arrow"} style={{ listStyle: "none" }} dangerouslySetInnerHTML={{ __html: iter }} />);
-                            })}
+                            {/*{curr_stats.map((iter, idx) => {*/}
+                            {/*    return (<li key={idx} className={(iter === "<br>") ? "" : "arrow"} style={{ listStyle: "none" }} dangerouslySetInnerHTML={{ __html: iter }} />);*/}
+                            {/*})}*/}
+                            <li style={{ listStyle: "none" }}>{matchups_title}</li>
+                            {(met_each_other === 0) ? "" :
+                                (<table className="ui celled table">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>{ this.state.player1.name }</th>
+                                        <th>{ this.state.player2.name }</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {Object.keys(this.state.matchups_values).map((stat) => {
+                                        const values = this.state.matchups_values[stat];
+                                        const value1 = (values.length > 0) ? values[0] : "N/A";
+                                        const value2 = (values.length > 1) ? values[1] : "N/A";
+                                        if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
+                                            return (<tr>
+                                                <td style={{ fontWeight: "bold" }}>{stat}</td>
+                                                <td>{value1}</td>
+                                                <td>{value2}</td>
+                                            </tr>)
+                                    })}
+                                    </tbody>
+                                </table>)}
+
                         </ul>
                     </div>
 
+                    {/*player stats*/}
                     <div className="ui header" style={{ width:"100%", textAlign: "center", marginBottom: "0px", marginTop: "10px" }}>Players Individual Stats</div>
-                    <div style={{ display: "block", width: "50%", textAlign: "center" }}>
+                    <div style={{ display: "block", width: "100%", textAlign: "center" }}>
                         <ul style={{ padding: "0px", }}>
-                            {player_stats.map((iter, idx) => {
-                                return (<li key={idx} className={(iter === "<br>") ? "" : "arrow"} style={{ listStyle: "none" }} dangerouslySetInnerHTML={{ __html: iter }} />);
-                            })}
+                            {/*{player_stats.map((iter, idx) => {*/}
+                            {/*    return (<li key={idx} className={(iter === "<br>") ? "" : "arrow"} style={{ listStyle: "none" }} dangerouslySetInnerHTML={{ __html: iter }} />);*/}
+                            {/*})}*/}
+
+                            <table className="ui celled table">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>{ this.state.player1.name }</th>
+                                    <th>{ this.state.player2.name }</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {Object.keys(this.state.player_stats_values).map((stat) => {
+                                        const values = this.state.player_stats_values[stat];
+                                        const value1 = (values.length > 0) ? values[0] : "N/A";
+                                        const value2 = (values.length > 1) ? values[1] : "N/A";
+                                        if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
+                                        return (<tr>
+                                                    <td style={{ fontWeight: "bold" }}>{stat}</td>
+                                                    <td>{value1}</td>
+                                                    <td>{value2}</td>
+                                                </tr>)
+                                    })}
+                                </tbody>
+                            </table>
+
                         </ul>
                     </div>
                 </div>

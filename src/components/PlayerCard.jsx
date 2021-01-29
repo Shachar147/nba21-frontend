@@ -60,7 +60,6 @@ export default class PlayerCard extends React.Component {
         if (isDefined(this.props.total_diff)) details.push("Total Diff: " + this.props.total_diff);
         if (isDefined(this.props.total_knockouts)) details.push("Total Knockouts: " + this.props.total_knockouts);
 
-
         // team
         if (this.props.details){
             details = this.props.details;
