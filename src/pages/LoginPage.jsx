@@ -75,7 +75,7 @@ export default class LoginPage extends React.Component {
                     message = "Logged in successfully!";
                     setTimeout(function(self){
                         self.setState({ redirect: true })
-                    }, 2000, self);
+                    }, 500, self);
                 }
                 else {
                     error = "Oops, something went wrong";

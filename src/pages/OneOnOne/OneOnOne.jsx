@@ -42,8 +42,9 @@ export default class OneOnOne extends React.Component {
     componentDidMount() {
         let self = this;
         apiGet(this,
-            `/player/popular`,
+            // `/player/popular`,
             // `/player/popular?names=James Harden,Stephen Curry,LeBron James,Klay Thompson,Tristan Thompson,Kevin Durant`,
+            `/player/popular?names=Kevin Durant,James Harden`,
             function(res) {
                 let players = res.data;
                 self.setState({ players });
@@ -84,7 +85,7 @@ export default class OneOnOne extends React.Component {
 
         const { player1, player2, stats } = this.state;
 
-        const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0 };
+        const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0, total_games:0, total_wins: 0, total_lost: 0, total_win_percents: "" };
 
         const stats1 = isDefined(stats[player1.name]) ? stats[player1.name] : Object.assign({},noStats);
         const stats2 = isDefined(stats[player2.name]) ? stats[player2.name] : Object.assign({},noStats);
@@ -97,12 +98,18 @@ export default class OneOnOne extends React.Component {
         let mutual_games_wins1 = 0;
         let mutual_scored1 = 0;
         let mutual_scored2 = 0;
+        let mutual_knockouts1 = 0;
+        let mutual_knockouts2 = 0;
 
         const arr = (stats1.records.length > stats2.records.length) ? stats1.records : stats2.records; // in case one of them is empty
+
         arr.forEach((record) => {
             if ((record.player1_name === player1.name && record.player2_name === player2.name) || (record.player1_name === player2.name && record.player2_name === player1.name)) {
+
+                console.log(record);
+
                 // met each other
-                met_each_other++;
+                met_each_other += 1;
 
                 if (record.player1_name === player1.name){
 
@@ -113,6 +120,10 @@ export default class OneOnOne extends React.Component {
                     // counting player1 wins in these mutual games
                     if (record.score1 > record.score2) mutual_games_wins1+=1;
 
+                    // knockouts
+                    if (record.score1 === 0 && record.score2 > 0) mutual_knockouts2 += 1;
+                    else if (record.score2 === 0 && record.score1 > 0) mutual_knockouts1 += 1;
+
                 } else if (record.player2_name === player1.name) {
 
                     // total scored (for diff)
@@ -121,6 +132,10 @@ export default class OneOnOne extends React.Component {
 
                     // counting player1 wins in these mutual games
                     if (record.score2 > record.score1) mutual_games_wins1+=1;
+
+                    // knockouts
+                    if (record.score1 === 0 && record.score2 > 0) mutual_knockouts1 += 1;
+                    else if (record.score2 === 0 && record.score1 > 0) mutual_knockouts2 += 1;
                 }
             }
         });
@@ -130,13 +145,23 @@ export default class OneOnOne extends React.Component {
             curr_stats.push("This is the first time these players meet each other.");
         } else {
             const plural = (met_each_other > 1) ? "s" : "";
+
+            let mutual_games_wins2 = met_each_other - mutual_games_wins1;
+            if (player1.name === player2.name){
+                mutual_games_wins1 = met_each_other;
+                mutual_games_wins2 = met_each_other;
+            }
+
             curr_stats.push(`These players met each other ${met_each_other} time${plural}.`);
-            curr_stats.push(`Wins: ${mutual_games_wins1} - ${met_each_other - mutual_games_wins1}`);
+            curr_stats.push(`Wins: ${mutual_games_wins1} - ${mutual_games_wins2}`);
             curr_stats.push(`Total Scored: ${mutual_scored1} - ${mutual_scored2}`);
             curr_stats.push(`Total Diff: ${Math.max(0,mutual_scored1-mutual_scored2)} - ${Math.max(0,mutual_scored2-mutual_scored1)}`);
+            curr_stats.push(`Knockouts: ${mutual_knockouts1} - ${mutual_knockouts2}`);
         }
 
         // player stats
+        player_stats.push(`Total Played Games: ${stats1.total_games} - ${stats2.total_games}`);
+        player_stats.push(`Standing: ${stats1.total_wins}W ${stats1.total_lost}L ${(stats1.total_win_percents) ? '(' + stats1.total_win_percents + ')' : ''} - ${stats2.total_wins}W ${stats2.total_lost}L ${(stats2.total_win_percents) ? '(' + stats2.total_win_percents + ')' : ''}`);
         player_stats.push(`Current Win Streak: ${stats1.win_streak} - ${stats2.win_streak}`);
         player_stats.push(`Current Lose Streak: ${stats1.lose_streak} - ${stats2.lose_streak}`);
         player_stats.push(`Best Win Streak: ${stats1.max_win_streak} - ${stats2.max_win_streak}`);
@@ -152,7 +177,15 @@ export default class OneOnOne extends React.Component {
         let scores = {};
         let scores_history = {};
         const player1 = getRandomElement(this.state.players);
-        const player2 = getRandomElement(this.state.players);
+        let player2 = getRandomElement(this.state.players);
+
+        // prevent same player
+        if (this.state.players.length >= 2) {
+            while (player1.name === player2.name) {
+                player2 = getRandomElement(this.state.players);
+            }
+        }
+
         scores[player1.name] = 0;
         scores[player2.name] = 0;
         scores_history[player1.name] = [];
@@ -178,8 +211,23 @@ export default class OneOnOne extends React.Component {
 
         if (idx === 0){
             player1 = getRandomElement(this.state.players);
+
+            // prevent same player
+            if (this.state.players.length >= 2) {
+                while (player1.name === player2.name) {
+                    player1 = getRandomElement(this.state.players);
+                }
+            }
+
         } else if (idx === 1){
             player2 = getRandomElement(this.state.players);
+
+            // prevent same player
+            if (this.state.players.length >= 2) {
+                while (player1.name === player2.name) {
+                    player2 = getRandomElement(this.state.players);
+                }
+            }
         }
 
         scores[player1.name] = 0;
@@ -237,6 +285,8 @@ export default class OneOnOne extends React.Component {
                 });
 
                 arr = arr.sort(function(a,b) { return b.score - a.score });
+
+                debugger;
 
                 let winner = arr[0].name;
                 let loser = arr[1].name;
