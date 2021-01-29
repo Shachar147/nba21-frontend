@@ -6,6 +6,7 @@ import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
 import {APP_BACKGROUND_COLOR} from "../../helpers/consts";
+import {Link} from "react-router-dom";
 
 export default class OneOnOne extends React.Component {
 
@@ -425,6 +426,9 @@ export default class OneOnOne extends React.Component {
                     </button>
                     <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.init}>
                         New Game
+                    </button>
+                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }}>
+                        <Link to={"/1on1/stats"}>View Stats</Link>
                     </button>
                 </div>
 

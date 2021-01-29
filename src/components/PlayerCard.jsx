@@ -47,10 +47,19 @@ export default class PlayerCard extends React.Component {
 
     render() {
         let details = [];
+        if (this.props.place) details.push(this.props.place + nth(this.props.place));
         if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
         if (this.props._2k_rating) details.push(`2K Rating: ${this.props._2k_rating}`);
         if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
         if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs");
+
+        // one on one
+        if (this.props.total_win_percents) details.push("Total Wins Percents: " + this.props.total_win_percents);
+        if (this.props.total_win_percents) details.push("Total Games: " + this.props.total_games);
+        if (this.props.home_road_games) details.push("Home/Road Games: " + this.props.home_road_games);
+        if (isDefined(this.props.total_diff)) details.push("Total Diff: " + this.props.total_diff);
+        if (isDefined(this.props.total_knockouts)) details.push("Total Knockouts: " + this.props.total_knockouts);
+
 
         // team
         if (this.props.details){
