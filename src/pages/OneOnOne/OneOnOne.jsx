@@ -7,6 +7,7 @@ import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
 import {APP_BACKGROUND_COLOR, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {Link} from "react-router-dom";
+import OneOnOneStats from "./OneOnOneStats";
 
 export default class OneOnOne extends React.Component {
 
@@ -53,6 +54,8 @@ export default class OneOnOne extends React.Component {
                 'Total Diff Per Game': [],
             },
             met_each_other: 0,
+
+            view_stats: false,
         };
 
         this.restart = this.restart.bind(this);
@@ -369,6 +372,14 @@ export default class OneOnOne extends React.Component {
             );
         }
 
+        if (this.state.view_stats){
+            return (
+                <OneOnOneStats
+                    onBack={() => { this.setState({ view_stats: false }) }}
+                />
+            );
+        }
+
         // initialize stats
         if (this.canInitStats()){
             this.initStats();
@@ -527,8 +538,9 @@ export default class OneOnOne extends React.Component {
                     <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.init}>
                         New Game
                     </button>
-                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }}>
-                        <Link to={"/1on1/stats"}>View Stats</Link>
+                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={() => { this.setState({ view_stats: true }) }}>
+                        {/*<Link to={"/1on1/stats"}>View Stats</Link>*/}
+                        View Stats
                     </button>
                 </div>
 

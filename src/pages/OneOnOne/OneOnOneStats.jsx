@@ -200,8 +200,9 @@ export default class OneOnOneStats extends React.Component {
                         Reload Stats
                     </button>
 
-                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }}>
-                        <Link to={"/1on1"}>Go Back</Link>
+                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.props.onBack}>
+                        {/*<Link to={"/1on1"}>Go Back</Link>*/}
+                        Go Back
                     </button>
                 </div>
 
