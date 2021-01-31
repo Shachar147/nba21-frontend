@@ -1,6 +1,7 @@
 import React from "react";
 import {LOST_X_IMAGE, PLAYER_NO_PICTURE} from "../helpers/consts";
 import {isDefined, nth, toPascalCase} from "../helpers/utils";
+import DropdownInput from "./DropdownInput";
 
 export default class PlayerCard extends React.Component {
 
@@ -19,6 +20,9 @@ export default class PlayerCard extends React.Component {
             ],
 
             shoot_score: 0,
+
+            specific_replace: false,
+            select_replacement: false,
         };
 
         this.onError = this.onError.bind(this);
@@ -144,22 +148,34 @@ export default class PlayerCard extends React.Component {
         if (this.props.position) position = `Position: ${this.props.position}`;
         if (this.props.team_division) position = `Division: ${this.props.team_division}`;
 
-        // let _2k_rating = <span />;
-        // if (this.props._2k_rating)
-        //     _2k_rating = (
-        //         <span style={{ opacity: "0.6", fontWeight: "normal", marginLeft: "5px" }}>
-        //             (2k rating: {this.props._2k_rating})
-        //         </span>
-        //     );
-
         let title = (this.props.details_title) ? this.props.details_title : "";
 
         let replace = (this.props.onReplace) ? (
-            // <button className={"ui button basic blue tiny"} onClick={this.props.onReplace} style={{ position: "absolute", bottom: "10px", right: "5px" }}>
-            //     Replace
-            // </button>
-            <a onClick={this.props.onReplace} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
+            <a onClick={() => { this.setState({ specific_replace: true }); this.props.onReplace(); }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
         ) : "";
+
+        let specific_replace =  (this.state.specific_replace && this.props.onSpecificReplace) ? (
+            <a onClick={() => {
+                if (this.state.select_replacement) {
+                    this.setState({ specific_replace: false, select_replacement: false });
+                } else {
+                    this.setState({ select_replacement: true });
+                }
+            }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "80px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Specific Replace</a>
+        ) : "";
+
+        let name =
+            (this.state.select_replacement) ? (
+                <DropdownInput
+                    options={this.props.all_players.filter((player) => { return this.props.curr_players.indexOf(player.name) === -1 })}
+                    name={"select_replacement"}
+                    placeholder={"Select Replacement..."}
+                    nameKey={"name"}
+                    valueKey={"name"}
+                    idKey={"id"}
+                    onChange={(player) => { this.props.onSpecificReplace(player); this.setState({ select_replacement: false, specific_replace: false }); }}
+                />
+            ) : this.props.name;
 
         return (
             <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>
@@ -167,9 +183,10 @@ export default class PlayerCard extends React.Component {
                 <div className="image" style={this.props.imageStyle}>
                     <img src={picture} onError={this.onError} alt={this.props.name} style={this.props.imgStyle} />
                     {replace}
+                    {specific_replace}
                 </div>
                 <div className="content">
-                    <div className="header">{this.props.name}</div>
+                    <div className="header">{name}</div>
                     <div className="meta">
                         <a disabled={true} style={{ cursor: "default" }}>
                             {this.props.team}

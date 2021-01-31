@@ -7,7 +7,6 @@ import ErrorPage from "../ErrorPage";
 
 import Header from "../../components/Header";
 import {apiGet} from "../../helpers/api";
-import {Link} from "react-router-dom";
 import {UNAUTHORIZED_ERROR} from "../../helpers/consts";
 
 export default class OneOnOneStats extends React.Component {

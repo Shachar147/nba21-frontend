@@ -62,6 +62,7 @@ export default class OneOnOne extends React.Component {
         this.init = this.init.bind(this);
         this.saveResult = this.saveResult.bind(this);
         this.replaceOne = this.replaceOne.bind(this);
+        this.onSpecificReplace = this.onSpecificReplace.bind(this);
     }
 
     componentDidMount() {
@@ -357,6 +358,26 @@ export default class OneOnOne extends React.Component {
         this.setState({ saving: false });
     }
 
+    async onSpecificReplace(player, new_player){
+        let { scores, scores_history, player1, player2} = this.state;
+
+        if (player1.name === player.name){
+            player1 = new_player;
+        }
+        else if (player2.name === player.name){
+            player2 = new_player;
+        }
+
+        scores[player1.name] = 0;
+        scores[player2.name] = 0;
+        scores_history[player1.name] = [];
+        scores_history[player2.name] = [];
+        await this.setState({
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history
+        });
+        this.initStats();
+    }
+
     render(){
 
         let error = this.state.error;
@@ -388,7 +409,7 @@ export default class OneOnOne extends React.Component {
         const self = this;
 
         const blocks =
-        [this.state.player1, this.state.player2].map(function(player, idx){
+        [this.state.player1, this.state.player2].map((player, idx) => {
             const _2k_rating = player['_2k_rating'] || 'N/A';
             return <PlayerCard
                         key={"player" + "-" + idx}
@@ -415,6 +436,10 @@ export default class OneOnOne extends React.Component {
                         onReplace={(e) => {
                             self.replaceOne(idx);
                         }}
+
+                        all_players={this.state.players}
+                        curr_players={[this.state.player1.name, this.state.player2.name]}
+                        onSpecificReplace={(new_player) => { this.onSpecificReplace(player, new_player) }}
                     />
         })
 
