@@ -1,5 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
+import {Redirect} from "react-router-dom";
+import {UNAUTHORIZED_ERROR} from "../helpers/consts";
 
 export default class ErrorPage extends React.Component {
 
@@ -13,6 +15,12 @@ export default class ErrorPage extends React.Component {
 
         const title = this.props.title || "Error";
         const message = this.props.message || "Oops something went wrong";
+
+        if (message === UNAUTHORIZED_ERROR){
+            return (
+                <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} />
+            );
+        }
 
         return (
             <div>

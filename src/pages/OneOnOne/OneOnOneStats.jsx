@@ -8,6 +8,7 @@ import ErrorPage from "../ErrorPage";
 import Header from "../../components/Header";
 import {apiGet} from "../../helpers/api";
 import {Link} from "react-router-dom";
+import {UNAUTHORIZED_ERROR} from "../../helpers/consts";
 
 export default class OneOnOneStats extends React.Component {
 
@@ -71,7 +72,7 @@ export default class OneOnOneStats extends React.Component {
             function(error) {
                 console.log(error);
                 let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
                 self.setState({ error: req_error });
             },
@@ -93,7 +94,7 @@ export default class OneOnOneStats extends React.Component {
             function(error) {
                 console.log(error);
                 let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
                 self.setState({ error: req_error });
             },

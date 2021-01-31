@@ -10,7 +10,7 @@ import {
     MIN_ROUND_LENGTH,
     RANDOM_PLAYER_PICTURE,
     ROUND_DEFAULT_LENGTH,
-    TEAM1_COLOR, TEAM2_COLOR
+    TEAM1_COLOR, TEAM2_COLOR, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
 import {deepClone, isDefined} from "../../helpers/utils";
 import LoadingPage from "../LoadingPage";
@@ -79,7 +79,7 @@ export default class Settings extends React.Component {
             function(error) {
                 console.log(error);
                 let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
                 self.setState({ error: req_error });
             },

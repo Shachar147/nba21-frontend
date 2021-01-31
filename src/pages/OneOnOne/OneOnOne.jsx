@@ -5,7 +5,7 @@ import {apiGet, apiPost} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
-import {APP_BACKGROUND_COLOR} from "../../helpers/consts";
+import {APP_BACKGROUND_COLOR, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {Link} from "react-router-dom";
 
 export default class OneOnOne extends React.Component {
@@ -74,7 +74,7 @@ export default class OneOnOne extends React.Component {
             function(error) {
                 console.log(error);
                 let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
                 self.setState({ error: req_error });
             },
@@ -92,7 +92,7 @@ export default class OneOnOne extends React.Component {
             function(error) {
                 console.log(error);
                 let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
                 self.setState({ error: req_error });
             },
@@ -340,7 +340,7 @@ export default class OneOnOne extends React.Component {
             function(error) {
                 console.log(error);
                 let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
                 self.setState({ error: req_error });
             },

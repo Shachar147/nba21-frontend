@@ -5,7 +5,7 @@ import {apiGet} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
-import {APP_BACKGROUND_COLOR, PLAYER_NO_PICTURE} from "../../helpers/consts";
+import {APP_BACKGROUND_COLOR, PLAYER_NO_PICTURE, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 
 export default class Random extends React.Component {
 
@@ -46,7 +46,7 @@ export default class Random extends React.Component {
             function(error) {
                 console.log(error);
                 let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = "Oops, seems like you are unauthorized to view this content." }
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no teams loaded :(<Br>It's probably related to a server error" }
                 self.setState({ error: req_error });
             },

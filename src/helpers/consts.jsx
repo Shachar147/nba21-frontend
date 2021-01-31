@@ -13,3 +13,5 @@ export const DEFAULT_COMPUTER_LEVEL = 'Real Life'; // 'Normal';
 
 export const TEAM1_COLOR = 'lightseagreen';
 export const TEAM2_COLOR = 'lightcoral';
+
+export const UNAUTHORIZED_ERROR = 'Oops, seems like you are unauthorized to view this content.';
