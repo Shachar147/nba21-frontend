@@ -4,6 +4,7 @@ import {getServerAddress} from "../config/config";
 import { Redirect } from 'react-router'
 import Logo from "../components/Logo";
 import {Link} from "react-router-dom";
+import {LOGIN_DELAY} from "../helpers/consts";
 
 export default class RegisterPage extends React.Component {
 
@@ -77,7 +78,7 @@ export default class RegisterPage extends React.Component {
                         message = "Registered successfully!";
                         setTimeout(function(self){
                             self.setState({ redirect: true })
-                        }, 2000, self);
+                        }, LOGIN_DELAY, self);
                     }
 
                 }).catch(function (err) {

@@ -5,6 +5,7 @@ import {setToken} from "../helpers/auth";
 import { Redirect } from 'react-router'
 import Logo from "../components/Logo";
 import {Link} from "react-router-dom";
+import {LOGIN_DELAY} from "../helpers/consts";
 
 export default class LoginPage extends React.Component {
 
@@ -75,7 +76,7 @@ export default class LoginPage extends React.Component {
                     message = "Logged in successfully!";
                     setTimeout(function(self){
                         self.setState({ redirect: true })
-                    }, 500, self);
+                    }, LOGIN_DELAY, self);
                 }
                 else {
                     error = "Oops, something went wrong";

@@ -15,3 +15,5 @@ export const TEAM1_COLOR = 'lightseagreen';
 export const TEAM2_COLOR = 'lightcoral';
 
 export const UNAUTHORIZED_ERROR = 'Oops, seems like you are unauthorized to view this content.';
+
+export const LOGIN_DELAY = 500;
