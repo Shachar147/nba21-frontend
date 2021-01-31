@@ -27,6 +27,7 @@ export default class OneOnOne extends React.Component {
             winner: "",
             loser: "",
             saved: false,
+            saving: false,
 
             loadedStats: false,
             stats: [], // all players stats
@@ -288,9 +289,12 @@ export default class OneOnOne extends React.Component {
         this.setState({ scores, saved: false, winner: "", loser: "", scores_history });
     }
 
-    saveResult(){
+    async saveResult(){
+
+        this.setState({ saving: true });
+
         const self = this;
-        apiPost(this,
+        await apiPost(this,
             `/records/one-on-one`,
             {
                 player1: this.state.player1.name,
@@ -324,8 +328,6 @@ export default class OneOnOne extends React.Component {
 
                 arr = arr.sort(function(a,b) { return b.score - a.score });
 
-                debugger;
-
                 let winner = arr[0].name;
                 let loser = arr[1].name;
 
@@ -348,6 +350,8 @@ export default class OneOnOne extends React.Component {
                 // finally
             }
         );
+
+        this.setState({ saving: false });
     }
 
     render(){
@@ -531,7 +535,7 @@ export default class OneOnOne extends React.Component {
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
-                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: bottom }}>
+                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: bottom }} disabled={this.state.saved || this.state.saving} >
                             Save
                         </button>
                     </div>
