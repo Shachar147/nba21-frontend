@@ -32,6 +32,7 @@ export default class Random extends React.Component {
         this.init = this.init.bind(this);
         this.saveResult = this.saveResult.bind(this);
         this.replaceOne = this.replaceOne.bind(this);
+        this.onSpecificReplace = this.onSpecificReplace.bind(this);
     }
 
     componentDidMount() {
@@ -152,6 +153,26 @@ export default class Random extends React.Component {
         this.setState({ saved: true, winner, loser, scores_history, scores });
     }
 
+    async onSpecificReplace(team, new_team){
+        let { scores, scores_history, team1, team2} = this.state;
+
+        if (team1.name === team.name){
+            team1 = new_team;
+        }
+        else if (team2.name === team.name){
+            team2 = new_team;
+        }
+
+        scores[team1.name] = 0;
+        scores[team2.name] = 0;
+        scores_history[team1.name] = [];
+        scores_history[team2.name] = [];
+        await this.setState({
+            team1, team2, scores, saved: false, winner: "", loser: "", scores_history
+        });
+        // this.initStats();
+    }
+
     render(){
 
         let error = this.state.error;
@@ -173,7 +194,7 @@ export default class Random extends React.Component {
         const minHeight = maxPlayers * 51;
 
         const blocks =
-            [this.state.team1, this.state.team2].map(function(team, idx){
+            [this.state.team1, this.state.team2].map((team, idx) => {
 
                 let details_title = "<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>Players:</div>";
                 let details = [];
@@ -225,6 +246,10 @@ export default class Random extends React.Component {
                     onReplace={(e) => {
                         self.replaceOne(idx);
                     }}
+
+                    all_players={this.state.teams}
+                    curr_players={[this.state.team1.name, this.state.team2.name]}
+                    onSpecificReplace={(new_team) => { this.onSpecificReplace(team, new_team) }}
                 />
             })
 
