@@ -21,28 +21,32 @@ export const UNAUTHORIZED_ERROR = 'Oops, seems like you are unauthorized to view
 export const LOGIN_DELAY = 500;
 
 export const LOADERS = {
-    'loaders/loading.gif': {
+    'loading.gif': {
         backgroundColor: "#F0F0F0",
         top: '-100px',
     },
-    'loaders/curry.gif': {
+    'curry.gif': {
         backgroundColor: 'white',
         top: '0px',
     },
-    'loaders/Loader.gif': {
+    'Loader.gif': {
         backgroundColor: 'white',
         top: '0px',
     },
-    'loaders/LoaderHarden.gif': {
+    'LoaderHarden.gif': {
         backgroundColor: 'white',
         top: '0px',
     },
+    'LoaderLebron.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    }
 }
 
 export const LOADER_DETAILS = () => {
     const options = shuffle(Object.keys(LOADERS));
     let option = LOADERS[options[0]];
-    option.loader = options[0];
+    option.loader = `loaders/${options[0]}`;
     return option;
 
 }
