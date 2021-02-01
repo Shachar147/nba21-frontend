@@ -25,53 +25,53 @@ export default class MainPage extends React.Component {
                         <div className="ui link cards centered" style={{ margin: "auto" }}>
                             <Card
                                 name={"Three Points Contest"}
-                                picture={"/ball.png"}
+                                picture={"/thumbnails/3pointsContest.png"}
                                 style={{ width: "160px" }}
                                 href={"/three-points"}
                             />
                             <Card
                                 name={"Season"}
-                                picture={"/shield.png"}
+                                picture={"/thumbnails/season.png"}
                                 style={{ width: "160px" }}
                                 href={"/"} // todo complete
                                 disabled={true}
                             />
                             <Card
                                 name={"Tournament"}
-                                picture={"/badge.png"}
+                                picture={"/thumbnails/tournament.png"}
                                 style={{ width: "160px" }}
                                 href={"/"} // todo complete
                                 disabled={true}
                             />
                             <Card
                                 name={"Random"}
-                                picture={"/net.png"}
+                                picture={"/thumbnails/random.png"}
                                 style={{ width: "160px" }}
                                 href={"/random"}
                             />
                             <Card
                                 name={"One on One"}
-                                picture={"/ball (1).png"}
+                                picture={"/thumbnails/1on1.png"}
                                 style={{ width: "160px" }}
                                 href={"/1on1"}
                             />
                             <Card
                                 name={"Stopwatch Shootout"}
-                                picture={"/stopwatch.png"}
+                                picture={"/thumbnails/stopwatch.png"}
                                 style={{ width: "160px" }}
                                 href={"/"} // todo complete
                                 disabled={true}
                             />
                             <Card
                                 name={"View Teams & Players"}
-                                picture={"/shorts.png"}
+                                picture={"/thumbnails/teamsNplayers.png"}
                                 style={{ width: "160px" }}
                                 href={"/"} // todo complete
                                 disabled={true}
                             />
                             <Card
                                 name={"View Stats"}
-                                picture={"/presentation.png"}
+                                picture={"/thumbnails/stats.png"}
                                 style={{ width: "160px" }}
                                 href={"/"} // todo complete
                                 disabled={true}
