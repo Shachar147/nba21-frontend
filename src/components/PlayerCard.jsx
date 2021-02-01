@@ -51,22 +51,51 @@ export default class PlayerCard extends React.Component {
     render() {
         let details = [];
 
+        let settings = {
+            '2K Rating': this.props._2k_rating,
+
+            'Total Wins Percents': this.props.total_win_percents,
+            'Total Games': this.props.total_games,
+            'Current Win Streak': this.props.win_streak,
+            'Current Lose Streak': this.props.lose_streak,
+            'Total Diff': this.props.total_diff,
+
+            'Total Diff Per Game': `(${this.props.total_diff_per_game} per game)`,
+            'Total Home Games': this.props.total_home_games,
+            'Total Road Games': this.props.total_away_games,
+            'Total Scored': this.props.total_scored,
+            'Total Suffered': this.props.total_suffered,
+            'Total Knockouts': this.props.total_knockouts,
+            'Total Suffered Knockouts': this.props.total_suffered_knockouts,
+            'Max Win Streak': `(Max: ${this.props.max_win_streak})`,
+            'Max Lose Streak': `(Max: ${this.props.max_lose_streak})`,
+        };
+
+        const { highlight } = this.props;
+        if (highlight) {
+            Object.keys(settings).map((name) => {
+                if(name === highlight){
+                    settings[name] = `<b>${settings[name]}</b>`
+                }
+            });
+        }
+
         // general details
         if (this.props.place) details.push(this.props.place + nth(this.props.place));
         if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
-        if (this.props._2k_rating) details.push(`2K Rating: ${this.props._2k_rating}`);
+        if (this.props._2k_rating) details.push(`2K Rating: ${settings['2K Rating']}`);
         if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
         if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs");
 
         // one on one
-        if (this.props.total_win_percents) details.push("Total Wins Percents: " + this.props.total_win_percents);
-        if (this.props.total_win_percents) details.push("Total Games: " + this.props.total_games);
-        if (this.props.home_road_games) details.push("Home/Road Games: " + this.props.home_road_games);
-        if (isDefined(this.props.win_streak)) { details.push("Win Streak: " + this.props.win_streak + " (Max:" + this.props.max_win_streak + ")"); }
-        if (isDefined(this.props.lose_streak)) { details.push("Lose Streak: " + this.props.lose_streak + " (Max: " + this.props.max_lose_streak + ")"); }
-        if (isDefined(this.props.total_diff)) details.push("Total Diff: " + this.props.total_diff);
-        if (isDefined(this.props.total_scored)) details.push("Total Scored/Suffered: " + this.props.total_scored + " - " + this.props.total_suffered);
-        if (isDefined(this.props.total_knockouts)) details.push("Total Knockouts Did/Suffered: " + this.props.total_knockouts + " - " + this.props.total_suffered_knockouts);
+        if (this.props.total_win_percents) details.push(`Total Wins Percents: ${settings['Total Wins Percents']}`);
+        if (this.props.total_win_percents) details.push(`Total Games: ${settings['Total Games']}`);
+        if (isDefined(this.props.total_home_games) && isDefined(this.props.total_away_games)) details.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
+        if (isDefined(this.props.win_streak)) { details.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}`); }
+        if (isDefined(this.props.lose_streak)) { details.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}`); }
+        if (isDefined(this.props.total_diff)) details.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
+        if (isDefined(this.props.total_scored)) details.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
+        if (isDefined(this.props.total_knockouts)) details.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);
 
         // team details (built outside)
         if (this.props.details){

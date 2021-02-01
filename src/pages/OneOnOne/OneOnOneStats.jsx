@@ -7,7 +7,17 @@ import ErrorPage from "../ErrorPage";
 
 import Header from "../../components/Header";
 import {apiGet} from "../../helpers/api";
-import {UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import {DEFAULT_STATS_ORDER, UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import {
+    _2kRatingSort,
+    currentLoseStreakSort,
+    currentWinStreakSort, maxLoseStreakSort, maxWinStreakSort,
+    overallSort, totalAwayGames, totalDiffPerGameSort, totalDiffSort,
+    totalGamesSort, totalHomeGames,
+    totalKnockoutsSort, totalSufferedKnockoutsSort,
+    totalWinsPercentsSort,
+} from "../../helpers/sort";
+import DropdownInput from "../../components/DropdownInput";
 
 export default class OneOnOneStats extends React.Component {
 
@@ -15,17 +25,59 @@ export default class OneOnOneStats extends React.Component {
         super(props);
 
         this.state = {
-            players: [],
-            records: {},
-            leaderboard: [],
-            keyword: "",
-            loaded1: false,
-            loaded2: false,
-            merged: false,
+            "players": [],
+            "records": {},
+            "leaderboard": [],
+            "keyword": "",
+            "loaded1": false,
+            "loaded2": false,
+            "merged": false,
+
+            "orderByOptions":[
+                { "Overall": overallSort },
+                { "Total Games": totalGamesSort },
+                { "Total Wins Percents": totalWinsPercentsSort },
+                { "Current Win Streak": currentWinStreakSort },
+                { "Current Lose Streak": currentLoseStreakSort },
+                { "Max Win Streak": maxWinStreakSort },
+                { "Max Lose Streak": maxLoseStreakSort },
+                { "Total Knockouts": totalKnockoutsSort },
+                { "Total Suffered Knockouts": totalSufferedKnockoutsSort },
+                { "Total Diff": totalDiffSort },
+                { "Total Diff Per Game": totalDiffPerGameSort },
+                { "2K Rating": _2kRatingSort },
+                { "Total Home Games": totalHomeGames },
+                { "Total Road Games": totalAwayGames },
+            ],
+            "orderBy": DEFAULT_STATS_ORDER,
         };
 
         this.applyFilters = this.applyFilters.bind(this);
         this.loadRecords = this.loadRecords.bind(this);
+        this.buildLeaderBoard = this.buildLeaderBoard.bind(this);
+    }
+
+    buildLeaderBoard(records){
+
+        const { orderByOptions, orderBy } = this.state;
+
+        let func = null;
+        let defFunc = null;
+        orderByOptions.map((iter) => {
+            const name = Object.keys(iter)[0];
+            if (name === orderBy){
+                func = iter[name];
+            }
+            if (name === DEFAULT_STATS_ORDER){
+                defFunc = iter[name];
+            }
+        })
+
+        const leaderboard =
+            Object.keys(records).sort((a,b) => {
+                return (func) ? func(records[a],records[b]) : defFunc(records[a],records[b]);
+            });
+        return leaderboard;
     }
 
     loadRecords(){
@@ -35,37 +87,7 @@ export default class OneOnOneStats extends React.Component {
             `/records/one-on-one/by-player`,
             function(res) {
                 let records = res.data.data;
-
-                let leaderboard = Object.keys(records).sort(function(a,b){
-
-                    // first sort
-                    const percent1 = parseFloat(records[b]['total_win_percents'].replace('%',''));
-                    const percent2 = parseFloat(records[a]['total_win_percents'].replace('%',''));
-
-                    // second sort
-                    const total_games1 = parseFloat(records[b]['total_games']);
-                    const total_games2 = parseFloat(records[a]['total_games']);
-
-                    // second sort
-                    const diff1 = parseFloat(records[b]['total_diff_per_game']);
-                    const diff2 = parseFloat(records[a]['total_diff_per_game']);
-
-                    // // third sort
-                    const total_knockouts1 = parseFloat(records[b]['total_knockouts']);
-                    const total_knockouts2 = parseFloat(records[a]['total_knockouts']);
-
-                    if (percent1 > percent2) return 1;
-                    else if (percent1 < percent2) return -1;
-
-                    if (diff1 > diff2) return 1;
-                    else if (diff1 < diff2) return -1;
-
-                    if (total_knockouts1 > total_knockouts2) return 1;
-                    else if (total_knockouts1 < total_knockouts2) return -1;
-
-                    return 0;
-                });
-
+                const leaderboard = self.buildLeaderBoard(records);
                 self.setState({ records, leaderboard });
             },
             function(error) {
@@ -151,8 +173,14 @@ export default class OneOnOneStats extends React.Component {
                 }
             });
             return isOk;
-        }).sort(function(a,b){
-            return leaderboard.indexOf(a.name) - leaderboard.indexOf(b.name);
+        }).sort((a,b) => {
+
+            if (this.state.orderBy === '2K Rating'){
+                return b['_2k_rating'] - a['_2k_rating'];
+            }
+            else {
+                return leaderboard.indexOf(a.name) - leaderboard.indexOf(b.name);
+            }
         })
         return this.state.players;
     }
@@ -181,6 +209,18 @@ export default class OneOnOneStats extends React.Component {
 
         const { records } = this.state;
 
+        let selectedOption = null;
+        const orderByOptions = this.state.orderByOptions.map((x,idx) => {
+
+            const name = Object.keys(x)[0];
+
+            const option = { name: name, id: idx }
+            if (option.name === this.state.orderBy){
+                selectedOption = option;
+            }
+            return option;
+        }).sort((a,b) => { return a.name - b.name; });
+
         return (
             <div style={{ paddingTop: "20px" }}>
                 <Header />
@@ -207,8 +247,26 @@ export default class OneOnOneStats extends React.Component {
 
                 <SearchInput onKeyUp={this.searchPlayers.bind(this)} />
 
+                <div className="ui link cards centered" style={{ margin: "auto", marginTop: "10px" }}>
+                    <DropdownInput
+                        options={orderByOptions}
+                        label={"Order By: "}
+                        name={"orderBy"}
+                        width={"200px"}
+                        nameKey={"name"}
+                        valueKey={"name"}
+                        idKey={"id"}
+                        selectedOption={selectedOption}
+                        onChange={async(option) => {
+                            await this.setState({ orderBy: option.name });
+                            const leaderboard = self.buildLeaderBoard(self.state.records, option);
+                            this.setState({ leaderboard });
+                        }}
+                    />
+                </div>
+
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
-                    { players.map(function(player,idx) {
+                    { players.map((player,idx) => {
                         const _2k_rating = player['_2k_rating'] || 'N/A';
 
                         return (<PlayerCard
@@ -222,12 +280,15 @@ export default class OneOnOneStats extends React.Component {
                                 place={(idx+1)}
                                 total_win_percents={records[player.name].total_win_percents}
                                 total_games={records[player.name].total_games}
-                                home_road_games={`${records[player.name].total_home_games} - ${records[player.name].total_away_games}`}
-                                total_diff={`${records[player.name].total_diff} (${records[player.name].total_diff_per_game} per game)`}
+                                total_home_games={records[player.name].total_home_games}
+                                total_away_games={records[player.name].total_away_games}
+                                total_diff={records[player.name].total_diff}
+                                total_diff_per_game={records[player.name].total_diff_per_game}
                                 total_scored={records[player.name].total_scored}
                                 total_suffered={records[player.name].total_suffered}
                                 total_knockouts={records[player.name].total_knockouts}
                                 total_suffered_knockouts={records[player.name].total_suffered_knockouts}
+                                highlight={this.state.orderBy}
                                 win_streak={records[player.name].win_streak}
                                 lose_streak={records[player.name].lose_streak}
                                 max_win_streak={records[player.name].max_win_streak}
@@ -235,7 +296,7 @@ export default class OneOnOneStats extends React.Component {
                                 debut_year={player.debut_year}
                                 picture={player.picture}
                                 percents={player['3pt_percents']}
-                                style={isDefined(player.selected) ? self.state.styles[player.selected] : {opacity: 0.6}}
+                                style={{}}
                                 onClick={() => {
                                     // todo complete - show complete statistics
                                 }}

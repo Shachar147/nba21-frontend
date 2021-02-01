@@ -1,0 +1,90 @@
+export function overallSort(a,b){
+
+    // first sort
+    const percent1 = parseFloat(b['total_win_percents'].replace('%', ''));
+    const percent2 = parseFloat(a['total_win_percents'].replace('%', ''));
+
+    // // second sort
+    // const total_games1 = parseFloat(b['total_games']);
+    // const total_games2 = parseFloat(a['total_games']);
+
+    // second sort
+    const diff1 = parseFloat(b['total_diff_per_game']);
+    const diff2 = parseFloat(a['total_diff_per_game']);
+
+    // // third sort
+    const total_knockouts1 = parseFloat(b['total_knockouts']);
+    const total_knockouts2 = parseFloat(a['total_knockouts']);
+
+    if (percent1 > percent2) return 1;
+    else if (percent1 < percent2) return -1;
+
+    if (diff1 > diff2) return 1;
+    else if (diff1 < diff2) return -1;
+
+    if (total_knockouts1 > total_knockouts2) return 1;
+    else if (total_knockouts1 < total_knockouts2) return -1;
+
+    return 0;
+}
+
+export function specificSort(key, a, b){
+    const value1 = parseFloat(b[key]);
+    const value2 = parseFloat(a[key]);
+
+    if (value1 > value2) return 1;
+    else if (value1 < value2) return -1;
+
+    return 0;
+}
+
+export function totalGamesSort(a,b){
+    return specificSort('total_games',a,b);
+}
+
+export function totalWinsPercentsSort(a,b){
+    return specificSort('total_win_percents',a,b);
+}
+
+export function totalKnockoutsSort(a,b){
+    return specificSort('total_knockouts',a,b);
+}
+export function totalSufferedKnockoutsSort(a,b){
+    return specificSort('total_suffered_knockouts',a,b);
+}
+
+export function currentWinStreakSort(a,b){
+    return specificSort('win_streak',a,b);
+}
+
+export function currentLoseStreakSort(a,b){
+    return specificSort('lose_streak',a,b);
+}
+
+export function maxLoseStreakSort(a,b){
+    return specificSort('max_lose_streak',a,b);
+}
+
+export function maxWinStreakSort(a,b){
+    return specificSort('max_win_streak',a,b);
+}
+
+export function totalDiffSort(a,b){
+    return specificSort('total_diff',a,b);
+}
+
+export function totalDiffPerGameSort(a,b){
+    return specificSort('total_diff_per_game',a,b);
+}
+
+export function _2kRatingSort(a,b){
+    return specificSort('_2k_rating',a,b);
+}
+
+export function totalHomeGames(a,b){
+    return specificSort('total_home_games',a,b);
+}
+
+export function totalAwayGames(a,b){
+    return specificSort('total_away_games',a,b);
+}
