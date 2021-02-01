@@ -7,8 +7,13 @@
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Card.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DropdownInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DropdownInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ErrorBox.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Logo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PlayerCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PlayerCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SearchInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SearchInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SelectedPlayers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SelectedPlayers.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,10 +59,10 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
+      <recent name="C:\repos\node-js\nba21-frontend\src\components\shared" />
       <recent name="C:\repos\node-js\nba21-frontend\src\pages" />
       <recent name="C:\repos\node-js\nba21-frontend" />
       <recent name="C:\repos\node-js\nba21-frontend\src\pages\ThreePointsContenst" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\Layouts\ThreePointsContest" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -71,7 +76,7 @@
       <workItem from="1610572030591" duration="2321000" />
       <workItem from="1610702572979" duration="43598000" />
       <workItem from="1610883426321" duration="105650000" />
-      <workItem from="1612132367271" duration="7803000" />
+      <workItem from="1612132367271" duration="8340000" />
     </task>
     <servers />
   </component>

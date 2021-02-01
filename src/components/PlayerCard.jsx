@@ -1,6 +1,6 @@
 import React from "react";
 import {LOST_X_IMAGE, PLAYER_NO_PICTURE} from "../helpers/consts";
-import {isDefined, nth, toPascalCase} from "../helpers/utils";
+import {isDefined, nth} from "../helpers/utils";
 import DropdownInput from "./DropdownInput";
 
 export default class PlayerCard extends React.Component {
@@ -43,7 +43,6 @@ export default class PlayerCard extends React.Component {
         const fallbacks = this.state.fallbacks;
 
         fallback++;
-        // console.log("here", fallback, fallbacks.length-1);
         if (fallback > fallbacks.length-1) return;
         const picture = fallbacks[fallback];
         this.setState({ picture, fallback });
@@ -51,6 +50,8 @@ export default class PlayerCard extends React.Component {
 
     render() {
         let details = [];
+
+        // general details
         if (this.props.place) details.push(this.props.place + nth(this.props.place));
         if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
         if (this.props._2k_rating) details.push(`2K Rating: ${this.props._2k_rating}`);
@@ -63,19 +64,16 @@ export default class PlayerCard extends React.Component {
         if (this.props.home_road_games) details.push("Home/Road Games: " + this.props.home_road_games);
         if (isDefined(this.props.win_streak)) { details.push("Win Streak: " + this.props.win_streak + " (Max:" + this.props.max_win_streak + ")"); }
         if (isDefined(this.props.lose_streak)) { details.push("Lose Streak: " + this.props.lose_streak + " (Max: " + this.props.max_lose_streak + ")"); }
-
         if (isDefined(this.props.total_diff)) details.push("Total Diff: " + this.props.total_diff);
         if (isDefined(this.props.total_scored)) details.push("Total Scored/Suffered: " + this.props.total_scored + " - " + this.props.total_suffered);
         if (isDefined(this.props.total_knockouts)) details.push("Total Knockouts Did/Suffered: " + this.props.total_knockouts + " - " + this.props.total_suffered_knockouts);
 
-
-        // team
+        // team details (built outside)
         if (this.props.details){
             details = this.props.details;
         }
 
         const picture = this.state.picture;
-
         const debut_year = (this.props.debut_year !== undefined) ? `Joined in ${this.props.debut_year}` : "";
 
         // shoot
@@ -125,7 +123,7 @@ export default class PlayerCard extends React.Component {
             </div>
         ) : undefined;
 
-        // Single Rounds (one oo One)
+        // Single Rounds (one on One, random teams)
         if (this.props.singleRounds){
             rounds = (
                 <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
@@ -149,16 +147,17 @@ export default class PlayerCard extends React.Component {
         const lostImage = (this.props.lost) ? (<img className="lost-image" alt={"lost"} src={LOST_X_IMAGE} />) : undefined;
         const winner = (this.props.winner) ? "Winner!" : "";
 
+        // position / division
         let position = <div />
         if (this.props.position) position = `Position: ${this.props.position}`;
         if (this.props.team_division) position = `Division: ${this.props.team_division}`;
 
         let title = (this.props.details_title) ? this.props.details_title : "";
 
+        // replace / specific replace
         let replace = (this.props.onReplace) ? (
             <a onClick={() => { this.setState({ specific_replace: true }); this.props.onReplace(); }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
         ) : "";
-
         let specific_replace =  (this.state.specific_replace && this.props.onSpecificReplace) ? (
             <a onClick={() => {
                 if (this.state.select_replacement) {
@@ -169,6 +168,7 @@ export default class PlayerCard extends React.Component {
             }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "80px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Specific Replace</a>
         ) : "";
 
+        // name / select specific replace
         let name =
             (this.state.select_replacement) ? (
                 <DropdownInput

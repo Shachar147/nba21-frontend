@@ -1,4 +1,5 @@
 import React from "react";
+import {PLAYER_NO_PICTURE} from "../helpers/consts";
 
 export default class SelectedPlayers extends React.Component {
 
@@ -9,7 +10,7 @@ export default class SelectedPlayers extends React.Component {
     }
 
     onError (event){
-        event.target.src = './nopic.png';
+        event.target.src = PLAYER_NO_PICTURE;
     }
 
     teamDetails (team){

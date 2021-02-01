@@ -14,11 +14,10 @@ export default class DropdownInput extends React.Component {
     }
 
     onChange(e){
-
         const placeholder = this.props.placeholder || "Select...";
-
         if (e.target.value !== placeholder){
 
+            // find selected option
             let option = null;
             this.props.options.map((opt) => {
                 if (opt[this.props.valueKey] === e.target.value){
@@ -27,9 +26,8 @@ export default class DropdownInput extends React.Component {
                 }
             })
 
-            if (this.props.onChange) {
-                this.props.onChange(option);
-            }
+            // trigger onChange on parent
+            if (this.props.onChange) this.props.onChange(option);
         }
     }
 
@@ -44,7 +42,6 @@ export default class DropdownInput extends React.Component {
             [this.props.nameKey]: placeholder,
             [this.props.valueKey]: placeholder
         }]
-
         options = options.concat(...this.props.options.sort((a,b) => {  if (a[this.props.nameKey] > b[this.props.nameKey]) return 1; else return -1; }));
 
         return (
@@ -69,6 +66,6 @@ export default class DropdownInput extends React.Component {
                     )
                 }
             </select>
-    );
+        );
     }
-    }
+}
