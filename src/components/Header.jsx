@@ -4,7 +4,7 @@ import Logo from "./Logo";
 
 export default function Header(props) {
 
-    const logo = (!this.props.nologo) ? (
+    const logo = (!props.nologo) ? (
                     <div className={"ui header cards centered"} style={{ width: "100%", backgroundColor: "#FAFAFB" }} >
                         <Logo />
                     </div>): "";

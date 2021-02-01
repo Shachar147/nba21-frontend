@@ -6,6 +6,7 @@ import { Redirect } from 'react-router'
 import Logo from "../components/Logo";
 import {Link} from "react-router-dom";
 import {LOGIN_DELAY} from "../helpers/consts";
+import TextInput from "../components/TextInput";
 
 export default class LoginPage extends React.Component {
 
@@ -117,8 +118,18 @@ export default class LoginPage extends React.Component {
 
         let bottom = (message !== '' || error !== '') ? "-24px" : "0px";
 
-        let userStyle = (this.state.errorField.username) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
-        let passStyle = (this.state.errorField.password) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
+        const inputs = [
+            {
+                name: 'username',
+                type: 'text',
+                placeholder: 'Username',
+            },
+            {
+                name: 'password',
+                type: 'password',
+                placeholder: 'Password',
+            },
+        ];
 
         let buttonStyle = (this.state.validating) ? { opacity: 0.6 , cursor: "default" } : {};
 
@@ -130,18 +141,27 @@ export default class LoginPage extends React.Component {
                         <div className="ui segment">
                             {message}
                             {error}
-                            <div className="field">
-                                <div className="ui left icon input" style={{ width: "100%", marginBottom: "10px" }}>
-                                    <i className="user icon" />
-                                    <input disabled={this.state.validating} type="text" name="username" placeholder="Username" style={userStyle} value={this.state.username} onChange={(e) => { let errorField = this.state.errorField; errorField.username = false; this.setState({ username: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
-                                </div>
-                            </div>
-                            <div className="field">
-                                <div className="ui left icon input" style={{ width: "100%", marginBottom: "10px" }}>
-                                    <i className="lock icon" />
-                                    <input disabled={this.state.validating} type="password" name="password" placeholder="Password" style={passStyle} value={this.state.password} onChange={(e) => { let errorField = this.state.errorField; errorField.password = false; this.setState({ password: e.target.value, errorField: errorField }) } } onKeyDown={this.onKeyDown} />
-                                </div>
-                            </div>
+                            {
+                                inputs.map((input) => {
+                                    const { name, type, placeholder } = input;
+                                    return (
+                                        <TextInput
+                                            name={name}
+                                            type={type}
+                                            disabled={this.state.validating}
+                                            placeholder={placeholder}
+                                            error={this.state.errorField[name]}
+                                            value={this.state[name]}
+                                            onChange={(e) => {
+                                                let errorField = this.state.errorField;
+                                                errorField[name] = false;
+                                                this.setState({ [name]: e.target.value, errorField: errorField });
+                                            }}
+                                            onKeyDown={this.onKeyDown}
+                                        />
+                                    );
+                                })
+                            }
                             <div className="ui fluid large blue submit button" onClick={this.login} style={buttonStyle}>Login</div>
                         </div>
                         <div style={{ fontWeight: "normal", fontSize: "16px" }}>
