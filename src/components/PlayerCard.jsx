@@ -71,11 +71,11 @@ export default class PlayerCard extends React.Component {
             'Max Lose Streak': `(Max: ${this.props.max_lose_streak})`,
         };
 
-        const { highlight } = this.props;
-        if (highlight) {
+        const { highlights } = this.props;
+        if (highlights) {
             Object.keys(settings).map((name) => {
-                if(name === highlight){
-                    settings[name] = `<b>${settings[name]}</b>`
+                if(highlights.indexOf(name) !== -1){
+                    settings[name] = `<b><u>${settings[name]}</u></b>`
                 }
             });
         }

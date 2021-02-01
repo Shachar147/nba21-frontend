@@ -28,6 +28,8 @@ export function overallSort(a,b){
     return 0;
 }
 
+export const OVERALL_HIGHLIGHTS = ['Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts'];
+
 export function specificSort(key, a, b){
     const value1 = parseFloat(b[key]);
     const value2 = parseFloat(a[key]);
@@ -87,4 +89,12 @@ export function totalHomeGames(a,b){
 
 export function totalAwayGames(a,b){
     return specificSort('total_away_games',a,b);
+}
+
+export function totalScored(a,b){
+    return specificSort('total_scored',a,b);
+}
+
+export function totalSuffered(a,b){
+    return specificSort('total_suffered',a,b);
 }

@@ -11,10 +11,10 @@ import {DEFAULT_STATS_ORDER, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {
     _2kRatingSort,
     currentLoseStreakSort,
-    currentWinStreakSort, maxLoseStreakSort, maxWinStreakSort,
+    currentWinStreakSort, maxLoseStreakSort, maxWinStreakSort, OVERALL_HIGHLIGHTS,
     overallSort, totalAwayGames, totalDiffPerGameSort, totalDiffSort,
     totalGamesSort, totalHomeGames,
-    totalKnockoutsSort, totalSufferedKnockoutsSort,
+    totalKnockoutsSort, totalScored, totalSuffered, totalSufferedKnockoutsSort,
     totalWinsPercentsSort,
 } from "../../helpers/sort";
 import DropdownInput from "../../components/DropdownInput";
@@ -48,6 +48,8 @@ export default class OneOnOneStats extends React.Component {
                 { "2K Rating": _2kRatingSort },
                 { "Total Home Games": totalHomeGames },
                 { "Total Road Games": totalAwayGames },
+                { "Total Scored": totalScored },
+                { "Total Suffered": totalSuffered },
             ],
             "orderBy": DEFAULT_STATS_ORDER,
         };
@@ -266,6 +268,9 @@ export default class OneOnOneStats extends React.Component {
                 </div>
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
+                    <div className={"centered"} style={{ width: "100%", textAlign: "center" }}>
+                        Total Results: {players.length}
+                    </div>
                     { players.map((player,idx) => {
                         const _2k_rating = player['_2k_rating'] || 'N/A';
 
@@ -288,7 +293,7 @@ export default class OneOnOneStats extends React.Component {
                                 total_suffered={records[player.name].total_suffered}
                                 total_knockouts={records[player.name].total_knockouts}
                                 total_suffered_knockouts={records[player.name].total_suffered_knockouts}
-                                highlight={this.state.orderBy}
+                                highlights={(this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy]}
                                 win_streak={records[player.name].win_streak}
                                 lose_streak={records[player.name].lose_streak}
                                 max_win_streak={records[player.name].max_win_streak}
