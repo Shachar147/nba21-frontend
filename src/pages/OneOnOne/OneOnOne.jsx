@@ -382,7 +382,7 @@ export default class OneOnOne extends React.Component {
 
         let error = this.state.error;
         const is_loading = !this.state.loaded;
-        if (is_loading || 1) {
+        if (is_loading) {
             return (
                 <LoadingPage message={"Please wait while loading players..."} />
             );
