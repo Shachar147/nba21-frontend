@@ -224,7 +224,14 @@ export default class OneOnOneStats extends React.Component {
                                 total_games={records[player.name].total_games}
                                 home_road_games={`${records[player.name].total_home_games} - ${records[player.name].total_away_games}`}
                                 total_diff={`${records[player.name].total_diff} (${records[player.name].total_diff_per_game} per game)`}
+                                total_scored={records[player.name].total_scored}
+                                total_suffered={records[player.name].total_suffered}
                                 total_knockouts={records[player.name].total_knockouts}
+                                total_suffered_knockouts={records[player.name].total_suffered_knockouts}
+                                win_streak={records[player.name].win_streak}
+                                lose_streak={records[player.name].lose_streak}
+                                max_win_streak={records[player.name].max_win_streak}
+                                max_lose_streak={records[player.name].max_lose_streak}
                                 debut_year={player.debut_year}
                                 picture={player.picture}
                                 percents={player['3pt_percents']}

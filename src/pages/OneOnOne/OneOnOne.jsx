@@ -468,6 +468,7 @@ export default class OneOnOne extends React.Component {
         const statsStyle = {
             margin: "30px auto 20px",
             width: "40%",
+            minWidth: "700px",
             backgroundColor: "rgba(255,255,255,0.6)",
             padding: "20px",
             border: "1px solid #eaeaea",

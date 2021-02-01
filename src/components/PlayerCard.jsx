@@ -61,8 +61,13 @@ export default class PlayerCard extends React.Component {
         if (this.props.total_win_percents) details.push("Total Wins Percents: " + this.props.total_win_percents);
         if (this.props.total_win_percents) details.push("Total Games: " + this.props.total_games);
         if (this.props.home_road_games) details.push("Home/Road Games: " + this.props.home_road_games);
+        if (isDefined(this.props.win_streak)) { details.push("Win Streak: " + this.props.win_streak + " (Max:" + this.props.max_win_streak + ")"); }
+        if (isDefined(this.props.lose_streak)) { details.push("Lose Streak: " + this.props.lose_streak + " (Max: " + this.props.max_lose_streak + ")"); }
+
         if (isDefined(this.props.total_diff)) details.push("Total Diff: " + this.props.total_diff);
-        if (isDefined(this.props.total_knockouts)) details.push("Total Knockouts: " + this.props.total_knockouts);
+        if (isDefined(this.props.total_scored)) details.push("Total Scored/Suffered: " + this.props.total_scored + " - " + this.props.total_suffered);
+        if (isDefined(this.props.total_knockouts)) details.push("Total Knockouts Did/Suffered: " + this.props.total_knockouts + " - " + this.props.total_suffered_knockouts);
+
 
         // team
         if (this.props.details){
