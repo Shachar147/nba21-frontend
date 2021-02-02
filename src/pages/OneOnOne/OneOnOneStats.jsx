@@ -7,7 +7,7 @@ import ErrorPage from "../ErrorPage";
 
 import Header from "../../components/Header";
 import {apiGet} from "../../helpers/api";
-import {DEFAULT_STATS_ORDER, LOADER_DETAILS, UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import {DEFAULT_STATS_ORDER, LOADER_DETAILS, LOADING_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {
     _2kRatingSort,
     currentLoseStreakSort,
@@ -123,7 +123,10 @@ export default class OneOnOneStats extends React.Component {
                 self.setState({ error: req_error });
             },
             function() {
-                self.setState({ loaded1: true });
+
+                setTimeout(() => {
+                    self.setState({ loaded1: true })},
+                LOADING_DELAY);
             }
         );
 
@@ -151,7 +154,6 @@ export default class OneOnOneStats extends React.Component {
         })
 
         this.setState({ players, merged })
-
     }
 
     searchPlayers(event){
