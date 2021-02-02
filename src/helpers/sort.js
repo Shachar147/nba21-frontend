@@ -98,3 +98,7 @@ export function totalScored(a,b){
 export function totalSuffered(a,b){
     return specificSort('total_suffered',a,b);
 }
+
+export function average2kRatingSort(a,b){
+    return specificSort('avg_2k_rating',a,b);
+}

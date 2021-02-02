@@ -9,7 +9,7 @@ import Header from "../../components/Header";
 import {apiGet} from "../../helpers/api";
 import {DEFAULT_STATS_ORDER, LOADER_DETAILS, LOADING_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {
-    _2kRatingSort,
+    _2kRatingSort, average2kRatingSort,
     currentLoseStreakSort,
     currentWinStreakSort, maxLoseStreakSort, maxWinStreakSort, OVERALL_HIGHLIGHTS,
     overallSort, totalAwayGames, totalDiffPerGameSort, totalDiffSort,
@@ -50,6 +50,7 @@ export default class OneOnOneStats extends React.Component {
                 { "Total Road Games": totalAwayGames },
                 { "Total Scored": totalScored },
                 { "Total Suffered": totalSuffered },
+                { "Average Opponent 2K Rating": average2kRatingSort },
             ],
             "orderBy": DEFAULT_STATS_ORDER,
             loaderDetails: LOADER_DETAILS(),
@@ -257,7 +258,7 @@ export default class OneOnOneStats extends React.Component {
                         options={orderByOptions}
                         label={"Order By: "}
                         name={"orderBy"}
-                        width={"200px"}
+                        width={"230px"}
                         nameKey={"name"}
                         valueKey={"name"}
                         idKey={"id"}
@@ -283,6 +284,7 @@ export default class OneOnOneStats extends React.Component {
                                 team={player.team.name}
                                 position={player.position}
                                 _2k_rating={_2k_rating}
+                                avg_opponent_2k_rating={records[player.name].avg_2k_rating}
                                 // weight_kgs={player.weight_kgs}
                                 // height_meters={player.height_meters}
                                 place={(idx+1)}

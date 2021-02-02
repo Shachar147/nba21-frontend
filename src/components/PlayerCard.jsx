@@ -60,6 +60,8 @@ export default class PlayerCard extends React.Component {
             'Current Lose Streak': this.props.lose_streak,
             'Total Diff': this.props.total_diff,
 
+            'Average Opponent 2K Rating': this.props.avg_opponent_2k_rating,
+
             'Total Diff Per Game': `(${this.props.total_diff_per_game} per game)`,
             'Total Home Games': this.props.total_home_games,
             'Total Road Games': this.props.total_away_games,
@@ -84,6 +86,7 @@ export default class PlayerCard extends React.Component {
         if (this.props.place) details.push(this.props.place + nth(this.props.place));
         if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
         if (this.props._2k_rating) details.push(`2K Rating: ${settings['2K Rating']}`);
+        if (this.props.avg_opponent_2k_rating) details.push(`Average Opponent 2K Rating: ${settings['Average Opponent 2K Rating']}`);
         if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
         if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs");
 
