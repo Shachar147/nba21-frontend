@@ -7,7 +7,7 @@ import ErrorPage from "../ErrorPage";
 
 import Header from "../../components/Header";
 import {apiGet} from "../../helpers/api";
-import {DEFAULT_STATS_ORDER, UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import {DEFAULT_STATS_ORDER, LOADER_DETAILS, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {
     _2kRatingSort,
     currentLoseStreakSort,
@@ -52,6 +52,7 @@ export default class OneOnOneStats extends React.Component {
                 { "Total Suffered": totalSuffered },
             ],
             "orderBy": DEFAULT_STATS_ORDER,
+            loaderDetails: LOADER_DETAILS(),
         };
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -198,7 +199,7 @@ export default class OneOnOneStats extends React.Component {
         const is_loading = !(this.state.loaded1 && this.state.loaded2 && this.state.merged);
         if (is_loading) {
             return (
-                <LoadingPage message={"Please wait while loading players..."} />
+                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
             );
         } else if (error || this.state.players.length === 0) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";

@@ -5,7 +5,7 @@ import {apiGet, apiPost} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
-import {APP_BACKGROUND_COLOR, LOADING_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import {APP_BACKGROUND_COLOR, LOADER_DETAILS, LOADING_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {Link} from "react-router-dom";
 import OneOnOneStats from "./OneOnOneStats";
 
@@ -56,6 +56,7 @@ export default class OneOnOne extends React.Component {
             met_each_other: 0,
 
             view_stats: false,
+            loaderDetails: LOADER_DETAILS(),
         };
 
         this.restart = this.restart.bind(this);
@@ -386,7 +387,7 @@ export default class OneOnOne extends React.Component {
         const is_loading = !this.state.loaded;
         if (is_loading) {
             return (
-                <LoadingPage message={"Please wait while loading players..."} />
+                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
             );
         } else if (error || this.state.players.length === 0) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";

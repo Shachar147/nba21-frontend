@@ -5,7 +5,13 @@ import {apiGet} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
-import {APP_BACKGROUND_COLOR, LOADING_DELAY, PLAYER_NO_PICTURE, UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import {
+    APP_BACKGROUND_COLOR,
+    LOADER_DETAILS,
+    LOADING_DELAY,
+    PLAYER_NO_PICTURE,
+    UNAUTHORIZED_ERROR
+} from "../../helpers/consts";
 
 export default class Random extends React.Component {
 
@@ -26,6 +32,8 @@ export default class Random extends React.Component {
             winner: "",
             loser: "",
             saved: false,
+
+            loaderDetails: LOADER_DETAILS(),
         };
 
         this.restart = this.restart.bind(this);
@@ -181,7 +189,7 @@ export default class Random extends React.Component {
         const is_loading = !this.state.loaded;
         if (is_loading) {
             return (
-                <LoadingPage message={"Please wait while loading teams..."} />
+                <LoadingPage message={"Please wait while loading teams..."} loaderDetails={this.state.loaderDetails} />
             );
         } else if (error || this.state.teams.length === 0) {
             error = error || "Oops, it seems like no teams loaded :(<Br>It's probably related to a server error";
