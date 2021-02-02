@@ -5,7 +5,7 @@ import {apiGet} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
-import {APP_BACKGROUND_COLOR, PLAYER_NO_PICTURE, UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import {APP_BACKGROUND_COLOR, LOADING_DELAY, PLAYER_NO_PICTURE, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 
 export default class Random extends React.Component {
 
@@ -52,7 +52,9 @@ export default class Random extends React.Component {
                 self.setState({ error: req_error });
             },
             function() {
-                self.setState({ loaded: true });
+                setTimeout(() => {
+                    self.setState({ loaded: true })},
+                LOADING_DELAY);
             }
         );
     }

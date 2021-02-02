@@ -4,6 +4,7 @@ export const MIN_ROUND_LENGTH = 3;
 export const MAX_ROUND_LENGTH = 100;
 export const ROUND_DEFAULT_LENGTH = 3;
 export const LOGIN_DELAY = 500;
+export const LOADING_DELAY = 1500; // to be able to see the loader
 
 // pictures and background
 export const RANDOM_PLAYER_PICTURE = '/nopic.png';

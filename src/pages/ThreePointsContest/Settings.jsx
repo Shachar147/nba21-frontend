@@ -5,7 +5,7 @@ import SelectedPlayers from "../../components/SelectedPlayers";
 import Game from './Game';
 import './three.points.contest.css';
 import {
-    COMPUTER_PLAYER_PICTURE, DEFAULT_COMPUTER_LEVEL,
+    COMPUTER_PLAYER_PICTURE, DEFAULT_COMPUTER_LEVEL, LOADER_DETAILS, LOADING_DELAY,
     MAX_ROUND_LENGTH,
     MIN_ROUND_LENGTH,
     RANDOM_PLAYER_PICTURE,
@@ -57,7 +57,8 @@ export default class Settings extends React.Component {
             game_started: false,
 
             loaded: false,
-            error: undefined
+            error: undefined,
+            loaderDetails: LOADER_DETAILS()
         };
 
         this.toggleState = this.toggleState.bind(this);
@@ -84,7 +85,9 @@ export default class Settings extends React.Component {
                 self.setState({ error: req_error });
             },
             function() {
-                self.setState({ loaded: true });
+                setTimeout(() => {
+                    self.setState({ loaded: true })},
+                LOADING_DELAY);
             }
         );
     }
@@ -304,7 +307,7 @@ export default class Settings extends React.Component {
         const is_loading = !this.state.loaded;
         if (is_loading) {
             return (
-                <LoadingPage message={"Please wait while loading players..."} />
+                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
             );
         } else if (error || this.state.players.length === 0) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";

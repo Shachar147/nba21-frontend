@@ -16,7 +16,7 @@ export default class LoadingPage extends React.Component {
         const title = this.props.title || "Loading";
         const message = this.props.message || "Please wait while loading...";
 
-        const loader_details = LOADER_DETAILS();
+        const loader_details = this.props.loaderDetails || LOADER_DETAILS();
 
         return (
             <div>
