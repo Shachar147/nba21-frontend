@@ -1,0 +1,53 @@
+import React from "react";
+
+
+export default class StatsTable extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {};
+
+    }
+
+    render() {
+
+        const { title, description, hidden, cols, stats, marginTop } = this.props;
+
+        return (
+            <div style={{ width:"100%", textAlign: "center" }}>
+                <div className="ui header" style={{ width:"100%", textAlign: "center", marginBottom: "0px", marginTop: marginTop }}>{title}</div>
+                <div style={{ display: "block", width: "100%", textAlign: "center" }}>
+                    <ul style={{ padding: "0px", }}>
+                        <li style={{ listStyle: "none" }}>{description}</li>
+                        {(hidden) ? "" :
+                            (<table className="ui celled table">
+                                <thead>
+                                <tr>
+                                    <th>{ cols[0] }</th>
+                                    <th>{ cols[1] }</th>
+                                    <th>{ cols[2] }</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {Object.keys(stats).map((stat) => {
+                                    const values = stats[stat];
+                                    const value1 = (values.length > 0) ? values[0] : "N/A";
+                                    const value2 = (values.length > 1) ? values[1] : "N/A";
+                                    if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
+                                        return (<tr>
+                                            <td style={{ fontWeight: "bold" }}>{stat}</td>
+                                            <td>{value1}</td>
+                                            <td>{value2}</td>
+                                        </tr>)
+                                })}
+                                </tbody>
+                            </table>)}
+
+                    </ul>
+                </div>
+            </div>
+        )
+
+    }
+}

@@ -8,6 +8,8 @@ import ErrorPage from "../ErrorPage";
 import {APP_BACKGROUND_COLOR, LOADER_DETAILS, LOADING_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {Link} from "react-router-dom";
 import OneOnOneStats from "./OneOnOneStats";
+import StatsTable from "../../components/StatsTable";
+import ButtonInput from "../../components/ButtonInput";
 
 export default class OneOnOne extends React.Component {
 
@@ -70,8 +72,6 @@ export default class OneOnOne extends React.Component {
         let self = this;
         apiGet(this,
             `/player/popular`,
-            // `/player/popular?names=James Harden,Stephen Curry,LeBron James,Klay Thompson,Tristan Thompson,Kevin Durant`,
-            // `/player/popular?names=Kevin Durant,James Harden`,
             function(res) {
                 let players = res.data;
                 self.setState({ players });
@@ -446,16 +446,6 @@ export default class OneOnOne extends React.Component {
                     />
         })
 
-        const againstStyle = {
-            margin: 0,
-            position: "absolute",
-            top: "50%",
-            // top: "10px",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "auto",
-        };
-
         let bottom = 75;
         let teams = Object.keys(this.state.scores_history);
         if (teams.length > 0) {
@@ -465,8 +455,6 @@ export default class OneOnOne extends React.Component {
                 bottom += 21;
             }
         }
-
-        // const { curr_stats, player_stats } = this.state;
 
         const statsStyle = {
             margin: "30px auto 20px",
@@ -480,8 +468,8 @@ export default class OneOnOne extends React.Component {
 
         const { met_each_other } = this.state;
         const plural = (met_each_other > 1) ? "s" : "";
-        let matchups_title = `These players met each other ${met_each_other} time${plural}.`;
-        if (met_each_other === 0) matchups_title = "This is the first time these players meet each other.";
+        let matchups_description = `These players met each other ${met_each_other} time${plural}.`;
+        if (met_each_other === 0) matchups_description = "This is the first time these players meet each other.";
 
         return (
 
@@ -489,96 +477,47 @@ export default class OneOnOne extends React.Component {
                 <Header />
 
                 <div className="ui link cards centered" style={statsStyle}>
-
-                    {/*matchups stats*/}
-                    <div className="ui header" style={{ width:"100%", textAlign: "center", marginBottom: "0px" }}>Previous Matchups Stats</div>
-                    <div style={{ display: "block", width: "100%", textAlign: "center" }}>
-                        <ul style={{ padding: "0px", }}>
-                            {/*{curr_stats.map((iter, idx) => {*/}
-                            {/*    return (<li key={idx} className={(iter === "<br>") ? "" : "arrow"} style={{ listStyle: "none" }} dangerouslySetInnerHTML={{ __html: iter }} />);*/}
-                            {/*})}*/}
-                            <li style={{ listStyle: "none" }}>{matchups_title}</li>
-                            {(met_each_other === 0) ? "" :
-                                (<table className="ui celled table">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>{ this.state.player1.name }</th>
-                                        <th>{ this.state.player2.name }</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {Object.keys(this.state.matchups_values).map((stat) => {
-                                        const values = this.state.matchups_values[stat];
-                                        const value1 = (values.length > 0) ? values[0] : "N/A";
-                                        const value2 = (values.length > 1) ? values[1] : "N/A";
-                                        if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
-                                            return (<tr>
-                                                <td style={{ fontWeight: "bold" }}>{stat}</td>
-                                                <td>{value1}</td>
-                                                <td>{value2}</td>
-                                            </tr>)
-                                    })}
-                                    </tbody>
-                                </table>)}
-
-                        </ul>
-                    </div>
-
-                    {/*player stats*/}
-                    <div className="ui header" style={{ width:"100%", textAlign: "center", marginBottom: "0px", marginTop: "10px" }}>Players Individual Stats</div>
-                    <div style={{ display: "block", width: "100%", textAlign: "center" }}>
-                        <ul style={{ padding: "0px", }}>
-                            {/*{player_stats.map((iter, idx) => {*/}
-                            {/*    return (<li key={idx} className={(iter === "<br>") ? "" : "arrow"} style={{ listStyle: "none" }} dangerouslySetInnerHTML={{ __html: iter }} />);*/}
-                            {/*})}*/}
-
-                            <table className="ui celled table">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>{ this.state.player1.name }</th>
-                                    <th>{ this.state.player2.name }</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    {Object.keys(this.state.player_stats_values).map((stat) => {
-                                        const values = this.state.player_stats_values[stat];
-                                        const value1 = (values.length > 0) ? values[0] : "N/A";
-                                        const value2 = (values.length > 1) ? values[1] : "N/A";
-                                        if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
-                                        return (<tr>
-                                                    <td style={{ fontWeight: "bold" }}>{stat}</td>
-                                                    <td>{value1}</td>
-                                                    <td>{value2}</td>
-                                                </tr>)
-                                    })}
-                                </tbody>
-                            </table>
-
-                        </ul>
-                    </div>
+                    <StatsTable
+                        title={"Previous Matchups Stats"}
+                        description={matchups_description}
+                        hidden={(met_each_other === 0)}
+                        cols={["",this.state.player1.name,this.state.player2.name]}
+                        stats={this.state.matchups_values}
+                    />
+                    <StatsTable
+                        title={"Players Individual Stats"}
+                        marginTop="10px"
+                        cols={["",this.state.player1.name,this.state.player2.name]}
+                        stats={this.state.player_stats_values}
+                    />
                 </div>
 
                 <div className="ui link cards centered" style={{margin: "auto", marginBottom:"5px"}}>
-                    <button className={"ui button basic blue"} onClick={this.restart}>
-                        Restart Game
-                    </button>
-                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.init}>
-                        New Game
-                    </button>
-                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={() => { this.setState({ view_stats: true }) }}>
-                        {/*<Link to={"/1on1/stats"}>View Stats</Link>*/}
-                        View Stats
-                    </button>
+                    <ButtonInput
+                        text={"Restart Game"}
+                        onClick={this.restart}
+                    />
+                    <ButtonInput
+                        text={"New Game"}
+                        style={{ marginLeft:"5px" }}
+                        onClick={this.init}
+                    />
+                    <ButtonInput
+                        text={"View Stats"}
+                        style={{ marginLeft:"5px" }}
+                        onClick={() => { this.setState({ view_stats: true }) }}
+                    />
                 </div>
 
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
-                        <button className={"ui button basic blue"} onClick={this.saveResult} style={{ position: "absolute", bottom: bottom }} disabled={this.state.saved || this.state.saving} >
-                            Save
-                        </button>
+                        <ButtonInput
+                            text={"Save"}
+                            style={{ position: "absolute", bottom: bottom }}
+                            onClick={this.saveResult}
+                            disabled={this.state.saved || this.state.saving}
+                        />
                     </div>
                     {blocks[1]}
                 </div>
