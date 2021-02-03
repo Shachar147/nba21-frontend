@@ -14,12 +14,17 @@ export default class StatsTable extends React.Component {
 
         const { title, description, hidden, cols, stats, marginTop } = this.props;
 
+        const description_bullets = (typeof(description) === "object") ? description : [description];
+
+
         return (
             <div style={{ width:"100%", textAlign: "center" }}>
                 <div className="ui header" style={{ width:"100%", textAlign: "center", marginBottom: "0px", marginTop: marginTop }}>{title}</div>
                 <div style={{ display: "block", width: "100%", textAlign: "center" }}>
                     <ul style={{ padding: "0px", }}>
-                        <li style={{ listStyle: "none" }}>{description}</li>
+                        {description_bullets.map((bullet,idx) => { return (
+                            <li key={`bullet_${idx}`} style={{ listStyle: "none" }}>{bullet}</li>
+                        )})}
                         {(hidden) ? "" :
                             (<table className="ui celled table">
                                 <thead>

@@ -61,3 +61,7 @@ export function toPascalCase(string) {
         .replace(new RegExp(/\s/, 'g'), '')
         .replace(new RegExp(/\w/), s => s.toUpperCase());
 }
+
+export function formatDate(dt){
+    return dt.toISOString().slice(0,10).split('-').reverse().join('/');
+}

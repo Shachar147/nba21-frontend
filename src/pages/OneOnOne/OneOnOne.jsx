@@ -1,12 +1,17 @@
 import React from 'react';
-import {getRandomElement, isDefined} from "../../helpers/utils";
+import {formatDate, getRandomElement, isDefined} from "../../helpers/utils";
 import Header from "../../components/Header";
 import {apiGet, apiPost} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
-import {APP_BACKGROUND_COLOR, LOADER_DETAILS, LOADING_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
-import {Link} from "react-router-dom";
+import {
+    APP_BACKGROUND_COLOR,
+    LOADER_DETAILS,
+    LOADING_DELAY,
+    TOP_STATS_NUMBER,
+    UNAUTHORIZED_ERROR
+} from "../../helpers/consts";
 import OneOnOneStats from "./OneOnOneStats";
 import StatsTable from "../../components/StatsTable";
 import ButtonInput from "../../components/ButtonInput";
@@ -59,6 +64,12 @@ export default class OneOnOne extends React.Component {
 
             view_stats: false,
             loaderDetails: LOADER_DETAILS(),
+            general_stats: {
+                'total_games': 0,
+                'total_games_per_day': {},
+                'total_points': 0,
+                'total_points_per_day': {},
+            }
         };
 
         this.restart = this.restart.bind(this);
@@ -216,7 +227,26 @@ export default class OneOnOne extends React.Component {
         player_stats_values['Total Diff'] = [stats1.total_diff, stats2.total_diff];
         player_stats_values['Total Diff Per Game'] = [stats1.total_diff_per_game, stats2.total_diff_per_game];
 
-        this.setState({ curr_stats, player_stats, player_stats_values, matchups_values, met_each_other })
+        // general stats
+        let general_stats = {
+            'total_games': 0,
+            'total_games_per_day': {},
+            'total_points': 0,
+            'total_points_per_day': {},
+        };
+        Object.keys(stats).forEach((player) => {
+            stats[player].records.forEach((record) => {
+                general_stats['total_games'] += 0.5;
+                general_stats['total_points'] += ((record.score1 + record.score2)/2);
+                const dt = formatDate(new Date(record.addedAt));
+                general_stats['total_games_per_day'][dt] = general_stats['total_games_per_day'][dt] || 0;
+                general_stats['total_games_per_day'][dt] += 0.5;
+                general_stats['total_points_per_day'][dt] = general_stats['total_points_per_day'][dt] || 0;
+                general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2)/2);
+            })
+        });
+
+        this.setState({ curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats })
     }
 
     async init(){
@@ -471,14 +501,64 @@ export default class OneOnOne extends React.Component {
         let matchups_description = `These players met each other ${met_each_other} time${plural}.`;
         if (met_each_other === 0) matchups_description = "This is the first time these players meet each other.";
 
+        // one on one stats
+        const { general_stats } = this.state;
+        let general_stats_block = null;
+
+        if (general_stats['total_games'] > 0){
+
+            const general_stats_lines = [];
+            const dtToday = formatDate(new Date());
+            const total_games_today = general_stats['total_games_per_day'][dtToday] || 0;
+            const total_points_today = general_stats['total_points_per_day'][dtToday] || 0;
+            general_stats_lines.push(`Total Games: ${general_stats['total_games']}`);
+            general_stats_lines.push(`Total Points: ${general_stats['total_points']}`);
+            general_stats_lines.push(`Total Games Today: ${total_games_today}`);
+            general_stats_lines.push(`Total Points Today: ${total_points_today}`);
+
+            const ppd = Object.keys(general_stats['total_points_per_day']).sort((a,b) => {
+               return  general_stats['total_points_per_day'][b] - general_stats['total_points_per_day'][a];
+            });
+
+            const gpd = Object.keys(general_stats['total_games_per_day']).sort((a,b) => {
+                return  general_stats['total_games_per_day'][b] - general_stats['total_games_per_day'][a];
+            });
+
+            general_stats_lines.push("----");
+            general_stats_lines.push(`Days with most games:`);
+            if (gpd.length === 0){ general_stats_lines.push('-'); }
+            for (let i=0; i<gpd.length && i<=TOP_STATS_NUMBER; i++){
+                general_stats_lines.push(`${gpd[i]} - ${general_stats['total_games_per_day'][gpd[i]]}`);
+            }
+
+            general_stats_lines.push("----");
+            general_stats_lines.push(`Days with most points:`);
+            if (ppd.length === 0){ general_stats_lines.push('-'); }
+            for (let i=0; i<ppd.length && i<=TOP_STATS_NUMBER; i++){
+                general_stats_lines.push(`${ppd[i]} - ${general_stats['total_points_per_day'][ppd[i]]}`);
+            }
+
+            general_stats_block = (
+                <StatsTable
+                    title={"One on One Stats"}
+                    description={general_stats_lines}
+                    hidden={true}
+                    // cols={[]}
+                    // stats={{}}
+                />
+            );
+        }
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
                 <Header />
 
                 <div className="ui link cards centered" style={statsStyle}>
+                    {general_stats_block}
                     <StatsTable
                         title={"Previous Matchups Stats"}
+                        marginTop="10px"
                         description={matchups_description}
                         hidden={(met_each_other === 0)}
                         cols={["",this.state.player1.name,this.state.player2.name]}

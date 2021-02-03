@@ -54,3 +54,5 @@ export const LOADER_DETAILS = () => {
     return option;
 
 }
+
+export const TOP_STATS_NUMBER = 3;

@@ -188,7 +188,6 @@ export default class OneOnOneStats extends React.Component {
                 return leaderboard.indexOf(a.name) - leaderboard.indexOf(b.name);
             }
         })
-        return this.state.players;
     }
 
     render() {
@@ -246,7 +245,6 @@ export default class OneOnOneStats extends React.Component {
                     </button>
 
                     <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.props.onBack}>
-                        {/*<Link to={"/1on1"}>Go Back</Link>*/}
                         Go Back
                     </button>
                 </div>
