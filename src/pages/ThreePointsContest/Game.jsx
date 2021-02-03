@@ -1,8 +1,8 @@
 import React from 'react';
 import {deepClone, getRandomElement, shuffle} from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
-import Header from "../../components/Header";
-import ButtonInput from "../../components/ButtonInput";
+import Header from "../../components/shared/Header";
+import ButtonInput from "../../components/shared/ButtonInput";
 
 export default class Game extends React.Component {
 

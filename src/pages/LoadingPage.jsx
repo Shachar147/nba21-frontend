@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/shared/Header";
 import {LOADER_DETAILS} from "../helpers/consts";
 
 export default class LoadingPage extends React.Component {

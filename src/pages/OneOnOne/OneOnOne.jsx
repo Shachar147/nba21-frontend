@@ -1,6 +1,6 @@
 import React from 'react';
 import {formatDate, getRandomElement, isDefined} from "../../helpers/utils";
-import Header from "../../components/Header";
+import Header from "../../components/shared/Header";
 import {apiGet, apiPost} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
@@ -13,7 +13,7 @@ import {
 } from "../../helpers/consts";
 import OneOnOneStats from "./OneOnOneStats";
 import StatsTable from "../../components/StatsTable";
-import ButtonInput from "../../components/ButtonInput";
+import ButtonInput from "../../components/shared/ButtonInput";
 import {buildStatsInformation, BuildStatsTable, statsStyle} from "./OneOnOneHelper";
 
 export default class OneOnOne extends React.Component {

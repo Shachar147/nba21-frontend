@@ -7,15 +7,12 @@ export default class StatsTable extends React.Component {
         super(props);
 
         this.state = {};
-
     }
 
     render() {
 
         const { title, description, hidden, cols, stats, marginTop } = this.props;
-
         const description_bullets = (typeof(description) === "object") ? description : [description];
-
 
         return (
             <div style={{ width:"100%", textAlign: "center" }}>

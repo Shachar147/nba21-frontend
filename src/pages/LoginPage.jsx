@@ -3,10 +3,10 @@ import axios from "axios";
 import {getServerAddress} from "../config/config";
 import {setToken} from "../helpers/auth";
 import { Redirect } from 'react-router'
-import Logo from "../components/Logo";
+import Logo from "../components/shared/Logo";
 import {Link} from "react-router-dom";
 import {LOGIN_DELAY} from "../helpers/consts";
-import TextInput from "../components/TextInput";
+import TextInput from "../components/shared/TextInput";
 
 export default class LoginPage extends React.Component {
 
