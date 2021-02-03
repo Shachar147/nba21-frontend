@@ -339,10 +339,10 @@ export default class OneOnOne extends React.Component {
                         debut_year={player.debut_year}
                         picture={player.picture}
 
-                        win_streak={stats[player.name]?.win_streak}
-                        max_win_streak={stats[player.name]?.max_win_streak}
-                        lose_streak={stats[player.name]?.lose_streak}
-                        max_lose_streak={stats[player.name]?.max_lose_streak}
+                        win_streak={stats[player.name]?.win_streak || "0"}
+                        max_win_streak={stats[player.name]?.max_win_streak || "0"}
+                        lose_streak={stats[player.name]?.lose_streak || "0"}
+                        max_lose_streak={stats[player.name]?.max_lose_streak || "0"}
 
                         _2k_rating={_2k_rating}
                         percents={player['3pt_percents']}

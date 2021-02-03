@@ -334,7 +334,12 @@ export default class OneOnOneStats extends React.Component {
                             />
                         );
                     })}
-                    {(players.length === 0) ? <div style={{ marginTop: "20px"}}>No Results Found for "{this.state.keyword}"</div> : "" }
+                    {(players.length === 0) ? <div style={{ marginTop: "20px"}}>
+                        {
+                            (this.state.keyword.length === 0) ? "Oops, it seems like you didn't played 1 on 1 yet, so there is no player in this list" :
+                            `No Results Found for "${this.state.keyword}"`
+                        }
+                    </div> : "" }
                 </div>
             </div>
         )
