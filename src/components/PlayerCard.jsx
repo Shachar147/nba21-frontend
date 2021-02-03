@@ -1,5 +1,7 @@
 import React from "react";
 import {
+    ICE_COLD_COLOR, ICE_COLD_ICON, ICE_COLD_STYLE,
+    ICE_COLD_THRESHOLD,
     LOST_X_IMAGE,
     ON_FIRE_COLOR,
     ON_FIRE_ICON,
@@ -82,10 +84,14 @@ export default class PlayerCard extends React.Component {
             'Max Lose Streak': `(Max: ${this.props.max_lose_streak})`,
         };
 
-        // on fire
+        // on fire / ice cold
         let onfire = "";
+        let icecold = "";
         if (this.props.win_streak >= ON_FIRE_THRESHOLD){
             onfire = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img style="${ON_FIRE_STYLE}" src="${ON_FIRE_ICON}" /></span>`
+        }
+        if (this.props.lose_streak >= ICE_COLD_THRESHOLD){
+            icecold = ` <span style="color:${ICE_COLD_COLOR}">Ice Cold <img style="${ICE_COLD_STYLE}" src="${ICE_COLD_ICON}" /></span>`
         }
 
         const { highlights } = this.props;
@@ -110,7 +116,7 @@ export default class PlayerCard extends React.Component {
         if (this.props.total_games) details.push(`Total Games: ${settings['Total Games']}`);
         if (isDefined(this.props.total_home_games) && isDefined(this.props.total_away_games)) details.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
         if (isDefined(this.props.win_streak)) { details.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
-        if (isDefined(this.props.lose_streak)) { details.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}`); }
+        if (isDefined(this.props.lose_streak)) { details.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}` + icecold); }
         if (isDefined(this.props.total_diff)) details.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
         if (isDefined(this.props.total_scored)) details.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
         if (isDefined(this.props.total_knockouts)) details.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);

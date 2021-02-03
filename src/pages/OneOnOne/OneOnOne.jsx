@@ -324,7 +324,7 @@ export default class OneOnOne extends React.Component {
             this.initStats();
         }
 
-        const self = this;
+        const { stats } = this.state;
 
         const blocks =
         [this.state.player1, this.state.player2].map((player, idx) => {
@@ -338,21 +338,27 @@ export default class OneOnOne extends React.Component {
                         height_meters={player.height_meters}
                         debut_year={player.debut_year}
                         picture={player.picture}
+
+                        win_streak={stats[player.name]?.win_streak}
+                        max_win_streak={stats[player.name]?.max_win_streak}
+                        lose_streak={stats[player.name]?.lose_streak}
+                        max_lose_streak={stats[player.name]?.max_lose_streak}
+
                         _2k_rating={_2k_rating}
                         percents={player['3pt_percents']}
                         className={"in-game"}
                         style={{ cursor: "default", textAlign: "left" }}
-                        singleShot={self.state.scores[player.name]}
-                        singleRounds={self.state.scores_history[player.name]}
+                        singleShot={this.state.scores[player.name]}
+                        singleRounds={this.state.scores_history[player.name]}
                         onChange={(e) => {
-                            let scores = self.state.scores;
+                            let scores = this.state.scores;
                             scores[player.name] = Number(Math.max(0,e.target.value));
-                            self.setState({ scores });
+                            this.setState({ scores });
                         }}
-                        lost={(self.state.saved && self.state.loser === player.name)}
-                        winner={(self.state.saved && self.state.winner === player.name)}
+                        lost={(this.state.saved && this.state.loser === player.name)}
+                        winner={(this.state.saved && this.state.winner === player.name)}
                         onReplace={(e) => {
-                            self.replaceOne(idx);
+                            this.replaceOne(idx);
                         }}
 
                         all_players={this.state.players}
