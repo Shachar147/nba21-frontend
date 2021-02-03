@@ -62,7 +62,7 @@ export default class PlayerCard extends React.Component {
             'Current Lose Streak': this.props.lose_streak,
             'Total Diff': this.props.total_diff,
 
-            'Average Opponent 2K Rating': this.props.avg_opponent_2k_rating.toFixed(0),
+            'Average Opponent 2K Rating': this.props.avg_opponent_2k_rating?.toFixed(0),
 
             'Total Diff Per Game': `(${this.props.total_diff_per_game} per game)`,
             'Total Home Games': this.props.total_home_games,
@@ -128,7 +128,7 @@ export default class PlayerCard extends React.Component {
             input_style.width = "100%";
             shoot = (
                <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", paddingBottom: "10px", marginBottom: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
-                   <input type={"number"} value={this.props.singleShot} min={0} onChange={this.props.onChange} style={input_style}/>
+                   <input type={"number"} value={this.props.singleShot} min={0} onChange={(e) => { e.target.value = Number(e.target.value); this.props.onChange(e);}} style={input_style}/>
                </div>
             );
         }
