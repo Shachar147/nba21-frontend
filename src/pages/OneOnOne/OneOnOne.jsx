@@ -9,12 +9,12 @@ import {
     APP_BACKGROUND_COLOR,
     LOADER_DETAILS,
     LOADING_DELAY,
-    TOP_STATS_NUMBER,
     UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
 import OneOnOneStats from "./OneOnOneStats";
 import StatsTable from "../../components/StatsTable";
 import ButtonInput from "../../components/ButtonInput";
+import {BuildStatsTable, statsStyle} from "./OneOnOneHelper";
 
 export default class OneOnOne extends React.Component {
 
@@ -486,68 +486,13 @@ export default class OneOnOne extends React.Component {
             }
         }
 
-        const statsStyle = {
-            margin: "30px auto 20px",
-            width: "40%",
-            minWidth: "700px",
-            backgroundColor: "rgba(255,255,255,0.6)",
-            padding: "20px",
-            border: "1px solid #eaeaea",
-            borderRadius: "20px",
-        }
-
         const { met_each_other } = this.state;
         const plural = (met_each_other > 1) ? "s" : "";
         let matchups_description = `These players met each other ${met_each_other} time${plural}.`;
         if (met_each_other === 0) matchups_description = "This is the first time these players meet each other.";
 
         // one on one stats
-        const { general_stats } = this.state;
-        let general_stats_block = null;
-
-        if (general_stats['total_games'] > 0){
-
-            const general_stats_lines = [];
-            const dtToday = formatDate(new Date());
-            const total_games_today = general_stats['total_games_per_day'][dtToday] || 0;
-            const total_points_today = general_stats['total_points_per_day'][dtToday] || 0;
-            general_stats_lines.push(`Total Games: ${general_stats['total_games']}`);
-            general_stats_lines.push(`Total Points: ${general_stats['total_points']}`);
-            general_stats_lines.push(`Total Games Today: ${total_games_today}`);
-            general_stats_lines.push(`Total Points Today: ${total_points_today}`);
-
-            const ppd = Object.keys(general_stats['total_points_per_day']).sort((a,b) => {
-               return  general_stats['total_points_per_day'][b] - general_stats['total_points_per_day'][a];
-            });
-
-            const gpd = Object.keys(general_stats['total_games_per_day']).sort((a,b) => {
-                return  general_stats['total_games_per_day'][b] - general_stats['total_games_per_day'][a];
-            });
-
-            general_stats_lines.push("----");
-            general_stats_lines.push(`Days with most games:`);
-            if (gpd.length === 0){ general_stats_lines.push('-'); }
-            for (let i=0; i<gpd.length && i<=TOP_STATS_NUMBER; i++){
-                general_stats_lines.push(`${gpd[i]} - ${general_stats['total_games_per_day'][gpd[i]]}`);
-            }
-
-            general_stats_lines.push("----");
-            general_stats_lines.push(`Days with most points:`);
-            if (ppd.length === 0){ general_stats_lines.push('-'); }
-            for (let i=0; i<ppd.length && i<=TOP_STATS_NUMBER; i++){
-                general_stats_lines.push(`${ppd[i]} - ${general_stats['total_points_per_day'][ppd[i]]}`);
-            }
-
-            general_stats_block = (
-                <StatsTable
-                    title={"One on One Stats"}
-                    description={general_stats_lines}
-                    hidden={true}
-                    // cols={[]}
-                    // stats={{}}
-                />
-            );
-        }
+        let general_stats_block = BuildStatsTable(this.state.general_stats);
 
         return (
 

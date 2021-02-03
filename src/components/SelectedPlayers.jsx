@@ -1,5 +1,6 @@
 import React from "react";
 import {PLAYER_NO_PICTURE} from "../helpers/consts";
+import ButtonInput from "./ButtonInput";
 
 export default class SelectedPlayers extends React.Component {
 
@@ -18,13 +19,19 @@ export default class SelectedPlayers extends React.Component {
             <div>
                 <div style={{margin: "20px"}}>
 
-                    <button className={"ui button basic tiny blue"} style={{ margin:"0px 5px" }} disabled={!this.props.enabled} onClick={this.props.onAddRandom}>
-                        + Random
-                    </button>
+                    <ButtonInput
+                        text={"+ Random"}
+                        style={{ margin:"0px 5px" }}
+                        disabled={!this.props.enabled}
+                        onClick={this.props.onAddRandom}
+                        />
+                    <ButtonInput
+                        text={"+ Computer"}
+                        style={{ margin:"0px 5px" }}
+                        disabled={!this.props.enabled}
+                        onClick={this.props.onAddComputer}
+                    />
 
-                    <button className={"ui button basic tiny blue"} style={{ margin:"0px px" }} disabled={!this.props.enabled} onClick={this.props.onAddComputer}>
-                        + Computer
-                    </button>
                 </div>
                 <div style={{margin: "20px"}}>
                     <div className="ui ordered list">
