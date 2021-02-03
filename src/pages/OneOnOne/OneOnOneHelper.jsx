@@ -1,6 +1,6 @@
 import StatsTable from "../../components/StatsTable";
 import {TOP_STATS_NUMBER} from "../../helpers/consts";
-import {formatDate} from "../../helpers/utils";
+import {formatDate, isDefined} from "../../helpers/utils";
 import React from "react";
 
 export const statsStyle = {
@@ -40,7 +40,7 @@ export function BuildStatsTable(general_stats, wrap) {
         if (gpd.length === 0) {
             general_stats_lines.push('-');
         }
-        for (let i = 0; i < gpd.length && i <= TOP_STATS_NUMBER; i++) {
+        for (let i = 0; i < gpd.length && i <= TOP_STATS_NUMBER - 1; i++) {
             general_stats_lines.push(`${gpd[i]} - ${general_stats['total_games_per_day'][gpd[i]]}`);
         }
 
@@ -49,7 +49,7 @@ export function BuildStatsTable(general_stats, wrap) {
         if (ppd.length === 0) {
             general_stats_lines.push('-');
         }
-        for (let i = 0; i < ppd.length && i <= TOP_STATS_NUMBER; i++) {
+        for (let i = 0; i < ppd.length && i <= TOP_STATS_NUMBER - 1; i++) {
             general_stats_lines.push(`${ppd[i]} - ${general_stats['total_points_per_day'][ppd[i]]}`);
         }
 
@@ -71,4 +71,136 @@ export function BuildStatsTable(general_stats, wrap) {
     }
 
     return general_stats_block;
+}
+
+export function buildStatsInformation(player1, player2, stats, player_stats_values, matchups_values){
+
+    const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0, total_games:0, total_wins: 0, total_lost: 0, total_win_percents: "" };
+
+    const stats1 = isDefined(stats[player1.name]) ? stats[player1.name] : Object.assign({},noStats);
+    const stats2 = isDefined(stats[player2.name]) ? stats[player2.name] : Object.assign({},noStats);
+
+    const curr_stats = [];
+    const player_stats = [];
+
+    // stats counter
+    let met_each_other = 0;
+    let mutual_games_wins1 = 0;
+    let mutual_scored1 = 0;
+    let mutual_scored2 = 0;
+    let mutual_knockouts1 = 0;
+    let mutual_knockouts2 = 0;
+
+    const arr = (stats1.records.length > stats2.records.length) ? stats1.records : stats2.records; // in case one of them is empty
+
+    arr.forEach((record) => {
+        if ((record.player1_name === player1.name && record.player2_name === player2.name) || (record.player1_name === player2.name && record.player2_name === player1.name)) {
+
+            // met each other
+            met_each_other += 1;
+
+            if (record.player1_name === player1.name){
+
+                // total scored (for diff)
+                mutual_scored1 += record.score1;
+                mutual_scored2 += record.score2;
+
+                // counting player1 wins in these mutual games
+                if (record.score1 > record.score2) mutual_games_wins1+=1;
+
+                // knockouts
+                if (record.score1 === 0 && record.score2 > 0) mutual_knockouts2 += 1;
+                else if (record.score2 === 0 && record.score1 > 0) mutual_knockouts1 += 1;
+
+            } else if (record.player2_name === player1.name) {
+
+                // total scored (for diff)
+                mutual_scored1 += record.score2;
+                mutual_scored2 += record.score1;
+
+                // counting player1 wins in these mutual games
+                if (record.score2 > record.score1) mutual_games_wins1+=1;
+
+                // knockouts
+                if (record.score1 === 0 && record.score2 > 0) mutual_knockouts1 += 1;
+                else if (record.score2 === 0 && record.score1 > 0) mutual_knockouts2 += 1;
+            }
+        }
+    });
+
+    // met each other stat
+    if (met_each_other === 0) {
+        curr_stats.push("This is the first time these players meet each other.");
+    } else {
+        const plural = (met_each_other > 1) ? "s" : "";
+
+        let mutual_games_wins2 = met_each_other - mutual_games_wins1;
+        if (player1.name === player2.name){
+            mutual_games_wins1 = met_each_other;
+            mutual_games_wins2 = met_each_other;
+        }
+
+        // matchups stats
+        curr_stats.push(`These players met each other ${met_each_other} time${plural}.`);
+        curr_stats.push(`Wins: ${mutual_games_wins1} - ${mutual_games_wins2}`);
+        curr_stats.push(`Total Scored: ${mutual_scored1} - ${mutual_scored2}`);
+        curr_stats.push(`Total Diff: ${Math.max(0,mutual_scored1-mutual_scored2)} - ${Math.max(0,mutual_scored2-mutual_scored1)}`);
+        curr_stats.push(`Knockouts: ${mutual_knockouts1} - ${mutual_knockouts2}`);
+
+        // matchups stats - table
+        // matchups_values['Total Previous Matchups'] = [met_each_other,met_each_other];
+        matchups_values['Wins'] = [mutual_games_wins1,mutual_games_wins2];
+        matchups_values['Total Scored'] = [mutual_scored1,mutual_scored2];
+        matchups_values['Total Diff'] = [Math.max(0,mutual_scored1-mutual_scored2), Math.max(0,mutual_scored2-mutual_scored1)];
+        matchups_values['Knockouts'] = [mutual_knockouts1, mutual_knockouts2];
+    }
+
+    // player stats
+    player_stats.push(`Total Played Games: ${stats1.total_games} - ${stats2.total_games}`);
+    player_stats.push(`Standing: ${stats1.total_wins}W ${stats1.total_lost}L ${(stats1.total_win_percents) ? '(' + stats1.total_win_percents + ')' : ''} - ${stats2.total_wins}W ${stats2.total_lost}L ${(stats2.total_win_percents) ? '(' + stats2.total_win_percents + ')' : ''}`);
+    player_stats.push(`Current Win Streak: ${stats1.win_streak} - ${stats2.win_streak}`);
+    player_stats.push(`Current Lose Streak: ${stats1.lose_streak} - ${stats2.lose_streak}`);
+    player_stats.push(`Best Win Streak: ${stats1.max_win_streak} - ${stats2.max_win_streak}`);
+    player_stats.push(`Worst Lose Streak: ${stats1.max_lose_streak} - ${stats2.max_lose_streak}`);
+    player_stats.push(`Total Knockouts: ${stats1.total_knockouts} - ${stats2.total_knockouts}`);
+    player_stats.push(`Total Diff: ${stats1.total_diff} / ${stats2.total_diff}`);
+    player_stats.push(`Total Diff Per Game: ${stats1.total_diff_per_game} / ${stats2.total_diff_per_game}`);
+
+    // player stats - table
+    player_stats_values['Total Played Games'] = [stats1.total_games, stats2.total_games];
+    player_stats_values['Standing'] = [`${stats1.total_wins}W ${stats1.total_lost}L ${(stats1.total_win_percents)}`, `${stats2.total_wins}W ${stats2.total_lost}L ${(stats2.total_win_percents)}`];
+    player_stats_values['Current Win Streak'] = [stats1.win_streak, stats2.win_streak];
+    player_stats_values['Current Lose Streak'] = [stats1.lose_streak, stats2.lose_streak];
+    player_stats_values['Best Win Streak'] = [stats1.max_win_streak, stats2.max_win_streak];
+    player_stats_values['Worst Lose Streak'] = [stats1.max_lose_streak, stats2.max_lose_streak];
+    player_stats_values['Total Knockouts'] = [stats1.total_knockouts, stats2.total_knockouts];
+    player_stats_values['Total Diff'] = [stats1.total_diff, stats2.total_diff];
+    player_stats_values['Total Diff Per Game'] = [stats1.total_diff_per_game, stats2.total_diff_per_game];
+
+    // general stats
+    const general_stats = buildGeneralStats(stats);
+
+    return {curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats};
+}
+
+export function buildGeneralStats(stats) {
+    const general_stats = {
+        'total_games': 0,
+        'total_games_per_day': {},
+        'total_points': 0,
+        'total_points_per_day': {},
+    };
+    Object.keys(stats).forEach((player) => {
+        stats[player].records.forEach((record) => {
+            general_stats['total_games'] += 0.5;
+            general_stats['total_points'] += ((record.score1 + record.score2)/2);
+            const dt = formatDate(new Date(record.addedAt));
+            general_stats['total_games_per_day'][dt] = general_stats['total_games_per_day'][dt] || 0;
+            general_stats['total_games_per_day'][dt] += 0.5;
+            general_stats['total_points_per_day'][dt] = general_stats['total_points_per_day'][dt] || 0;
+            general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2)/2);
+        })
+    });
+
+    return general_stats;
 }

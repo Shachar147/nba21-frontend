@@ -2,6 +2,7 @@ import React from 'react';
 import {deepClone, getRandomElement, shuffle} from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
 import Header from "../../components/Header";
+import ButtonInput from "../../components/ButtonInput";
 
 export default class Game extends React.Component {
 
@@ -301,12 +302,15 @@ export default class Game extends React.Component {
                 <Header />
 
                 <div className="ui link cards centered" style={{margin: "auto", marginBottom:"20px"}}>
-                    <button className={"ui button basic blue"} onClick={this.restart}>
-                        Rematch
-                    </button>
-                    <button className={"ui button basic blue"} style={{ marginLeft: "5px" }} onClick={this.goHome}>
-                        End Game
-                    </button>
+                    <ButtonInput
+                        text={"Rematch"}
+                        onClick={this.restart}
+                    />
+                    <ButtonInput
+                        text={"End Game"}
+                        style={{ marginLeft: "5px" }}
+                        onClick={this.goHome}
+                    />
                 </div>
                 {computers_block}
                 {teams_blocks[0]}

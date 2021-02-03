@@ -48,3 +48,7 @@
 .ui.card.disabled a, .ui.cards>.card.disabled a {
   cursor:default !important;
 }
+
+button:not(:disabled) {
+  cursor: pointer !important;
+}

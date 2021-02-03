@@ -19,7 +19,7 @@ import {
 } from "../../helpers/sort";
 import DropdownInput from "../../components/DropdownInput";
 import ButtonInput from "../../components/ButtonInput";
-import {BuildStatsTable} from "./OneOnOneHelper";
+import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 
 export default class OneOnOneStats extends React.Component {
 
@@ -164,23 +164,7 @@ export default class OneOnOneStats extends React.Component {
         });
 
         // general stats
-        let general_stats = {
-            'total_games': 0,
-            'total_games_per_day': {},
-            'total_points': 0,
-            'total_points_per_day': {},
-        };
-        Object.keys(records).forEach((player) => {
-            records[player].records.forEach((record) => {
-                general_stats['total_games'] += 0.5;
-                general_stats['total_points'] += ((record.score1 + record.score2)/2);
-                const dt = formatDate(new Date(record.addedAt));
-                general_stats['total_games_per_day'][dt] = general_stats['total_games_per_day'][dt] || 0;
-                general_stats['total_games_per_day'][dt] += 0.5;
-                general_stats['total_points_per_day'][dt] = general_stats['total_points_per_day'][dt] || 0;
-                general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2)/2);
-            })
-        });
+        const general_stats = buildGeneralStats(records);
 
         this.setState({ players, merged, general_stats })
     }

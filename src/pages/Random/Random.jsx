@@ -229,7 +229,6 @@ export default class Random extends React.Component {
                     )
                 });
                 details = [details.concat(...arr).join("")];
-                // }).map(x => `> ${x.name} <span style='opacity:0.6'>(2k rating: ${x.rate})</span>`);
 
                 return <PlayerCard
                     key={"team" + "-" + idx}
@@ -262,15 +261,6 @@ export default class Random extends React.Component {
                     onSpecificReplace={(new_team) => { this.onSpecificReplace(team, new_team) }}
                 />
             })
-
-        const againstStyle = {
-            margin: 0,
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "auto",
-        };
 
         let bottom = 35;
         let teams = Object.keys(this.state.scores_history);
