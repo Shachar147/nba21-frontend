@@ -239,8 +239,6 @@ export default class Game extends React.Component {
             });
         });
 
-        const self = this;
-
         // build teams blocks
         const teams_blocks = [];
         for (let team_idx=0; team_idx < percents.length; team_idx++) {
@@ -254,8 +252,17 @@ export default class Game extends React.Component {
                         </div>
                     </div>
                     <div className="ui link cards centered" style={{margin: "auto"}}>
-                        {teams[team_idx].map(function(player, idx){
+                        {teams[team_idx].map((player, idx) => {
                             const _2k_rating = player['_2k_rating'] || 'N/A';
+
+                            let placeRibbon = "blue";
+                            const in_game = this.state.leaderboard;
+                            if (in_game.indexOf(player.name) === in_game.length-1 && in_game.length > 1){
+                                placeRibbon = "red";
+                            }
+                            else if (in_game.indexOf(player.name) === in_game.length-2 && in_game.length > 2){
+                                placeRibbon = "orange";
+                            }
 
                             return (
                                 <PlayerCard
@@ -272,12 +279,13 @@ export default class Game extends React.Component {
                                     picture={player.picture}
                                     percents={player['3pt_percents']}
                                     round_length={round_length}
-                                    onScore={self.onScore}
+                                    onScore={this.onScore}
                                     className={"in-game"}
                                     rounds={scores[player.name]}
                                     lost={lost[player.name]}
-                                    winner={self.state.winner === player.name}
-                                    place={self.state.leaderboard.indexOf(player.name)+1}
+                                    winner={this.state.winner === player.name}
+                                    place={this.state.leaderboard.indexOf(player.name)+1}
+                                    placeRibbon={placeRibbon}
                                 />
                             );
                         })}

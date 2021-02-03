@@ -52,3 +52,7 @@
 button:not(:disabled) {
   cursor: pointer !important;
 }
+
+.ui.red.label.ribbon, .ui.red.labels.ribbon .label {
+  background-color: #F10B45;
+}

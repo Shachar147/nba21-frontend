@@ -235,10 +235,16 @@ export default class PlayerCard extends React.Component {
                 />
             ) : this.props.name;
 
+        // place ribbon
+        const place_tag = (!this.props.place || !this.props.placeRibbon) ? null : (
+            <a className={`ui ${this.props.placeRibbon} ribbon label`} style={{ left: "-15px", top: "3px" }}>#{this.props.place}</a>
+        )
+
         return (
             <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>
                 {lostImage}
                 <div className="image" style={this.props.imageStyle}>
+                    {place_tag}
                     <img src={picture} onError={this.onError} alt={this.props.name} style={this.props.imgStyle} />
                     {replace}
                     {specific_replace}
