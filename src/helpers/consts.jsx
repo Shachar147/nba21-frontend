@@ -56,3 +56,8 @@ export const LOADER_DETAILS = () => {
 }
 
 export const TOP_STATS_NUMBER = 3;
+
+export const ON_FIRE_STYLE = "width:16px; top: -4px; position: relative";
+export const ON_FIRE_COLOR = "rgb(255,117,0)";
+export const ON_FIRE_ICON = "./onfire.png";
+export const ON_FIRE_THRESHOLD = 3;

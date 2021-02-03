@@ -1,5 +1,12 @@
 import React from "react";
-import {LOST_X_IMAGE, PLAYER_NO_PICTURE} from "../helpers/consts";
+import {
+    LOST_X_IMAGE,
+    ON_FIRE_COLOR,
+    ON_FIRE_ICON,
+    ON_FIRE_STYLE,
+    ON_FIRE_THRESHOLD,
+    PLAYER_NO_PICTURE
+} from "../helpers/consts";
 import {isDefined, nth} from "../helpers/utils";
 import DropdownInput from "./DropdownInput";
 
@@ -75,6 +82,12 @@ export default class PlayerCard extends React.Component {
             'Max Lose Streak': `(Max: ${this.props.max_lose_streak})`,
         };
 
+        // on fire
+        let onfire = "";
+        if (this.props.win_streak >= ON_FIRE_THRESHOLD){
+            onfire = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img style="${ON_FIRE_STYLE}" src="${ON_FIRE_ICON}" /></span>`
+        }
+
         const { highlights } = this.props;
         if (highlights) {
             Object.keys(settings).map((name) => {
@@ -94,9 +107,9 @@ export default class PlayerCard extends React.Component {
 
         // one on one
         if (this.props.total_win_percents) details.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
-        if (this.props.total_win_percents) details.push(`Total Games: ${settings['Total Games']}`);
+        if (this.props.total_games) details.push(`Total Games: ${settings['Total Games']}`);
         if (isDefined(this.props.total_home_games) && isDefined(this.props.total_away_games)) details.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
-        if (isDefined(this.props.win_streak)) { details.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}`); }
+        if (isDefined(this.props.win_streak)) { details.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
         if (isDefined(this.props.lose_streak)) { details.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}`); }
         if (isDefined(this.props.total_diff)) details.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
         if (isDefined(this.props.total_scored)) details.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);

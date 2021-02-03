@@ -142,10 +142,11 @@ export default class LoginPage extends React.Component {
                             {message}
                             {error}
                             {
-                                inputs.map((input) => {
+                                inputs.map((input,idx) => {
                                     const { name, type, placeholder } = input;
                                     return (
                                         <TextInput
+                                            key={idx}
                                             name={name}
                                             type={type}
                                             disabled={this.state.validating}
