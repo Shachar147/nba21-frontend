@@ -102,3 +102,11 @@ export function totalSuffered(a,b){
 export function average2kRatingSort(a,b){
     return specificSort('avg_2k_rating',a,b);
 }
+
+export function totalWinsSort(a,b){
+    return specificSort('total_wins',a,b);
+}
+
+export function totalLostSort(a,b){
+    return specificSort('total_lost',a,b);
+}

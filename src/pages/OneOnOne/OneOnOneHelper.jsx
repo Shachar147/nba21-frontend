@@ -1,6 +1,6 @@
 import StatsTable from "../../components/StatsTable";
 import {TOP_STATS_NUMBER} from "../../helpers/consts";
-import {formatDate, isDefined} from "../../helpers/utils";
+import {formatDate, getRandomElement, isDefined} from "../../helpers/utils";
 import React from "react";
 
 export const statsStyle = {

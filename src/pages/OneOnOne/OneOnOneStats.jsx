@@ -14,8 +14,8 @@ import {
     currentWinStreakSort, maxLoseStreakSort, maxWinStreakSort, OVERALL_HIGHLIGHTS,
     overallSort, totalAwayGames, totalDiffPerGameSort, totalDiffSort,
     totalGamesSort, totalHomeGames,
-    totalKnockoutsSort, totalScored, totalSuffered, totalSufferedKnockoutsSort,
-    totalWinsPercentsSort,
+    totalKnockoutsSort, totalLostSort, totalScored, totalSuffered, totalSufferedKnockoutsSort,
+    totalWinsPercentsSort, totalWinsSort,
 } from "../../helpers/sort";
 import DropdownInput from "../../components/DropdownInput";
 import ButtonInput from "../../components/ButtonInput";
@@ -53,6 +53,8 @@ export default class OneOnOneStats extends React.Component {
                 { "Total Scored": totalScored },
                 { "Total Suffered": totalSuffered },
                 { "Average Opponent 2K Rating": average2kRatingSort },
+                { "Total Wins": totalWinsSort },
+                { "Total Lost": totalLostSort },
             ],
             "orderBy": DEFAULT_STATS_ORDER,
             loaderDetails: LOADER_DETAILS(),
@@ -305,6 +307,8 @@ export default class OneOnOneStats extends React.Component {
                                 // weight_kgs={player.weight_kgs}
                                 // height_meters={player.height_meters}
                                 place={(idx+1)}
+                                total_wins={records[player.name].total_wins}
+                                total_lost={records[player.name].total_lost}
                                 total_win_percents={records[player.name].total_win_percents}
                                 total_games={records[player.name].total_games}
                                 total_home_games={records[player.name].total_home_games}

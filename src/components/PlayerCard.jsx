@@ -55,12 +55,14 @@ export default class PlayerCard extends React.Component {
             '2K Rating': this.props._2k_rating,
 
             'Total Wins Percents': this.props.total_win_percents,
+            'Total Wins': `${this.props.total_wins}W`,
+            'Total Lost': `${this.props.total_lost}L`,
             'Total Games': this.props.total_games,
             'Current Win Streak': this.props.win_streak,
             'Current Lose Streak': this.props.lose_streak,
             'Total Diff': this.props.total_diff,
 
-            'Average Opponent 2K Rating': this.props.avg_opponent_2k_rating,
+            'Average Opponent 2K Rating': this.props.avg_opponent_2k_rating.toFixed(0),
 
             'Total Diff Per Game': `(${this.props.total_diff_per_game} per game)`,
             'Total Home Games': this.props.total_home_games,
@@ -91,7 +93,7 @@ export default class PlayerCard extends React.Component {
         if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs");
 
         // one on one
-        if (this.props.total_win_percents) details.push(`Total Wins Percents: ${settings['Total Wins Percents']}`);
+        if (this.props.total_win_percents) details.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
         if (this.props.total_win_percents) details.push(`Total Games: ${settings['Total Games']}`);
         if (isDefined(this.props.total_home_games) && isDefined(this.props.total_away_games)) details.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
         if (isDefined(this.props.win_streak)) { details.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}`); }
