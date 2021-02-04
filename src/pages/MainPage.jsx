@@ -35,6 +35,7 @@ export default class MainPage extends React.Component {
                                     style={{ width: "160px" }}
                                     href={"/"} // todo complete
                                     disabled={true}
+                                    disabledAltAddition={"(not available yet)"}
                                 />
                                 <Card
                                     name={"Tournament"}
@@ -42,6 +43,7 @@ export default class MainPage extends React.Component {
                                     style={{ width: "160px" }}
                                     href={"/"} // todo complete
                                     disabled={true}
+                                    disabledAltAddition={"(not available yet)"}
                                 />
                                 <Card
                                     name={"Random"}
@@ -61,6 +63,7 @@ export default class MainPage extends React.Component {
                                     style={{ width: "160px" }}
                                     href={"/"} // todo complete
                                     disabled={true}
+                                    disabledAltAddition={"(not available yet)"}
                                 />
                                 <Card
                                     name={"View Teams & Players"}
@@ -68,6 +71,7 @@ export default class MainPage extends React.Component {
                                     style={{ width: "160px" }}
                                     href={"/"} // todo complete
                                     disabled={true}
+                                    disabledAltAddition={"(not available yet)"}
                                 />
                                 <Card
                                     name={"View Stats"}
@@ -75,6 +79,7 @@ export default class MainPage extends React.Component {
                                     style={{ width: "160px" }}
                                     href={"/"} // todo complete
                                     disabled={true}
+                                    disabledAltAddition={"(not available yet)"}
                                 />
                             </div>
                         </div>
