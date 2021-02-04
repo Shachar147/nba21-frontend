@@ -1,6 +1,6 @@
 import React from "react";
 import {PLAYER_NO_PICTURE} from "../helpers/consts";
-import ButtonInput from "./shared/ButtonInput";
+import ButtonInput from "./inputs/ButtonInput";
 
 export default class SelectedPlayers extends React.Component {
 

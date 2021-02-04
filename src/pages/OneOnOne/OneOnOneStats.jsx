@@ -1,11 +1,11 @@
 import React from 'react';
 import PlayerCard from '../../components/PlayerCard';
-import SearchInput from '../../components/shared/SearchInput';
+import SearchInput from '../../components/inputs/SearchInput';
 import {formatDate, isDefined} from "../../helpers/utils";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
 
-import Header from "../../components/shared/Header";
+import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import {DEFAULT_STATS_ORDER, LOADER_DETAILS, LOADING_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import {
@@ -17,8 +17,8 @@ import {
     totalKnockoutsSort, totalLostSort, totalScored, totalSuffered, totalSufferedKnockoutsSort,
     totalWinsPercentsSort, totalWinsSort,
 } from "../../helpers/sort";
-import DropdownInput from "../../components/shared/DropdownInput";
-import ButtonInput from "../../components/shared/ButtonInput";
+import DropdownInput from "../../components/inputs/DropdownInput";
+import ButtonInput from "../../components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 
 export default class OneOnOneStats extends React.Component {

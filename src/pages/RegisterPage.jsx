@@ -2,10 +2,10 @@ import React from "react";
 import axios from "axios";
 import {getServerAddress} from "../config/config";
 import { Redirect } from 'react-router'
-import Logo from "../components/shared/Logo";
+import Logo from "../components/layouts/Logo";
 import {Link} from "react-router-dom";
 import {LOGIN_DELAY} from "../helpers/consts";
-import TextInput from "../components/shared/TextInput";
+import TextInput from "../components/inputs/TextInput";
 
 export default class RegisterPage extends React.Component {
 
@@ -123,16 +123,19 @@ export default class RegisterPage extends React.Component {
                 name: 'username',
                 type: 'text',
                 placeholder: 'Username',
+                icon: 'icon',
             },
             {
                 name: 'password',
                 type: 'password',
                 placeholder: 'Password',
+                icon: 'lock',
             },
             {
                 name: 'passwordAgain',
                 type: 'password',
                 placeholder: 'Repeat Password',
+                icon: 'lock',
             }
         ];
 
@@ -146,11 +149,12 @@ export default class RegisterPage extends React.Component {
                             {error}
                             {
                                 inputs.map((input) => {
-                                    const { name, type, placeholder } = input;
+                                    const { name, type, placeholder, icon } = input;
                                     return (
                                         <TextInput
                                             name={name}
                                             type={type}
+                                            icon={icon}
                                             disabled={this.state.validating}
                                             placeholder={placeholder}
                                             error={this.state.errorField[name]}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {getRandomElement} from "../../helpers/utils";
-import Header from "../../components/shared/Header";
+import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";

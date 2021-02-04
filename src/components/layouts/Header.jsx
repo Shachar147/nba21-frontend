@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import Logo from "./Logo";
+import PropTypes from "prop-types";
 
 export default function Header(props) {
 
@@ -21,3 +22,14 @@ export default function Header(props) {
         </div>
     );
 }
+
+Header.propTypes = {
+    /**
+     * Option to render the header without logo.
+     */
+    nologo: PropTypes.bool,
+};
+
+Header.defaultProps = {
+    nologo: false
+};

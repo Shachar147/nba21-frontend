@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Logo from '../components/shared/Logo';
+import Logo from '../../../components/layouts/Logo';
 
 export default {
-    title: 'components/shared/Logo',
+    title: '/components/layout components/Logo',
     component: Logo,
     argTypes: {
         maxWidth: { control: 'number' },

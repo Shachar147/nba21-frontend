@@ -10,7 +10,7 @@ import {
     PLAYER_NO_PICTURE
 } from "../helpers/consts";
 import {isDefined, nth} from "../helpers/utils";
-import DropdownInput from "./shared/DropdownInput";
+import DropdownInput from "./inputs/DropdownInput";
 
 export default class PlayerCard extends React.Component {
 

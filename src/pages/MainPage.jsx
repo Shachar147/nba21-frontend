@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/shared/Header";
-import Logo from "../components/shared/Logo";
+import Header from "../components/layouts/Header";
+import Logo from "../components/layouts/Logo";
 import Card from "../components/Card";
 
 export default class MainPage extends React.Component {

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function SearchInput(props) {
     return (
@@ -10,3 +11,13 @@ export default function SearchInput(props) {
         </div>
     );
 }
+
+SearchInput.propTypes = {
+    /**
+     * optional onKeyUp callback for the search input, usually used to do something with the search keyword.
+     */
+    onKeyUp: PropTypes.func,
+};
+
+SearchInput.defaultProps = {
+};

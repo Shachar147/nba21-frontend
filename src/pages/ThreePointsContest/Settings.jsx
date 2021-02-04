@@ -1,6 +1,6 @@
 import React from 'react';
 import PlayerCard from '../../components/PlayerCard';
-import SearchInput from '../../components/shared/SearchInput';
+import SearchInput from '../../components/inputs/SearchInput';
 import SelectedPlayers from "../../components/SelectedPlayers";
 import Game from './Game';
 import './three.points.contest.css';
@@ -16,7 +16,7 @@ import {deepClone, isDefined} from "../../helpers/utils";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
 
-import Header from "../../components/shared/Header";
+import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 
 export default class Settings extends React.Component {

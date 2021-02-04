@@ -1,9 +1,9 @@
 import React from 'react';
 
-import ButtonInput from '../components/shared/ButtonInput';
+import ButtonInput from '../../../components/inputs/ButtonInput';
 
 export default {
-    title: 'components/shared/ButtonInput',
+    title: '/components/inputs/ButtonInput',
     component: ButtonInput,
     argTypes: {
         text: { control: 'text' },

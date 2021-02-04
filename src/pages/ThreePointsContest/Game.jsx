@@ -1,8 +1,8 @@
 import React from 'react';
 import {deepClone, getRandomElement, shuffle} from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
-import Header from "../../components/shared/Header";
-import ButtonInput from "../../components/shared/ButtonInput";
+import Header from "../../components/layouts/Header";
+import ButtonInput from "../../components/inputs/ButtonInput";
 import {_3PT_COMPUTER_SCORE_DELAY} from "../../helpers/consts";
 
 export default class Game extends React.Component {
