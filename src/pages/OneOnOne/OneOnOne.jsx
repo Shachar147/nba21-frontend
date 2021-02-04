@@ -96,8 +96,14 @@ export default class OneOnOne extends React.Component {
                 self.setState({ error: req_error });
             },
             function() {
-                setTimeout(() => {
-                    self.setState({ loaded: true })},
+                setTimeout(async () => {
+                    await self.setState({ loaded: true })
+
+                    // initialize stats
+                    if (self.canInitStats()){
+                        self.initStats();
+                    }
+                },
                 LOADING_DELAY);
             }
         );
@@ -115,8 +121,13 @@ export default class OneOnOne extends React.Component {
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
                 self.setState({ error: req_error });
             },
-            function() {
-                self.setState({ loadedStats: true });
+            async function() {
+                await self.setState({ loadedStats: true });
+
+                // initialize stats
+                if (self.canInitStats()){
+                    self.initStats();
+                }
             }
         );
     }
@@ -319,11 +330,6 @@ export default class OneOnOne extends React.Component {
             );
         }
 
-        // initialize stats
-        if (this.canInitStats()){
-            this.initStats();
-        }
-
         const { stats } = this.state;
 
         const blocks =
@@ -331,38 +337,39 @@ export default class OneOnOne extends React.Component {
             const _2k_rating = player['_2k_rating'] || 'N/A';
             return <PlayerCard
                         key={"player" + "-" + idx}
-                        name={player.name}
-                        team={player.team.name}
-                        position={player.position}
-                        weight_kgs={player.weight_kgs}
-                        height_meters={player.height_meters}
-                        debut_year={player.debut_year}
-                        picture={player.picture}
-
-                        win_streak={stats[player.name]?.win_streak || "0"}
-                        max_win_streak={stats[player.name]?.max_win_streak || "0"}
-                        lose_streak={stats[player.name]?.lose_streak || "0"}
-                        max_lose_streak={stats[player.name]?.max_lose_streak || "0"}
-
-                        _2k_rating={_2k_rating}
-                        percents={player['3pt_percents']}
                         className={"in-game"}
                         style={{ cursor: "default", textAlign: "left" }}
-                        singleShot={this.state.scores[player.name]}
-                        singleRounds={this.state.scores_history[player.name]}
+                        name={player.name}
+                        picture={player.picture}
+                        position={player.position}
+                        debut_year={player.debut_year}
+                        details={{
+                            _2k_rating: _2k_rating,
+                            percents: player['3pt_percents'], // 3pt percents
+                            height_meters:player.height_meters,
+                            weight_kgs:player.weight_kgs,
+                            team: player.team.name,
+                        }}
+                        stats={{
+                            win_streak: stats[player.name]?.win_streak || "0",
+                            max_win_streak: stats[player.name]?.max_win_streak || "0",
+                            lose_streak: stats[player.name]?.lose_streak || "0",
+                            max_lose_streak: stats[player.name]?.max_lose_streak || "0",
+                        }}
+
                         onChange={(e) => {
                             let scores = this.state.scores;
                             scores[player.name] = Number(Math.max(0,e.target.value));
                             this.setState({ scores });
                         }}
+                        singleShot={this.state.scores[player.name]}
+                        singleRounds={this.state.scores_history[player.name]}
                         lost={(this.state.saved && this.state.loser === player.name)}
                         winner={(this.state.saved && this.state.winner === player.name)}
-                        onReplace={(e) => {
-                            this.replaceOne(idx);
-                        }}
 
                         all_players={this.state.players}
                         curr_players={[this.state.player1.name, this.state.player2.name]}
+                        onReplace={(e) => { this.replaceOne(idx); }}
                         onSpecificReplace={(new_player) => { this.onSpecificReplace(player, new_player) }}
                     />
         })

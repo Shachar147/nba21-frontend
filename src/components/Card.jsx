@@ -52,11 +52,15 @@ export default function Card(props) {
 
 Card.propTypes = {
     /**
-     * picture for this card. for example game mode picture.
+     * picture for this card.
+     *
+     * for example game mode picture.
      */
     picture: PropTypes.string.isRequired,
     /**
-     * name / title that describes this card. for example game mode name.
+     * name / title that describes this card.
+     *
+     * for example game mode name.
      */
     name: PropTypes.string,
     /**
@@ -72,7 +76,9 @@ Card.propTypes = {
      */
     disabled: PropTypes.bool,
     /**
-     * option to add suffix to image alt, when disabled. for example: "(not available yet)"
+     * option to add suffix to image alt, when disabled.
+     *
+     * for example: "(not available yet)"
      */
     disabledAltAddition: PropTypes.string,
     /**

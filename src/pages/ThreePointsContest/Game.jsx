@@ -268,25 +268,28 @@ export default class Game extends React.Component {
                             return (
                                 <PlayerCard
                                     key={"team" + team_idx + "-" + idx}
-                                    name={player.name}
-                                    team={player.team.name}
-                                    position={player.position}
-                                    // weight_kgs={player.weight_kgs}
-                                    // height_meters={player.height_meters}
-                                    _2k_rating={_2k_rating}
-                                    shoot={player.name === shoot_player.name}
-                                    style={(player.name !== shoot_player.name) ? {opacity: 0.6, cursor: "default" } : undefined}
-                                    debut_year={player.debut_year}
-                                    picture={player.picture}
-                                    percents={player['3pt_percents']}
-                                    round_length={round_length}
-                                    onScore={this.onScore}
                                     className={"in-game"}
+                                    style={(player.name !== shoot_player.name) ? {opacity: 0.6, cursor: "default" } : undefined}
+
+                                    name={player.name}
+                                    picture={player.picture}
+                                    position={player.position}
+                                    debut_year={player.debut_year}
+                                    details={{
+                                        _2k_rating: _2k_rating,
+                                        percents: player['3pt_percents'],
+                                        team: player.team.name,
+                                    }}
+
+                                    shoot={player.name === shoot_player.name}
+                                    round_length={round_length}
                                     rounds={scores[player.name]}
                                     lost={lost[player.name]}
                                     winner={this.state.winner === player.name}
                                     place={this.state.leaderboard.indexOf(player.name)+1}
                                     placeRibbon={placeRibbon}
+
+                                    onScore={this.onScore}
                                 />
                             );
                         })}

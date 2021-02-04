@@ -299,35 +299,40 @@ export default class OneOnOneStats extends React.Component {
 
                         return (<PlayerCard
                                 key={idx}
-                                name={player.name}
-                                team={player.team.name}
-                                position={player.position}
-                                _2k_rating={_2k_rating}
-                                avg_opponent_2k_rating={records[player.name].avg_2k_rating}
-                                // weight_kgs={player.weight_kgs}
-                                // height_meters={player.height_meters}
-                                place={(idx+1)}
-                                total_wins={records[player.name].total_wins}
-                                total_lost={records[player.name].total_lost}
-                                total_win_percents={records[player.name].total_win_percents}
-                                total_games={records[player.name].total_games}
-                                total_home_games={records[player.name].total_home_games}
-                                total_away_games={records[player.name].total_away_games}
-                                total_diff={records[player.name].total_diff}
-                                total_diff_per_game={records[player.name].total_diff_per_game}
-                                total_scored={records[player.name].total_scored}
-                                total_suffered={records[player.name].total_suffered}
-                                total_knockouts={records[player.name].total_knockouts}
-                                total_suffered_knockouts={records[player.name].total_suffered_knockouts}
-                                highlights={(this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy]}
-                                win_streak={records[player.name].win_streak}
-                                lose_streak={records[player.name].lose_streak}
-                                max_win_streak={records[player.name].max_win_streak}
-                                max_lose_streak={records[player.name].max_lose_streak}
-                                debut_year={player.debut_year}
-                                picture={player.picture}
-                                percents={player['3pt_percents']}
                                 style={{}}
+
+                                name={player.name}
+                                picture={player.picture}
+                                details={{
+                                    _2k_rating: _2k_rating,
+                                    percents: player['3pt_percents'],
+                                    team: player.team.name,
+                                }}
+                                position={player.position}
+                                place={(idx+1)}
+                                debut_year={player.debut_year}
+
+                                stats={{
+                                    avg_opponent_2k_rating: records[player.name].avg_2k_rating,
+                                    total_wins: records[player.name].total_wins,
+                                    total_lost: records[player.name].total_lost,
+                                    total_win_percents: records[player.name].total_win_percents,
+                                    total_games: records[player.name].total_games,
+                                    total_home_games: records[player.name].total_home_games,
+                                    total_away_games: records[player.name].total_away_games,
+                                    total_diff: records[player.name].total_diff,
+                                    total_diff_per_game: records[player.name].total_diff_per_game,
+                                    total_scored: records[player.name].total_scored,
+                                    total_suffered: records[player.name].total_suffered,
+                                    total_knockouts: records[player.name].total_knockouts,
+                                    total_suffered_knockouts: records[player.name].total_suffered_knockouts,
+                                    win_streak: records[player.name].win_streak,
+                                    lose_streak: records[player.name].lose_streak,
+                                    max_win_streak: records[player.name].max_win_streak,
+                                    max_lose_streak: records[player.name].max_lose_streak,
+                                    highlights: (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
+                                }}
+
                                 onClick={() => {
                                     // todo complete - show complete statistics
                                 }}

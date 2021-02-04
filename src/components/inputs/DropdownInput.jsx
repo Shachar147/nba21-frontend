@@ -103,17 +103,20 @@ DropdownInput.propTypes = {
     placeholder: PropTypes.string,
     /**
      * Array of hashes representing options for this dropdown.
+     *
      * Example:
      * [{"id":"1","name":"Option1","value":"1"},{"id":"2","name":"Option2","value":"2"}]
      */
     options: PropTypes.object.isRequired,
     /**
      * the key of the name inside the option's hash.
-     * example: "name"
+     *
+     * Example: "name"
      */
     nameKey: PropTypes.string.isRequired,
     /**
      * the key of the value inside the option's hash.
+     *
      * Example: "value"
      */
     valueKey: PropTypes.string.isRequired,
@@ -124,6 +127,7 @@ DropdownInput.propTypes = {
     idKey: PropTypes.string.isRequired,
     /**
      * an optional label that will appear near the dropdown to describe what it is,
+     *
      * Example:
      * 'Select Player'
      */

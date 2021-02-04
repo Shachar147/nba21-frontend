@@ -366,21 +366,23 @@ export default class Settings extends React.Component {
                         const _2k_rating = player['_2k_rating'] || 'N/A';
 
                         return (<PlayerCard
-                                key={idx}
-                                name={player.name}
-                                team={player.team.name}
-                                position={player.position}
-                                _2k_rating={_2k_rating}
-                                weight_kgs={player.weight_kgs}
-                                height_meters={player.height_meters}
-                                debut_year={player.debut_year}
-                                picture={player.picture}
-                                percents={player['3pt_percents']}
-                                style={isDefined(player.selected) ? self.state.styles[player.selected] : {opacity: 0.6}}
-                                onClick={() => {
-                                    self.toggleState(player);
-                                }}
-                            />
+                                    key={idx}
+                                    name={player.name}
+                                    picture={player.picture}
+                                    details={{
+                                        _2k_rating: _2k_rating,
+                                        percents: player['3pt_percents'], // 3pt percents
+                                        height_meters:player.height_meters,
+                                        weight_kgs:player.weight_kgs,
+                                        team:player.team.name,
+                                    }}
+                                    position={player.position}
+                                    debut_year={player.debut_year}
+                                    style={isDefined(player.selected) ? self.state.styles[player.selected] : {opacity: 0.6}}
+                                    onClick={() => {
+                                        self.toggleState(player);
+                                    }}
+                                />
                         );
                     })}
                     {(players.length === 0) ? <div style={{ marginTop: "20px"}}>No Results Found for "{this.state.keyword}"</div> : "" }

@@ -32,12 +32,12 @@ export default class StatsTable extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {Object.keys(stats).map((stat) => {
+                                {Object.keys(stats).map((stat,idx) => {
                                     const values = stats[stat];
                                     const value1 = (values.length > 0) ? values[0] : "N/A";
                                     const value2 = (values.length > 1) ? values[1] : "N/A";
                                     if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
-                                        return (<tr>
+                                        return (<tr key={`stat-${idx}`}>
                                             <td style={{ fontWeight: "bold" }}>{stat}</td>
                                             <td>{value1}</td>
                                             <td>{value2}</td>

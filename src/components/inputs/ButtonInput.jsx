@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Button} from "../../stories/examples/Button";
 
 export default function ButtonInput(props) {
     let { style, text, onClick, disabled } = props;

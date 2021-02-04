@@ -206,8 +206,8 @@ export default class Random extends React.Component {
         const blocks =
             [this.state.team1, this.state.team2].map((team, idx) => {
 
-                let details_title = "<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>Players:</div>";
-                let details = [];
+                let custom_details_title = "<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>Players:</div>";
+                let custom_details = [];
 
                 team.players.forEach(function(player){
                     let rate = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
@@ -228,38 +228,42 @@ export default class Random extends React.Component {
                         </div>`
                     )
                 });
-                details = [details.concat(...arr).join("")];
+                custom_details = [custom_details.concat(...arr).join("")];
 
                 return <PlayerCard
-                    key={"team" + "-" + idx}
-                    name={team.name}
-                    team={team.conference + ' - ' + team.division}
-                    details_title={details_title}
-                    details={details}
-                    picture={team.logo}
-                    className={"in-game"}
-                    style={{ cursor: "default", textAlign: "left" }}
-                    descriptionStyle={{ minHeight: minHeight }}
-                    singleShot={self.state.scores[team.name]}
-                    singleRounds={self.state.scores_history[team.name]}
-                    onChange={(e) => {
-                        let scores = self.state.scores;
-                        scores[team.name] = Math.max(0,e.target.value);
-                        self.setState({ scores });
-                    }}
-                    lost={(self.state.saved && self.state.loser === team.name)}
-                    winner={(self.state.saved && self.state.winner === team.name)}
-                    imageStyle={{ backgroundColor: "#F2F2F2" }}
-                    imgStyle={{ width: 200, margin: "auto", padding: "20px" }}
-                    extraContentStyle={{ display: "none" }}
-                    onReplace={(e) => {
-                        self.replaceOne(idx);
-                    }}
+                        key={"team" + "-" + idx}
+                        className={"in-game"}
 
-                    all_players={this.state.teams}
-                    curr_players={[this.state.team1.name, this.state.team2.name]}
-                    onSpecificReplace={(new_team) => { this.onSpecificReplace(team, new_team) }}
-                />
+                        style={{ cursor: "default", textAlign: "left" }}
+                        descriptionStyle={{ minHeight: minHeight }}
+                        imageStyle={{ backgroundColor: "#F2F2F2" }}
+                        imgStyle={{ width: 200, margin: "auto", padding: "20px" }}
+                        extraContentStyle={{ display: "none" }}
+
+                        name={team.name}
+                        picture={team.logo}
+                        details={{
+                            team: team.conference + ' - ' + team.division,
+                        }}
+                        custom_details_title={custom_details_title}
+                        custom_details={custom_details}
+                        singleShot={self.state.scores[team.name]}
+                        singleRounds={self.state.scores_history[team.name]}
+                        onChange={(e) => {
+                            let scores = self.state.scores;
+                            scores[team.name] = Math.max(0,e.target.value);
+                            self.setState({ scores });
+                        }}
+                        lost={(self.state.saved && self.state.loser === team.name)}
+                        winner={(self.state.saved && self.state.winner === team.name)}
+                        onReplace={(e) => {
+                            self.replaceOne(idx);
+                        }}
+
+                        all_players={this.state.teams}
+                        curr_players={[this.state.team1.name, this.state.team2.name]}
+                        onSpecificReplace={(new_team) => { this.onSpecificReplace(team, new_team) }}
+                    />
             })
 
         let bottom = 35;
