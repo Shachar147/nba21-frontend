@@ -1,6 +1,8 @@
 import React from "react";
 import {LOGO_IMAGE} from "../../helpers/consts";
 import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
+import DropdownInput from "./DropdownInput";
 
 export default function Logo(props) {
     const maxWidth = props.maxWidth || 400;
@@ -12,3 +14,13 @@ export default function Logo(props) {
         </div>
     );
 }
+
+DropdownInput.propTypes = {
+    /**
+     * Optional option to set max width for logo
+     */
+    maxWidth: PropTypes.number,
+};
+
+DropdownInput.defaultProps = {
+};
