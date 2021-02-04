@@ -58,43 +58,120 @@ export default class PlayerCard extends React.Component {
     }
 
     render() {
-        let details = [];
+        const {
+
+            details_title,
+
+            // player details
+            name,
+            team,
+            _2k_rating,
+            place,
+            percents, // 3pt percents
+            height_meters,
+            weight_kgs,
+            debut_year,
+            position,
+            team_division,
+
+            placeRibbon,
+
+            // stats details
+            total_win_percents,
+            total_wins,
+            total_lost,
+            total_games,
+            win_streak,
+            lose_streak,
+            total_diff,
+            total_diff_per_game,
+            avg_opponent_2k_rating,
+            total_home_games,
+            total_away_games,
+            total_scored,
+            total_suffered,
+            total_knockouts,
+            total_suffered_knockouts,
+            max_win_streak,
+            max_lose_streak,
+
+            // details - override all the above
+            details,
+
+            // order by highlightes
+            highlights,
+
+            // shoot block
+            shoot,
+            winner,
+            lost,
+            round_length,
+            singleShot,
+            rounds,
+            singleRounds,
+
+            // Events
+            onScore,
+            onChange,
+            onReplace,
+            onSpecificReplace,
+            onClick,
+
+            all_players,
+            curr_players,
+
+            className,
+            style,
+            imageStyle,
+            imgStyle,
+            descriptionStyle,
+            extraContentStyle,
+
+        } = this.props;
+
+        const {
+            picture,
+            shoot_score,
+            specific_replace,
+            select_replacement,
+
+        } = this.state;
 
         let settings = {
-            '2K Rating': this.props._2k_rating,
+            '2K Rating': _2k_rating,
 
-            'Total Wins Percents': this.props.total_win_percents,
-            'Total Wins': `${this.props.total_wins}W`,
-            'Total Lost': `${this.props.total_lost}L`,
-            'Total Games': this.props.total_games,
-            'Current Win Streak': this.props.win_streak,
-            'Current Lose Streak': this.props.lose_streak,
-            'Total Diff': this.props.total_diff,
+            'Total Wins Percents': total_win_percents,
+            'Total Wins': `${total_wins}W`,
+            'Total Lost': `${total_lost}L`,
+            'Total Games': total_games,
+            'Current Win Streak': win_streak,
+            'Current Lose Streak': lose_streak,
+            'Total Diff': total_diff,
 
-            'Average Opponent 2K Rating': this.props.avg_opponent_2k_rating?.toFixed(0),
+            'Average Opponent 2K Rating': avg_opponent_2k_rating?.toFixed(0),
 
-            'Total Diff Per Game': `(${this.props.total_diff_per_game} per game)`,
-            'Total Home Games': this.props.total_home_games,
-            'Total Road Games': this.props.total_away_games,
-            'Total Scored': this.props.total_scored,
-            'Total Suffered': this.props.total_suffered,
-            'Total Knockouts': this.props.total_knockouts,
-            'Total Suffered Knockouts': this.props.total_suffered_knockouts,
-            'Max Win Streak': `(Max: ${this.props.max_win_streak})`,
-            'Max Lose Streak': `(Max: ${this.props.max_lose_streak})`,
+            'Total Diff Per Game': `(${total_diff_per_game} per game)`,
+            'Total Home Games': total_home_games,
+            'Total Road Games': total_away_games,
+            'Total Scored': total_scored,
+            'Total Suffered': total_suffered,
+            'Total Knockouts': total_knockouts,
+            'Total Suffered Knockouts': total_suffered_knockouts,
+            'Max Win Streak': `(Max: ${max_win_streak})`,
+            'Max Lose Streak': `(Max: ${max_lose_streak})`,
         };
 
         // on fire / ice cold
         let onfire = "";
         let icecold = "";
-        if (this.props.win_streak >= ON_FIRE_THRESHOLD){
+        if (win_streak >= ON_FIRE_THRESHOLD){
             onfire = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img style="${ON_FIRE_STYLE}" src="${ON_FIRE_ICON}" /></span>`
         }
-        if (this.props.lose_streak >= ICE_COLD_THRESHOLD){
+        if (lose_streak >= ICE_COLD_THRESHOLD){
             icecold = ` <span style="color:${ICE_COLD_COLOR}">Ice Cold <img style="${ICE_COLD_STYLE}" src="${ICE_COLD_ICON}" /></span>`
         }
 
-        const { highlights } = this.props;
+        // order by highlights
         if (highlights) {
             Object.keys(settings).map((name) => {
                 if(highlights.indexOf(name) !== -1){
@@ -103,69 +180,104 @@ export default class PlayerCard extends React.Component {
             });
         }
 
+        let details_arr = [];
+
         // general details
-        if (this.props.place) details.push(this.props.place + nth(this.props.place));
-        if (this.props.percents) details.push("3Pt Percents: " + this.props.percents);
-        if (this.props._2k_rating) details.push(`2K Rating: ${settings['2K Rating']}`);
-        if (this.props.avg_opponent_2k_rating) details.push(`Average Opponent 2K Rating: ${settings['Average Opponent 2K Rating']}`);
-        if (this.props.height_meters) details.push("Height: " + this.props.height_meters + " meters");
-        if (this.props.weight_kgs) details.push("Weight: " + this.props.weight_kgs + " kgs");
+        if (place) details_arr.push(place + nth(place));
+        if (percents) details_arr.push("3Pt Percents: " + percents);
+        if (_2k_rating) details_arr.push(`2K Rating: ${settings['2K Rating']}`);
+        if (avg_opponent_2k_rating) details_arr.push(`Average Opponent 2K Rating: ${settings['Average Opponent 2K Rating']}`);
+        if (height_meters) details_arr.push("Height: " + height_meters + " meters");
+        if (weight_kgs) details_arr.push("Weight: " + weight_kgs + " kgs");
 
         // one on one
-        if (this.props.total_win_percents) details.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
-        if (this.props.total_games) details.push(`Total Games: ${settings['Total Games']}`);
-        if (isDefined(this.props.total_home_games) && isDefined(this.props.total_away_games)) details.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
-        if (isDefined(this.props.win_streak)) { details.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
-        if (isDefined(this.props.lose_streak)) { details.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}` + icecold); }
-        if (isDefined(this.props.total_diff)) details.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
-        if (isDefined(this.props.total_scored)) details.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
-        if (isDefined(this.props.total_knockouts)) details.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);
+        if (total_win_percents) details_arr.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
+        if (total_games) details_arr.push(`Total Games: ${settings['Total Games']}`);
+        if (isDefined(total_home_games) && isDefined(total_away_games)) details_arr.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
+        if (isDefined(win_streak)) { details_arr.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
+        if (isDefined(lose_streak)) { details_arr.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}` + icecold); }
+        if (isDefined(total_diff)) details_arr.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
+        if (isDefined(total_scored)) details_arr.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
+        if (isDefined(total_knockouts)) details_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);
 
         // team details (built outside)
-        if (this.props.details){
-            details = this.props.details;
-        }
+        if (details) details_arr = details;
 
-        const picture = this.state.picture;
-        const debut_year = (this.props.debut_year !== undefined) ? `Joined in ${this.props.debut_year}` : "";
+        // debut year
+        const debut_year_block = (debut_year !== undefined) ? `Joined in ${debut_year}` : "";
 
         // shoot
         let input_style= { height: "38px", width: "30%", border: "1px solid #eaeaea", padding:"0px 5px" };
-        let shoot = (this.props.shoot && !this.props.winner) ? (
+        let shoot_block = (shoot && !winner) ? (
             <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea"}}>
-                <input type={"number"} value={this.state.shoot_score} min={0} max={this.props.round_length} onChange={(e) => { this.setState({ shoot_score: Math.min(this.props.round_length,e.target.value) }) }} style={input_style}/>
+                <input
+                    type={"number"}
+                    value={shoot_score}
+                    min={0}
+                    max={round_length}
+                    onChange={(e) => {
+                        this.setState({
+                            shoot_score: Math.min(round_length, e.target.value)
+                        })
+                    }}
+                    style={input_style}
+                />
                 <span style={{ margin: "0px 5px" }} > / </span>
-                <input type={"number"} value={this.props.round_length} disabled style={input_style}/>
+                <input type={"number"} value={round_length} disabled style={input_style}/>
                 <div className={"ui basic buttons"} style={{ marginLeft: "10px" }}>
-                    <input type={"button"} className={"ui basic button"} value={"Go"} onClick={() => { this.props.onScore(this.state.shoot_score); this.setState({ shoot_score: 0}); }} />
+                    <input
+                        type={"button"}
+                        className={"ui basic button"}
+                        value={"Go"}
+                        onClick={() => {
+                            onScore(shoot_score);
+                            this.setState({ shoot_score: 0});
+                        }}
+                    />
                 </div>
             </div>
         ) : undefined;
 
         // single shoot (one on one)
-        if (isDefined(this.props.singleShot)) {
+        if (isDefined(singleShot)) {
             input_style.width = "100%";
-            shoot = (
-               <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", paddingBottom: "10px", marginBottom: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
-                   <input type={"number"} value={this.props.singleShot} min={0} onChange={(e) => { e.target.value = Number(e.target.value); this.props.onChange(e);}} style={input_style}/>
+            shoot_block = (
+               <div style={{
+                   display: "inline-block",
+                   paddingTop: "10px",
+                   marginTop: "10px",
+                   paddingBottom: "10px",
+                   marginBottom: "10px",
+                   borderTop: "1px solid #eaeaea",
+                   width: "100%"}}
+               >
+                   <input
+                       type={"number"}
+                       value={singleShot}
+                       min={0}
+                       onChange={(e) => {
+                           e.target.value = Number(e.target.value);
+                           onChange(e);
+                       }}
+                       style={input_style}
+                   />
                </div>
             );
         }
 
         // place
-        const place = (this.props.place) ? "Place: " + this.props.place + nth(this.props.place) : "";
+        const place_block = (place) ? "Place: " + place + nth(place) : "";
 
         // rounds
-        const round_length = this.props.round_length;
-        const total_made = (!this.props.rounds || !this.props.rounds.length) ? 0 : this.props.rounds.reduce((a, b) => a + b);
-        const total_attempt = (!this.props.rounds || !this.props.rounds.length) ? 0 : this.props.rounds.length * round_length;
-        let rounds = (this.props.rounds) ? (
+        const total_made = (!rounds || !rounds.length) ? 0 : rounds.reduce((a, b) => a + b);
+        const total_attempt = (!rounds || !rounds.length) ? 0 : rounds.length * round_length;
+        let rounds_block = (rounds) ? (
             <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
                 { <div style={{ marginBottom: "5px", fontWeight: "bold" }}>
                     Total: {total_made}/{total_attempt} - { ( (total_made/total_attempt)* 100).toFixed(2) + "%" }
                 </div> }
-                {place}
-                { this.props.rounds.map(function(iter,idx) {
+                {place_block}
+                { rounds.map(function(iter,idx) {
                     return (
                         <div key={`round-` + idx}>
                             <span>{iter}/{round_length}</span>
@@ -177,13 +289,13 @@ export default class PlayerCard extends React.Component {
         ) : undefined;
 
         // Single Rounds (one on One, random teams)
-        if (this.props.singleRounds){
-            rounds = (
+        if (singleRounds){
+            rounds_block = (
                 <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
                     { <div style={{ marginBottom: "5px", fontWeight: "bold" }}>
-                        Total: {this.props.singleRounds.reduce((a, b) => a + b, 0) } Points
+                        Total: {singleRounds.reduce((a, b) => a + b, 0) } Points
                     </div> }
-                    { this.props.singleRounds.map(function(iter,idx) {
+                    { singleRounds.map(function(iter,idx) {
                         return (
                             <div key={`round-` + idx}>
                                 <span>{iter} Points</span>
@@ -196,24 +308,24 @@ export default class PlayerCard extends React.Component {
         }
 
         // lost / win
-        const lost = (this.props.lost) ? "Loser" : "";
-        const lostImage = (this.props.lost) ? (<img className="lost-image" alt={"lost"} src={LOST_X_IMAGE} />) : undefined;
-        const winner = (this.props.winner) ? "Winner!" : "";
+        const lost_block = (lost) ? "Loser" : "";
+        const lostImage = (lost) ? (<img className="lost-image" alt={"lost"} src={LOST_X_IMAGE} />) : undefined;
+        const winner_block = (winner) ? "Winner!" : "";
 
         // position / division
-        let position = <div />
-        if (this.props.position) position = `Position: ${this.props.position}`;
-        if (this.props.team_division) position = `Division: ${this.props.team_division}`;
+        let position_block = <div />
+        if (position) position_block = `Position: ${position}`;
+        if (team_division) position_block = `Division: ${team_division}`;
 
-        let title = (this.props.details_title) ? this.props.details_title : "";
+        let title = (details_title) ? details_title : "";
 
         // replace / specific replace
-        let replace = (this.props.onReplace) ? (
-            <a onClick={() => { this.setState({ specific_replace: true }); this.props.onReplace(); }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
+        let replace = (onReplace) ? (
+            <a onClick={() => { this.setState({ specific_replace: true }); onReplace(); }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
         ) : "";
-        let specific_replace =  (this.state.specific_replace && this.props.onSpecificReplace) ? (
+        let specific_replace_block =  (specific_replace && onSpecificReplace) ? (
             <a onClick={() => {
-                if (this.state.select_replacement) {
+                if (select_replacement) {
                     this.setState({ specific_replace: false, select_replacement: false });
                 } else {
                     this.setState({ select_replacement: true });
@@ -222,51 +334,51 @@ export default class PlayerCard extends React.Component {
         ) : "";
 
         // name / select specific replace
-        let name =
-            (this.state.select_replacement) ? (
+        let name_block =
+            (select_replacement) ? (
                 <DropdownInput
-                    options={this.props.all_players.filter((player) => { return this.props.curr_players.indexOf(player.name) === -1 })}
+                    options={all_players.filter((player) => { return curr_players.indexOf(player.name) === -1 })}
                     name={"select_replacement"}
                     placeholder={"Select Replacement..."}
                     nameKey={"name"}
                     valueKey={"name"}
                     idKey={"id"}
-                    onChange={(player) => { this.props.onSpecificReplace(player); this.setState({ select_replacement: false, specific_replace: false }); }}
+                    onChange={(player) => { onSpecificReplace(player); this.setState({ select_replacement: false, specific_replace: false }); }}
                 />
-            ) : this.props.name;
+            ) : name;
 
         // place ribbon
-        const place_tag = (!this.props.place || !this.props.placeRibbon) ? null : (
-            <a className={`ui ${this.props.placeRibbon} ribbon label`} style={{ left: "-15px", top: "3px", position: "absolute" }}>#{this.props.place}</a>
+        const place_tag = (!place || !placeRibbon) ? null : (
+            <a className={`ui ${placeRibbon} ribbon label`} style={{ left: "-15px", top: "3px", position: "absolute" }}>#{place}</a>
         )
 
         return (
-            <div className={"card" + (this.props.className ? " " + this.props.className : "")} onClick={this.props.onClick} style={this.props.style}>
+            <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
                 {lostImage}
-                <div className="image" style={this.props.imageStyle}>
+                <div className="image" style={imageStyle}>
                     {place_tag}
-                    <img src={picture} onError={this.onError} alt={this.props.name} style={this.props.imgStyle} />
+                    <img src={picture} onError={this.onError} alt={name} style={imgStyle} />
                     {replace}
-                    {specific_replace}
+                    {specific_replace_block}
                 </div>
                 <div className="content">
-                    <div className="header">{name}</div>
+                    <div className="header">{name_block}</div>
                     <div className="meta">
                         <a disabled={true} style={{ cursor: "default" }}>
-                            {this.props.team}
+                            {team}
                         </a>
                     </div>
-                    <div className="description" style={this.props.descriptionStyle} dangerouslySetInnerHTML={{__html: title + details.join("<br/>")}}/>
-                    {rounds}
-                    {shoot}
-                    {lost}
-                    {winner}
+                    <div className="description" style={descriptionStyle} dangerouslySetInnerHTML={{__html: title + details_arr.join("<br/>")}}/>
+                    {rounds_block}
+                    {shoot_block}
+                    {lost_block}
+                    {winner_block}
                 </div>
-                <div className="extra content" style={this.props.extraContentStyle}>
-                    <span className="right floated">{debut_year}</span>
+                <div className="extra content" style={extraContentStyle}>
+                    <span className="right floated">{debut_year_block}</span>
                     <span>
                     <i className="user icon"/>
-                        {position}
+                        {position_block}
                 </span>
                 </div>
             </div>
