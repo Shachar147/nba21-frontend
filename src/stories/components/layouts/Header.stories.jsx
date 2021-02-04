@@ -6,7 +6,7 @@ export default {
     title: '/components/layout components/Header',
     component: Header,
     argTypes: {
-        nologo: { control: 'bool' },
+        nologo: { control: 'boolean' },
     },
 };
 
