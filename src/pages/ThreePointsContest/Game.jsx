@@ -3,6 +3,7 @@ import {deepClone, getRandomElement, shuffle} from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
 import Header from "../../components/shared/Header";
 import ButtonInput from "../../components/shared/ButtonInput";
+import {_3PT_COMPUTER_SCORE_DELAY} from "../../helpers/consts";
 
 export default class Game extends React.Component {
 
@@ -107,7 +108,7 @@ export default class Game extends React.Component {
             }
 
             if (current_player && current_player.name.indexOf("Computer") !== -1){
-                setTimeout(() => this.onScore(this.getComputerScoreResult()),1000);
+                setTimeout(() => this.onScore(this.getComputerScoreResult()),_3PT_COMPUTER_SCORE_DELAY);
             }
         }
     }

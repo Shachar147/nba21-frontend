@@ -6,6 +6,8 @@ export const ROUND_DEFAULT_LENGTH = 3;
 export const LOGIN_DELAY = 500;
 export const LOADING_DELAY = 1500; // to be able to see the loader
 
+export const _3PT_COMPUTER_SCORE_DELAY = 1000; // delay between computer's start turn until score submittion
+
 // pictures and background
 export const RANDOM_PLAYER_PICTURE = '/nopic.png';
 export const PLAYER_NO_PICTURE = '/nopic.png';

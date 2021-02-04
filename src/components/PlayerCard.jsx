@@ -237,7 +237,7 @@ export default class PlayerCard extends React.Component {
 
         // place ribbon
         const place_tag = (!this.props.place || !this.props.placeRibbon) ? null : (
-            <a className={`ui ${this.props.placeRibbon} ribbon label`} style={{ left: "-15px", top: "3px" }}>#{this.props.place}</a>
+            <a className={`ui ${this.props.placeRibbon} ribbon label`} style={{ left: "-15px", top: "3px", position: "absolute" }}>#{this.props.place}</a>
         )
 
         return (

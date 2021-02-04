@@ -3,7 +3,7 @@ import React from 'react';
 import ButtonInput from '../components/shared/ButtonInput';
 
 export default {
-    title: 'Components/ButtonInput',
+    title: 'components/shared/ButtonInput',
     component: ButtonInput,
     argTypes: {
         text: { control: 'text' },
