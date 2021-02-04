@@ -32,19 +32,35 @@ export const LOADERS = {
         backgroundColor: "#F0F0F0",
         top: '-100px',
     },
-    'curry.gif': {
+    'Curry.gif': {
         backgroundColor: 'white',
         top: '0px',
     },
-    'Loader.gif': {
+    'Griffin.gif': {
         backgroundColor: 'white',
         top: '0px',
     },
-    'LoaderHarden.gif': {
+    'Harden.gif': {
         backgroundColor: 'white',
         top: '0px',
     },
-    'LoaderLebron.gif': {
+    'Lebron.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Durant.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Davis.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Love.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Howard.gif': {
         backgroundColor: 'white',
         top: '0px',
     }
