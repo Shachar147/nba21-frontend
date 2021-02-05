@@ -1,7 +1,7 @@
 import React from 'react';
 import {formatDate, getRandomElement, isDefined} from "../../helpers/utils";
 import Header from "../../components/layouts/Header";
-import {apiGet, apiPost} from "../../helpers/api";
+import {apiGet, apiPost, apiPut} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
@@ -69,12 +69,15 @@ export default class OneOnOne extends React.Component {
                 'total_games_per_day': {},
                 'total_points': 0,
                 'total_points_per_day': {},
-            }
+            },
+
+            saved_game_id: undefined,
         };
 
         this.restart = this.restart.bind(this);
         this.init = this.init.bind(this);
         this.saveResult = this.saveResult.bind(this);
+        this.updateResult = this.updateResult.bind(this);
         this.replaceOne = this.replaceOne.bind(this);
         this.onSpecificReplace = this.onSpecificReplace.bind(this);
     }
@@ -164,7 +167,7 @@ export default class OneOnOne extends React.Component {
         scores_history[player1.name] = [];
         scores_history[player2.name] = [];
         await this.setState({
-            player1, player2, scores, saved: false, winner: "", loser: "", scores_history
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined,
         });
 
         if (this.state.loaded && this.state.loadedStats){
@@ -208,7 +211,7 @@ export default class OneOnOne extends React.Component {
         scores_history[player1.name] = [];
         scores_history[player2.name] = [];
         await this.setState({
-            player1, player2, scores, saved: false, winner: "", loser: "", scores_history
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined,
         });
         this.initStats();
     }
@@ -220,7 +223,70 @@ export default class OneOnOne extends React.Component {
             scores[key] = 0;
             scores_history[key] = [];
         });
-        this.setState({ scores, saved: false, winner: "", loser: "", scores_history });
+        this.setState({ scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, });
+    }
+
+    async updateResult(){
+
+        this.setState({ saving: true });
+
+        const self = this;
+        await apiPut(this,
+            `/records/one-on-one/` + this.state.saved_game_id,
+            {
+                score1: this.state.scores[this.state.player1.name],
+                score2: this.state.scores[this.state.player2.name]
+            },
+            async function(res) {
+
+                const stats = self.state.stats;
+                let scores_history = self.state.scores_history;
+
+                const response = res.data;
+                debugger;
+                Object.keys(response).forEach((player_name) => {
+                    stats[player_name] = response[player_name];
+
+                    const lastRecord = response[player_name].records.slice(-1)[0];
+                    scores_history[player_name][scores_history[player_name].length-1] = (lastRecord.player1_name === player_name) ? lastRecord.score1 : lastRecord.score2;
+                });
+
+                let scores = self.state.scores;
+
+                let arr = Object.keys(scores).map(function(name){
+                    scores_history[name].slice(-1)[0] = Number(scores[name]);
+                    return {
+                        name: name,
+                        score: Number(scores[name])
+                    }
+                });
+
+                arr = arr.sort(function(a,b) { return b.score - a.score });
+
+                let winner = arr[0].name;
+                let loser = arr[1].name;
+
+                if (arr[0].score === arr[1].score){
+                    winner = "";
+                    loser = "";
+                }
+
+                await self.setState({ saved: true, winner, loser, scores_history, scores, stats });
+                self.initStats();
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
+                self.setState({ error: req_error });
+            },
+            function() {
+                // finally
+            }
+        );
+
+        this.setState({ saving: false });
     }
 
     async saveResult(){
@@ -245,6 +311,8 @@ export default class OneOnOne extends React.Component {
                     stats[player_name] = response[player_name];
                 });
 
+                const saved_game_id = response[Object.keys(response)[0]].records.slice(-1)[0].id;
+
                 let scores = self.state.scores;
                 let scores_history = self.state.scores_history;
 
@@ -256,9 +324,10 @@ export default class OneOnOne extends React.Component {
                     }
                 });
 
-                Object.keys(scores).forEach(function(key, idx){
-                    scores[key] = 0;
-                });
+                // for update - comment this.
+                // Object.keys(scores).forEach(function(key, idx){
+                //     scores[key] = 0;
+                // });
 
                 arr = arr.sort(function(a,b) { return b.score - a.score });
 
@@ -270,7 +339,7 @@ export default class OneOnOne extends React.Component {
                     loser = "";
                 }
 
-                await self.setState({ saved: true, winner, loser, scores_history, scores, stats });
+                await self.setState({ saved: true, winner, loser, scores_history, scores, stats, saved_game_id });
                 self.initStats();
             },
             function(error) {
@@ -303,7 +372,7 @@ export default class OneOnOne extends React.Component {
         scores_history[player1.name] = [];
         scores_history[player2.name] = [];
         await this.setState({
-            player1, player2, scores, saved: false, winner: "", loser: "", scores_history
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id:undefined,
         });
         this.initStats();
     }
@@ -436,12 +505,21 @@ export default class OneOnOne extends React.Component {
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
-                        <ButtonInput
-                            text={"Save"}
-                            style={{ position: "absolute", bottom: bottom }}
-                            onClick={this.saveResult}
-                            disabled={this.state.saved || this.state.saving}
-                        />
+                        {(this.state.saved_game_id) ?
+                            (
+                                <ButtonInput
+                                    text={"Update"}
+                                    style={{ position: "absolute", bottom: bottom }}
+                                    onClick={this.updateResult}
+                                />
+                            ): (
+                                <ButtonInput
+                                    text={"Save"}
+                                    style={{ position: "absolute", bottom: bottom }}
+                                    onClick={this.saveResult}
+                                    disabled={this.state.saved || this.state.saving}
+                                />
+                            )}
                     </div>
                     {blocks[1]}
                 </div>

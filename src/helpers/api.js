@@ -26,4 +26,14 @@ export function apiPost(self, url, data, onSuccess, onError, onFinish){
         .then(function () {
             onFinish();
         });
+}export function apiPut(self, url, data, onSuccess, onError, onFinish){
+    axios.put(getServerAddress() + url, data)
+        .then(res => {
+            onSuccess(res);
+        }).catch(function (error) {
+        onError(error);
+    })
+        .then(function () {
+            onFinish();
+        });
 }
