@@ -137,6 +137,7 @@ export default class PlayerCard extends React.Component {
                     min={0}
                     max={round_length}
                     onChange={(e) => {
+                        e.target.value = Number(e.target.value);
                         this.setState({
                             shoot_score: Math.min(round_length, e.target.value)
                         })

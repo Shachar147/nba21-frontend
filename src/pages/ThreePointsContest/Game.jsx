@@ -139,6 +139,7 @@ export default class Game extends React.Component {
 
     async onScore(score){
 
+
         if(!this.state.game_started){
             return;
         }
