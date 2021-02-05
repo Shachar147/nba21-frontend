@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.storybook/preview-body.html" beforeDir="false" afterPath="$PROJECT_DIR$/.storybook/preview-body.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SelectedPlayers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SelectedPlayers.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/Introduction.stories.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/Introduction.stories.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/examples/Button.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/examples/Button.stories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/examples/Header.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/examples/Header.stories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/examples/Page.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/examples/Page.stories.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +37,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -46,6 +48,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="C:\repos\node-js\nba21-frontend\node_modules\prettier" />
     <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
