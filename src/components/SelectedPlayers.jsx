@@ -1,6 +1,7 @@
 import React from "react";
 import {PLAYER_NO_PICTURE} from "../helpers/consts";
 import ButtonInput from "./inputs/ButtonInput";
+import PropTypes from "prop-types";
 
 export default class SelectedPlayers extends React.Component {
 
@@ -51,11 +52,71 @@ export default class SelectedPlayers extends React.Component {
     }
 
     render(){
-        return (
+        const selected = (
             <h2 className="ui header" style={{margin: "10px", width:"50%"}}>
                 {this.props.title}
                 <div className="sub header">Selected players for this team {this.teamDetails(this.props.team)}</div>
             </h2>
         );
+
+        if (this.props.wrapper){
+            return (
+                <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
+                    {selected}
+                </div>
+                )
+        }
+
+        return selected;
     }
 }
+
+SelectedPlayers.propTypes = {
+    /**
+     * Are the buttons enabled or not?
+     */
+    enabled: PropTypes.bool,
+    /**
+     * Title for this component.
+     *
+     * For example - The name of the team you are selecting players to.
+     *
+     * For example 'Team One', 'Team Two' (on 3pts contents)
+     */
+    title: PropTypes.string,
+    /**
+     * selected players objects. array of hashes.
+     */
+    team: PropTypes.arrayOf(PropTypes.object),
+    /**
+     * What should happen when clicking on add random button?
+     */
+    onAddRandom: PropTypes.func,
+    /**
+     * What should happen when clicking on add computer button?
+     */
+    onAddComputer: PropTypes.func,
+    /**
+     * Toggle function when clicking on already selected item from the list
+     */
+    toggle: PropTypes.func,
+    /**
+     * What should happen when clicking on clear list?
+     */
+    onClear: PropTypes.func,
+    /**
+     * should we wrap this component with a centered div?
+     */
+    wrapper: PropTypes.bool,
+};
+
+SelectedPlayers.defaultProps = {
+    enabled: true,
+    title: undefined,
+    team: [],
+    onAddRandom: undefined,
+    onAddComputer: undefined,
+    toggle: undefined,
+    onClear: undefined,
+    wrapper: false,
+};
