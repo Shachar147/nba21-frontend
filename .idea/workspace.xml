@@ -7,10 +7,12 @@
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/loaders/Loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/loaders/LoaderHarden.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/loaders/LoaderLebron.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.storybook/preview-body.html" beforeDir="false" afterPath="$PROJECT_DIR$/.storybook/preview-body.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PlayerCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PlayerCard.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/components/Card.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/Card.stories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/components/PlayerCard.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/PlayerCard.stories.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +75,7 @@
       <workItem from="1610572030591" duration="2321000" />
       <workItem from="1610702572979" duration="43598000" />
       <workItem from="1610883426321" duration="105650000" />
-      <workItem from="1612132367271" duration="79795000" />
+      <workItem from="1612132367271" duration="82337000" />
     </task>
     <servers />
   </component>

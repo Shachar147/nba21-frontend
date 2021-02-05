@@ -222,7 +222,7 @@ export default class PlayerCard extends React.Component {
 
         // lost / win
         const lost_block = (lost) ? "Loser" : "";
-        const lostImage = (lost) ? (<img className="lost-image" alt={"lost"} src={LOST_X_IMAGE} />) : undefined;
+        const lostImage = (lost) ? (<img className="lost-image" style={{ position: "absolute", top: "-30px", zIndex:"9999999"}} alt={"lost"} src={LOST_X_IMAGE} />) : undefined;
         const winner_block = (winner) ? "Winner!" : "";
 
         // position / division
@@ -311,11 +311,15 @@ export default class PlayerCard extends React.Component {
 
 PlayerCard.propTypes = {
     /**
-     * option to pass a title to custom details. for example: "Players", and then on custom_details pass array of players names.
+     * option to pass a title to custom details.
+     *
+     * for example: "Players", and then on custom_details pass array of players names.
      */
     custom_details_title: PropTypes.string,
     /**
-     * option to pass custom details array. will override 'details' and 'stats'. for example, you can pass array of all players of specific team.
+     * option to pass custom details array. will override 'details' and 'stats'.
+     *
+     * for example, you can pass array of all players of specific team.
      */
     custom_details: PropTypes.arrayOf(PropTypes.string),
 
@@ -336,6 +340,7 @@ PlayerCard.propTypes = {
      * Array of strings that represents players names that are on current game. (for example in One on One we will have array of 2 players)
      *
      * Example:
+     *
      * ["Khris Middleton","LeBron James"]
      */
     curr_players: PropTypes.arrayOf(string).isRequired,
@@ -354,22 +359,70 @@ PlayerCard.propTypes = {
     /**
      * Hash of player details.
      *
-     * for example:
+     * \> \_2k_rating
+     *
+     * \> height\_meters
+     *
+     * \> weight_kgs
+     *
+     * \> percents (3pt percents)
+     *
+     * \> team
+     *
+     * Example:
+     *
      * {"\_2k\_rating": "95","height\_meters": 1.9,"percents":"43.43%","team": "Golden State Warriors","weight\_kgs": "83.9"}
      */
     details: PropTypes.object,
     /**
      * Hash of player stats.
      *
-     * for example:
-     * {"avg\_opponent\_2k\_rating":95,"lose\_streak":0,"max\_lose\_streak":0,"max\_win\_streak":12,"total\_away\_games":50,"total\_diff":250,"total\_diff\_per\_game":2.5,
-     * "total\_games":100,"total\_home\_games":50,"total\_knockouts":25,"total\_lost":20,"total\_scored":1250,"total\_suffered":1000,"total\_suffered\_knockouts":3,
+     * \> win\_streak
+     *
+     * \> max\_win\_streak
+     *
+     * \> lose\_streak
+     *
+     * \> max\_lose\_streak
+     *
+     * \> total\_win\_percents
+     *
+     * \> total\_games
+     *
+     * \> total\_wins
+     *
+     * \> total\_lost
+     *
+     * \> total\_diff
+     *
+     * \> total\_diff\_per\_game
+     *
+     * \> total\_away\_games
+     *
+     * \> total\_home\_games
+     *
+     * \> total\_knockouts
+     *
+     * \> avg\_opponent\_2k\_rating
+     *
+     * \> total\_scored
+     *
+     * \> total\_suffered
+     *
+     * \> total\_suffered\_knockouts
+     *
+     * Example:
+     *
+     * {"avg\_opponent\_2k\_rating":95,"lose\_streak":0,"max\_lose\_streak":0,"max\_win\_streak":12,
+     * "total\_away\_games":50,"total\_diff":250,"total\_diff\_per\_game":2.5,
+     * "total\_games":100,"total\_home\_games":50,"total\_knockouts":25,"total\_lost":20,
+     * "total\_scored":1250,"total\_suffered":1000,"total\_suffered\_knockouts":3,
      * "total\_win\_percents":"80.00%","total\_wins":80,"win\_streak":2}
      */
     stats: PropTypes.object,
 
     // shoot block
-    shoot: PropTypes.string,
+    shoot: PropTypes.bool,
     winner: PropTypes.bool,
     lost: PropTypes.bool,
     round_length: PropTypes.string,
@@ -395,6 +448,7 @@ PlayerCard.propTypes = {
 
     /**
      * should we wrap this card with cards wrapper?
+     *
      * default is false because usually we would like to print multiple cards under the same wrapper, so we will print the wrapper outside.
      */
     wrapper: PropTypes.bool,

@@ -4,7 +4,7 @@ export const MIN_ROUND_LENGTH = 3;
 export const MAX_ROUND_LENGTH = 100;
 export const ROUND_DEFAULT_LENGTH = 3;
 export const LOGIN_DELAY = 500;
-export const LOADING_DELAY = 1500; // to be able to see the loader
+export const LOADING_DELAY = 2000; // to be able to see the loader
 
 export const _3PT_COMPUTER_SCORE_DELAY = 1000; // delay between computer's start turn until score submittion
 
@@ -61,6 +61,14 @@ export const LOADERS = {
         top: '0px',
     },
     'Howard.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Westbrook.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'CP3.gif': {
         backgroundColor: 'white',
         top: '0px',
     }

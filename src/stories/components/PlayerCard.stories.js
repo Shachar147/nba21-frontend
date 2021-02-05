@@ -3,6 +3,8 @@ import React from 'react';
 import PlayerCard from "../../components/PlayerCard";
 import {ICE_COLD_THRESHOLD, ON_FIRE_THRESHOLD} from "../../helpers/consts";
 
+const SERVER = "http://localhost:3001";
+
 export default {
     title: '/components/PlayerCard',
     component: PlayerCard,
@@ -16,14 +18,14 @@ const Template = (args) => <PlayerCard {...args} />;
 export const Basic = Template.bind({});
 Basic.args = {
     name:"Stephen Curry",
-    picture:"/stories/stephen.curry.png",
+    picture: SERVER + "/stories/stephen.curry.png",
     wrapper: true,
 };
 
 export const OnFire = Template.bind({});
 OnFire.args = {
     name:"Stephen Curry",
-    picture:"/stories/stephen.curry.png",
+    picture: SERVER + "/stories/stephen.curry.png",
     wrapper: true,
     stats: {
         win_streak: ON_FIRE_THRESHOLD,
@@ -36,7 +38,7 @@ OnFire.args = {
 export const IceCold = Template.bind({});
 IceCold.args = {
     name:"Stephen Curry",
-    picture:"/stories/stephen.curry.png",
+    picture: SERVER + "/stories/stephen.curry.png",
     wrapper: true,
     stats: {
         win_streak: 0,
@@ -63,7 +65,7 @@ unknownPlayer.args = {
 export const fullStats = Template.bind({});
 fullStats.args = {
     name:"Stephen Curry",
-    picture:"/stories/stephen.curry.png",
+    picture: SERVER + "/stories/stephen.curry.png",
     wrapper: true,
     position: "Guard",
     debut_year: 2009,
@@ -92,6 +94,14 @@ fullStats.args = {
         total_scored: 1250,
         total_suffered:1000,
         total_suffered_knockouts: 3,
-
     }
 };
+
+
+// todo complete:
+// shoot example
+// single shoot example
+// winner example
+// loser example
+// onClick, onchange etc events examples
+// move styles to a hash too.

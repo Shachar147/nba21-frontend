@@ -87,6 +87,7 @@ Card.propTypes = {
     href: PropTypes.string,
     /**
      * should we wrap this card with cards wrapper?
+     *
      * default is false because usually we would like to print multiple cards under the same wrapper, so we will print the wrapper outside.
      */
     wrapper: PropTypes.bool,

@@ -2,6 +2,8 @@ import React from 'react';
 
 import Card from "../../components/Card";
 
+const SERVER = "http://localhost:3001";
+
 export default {
     title: '/components/Card',
     component: Card,
@@ -22,7 +24,7 @@ const Template = (args) => <Card {...args} />;
 export const Basic = Template.bind({});
 Basic.args = {
     name:"Three Points Contest",
-    picture:"/thumbnails/3pointsContest.png",
+    picture: SERVER + "/thumbnails/3pointsContest.png",
     style:{ width: "160px" },
     href:"/three-points",
     wrapper: true,
@@ -31,7 +33,7 @@ Basic.args = {
 export const Disabled = Template.bind({});
 Disabled.args = {
     name:"Allstar Weekend",
-    picture:"/thumbnails/allstar.png",
+    picture: SERVER + "/thumbnails/allstar.png",
     style:{ width: "160px" },
     disabled: true,
     disabledAltAddition: "(Not Implemented Yet)",

@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
-<body>
-<div id="modal-root"></div>
-<style>
+<style type="css">
     hr.divider {
         border: 1px solid #eaeaea;
         border-bottom: 0px;
         top: 10px;
         position: relative;
     }
+
+    .selected-players h2.header:not(:first-child){
+        border-left:1px solid #eaeaea;
+    }
+
+    .card:not(.in-game):hover {
+        opacity:1 !important;
+    }
+
+    .selected-players .ui.avatar.image {
+        height: 1.4em !important;
+    }
+
+    .lost-image {
+        z-index: 999;
+        float: right;
+        width: 230;
+        height: 185;
+        right: 0px;
+        top: -30px;
+        position: absolute;
+    }
+
+    .card.in-game {
+        transform: unset !important;
+    }
 </style>
+<body>
+<div id="modal-root"></div>
 </body>
 </html>
