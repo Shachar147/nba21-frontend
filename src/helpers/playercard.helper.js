@@ -18,7 +18,7 @@ export function buildDetails(details, stats){
         weight_kgs,
     } = details;
 
-    const {
+    let {
         // stats details
         total_win_percents,
         total_wins,
@@ -42,6 +42,8 @@ export function buildDetails(details, stats){
         highlights,
 
     } = stats;
+
+    total_diff_per_game = total_diff_per_game || 'N/A';
 
     let settings = {
         '2K Rating': _2k_rating,

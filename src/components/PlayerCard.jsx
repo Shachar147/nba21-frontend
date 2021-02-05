@@ -59,7 +59,6 @@ export default class PlayerCard extends React.Component {
             // required
             name,
             all_players,
-            curr_players,
 
             // player details
             place,
@@ -100,6 +99,12 @@ export default class PlayerCard extends React.Component {
 
             wrapper,
         } = this.props;
+
+        let { curr_players } = this.props;
+
+        if (!isDefined(curr_players) && isDefined(name)) {
+            curr_players = [name];
+        }
 
         const {
             picture,
@@ -250,7 +255,7 @@ export default class PlayerCard extends React.Component {
         let name_block =
             (select_replacement) ? (
                 <DropdownInput
-                    options={all_players?.filter((player) => { return curr_players.indexOf(player.name) === -1 })}
+                    options={all_players?.filter((player) => { return curr_players?.indexOf(player.name) === -1 })}
                     name={"select_replacement"}
                     placeholder={"Select Replacement..."}
                     nameKey={"name"}
@@ -334,8 +339,32 @@ PlayerCard.propTypes = {
     picture:PropTypes.string.isRequired,
     /**
      * Array of hashes that represents all players. this array will be used for "replace" functionality, and will be filtered to all players except of curr_players. this way it won't random the same player again.
+     *
+     * Example:
+     *
+     * [{"id":233,"name":"LeBron James",
+     * "picture":"https:\/\/ak-static.cms.nba.com\/wp-content\/uploads\/headshots\/nba\/latest\/260x190\/2544.png",
+     * "position":"Forward","height_feet":6,"height_meters":2.06,"height_inches":9,"weight_pounds":250,
+     * "weight_kgs":113.4,"jersey":23,"debut_year":2003,
+     * "_2k_rating":97,"team":{"id":14,"name":"Los Angeles Lakers",
+     * "logo":"https:\/\/www.nba.com\/.element\/img\/1.0\/teamsites\/logos\/teamlogos_500x500\/lal.png",
+     * "division":"PACIFIC","conference":"WEST"}},
+     * {"id":184,"name":"James Harden",
+     * "picture":"https:\/\/ak-static.cms.nba.com\/wp-content\/uploads\/headshots\/nba\/latest\/260x190\/201935.png",
+     * "position":"Guard","height_feet":6,"height_meters":1.96,"height_inches":5,"weight_pounds":220,
+     * "weight_kgs":99.8,"jersey":13,"debut_year":2009,"_2k_rating":95,
+     * "team":{"id":3,"name":"Brooklyn Nets",
+     * "logo":"https:\/\/www.nba.com\/.element\/img\/1.0\/teamsites\/logos\/teamlogos_500x500\/bkn.png","division":"ATLANTIC",
+     * "conference":"EAST"}},
+     * {"id":109,"name":"Stephen Curry",
+     * "picture":"https:\/\/ak-static.cms.nba.com\/wp-content\/uploads\/headshots\/nba\/latest\/260x190\/201939.png",
+     * "position":"Guard","height_feet":6,"height_meters":1.9,"height_inches":3,"weight_pounds":185,"weight_kgs":83.9,
+     * "jersey":30,"debut_year":2009,"_2k_rating":95,
+     * "team":{"id":10,"name":"Golden State Warriors",
+     * "logo":"https:\/\/www.nba.com\/.element\/img\/1.0\/teamsites\/logos\/teamlogos_500x500\/gsw.png",
+     * "division":"PACIFIC","conference":"WEST"}}]
      */
-    all_players: PropTypes.arrayOf(PropTypes.object).isRequired,
+    all_players: PropTypes.arrayOf(PropTypes.object),
     /**
      * Array of strings that represents players names that are on current game. (for example in One on One we will have array of 2 players)
      *
@@ -343,9 +372,11 @@ PlayerCard.propTypes = {
      *
      * ["Khris Middleton","LeBron James"]
      */
-    curr_players: PropTypes.arrayOf(string).isRequired,
+    curr_players: PropTypes.arrayOf(string),
     /**
      * Player Position, for example: Guard, Forward, Center etc.
+     *
+     * Will be appeared at the bottom of the card.
      */
     position: PropTypes.string,
     /**
@@ -354,6 +385,8 @@ PlayerCard.propTypes = {
     team_division: PropTypes.string,
     /**
      * Player debut year - when did he joined the NBA? for example 2009
+     *
+     * Will be appeared at the bottom of the card, and override position if passed.
      */
     debut_year: PropTypes.number,
     /**
@@ -420,21 +453,122 @@ PlayerCard.propTypes = {
      * "total\_win\_percents":"80.00%","total\_wins":80,"win\_streak":2}
      */
     stats: PropTypes.object,
-
-    // shoot block
+    /**
+     * Is the player shooting right now? (for example in 3pt contest)
+     * If so, a "scored/from" inputs will appear.
+     */
     shoot: PropTypes.bool,
+    /**
+     * Is this player won? if so, a "Winner" message will appear
+     */
     winner: PropTypes.bool,
+    /**
+     * Is this player lost? if so, a "Loser" message will appear and a X on the player.
+     */
     lost: PropTypes.bool,
-    round_length: PropTypes.string,
+    /**
+     * Round length. determines shooting "from" input.
+     */
+    round_length: PropTypes.number,
+    /**
+     * Is the player shooting a single shot right now? (for example in One on One or Random games)
+     * If so, the value that passed here will be used for his shooting score.
+     *
+     * If this setting passed, it's overriding shot (scored/from shot)
+     */
     singleShot: PropTypes.number,
+    /**
+     * Array of passed scores of the previous rounds.
+     *
+     * For example, in 3 pts contest, holds all previous rounds scoring list.
+     *
+     * Example:
+     *
+     * [3, 2, 2]
+     */
     rounds: PropTypes.arrayOf(PropTypes.number),
+
+    /**
+     * Array of passed scores of the previous rounds in single shootout.
+     * Will be used to display rounds history in case the player is using singleshoot block.
+     *
+     * Example:
+     *
+     * [3, 2, 2]
+     */
     singleRounds: PropTypes.arrayOf(PropTypes.number),
 
     // Events
+    /**
+     * onScore event. relevant for scored/from shots (for example in 3pt contest).
+     *
+     * Handles what will happen after the user submits scored/from result for specific player.
+     *
+     * onScore gets as parameter scored value.
+     *
+     * Example:
+     *
+     * onScore: (value) => { alert(`Player scored ${value}/${example_round_length}`) }
+     */
     onScore: PropTypes.func,
+    /**
+     * onChange event. relevant for single shot. (for example One on One or Random).
+     *
+     * Handles what will happen when the user changes singleshot input.
+     *
+     * Example:
+     *
+     * onChange: (e) => { alert(`Current Score Value: ${e.target.value}`) }
+     */
     onChange: PropTypes.func,
+    /**
+     * onReplace event. happens when the user clicks on replace.
+     *
+     * You should pass a function that will random a new player and trigger a setState on the parent that will cause this specific player replacement.
+     *
+     * Example:
+     *
+     * onReplace: () => { this.replaceOne(idx); },
+     *
+     * idx in this example indicates if it's player number 1 or player number 2 in one on one.
+     *
+     * Notes:
+     *
+     * /> Replace link will appear only if this function is being passed as property (!!)
+     */
     onReplace: PropTypes.func,
+    /**
+     * onSpecificReplace event.
+     *
+     * If passed, after the user clicks on Replace he'll see also a Specific Replace button.
+     *
+     * Clicking on it will transform player name into a select dropdown, in which the user can choose specific player to replace to.
+     *
+     *
+     * Example:
+     *
+     * onSpecificReplace={(new_player) => { this.onSpecificReplace(old_player, new_player) }}
+     *
+     *
+     * Notes:
+     *
+     * \> Specific Replace link will appear only if this function is being passed as property (!!)
+     *
+     * \> You should also pass all_players property in order to have a list of players to select from.
+     */
     onSpecificReplace: PropTypes.func,
+
+    /**
+     * onClick event.
+     *
+     * Handles what will happen when the user clicks on the PlayerCard.
+     *
+     * You can use this event, to, for example, let the user choose players for two different teams and change PlayerCard style accordingly.
+     *
+     * Example:
+     *
+     * onClick: (e) => { alert(`This player was selected! do something with this information.`) }
+     */
     onClick: PropTypes.func,
 
     // ui settings
@@ -455,5 +589,7 @@ PlayerCard.propTypes = {
 };
 
 PlayerCard.defaultProps = {
+    round_length: 3,
+    onReplace: undefined,
     wrapper: false,
 };
