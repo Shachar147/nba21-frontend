@@ -54,11 +54,13 @@ export default class PlayerCard extends React.Component {
     }
 
     render() {
-        const {
+        let {
 
             // required
             name,
+
             all_players,
+            curr_players,
 
             // player details
             place,
@@ -89,18 +91,20 @@ export default class PlayerCard extends React.Component {
             onClick,
 
             // style
-            placeRibbon,
-            className,
             style,
-            imageStyle,
-            imgStyle,
-            descriptionStyle,
-            extraContentStyle,
+            className,
+            styles,
 
             wrapper,
         } = this.props;
 
-        let { curr_players } = this.props;
+        const {
+            placeRibbon,
+            imageContainerStyle,
+            imageStyle,
+            descriptionStyle,
+            extraContentStyle,
+        } = styles;
 
         if (!isDefined(curr_players) && isDefined(name)) {
             curr_players = [name];
@@ -273,9 +277,9 @@ export default class PlayerCard extends React.Component {
         const card = (
             <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
                 {lostImage}
-                <div className="image" style={imageStyle}>
+                <div className="image" style={imageContainerStyle}>
                     {place_tag}
-                    <img src={picture} onError={this.onError} alt={name} style={imgStyle} />
+                    <img src={picture} onError={this.onError} alt={name} style={imageStyle} />
                     {replace}
                     {specific_replace_block}
                 </div>
@@ -557,7 +561,6 @@ PlayerCard.propTypes = {
      * \> You should also pass all_players property in order to have a list of players to select from.
      */
     onSpecificReplace: PropTypes.func,
-
     /**
      * onClick event.
      *
@@ -572,13 +575,39 @@ PlayerCard.propTypes = {
     onClick: PropTypes.func,
 
     // ui settings
-    placeRibbon: PropTypes.string,
-    className: PropTypes.string,
+    /**
+     * optional style property to style PlayerCard wrapper div.
+     *
+     * for example, change its border color based on selected team.
+     */
     style: PropTypes.object,
-    imageStyle: PropTypes.object,
-    imgStyle: PropTypes.object,
-    descriptionStyle: PropTypes.object,
-    extraContentStyle: PropTypes.object,
+    /**
+     * optional className property to add to PlayerCard wrapper div. (in addition to the default 'card' class)
+     *
+     * for example, pass 'in-game' className to show the player always with opacity 1.
+     */
+    className: PropTypes.string,
+    /**
+     * optional styles property, hash of the following UI settings you can control:
+     *
+     * /> placeRibbon - color (red/orange/blue etc) should we show a place ribbon that indicates player's place in a more noticeable way.
+     *
+     * /> imageContainerStyle - hash of styles for image container
+     *
+     * /> imageStyle - hash of styles for the image itself
+     *
+     * /> descriptionStyle - hash of styles for description block
+     *
+     * /> extraContentStyle - hash of styles for the bottom part of the card.
+     *
+     * Example:
+     *
+     * {
+     * descriptionStyle: { minHeight: minHeight }, imageContainerStyle: { backgroundColor: "#F2F2F2" },
+     * imageStyle: { width: 200, margin: "auto", padding: "20px" }, extraContentStyle: { display: "none" }
+     * }
+     */
+    styles: PropTypes.object,
 
     /**
      * should we wrap this card with cards wrapper?
@@ -592,4 +621,5 @@ PlayerCard.defaultProps = {
     round_length: 3,
     onReplace: undefined,
     wrapper: false,
+    styles: {},
 };

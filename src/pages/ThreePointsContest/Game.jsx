@@ -287,7 +287,10 @@ export default class Game extends React.Component {
                                     lost={lost[player.name]}
                                     winner={this.state.winner === player.name}
                                     place={this.state.leaderboard.indexOf(player.name)+1}
-                                    placeRibbon={placeRibbon}
+
+                                    styles={{
+                                        placeRibbon:placeRibbon,
+                                    }}
 
                                     onScore={this.onScore}
                                 />

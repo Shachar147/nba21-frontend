@@ -235,10 +235,12 @@ export default class Random extends React.Component {
                         className={"in-game"}
 
                         style={{ cursor: "default", textAlign: "left" }}
-                        descriptionStyle={{ minHeight: minHeight }}
-                        imageStyle={{ backgroundColor: "#F2F2F2" }}
-                        imgStyle={{ width: 200, margin: "auto", padding: "20px" }}
-                        extraContentStyle={{ display: "none" }}
+                        styles={{
+                            descriptionStyle: { minHeight: minHeight },
+                            imageContainerStyle: { backgroundColor: "#F2F2F2" },
+                            imageStyle: { width: 200, margin: "auto", padding: "20px" },
+                            extraContentStyle: { display: "none" },
+                        }}
 
                         name={team.name}
                         picture={team.logo}
