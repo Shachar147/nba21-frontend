@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/stories/components/SelectedPlayers.stories.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stories/components/StatsTable.stories.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PrivateRoute.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PrivateRoute.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SelectedPlayers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SelectedPlayers.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/StatsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StatsTable.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +71,7 @@
       <workItem from="1610572030591" duration="2321000" />
       <workItem from="1610702572979" duration="43598000" />
       <workItem from="1610883426321" duration="105650000" />
-      <workItem from="1612132367271" duration="91140000" />
+      <workItem from="1612132367271" duration="93944000" />
     </task>
     <servers />
   </component>

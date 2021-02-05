@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 
 export default class StatsTable extends React.Component {
 
@@ -53,3 +53,65 @@ export default class StatsTable extends React.Component {
 
     }
 }
+
+
+StatsTable.propTypes = {
+    /**
+     * Title for this stats table.
+     *
+     * for example: 'Individual Player Stats', 'One on One stats' etc.
+     */
+    title: PropTypes.string,
+    /**
+     * description to be displayed under the title, above the table.
+     *
+     * description can be either a string or an array of strings.
+     *
+     * description items will be displayed line after line.
+     *
+     * for example: 'Individual Player Stats', 'One on One stats' etc.
+     */
+    description: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+    ]),
+    /**
+     * Is the table supposed to be hidden?
+     * Use this if the title and description are enough for you.
+     */
+    hidden: PropTypes.bool,
+    /**
+     * Stats table contains 3 columns. supply their names here.
+     *
+     * Example:
+     *
+     * ["","Days with most games","Days with most points"]
+     */
+    cols: PropTypes.arrayOf(PropTypes.string),
+    /**
+     * Stats object.
+     *
+     * Example:
+     *
+     * {"#1":["29/01/2021 - 12", "29/01/2021 - 147"], "#2":["30/01/2021 - 11", "28/01/2021 - 140"], "#3":["01/02/2021 - 9", "28/01/2021 - 106"]}
+     *
+     */
+    stats: PropTypes.object,
+    /**
+     * optional margin top setting,
+     */
+    marginTop: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+    ])
+
+};
+
+StatsTable.defaultProps = {
+    title: undefined,
+    description: undefined,
+    hidden: false,
+    cols: ["","",""],
+    stats: {},
+    marginTop: undefined,
+};
