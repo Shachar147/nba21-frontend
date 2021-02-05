@@ -85,10 +85,10 @@ export const TOP_STATS_NUMBER = 3;
 
 export const ON_FIRE_STYLE = "width:16px; top: -4px; position: relative";
 export const ON_FIRE_COLOR = "rgb(255,117,0)";
-export const ON_FIRE_ICON = "./onfire.png";
+export const ON_FIRE_ICON = "/onfire.png";
 export const ON_FIRE_THRESHOLD = 3;
 
 export const ICE_COLD_STYLE = "width:16px; top: -2px; position: relative";
 export const ICE_COLD_COLOR = "rgb(0,173,239)";
-export const ICE_COLD_ICON = "./icecold.jpg";
+export const ICE_COLD_ICON = "/icecold.jpg";
 export const ICE_COLD_THRESHOLD = 3;

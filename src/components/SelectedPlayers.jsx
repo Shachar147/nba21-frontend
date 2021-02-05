@@ -39,7 +39,7 @@ export default class SelectedPlayers extends React.Component {
                         {team.map((player) => (
                             <a key={player.name} className={"item"} title={"Click to remove"} onClick={() => (this.props.toggle) ? this.props.toggle(player) : undefined}>
                                 <span style={{ width: "200px", display:"inline-block", textAlign: "left" }} >
-                                    <img className={"ui avatar image"} src={player.picture} onError={this.onError.bind(this)}  />
+                                    <img className={"ui avatar image"} style={{ height: "1.4em" }} src={player.picture} onError={this.onError.bind(this)}  />
                                     {player.name}
                                 </span>
                             </a>
