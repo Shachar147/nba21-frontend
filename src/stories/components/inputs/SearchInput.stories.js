@@ -3,7 +3,7 @@ import React from 'react';
 import SearchInput from '../../../components/inputs/SearchInput';
 
 export default {
-    title: '/components/inputs/SearchInput',
+    title: 'Storybook/components/inputs/SearchInput',
     component: SearchInput,
     argTypes: {
         onKeyUp: { control: 'function' },

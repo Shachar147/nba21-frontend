@@ -5,7 +5,7 @@ import Card from "../../components/Card";
 const SERVER = "http://localhost:3001";
 
 export default {
-    title: '/components/Card',
+    title: 'Storybook/components/Card',
     component: Card,
     argTypes: {
         picture: { control: "text" },

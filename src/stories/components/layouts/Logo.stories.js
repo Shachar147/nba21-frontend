@@ -3,7 +3,7 @@ import React from 'react';
 import Logo from '../../../components/layouts/Logo';
 
 export default {
-    title: '/components/layout components/Logo',
+    title: 'Storybook/components/layout components/Logo',
     component: Logo,
     argTypes: {
         maxWidth: { control: 'number' },

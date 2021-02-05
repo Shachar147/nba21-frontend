@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../../../components/layouts/Header';
 
 export default {
-    title: '/components/layout components/Header',
+    title: 'Storybook/components/layout components/Header',
     component: Header,
     argTypes: {
         nologo: { control: 'boolean' },

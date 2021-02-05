@@ -3,7 +3,7 @@ import React from 'react';
 import TextInput from '../../../components/inputs/TextInput';
 
 export default {
-    title: '/components/inputs/TextInput',
+    title: 'Storybook/components/inputs/TextInput',
     component: TextInput,
     argTypes: {
         disabled: { control: 'boolean' },

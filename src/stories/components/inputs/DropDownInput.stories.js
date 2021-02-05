@@ -3,7 +3,7 @@ import React from 'react';
 import DropdownInput from '../../../components/inputs/DropdownInput';
 
 export default {
-    title: '/components/inputs/DropdownInput',
+    title: 'Storybook/components/inputs/DropdownInput',
     component: DropdownInput,
     argTypes: {
         placeholder: { control: 'text' },

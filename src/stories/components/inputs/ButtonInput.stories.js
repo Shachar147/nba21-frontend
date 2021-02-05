@@ -3,7 +3,7 @@ import React from 'react';
 import ButtonInput from '../../../components/inputs/ButtonInput';
 
 export default {
-    title: '/components/inputs/ButtonInput',
+    title: 'Storybook/components/inputs/ButtonInput',
     component: ButtonInput,
     argTypes: {
         text: { control: 'text' },

@@ -6,7 +6,7 @@ import {ICE_COLD_THRESHOLD, ON_FIRE_THRESHOLD, TEAM1_COLOR} from "../../helpers/
 const SERVER = "http://localhost:3001";
 
 export default {
-    title: '/components/PlayerCard',
+    title: 'Storybook/components/PlayerCard',
     component: PlayerCard,
     argTypes: {
 
