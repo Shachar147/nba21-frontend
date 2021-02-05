@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import {isDefined} from "./utils";
 import {apiPost} from "./api";
+import jwtDecode from "jwt-decode";
 
 export function setToken (token) {
     Cookies.set('token', token);
@@ -8,6 +9,11 @@ export function setToken (token) {
 
 export function getToken(){
     return Cookies.get('token');
+}
+
+export function getUser(){
+    const decodedPayload = jwtDecode(getToken())
+    return decodedPayload.username;
 }
 
 export function isLoggedOn(){

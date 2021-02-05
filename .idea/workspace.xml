@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PlayerCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PlayerCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ThreePointsContest/Game.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/Introduction.stories.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/Introduction.stories.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/examples/Button.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/examples/Button.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/examples/Header.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/examples/Header.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/examples/Page.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/examples/Page.stories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/thumbnails/3pointsContest.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/thumbnails/3pointsContest.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layouts/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layouts/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/auth.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

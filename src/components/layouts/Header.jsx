@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import Logo from "./Logo";
 import PropTypes from "prop-types";
+import {getUser} from "../../helpers/auth";
 
 export default function Header(props) {
 
@@ -16,6 +17,9 @@ export default function Header(props) {
                 <Link to={"/"}>Home</Link>
                 <span style={{ margin: "0px 10px" }}>/</span>
                 <Link to={"/logout"}>Logout</Link>
+                <span style={{ float: "right" , opacity: "0.6"}}>
+                    Connected as: {getUser()}
+                </span>
             </div>
             <br/><br/>
             {logo}
