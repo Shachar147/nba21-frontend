@@ -41,6 +41,10 @@ export function buildDetails(details, stats){
         // order by highlightes
         highlights,
 
+        // real stats
+        WP,
+        GP,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -67,6 +71,10 @@ export function buildDetails(details, stats){
         'Total Suffered Knockouts': total_suffered_knockouts,
         'Max Win Streak': `(Max: ${isDefined(max_win_streak) ? max_win_streak : 'N/A'})`,
         'Max Lose Streak': `(Max: ${isDefined(max_lose_streak) ? max_lose_streak : 'N/A'})`,
+
+        // real stats
+        'Career Win Percents': `${WP}%`,
+        'Career Games Played': GP,
     };
 
     // on fire / ice cold
@@ -111,6 +119,10 @@ export function buildDetails(details, stats){
     if (isDefined(total_diff)) status_arr.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
     if (isDefined(total_scored)) status_arr.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
     if (isDefined(total_knockouts)) status_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);
+
+    // real stats
+    if (isDefined(WP)) status_arr.push(`Career Win Percents: ${settings['Career Win Percents']}`);
+    if (isDefined(GP)) status_arr.push(`Career Games Played: ${settings['Career Games Played']}`);
 
     if(status_arr.length > 3){
         details_arr.push(divider);

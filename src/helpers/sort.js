@@ -110,3 +110,11 @@ export function totalWinsSort(a,b){
 export function totalLostSort(a,b){
     return specificSort('total_lost',a,b);
 }
+
+export function WPSort(a,b){
+    return specificSort('WP',a,b);
+}
+
+export function GPSort(a,b){
+    return specificSort('GP',a,b);
+}

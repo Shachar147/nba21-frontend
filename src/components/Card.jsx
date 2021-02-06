@@ -33,7 +33,7 @@ export default function Card(props) {
                     <img src={props.picture} alt={alt} style={{ width: "60%" }} />
                 </Link>
             </div>
-            <div className="content" style={{ wordBreak: "break-all" }}>
+            <div className="content" style={{ wordBreak: "break-word" }}>
                 <Link to={props.href} disabled={props.disabled}><div className="description" dangerouslySetInnerHTML={{__html: props.name}} /></Link>
             </div>
         </div>

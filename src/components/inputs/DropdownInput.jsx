@@ -69,7 +69,7 @@ export default class DropdownInput extends React.Component {
         return (
             <div>
                 {label}
-                <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px" }} defaultValue={selected[this.props.valueKey]} onChange={this.onChange}>
+                <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px" }} defaultValue={selected[this.props.valueKey]} defaultValue={selected[this.props.valueKey]} onChange={this.onChange}>
                     {
                         (options.length === 0) ?
                             <option>No Options</option>
@@ -84,6 +84,7 @@ export default class DropdownInput extends React.Component {
                                 <option
                                     key={key}
                                     value={value}
+                                    selected={selected[this.props.valueKey] === value}
                                 >
                                     {name}
                                 </option>

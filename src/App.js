@@ -13,6 +13,7 @@ import RegisterPage from "./pages/RegisterPage";
 import OneOnOne from "./pages/OneOnOne/OneOnOne";
 import Random from "./pages/Random/Random";
 import OneOnOneStats from "./pages/OneOnOne/OneOnOneStats";
+import RealStats from "./pages/RealStats/RealStats";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
                     <PrivateRoute path ="/three-points/" component={Settings} />
                     <PrivateRoute exact path ="/1on1/" component={OneOnOne} />
                     <PrivateRoute path ="/1on1/stats" component={OneOnOneStats} />
+                    <PrivateRoute path ="/real-stats/" component={RealStats} />
                     <PrivateRoute path ="/random/" component={Random} />
                     <PrivateRoute path ="/" component={MainPage} />
                 </Switch>

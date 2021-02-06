@@ -449,6 +449,13 @@ PlayerCard.propTypes = {
      *
      * \> total\_suffered\_knockouts
      *
+     *
+     * Real Stats:
+     *
+     * /> WP - Career win percents
+     *
+     * /> GP - Career games played
+     *
      * Example:
      *
      * {"avg\_opponent\_2k\_rating":95,"lose\_streak":0,"max\_lose\_streak":0,"max\_win\_streak":12,
