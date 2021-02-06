@@ -291,7 +291,7 @@ export default class PlayerCard extends React.Component {
                             {team}
                         </a>
                     </div>
-                    <div className="description" style={descriptionStyle} dangerouslySetInnerHTML={{__html: title + details_arr.join("<br/>")}}/>
+                    <div className="description" style={descriptionStyle} dangerouslySetInnerHTML={{__html: title + details_arr.map((x) => `<div>${x}</div>`).join("")}}/>
                     {rounds_block}
                     {shoot_block}
                     {lost_block}

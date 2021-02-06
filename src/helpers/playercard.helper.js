@@ -98,7 +98,7 @@ export function buildDetails(details, stats){
         'Max Lose Streak': `(Max: ${isDefined(max_lose_streak) ? max_lose_streak : 'N/A'})`,
 
         // real stats
-        'Career Win Percents': `${WP}%`,
+        'Career Win%': `${WP}%`,
         'Career Games Played': GP,
         'Career Minutes Per Game': `${MPG}`,
         'Career Points Per Game': `${PPG}`,
@@ -109,13 +109,13 @@ export function buildDetails(details, stats){
         'Career Turnovers Per Game': `${TPG}`,
         'Career FG Made': `${FGM}`,
         'Career FG Attempts': `${FGA}`,
-        'Career FG Percents': `${FGP}%`,
+        'Career FG%': `${FGP}%`,
         'Career FT Made': `${FTM}`,
         'Career FT Attempts': `${FTA}`,
-        'Career FT Percents': `${FTP}%`,
+        'Career FT%': `${FTP}%`,
         'Career 3P Made': `${_3PM}`,
         'Career 3P Attempts': `${_3PA}`,
-        'Career 3P Percents': `${_3PP}%`,
+        'Career 3P%': `${_3PP}%`,
         'Career Total Minutes': `${MIN}`,
         'Career Total Points': `${PTS}`,
         'Career Total Rebounds': `${REB}`,
@@ -156,11 +156,11 @@ export function buildDetails(details, stats){
     if (height_meters) details_arr.push("Height: " + height_meters + " meters");
     if (weight_kgs) details_arr.push("Weight: " + weight_kgs + " kgs");
 
-    const hr_style = 'border: 1px solid #eaeaea; border-bottom: 0px; top: 10px; position: relative;';
+    const hr_style = 'border: 1px solid #eaeaea; border-bottom: 0px; top: 10px; position: relative; margin-bottom:20px';
     const divider = "<hr style='" + hr_style + "'/>";
 
     // stats
-    const status_arr = [];
+    let status_arr = [];
     if (total_win_percents) status_arr.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
     if (total_games) status_arr.push(`Total Games: ${settings['Total Games']}`);
     if (isDefined(total_home_games) && isDefined(total_away_games)) status_arr.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
@@ -171,8 +171,11 @@ export function buildDetails(details, stats){
     if (isDefined(total_knockouts)) status_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);
 
     // real stats
-    if (isDefined(WP)) status_arr.push(`Career Win Percents: ${settings['Career Win Percents']}`);
+    if (isDefined(WP)) status_arr.push(`Career Win%: ${settings['Career Win%']}`);
     if (isDefined(GP)) status_arr.push(`Career Games Played: ${settings['Career Games Played']}`);
+    if (isDefined(_3PP)) status_arr.push(`Career 3P%: ${settings['Career 3P%']}`);
+    if (isDefined(FGP)) status_arr.push(`Career FG%: ${settings['Career FG%']}`);
+    if (isDefined(FTP)) status_arr.push(`Career FT%: ${settings['Career FT%']}`);
     if (isDefined(MPG)) status_arr.push(`Career MPG: ${settings['Career Minutes Per Game']}`);
     if (isDefined(PPG)) status_arr.push(`Career PPG: ${settings['Career Points Per Game']}`);
     if (isDefined(RPG)) status_arr.push(`Career RPG: ${settings['Career Rebounds Per Game']}`);
@@ -182,13 +185,10 @@ export function buildDetails(details, stats){
     if (isDefined(TPG)) status_arr.push(`Career TPG: ${settings['Career Turnovers Per Game']}`);
     if (isDefined(FGM)) status_arr.push(`Career FGM: ${settings['Career FG Made']}`);
     if (isDefined(FGA)) status_arr.push(`Career FGA: ${settings['Career FG Attempts']}`);
-    if (isDefined(FGP)) status_arr.push(`Career FG%: ${settings['Career FG Percents']}`);
     if (isDefined(FTM)) status_arr.push(`Career FTM: ${settings['Career FT Made']}`);
     if (isDefined(FTA)) status_arr.push(`Career FTA: ${settings['Career FT Attempts']}`);
-    if (isDefined(FTP)) status_arr.push(`Career FT%: ${settings['Career FT Percents']}`);
     if (isDefined(_3PM)) status_arr.push(`Career 3PM: ${settings['Career 3P Made']}`);
     if (isDefined(_3PA)) status_arr.push(`Career 3PA: ${settings['Career 3P Attempts']}`);
-    if (isDefined(_3PP)) status_arr.push(`Career 3P%: ${settings['Career 3P Percents']}`);
     if (isDefined(MIN)) status_arr.push(`Career Total Minutes: ${settings['Career Total Minutes']}`);
     if (isDefined(PTS)) status_arr.push(`Career Total Points: ${settings['Career Total Points']}`);
     if (isDefined(REB)) status_arr.push(`Career Total Rebounds: ${settings['Career Total Rebounds']}`);
@@ -199,15 +199,35 @@ export function buildDetails(details, stats){
     if (isDefined(PF)) status_arr.push(`Career Total Personal Fouls: ${settings['Career Total Personal Fouls']}`);
     if (isDefined(PM)) status_arr.push(`Career Total +/-: ${settings['Career Total +/-']}`);
 
+
+    // highlighted items first
+    let first = [];
+    status_arr = status_arr.filter((x) => {
+        if (x.indexOf('<b>') !== -1){
+            first.push(x);
+            return false;
+        }
+        return true;
+    });
+    status_arr = [...first,...status_arr];
+
     if(status_arr.length > 3){
         details_arr.push(divider);
     }
 
-    // if (status_arr.length >= PLAYER_STATS_SHOW_MORE_THRESHOLD){
-    //     const item = '<a onClick="$(this).prev(\'br\').remove(); $(this).next(\'div\').show(); $(this).next(\'div>br\').remove(); $(this).hide();">Show More...</a><div style="display:none;" class="full-details">'
-    //     status_arr.splice(PLAYER_STATS_SHOW_MORE_THRESHOLD, 0, item);
-    //     status_arr.push('</div>');
-    // }
+    if (status_arr.length >= PLAYER_STATS_SHOW_MORE_THRESHOLD){
+        const item = '<a class="show-more-btn" onClick="$(this).parent().parent().find(\'div.show-more\').show(); $(this).hide(); $(this).parent().parent().find(\'.hide-more-btn\').show(); ">More Details</a><span style="display:none;" class="full-details">'
+        status_arr.splice(PLAYER_STATS_SHOW_MORE_THRESHOLD, 0, item);
+
+        for (let i=PLAYER_STATS_SHOW_MORE_THRESHOLD+1; i< status_arr.length; i++){
+            status_arr[i] = `<div class='show-more' style="display:none;">${status_arr[i]}</div>`;
+        }
+        status_arr.push('</span>');
+
+        const end_item = '<a class="hide-more-btn" style="display:none;" onClick="$(this).parent().parent().find(\'div.show-more\').hide(); $(this).hide(); $(this).parent().parent().find(\'.show-more-btn\').show();">Fewer Details</a><span style="display:none;" class="full-details">'
+        status_arr.push(end_item);
+
+    }
 
     details_arr = [...details_arr,...status_arr];
 

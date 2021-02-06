@@ -36,8 +36,8 @@ export default class RealStats extends React.Component {
             "merged": false,
 
             "orderByOptions":[
-                { "Career Win Percents, 300 Games or more": WPSort },
-                { "Career Win Percents": WPSort },
+                { "Career Win%, 300 Games or more": WPSort },
+                { "Career Win%": WPSort },
                 { "Career Games Played": GPSort },
 
                 { 'Career Minutes Per Game': (a,b) => specificSort('MPG', a, b) },
@@ -49,13 +49,13 @@ export default class RealStats extends React.Component {
                 { 'Career Turnovers Per Game': (a,b) => specificSort('TPG', a, b) },
                 { 'Career FG Made': (a,b) => specificSort('FGM', a, b) },
                 { 'Career FG Attempts': (a,b) => specificSort('FGA', a, b) },
-                { 'Career FG Percents': (a,b) => specificSort('FGP', a, b) },
+                { 'Career FG%': (a,b) => specificSort('FGP', a, b) },
                 { 'Career FT Made': (a,b) => specificSort('FTM', a, b) },
                 { 'Career FT Attempts': (a,b) => specificSort('FTA', a, b) },
-                { 'Career FT Percents': (a,b) => specificSort('FTP', a, b) },
+                { 'Career FT%': (a,b) => specificSort('FTP', a, b) },
                 { 'Career 3P Made': (a,b) => specificSort('_3PM', a, b) },
                 { 'Career 3P Attempts': (a,b) => specificSort('_3PA', a, b) },
-                { 'Career 3P Percents': (a,b) => specificSort('_3PP', a, b) },
+                { 'Career 3P%': (a,b) => specificSort('_3PP', a, b) },
                 { 'Career Total Minutes': (a,b) => specificSort('MIN', a, b) },
                 { 'Career Total Points': (a,b) => specificSort('PTS', a, b) },
                 { 'Career Total Rebounds': (a,b) => specificSort('REB', a, b) },
@@ -193,7 +193,7 @@ export default class RealStats extends React.Component {
 
             if (!records[iter.name]) { return false; }
 
-            if (this.state.orderBy === 'Career Win Percents, 300 Games or more'){
+            if (this.state.orderBy === 'Career Win%, 300 Games or more'){
                 if (!iter.GP || iter.GP < 300){
                     return false;
                 }
@@ -349,7 +349,7 @@ export default class RealStats extends React.Component {
                                     PF: player.PF,
                                     PM: player.PM,
 
-                                    highlights: (this.state.orderBy === 'Career Win Percents, 300 Games or more') ? ['Career Win Percents','Career Games Played'] : [this.state.orderBy],
+                                    highlights: (this.state.orderBy === 'Career Win%, 300 Games or more') ? ['Career Win%','Career Games Played'] : [this.state.orderBy],
                                 }}
 
                                 onClick={() => {
