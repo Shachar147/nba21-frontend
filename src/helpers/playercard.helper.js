@@ -44,6 +44,31 @@ export function buildDetails(details, stats){
         // real stats
         WP,
         GP,
+        MPG,
+        PPG,
+        RPG,
+        APG,
+        SPG,
+        BPG,
+        TPG,
+        FGM,
+        FGA,
+        FGP,
+        FTM,
+        FTA,
+        FTP,
+        _3PM,
+        _3PA,
+        _3PP,
+        MIN,
+        PTS,
+        REB,
+        AST,
+        STL,
+        BLK,
+        TOV,
+        PF,
+        PM,
 
     } = stats;
 
@@ -75,6 +100,31 @@ export function buildDetails(details, stats){
         // real stats
         'Career Win Percents': `${WP}%`,
         'Career Games Played': GP,
+        'Career Minutes Per Game': `${MPG}`,
+        'Career Points Per Game': `${PPG}`,
+        'Career Rebounds Per Game': `${RPG}`,
+        'Career Assists Per Game': `${APG}`,
+        'Career Steals Per Game': `${SPG}`,
+        'Career Blocks Per Game': `${BPG}`,
+        'Career Turnovers Per Game': `${TPG}`,
+        'Career FG Made': `${FGM}`,
+        'Career FG Attempts': `${FGA}`,
+        'Career FG Percents': `${FGP}`,
+        'Career FT Made': `${FTM}`,
+        'Career FT Attempts': `${FTA}`,
+        'Career FT Percents': `${FTP}`,
+        'Career 3PT Made': `${_3PM}`,
+        'Career 3PT Attempts': `${_3PA}`,
+        'Career 3PT Percents': `${_3PP}`,
+        'Career Total Minutes': `${MIN}`,
+        'Career Total Points': `${PTS}`,
+        'Career Total Rebounds': `${REB}`,
+        'Career Total Assists': `${AST}`,
+        'Career Total Steals': `${STL}`,
+        'Career Total Blocks': `${BLK}`,
+        'Career Total Turnovers': `${TOV}`,
+        'Career Total Personal Fouls': `${PF}`,
+        'Career Total +/-': `${PM}`,
     };
 
     // on fire / ice cold
@@ -123,6 +173,31 @@ export function buildDetails(details, stats){
     // real stats
     if (isDefined(WP)) status_arr.push(`Career Win Percents: ${settings['Career Win Percents']}`);
     if (isDefined(GP)) status_arr.push(`Career Games Played: ${settings['Career Games Played']}`);
+    if (isDefined(MPG)) status_arr.push(`Career Minutes Per Game: ${settings['Career Minutes Per Game']}`);
+    if (isDefined(PPG)) status_arr.push(`Career Points Per Game: ${settings['Career Points Per Game']}`);
+    if (isDefined(RPG)) status_arr.push(`Career Rebounds Per Game: ${settings['Career Rebounds Per Game']}`);
+    if (isDefined(APG)) status_arr.push(`Career Assists Per Game: ${settings['Career Assists Per Game']}`);
+    if (isDefined(SPG)) status_arr.push(`Career Steals Per Game: ${settings['Career Steals Per Game']}`);
+    if (isDefined(BPG)) status_arr.push(`Career Blocks Per Game: ${settings['Career Blocks Per Game']}`);
+    if (isDefined(TPG)) status_arr.push(`Career Turnovers Per Game: ${settings['Career Turnovers Per Game']}`);
+    if (isDefined(FGM)) status_arr.push(`Career FG Made: ${settings['Career FG Made']}`);
+    if (isDefined(FGA)) status_arr.push(`Career FG Attempts: ${settings['Career FG Attempts']}`);
+    if (isDefined(FGP)) status_arr.push(`Career FG Percents: ${settings['Career FG Percents']}%`);
+    if (isDefined(FTM)) status_arr.push(`Career FT Made: ${settings['Career FT Made']}`);
+    if (isDefined(FTA)) status_arr.push(`Career FT Attempts: ${settings['Career FT Attempts']}`);
+    if (isDefined(FTP)) status_arr.push(`Career FT Percents: ${settings['Career FT Percents']}%`);
+    if (isDefined(_3PM)) status_arr.push(`Career 3PT Made: ${settings['Career 3PT Made']}`);
+    if (isDefined(_3PA)) status_arr.push(`Career 3PT Attempts: ${settings['Career 3PT Attempts']}`);
+    if (isDefined(_3PP)) status_arr.push(`Career 3PT Percents: ${settings['Career 3PT Percents']}%`);
+    if (isDefined(MIN)) status_arr.push(`Career Total Minutes: ${settings['Career Total Minutes']}`);
+    if (isDefined(PTS)) status_arr.push(`Career Total Points: ${settings['Career Total Points']}`);
+    if (isDefined(REB)) status_arr.push(`Career Total Rebounds: ${settings['Career Total Rebounds']}`);
+    if (isDefined(AST)) status_arr.push(`Career Total Assists: ${settings['Career Total Assists']}`);
+    if (isDefined(STL)) status_arr.push(`Career Total Steals: ${settings['Career Total Steals']}`);
+    if (isDefined(BLK)) status_arr.push(`Career Total Blocks: ${settings['Career Total Blocks']}`);
+    if (isDefined(TOV)) status_arr.push(`Career Total Turnovers: ${settings['Career Total Turnovers']}`);
+    if (isDefined(PF)) status_arr.push(`Career Total Personal Fouls: ${settings['Career Total Personal Fouls']}`);
+    if (isDefined(PM)) status_arr.push(`Career Total +/-: ${settings['Career Total +/-']}`);
 
     if(status_arr.length > 3){
         details_arr.push(divider);

@@ -15,7 +15,7 @@ import {
 } from "../../helpers/consts";
 import {
     GPSort,
-    OVERALL_HIGHLIGHTS,
+    OVERALL_HIGHLIGHTS, specificSort,
     WPSort
 } from "../../helpers/sort";
 import DropdownInput from "../../components/inputs/DropdownInput";
@@ -38,7 +38,33 @@ export default class RealStats extends React.Component {
             "orderByOptions":[
                 { "Career Win Percents, 300 Games or more": WPSort },
                 { "Career Win Percents": WPSort },
-                { "Career Games Played": GPSort }
+                { "Career Games Played": GPSort },
+
+                { 'Career Minutes Per Game': (a,b) => specificSort('MPG', a, b) },
+                { 'Career Points Per Game': (a,b) => specificSort('PPG', a, b) },
+                { 'Career Rebounds Per Game': (a,b) => specificSort('RPG', a, b) },
+                { 'Career Assists Per Game': (a,b) => specificSort('APG', a, b) },
+                { 'Career Steals Per Game': (a,b) => specificSort('SPG', a, b) },
+                { 'Career Blocks Per Game': (a,b) => specificSort('BPG', a, b) },
+                { 'Career Turnovers Per Game': (a,b) => specificSort('TPG', a, b) },
+                { 'Career FG Made': (a,b) => specificSort('FGM', a, b) },
+                { 'Career FG Attempts': (a,b) => specificSort('FGA', a, b) },
+                { 'Career FG Percents': (a,b) => specificSort('FGP', a, b) },
+                { 'Career FT Made': (a,b) => specificSort('FTM', a, b) },
+                { 'Career FT Attempts': (a,b) => specificSort('FTA', a, b) },
+                { 'Career FT Percents': (a,b) => specificSort('FTP', a, b) },
+                { 'Career 3PT Made': (a,b) => specificSort('_3PM', a, b) },
+                { 'Career 3PT Attempts': (a,b) => specificSort('_3PA', a, b) },
+                { 'Career 3PT Percents': (a,b) => specificSort('_3PP', a, b) },
+                { 'Career Total Minutes': (a,b) => specificSort('MIN', a, b) },
+                { 'Career Total Points': (a,b) => specificSort('PTS', a, b) },
+                { 'Career Total Rebounds': (a,b) => specificSort('REB', a, b) },
+                { 'Career Total Assists': (a,b) => specificSort('AST', a, b) },
+                { 'Career Total Steals': (a,b) => specificSort('STL', a, b) },
+                { 'Career Total Blocks': (a,b) => specificSort('BLK', a, b) },
+                { 'Career Total Turnovers': (a,b) => specificSort('TOV', a, b) },
+                { 'Career Total Personal Fouls': (a,b) => specificSort('PF', a, b) },
+                { 'Career Total +/-': (a,b) => specificSort('PM', a, b) },
             ],
             "orderBy": DEFAULT_REAL_STATS_ORDER,
             loaderDetails: LOADER_DETAILS(),
@@ -293,6 +319,32 @@ export default class RealStats extends React.Component {
                                 stats={{
                                     WP:player.WP,
                                     GP:player.GP,
+                                    MPG: player.MPG,
+                                    PPG: player.PPG,
+                                    RPG: player.RPG,
+                                    APG: player.APG,
+                                    SPG: player.SPG,
+                                    BPG: player.BPG,
+                                    TPG: player.TPG,
+                                    FGM: player.FGM,
+                                    FGA: player.FGA,
+                                    FGP: player.FGP,
+                                    FTM: player.FTM,
+                                    FTA: player.FTA,
+                                    FTP: player.FTP,
+                                    _3PM: player._3PM,
+                                    _3PA: player._3PA,
+                                    _3PP: player._3PP,
+                                    MIN: player.MIN,
+                                    PTS: player.PTS,
+                                    REB: player.REB,
+                                    AST: player.AST,
+                                    STL: player.STL,
+                                    BLK: player.BLK,
+                                    TOV: player.TOV,
+                                    PF: player.PF,
+                                    PM: player.PM,
+
                                     highlights: (this.state.orderBy === 'Career Win Percents, 300 Games or more') ? ['Career Win Percents','Career Games Played'] : [this.state.orderBy],
                                 }}
 
