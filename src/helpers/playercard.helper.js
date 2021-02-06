@@ -69,7 +69,8 @@ export function buildDetails(details, stats){
         TOV,
         PF,
         PM,
-
+        PFP,
+        PMP,
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -125,6 +126,9 @@ export function buildDetails(details, stats){
         'Career Total Turnovers': `${TOV}`,
         'Career Total Personal Fouls': `${PF}`,
         'Career Total +/-': `${PM}`,
+
+        'Personal Fouls Per Game': `${PFP}`,
+        '+/- Per Game': `${PMP}`,
     };
 
     // on fire / ice cold
@@ -198,7 +202,8 @@ export function buildDetails(details, stats){
     if (isDefined(TOV)) status_arr.push(`Career Total Turnovers: ${settings['Career Total Turnovers']}`);
     if (isDefined(PF)) status_arr.push(`Career Total Personal Fouls: ${settings['Career Total Personal Fouls']}`);
     if (isDefined(PM)) status_arr.push(`Career Total +/-: ${settings['Career Total +/-']}`);
-
+    if (isDefined(PFP)) status_arr.push(`Personal Fouls Per Game: ${settings['Personal Fouls Per Game']}`);
+    if (isDefined(PMP)) status_arr.push(`+/- Per Game: ${settings['+/- Per Game']}`);
 
     // highlighted items first
     let first = [];

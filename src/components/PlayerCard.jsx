@@ -456,6 +456,61 @@ PlayerCard.propTypes = {
      *
      * /> GP - Career games played
      *
+     * /> MPG - Minutes per game
+     *
+     * /> PPG - Points per game
+     *
+     * /> RPG - Rebounds per game
+     *
+     * /> APG - Assists per game
+     *
+     * /> SPG - Steals per game
+     *
+     * /> BPG - Blocks per game
+     *
+     * /> TPG - Turnovers per game
+     *
+     * /> FGM - Field Goals Made
+     *
+     * /> FGA - Field Goals Attempted
+     *
+     * /> FGP - Field Goals Percents
+     *
+     * /> FTM - Free Throws Made
+     *
+     * /> FTA - Free Throws Attempted
+     *
+     * /> FTP - Free Throws Percents
+     *
+     * /> _3PM - Three Points Made
+     *
+     * /> _3PA - Three Points Attempted
+     *
+     * /> _3PP - Three Points Percents
+     *
+     * /> MIN - Career Total Minutes
+     *
+     * /> PTS - Career Total Points
+     *
+     * /> REB - Career Total Rebounds
+     *
+     * /> AST - Career Total Assists
+     *
+     * /> STL - Career Total Steals
+     *
+     * /> BLK - Career Total Blocks
+     *
+     * /> TOV - Career Total Turnovers
+     *
+     * /> PF - Career Total Personal Fouls
+     *
+     * /> PM - Career Total +/-
+     *
+     * /> PFP - Personal Fouls Per Game
+     *
+     * /> PMP - +/- per Game
+     *
+     *
      * Example:
      *
      * {"avg\_opponent\_2k\_rating":95,"lose\_streak":0,"max\_lose\_streak":0,"max\_win\_streak":12,

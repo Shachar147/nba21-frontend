@@ -65,6 +65,8 @@ export default class RealStats extends React.Component {
                 { 'Career Total Turnovers': (a,b) => specificSort('TOV', a, b) },
                 { 'Career Total Personal Fouls': (a,b) => specificSort('PF', a, b) },
                 { 'Career Total +/-': (a,b) => specificSort('PM', a, b) },
+                { 'Personal Fouls Per Game': (a,b) => specificSort('PFP', a, b) },
+                { '+/- Per Game': (a,b) => specificSort('PMP', a, b) },
             ],
             "orderBy": DEFAULT_REAL_STATS_ORDER,
             loaderDetails: LOADER_DETAILS(),
@@ -348,6 +350,8 @@ export default class RealStats extends React.Component {
                                     TOV: player.TOV,
                                     PF: player.PF,
                                     PM: player.PM,
+                                    PFP: player.PFP,
+                                    PMP: player.PMP,
 
                                     highlights: (this.state.orderBy === 'Career Win%, 300 Games or more') ? ['Career Win%','Career Games Played'] : [this.state.orderBy],
                                 }}
