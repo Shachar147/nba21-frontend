@@ -5,7 +5,7 @@ import {
     ON_FIRE_COLOR,
     ON_FIRE_ICON,
     ON_FIRE_STYLE,
-    ON_FIRE_THRESHOLD
+    ON_FIRE_THRESHOLD, PLAYER_STATS_SHOW_MORE_THRESHOLD
 } from "./consts";
 
 export function buildDetails(details, stats){
@@ -109,13 +109,13 @@ export function buildDetails(details, stats){
         'Career Turnovers Per Game': `${TPG}`,
         'Career FG Made': `${FGM}`,
         'Career FG Attempts': `${FGA}`,
-        'Career FG Percents': `${FGP}`,
+        'Career FG Percents': `${FGP}%`,
         'Career FT Made': `${FTM}`,
         'Career FT Attempts': `${FTA}`,
-        'Career FT Percents': `${FTP}`,
-        'Career 3PT Made': `${_3PM}`,
-        'Career 3PT Attempts': `${_3PA}`,
-        'Career 3PT Percents': `${_3PP}`,
+        'Career FT Percents': `${FTP}%`,
+        'Career 3P Made': `${_3PM}`,
+        'Career 3P Attempts': `${_3PA}`,
+        'Career 3P Percents': `${_3PP}%`,
         'Career Total Minutes': `${MIN}`,
         'Career Total Points': `${PTS}`,
         'Career Total Rebounds': `${REB}`,
@@ -173,22 +173,22 @@ export function buildDetails(details, stats){
     // real stats
     if (isDefined(WP)) status_arr.push(`Career Win Percents: ${settings['Career Win Percents']}`);
     if (isDefined(GP)) status_arr.push(`Career Games Played: ${settings['Career Games Played']}`);
-    if (isDefined(MPG)) status_arr.push(`Career Minutes Per Game: ${settings['Career Minutes Per Game']}`);
-    if (isDefined(PPG)) status_arr.push(`Career Points Per Game: ${settings['Career Points Per Game']}`);
-    if (isDefined(RPG)) status_arr.push(`Career Rebounds Per Game: ${settings['Career Rebounds Per Game']}`);
-    if (isDefined(APG)) status_arr.push(`Career Assists Per Game: ${settings['Career Assists Per Game']}`);
-    if (isDefined(SPG)) status_arr.push(`Career Steals Per Game: ${settings['Career Steals Per Game']}`);
-    if (isDefined(BPG)) status_arr.push(`Career Blocks Per Game: ${settings['Career Blocks Per Game']}`);
-    if (isDefined(TPG)) status_arr.push(`Career Turnovers Per Game: ${settings['Career Turnovers Per Game']}`);
-    if (isDefined(FGM)) status_arr.push(`Career FG Made: ${settings['Career FG Made']}`);
-    if (isDefined(FGA)) status_arr.push(`Career FG Attempts: ${settings['Career FG Attempts']}`);
-    if (isDefined(FGP)) status_arr.push(`Career FG Percents: ${settings['Career FG Percents']}%`);
-    if (isDefined(FTM)) status_arr.push(`Career FT Made: ${settings['Career FT Made']}`);
-    if (isDefined(FTA)) status_arr.push(`Career FT Attempts: ${settings['Career FT Attempts']}`);
-    if (isDefined(FTP)) status_arr.push(`Career FT Percents: ${settings['Career FT Percents']}%`);
-    if (isDefined(_3PM)) status_arr.push(`Career 3PT Made: ${settings['Career 3PT Made']}`);
-    if (isDefined(_3PA)) status_arr.push(`Career 3PT Attempts: ${settings['Career 3PT Attempts']}`);
-    if (isDefined(_3PP)) status_arr.push(`Career 3PT Percents: ${settings['Career 3PT Percents']}%`);
+    if (isDefined(MPG)) status_arr.push(`Career MPG: ${settings['Career Minutes Per Game']}`);
+    if (isDefined(PPG)) status_arr.push(`Career PPG: ${settings['Career Points Per Game']}`);
+    if (isDefined(RPG)) status_arr.push(`Career RPG: ${settings['Career Rebounds Per Game']}`);
+    if (isDefined(APG)) status_arr.push(`Career APG: ${settings['Career Assists Per Game']}`);
+    if (isDefined(SPG)) status_arr.push(`Career SPG: ${settings['Career Steals Per Game']}`);
+    if (isDefined(BPG)) status_arr.push(`Career BPG: ${settings['Career Blocks Per Game']}`);
+    if (isDefined(TPG)) status_arr.push(`Career TPG: ${settings['Career Turnovers Per Game']}`);
+    if (isDefined(FGM)) status_arr.push(`Career FGM: ${settings['Career FG Made']}`);
+    if (isDefined(FGA)) status_arr.push(`Career FGA: ${settings['Career FG Attempts']}`);
+    if (isDefined(FGP)) status_arr.push(`Career FG%: ${settings['Career FG Percents']}`);
+    if (isDefined(FTM)) status_arr.push(`Career FTM: ${settings['Career FT Made']}`);
+    if (isDefined(FTA)) status_arr.push(`Career FTA: ${settings['Career FT Attempts']}`);
+    if (isDefined(FTP)) status_arr.push(`Career FT%: ${settings['Career FT Percents']}`);
+    if (isDefined(_3PM)) status_arr.push(`Career 3PM: ${settings['Career 3P Made']}`);
+    if (isDefined(_3PA)) status_arr.push(`Career 3PA: ${settings['Career 3P Attempts']}`);
+    if (isDefined(_3PP)) status_arr.push(`Career 3P%: ${settings['Career 3P Percents']}`);
     if (isDefined(MIN)) status_arr.push(`Career Total Minutes: ${settings['Career Total Minutes']}`);
     if (isDefined(PTS)) status_arr.push(`Career Total Points: ${settings['Career Total Points']}`);
     if (isDefined(REB)) status_arr.push(`Career Total Rebounds: ${settings['Career Total Rebounds']}`);
@@ -202,6 +202,13 @@ export function buildDetails(details, stats){
     if(status_arr.length > 3){
         details_arr.push(divider);
     }
+
+    // if (status_arr.length >= PLAYER_STATS_SHOW_MORE_THRESHOLD){
+    //     const item = '<a onClick="$(this).prev(\'br\').remove(); $(this).next(\'div\').show(); $(this).next(\'div>br\').remove(); $(this).hide();">Show More...</a><div style="display:none;" class="full-details">'
+    //     status_arr.splice(PLAYER_STATS_SHOW_MORE_THRESHOLD, 0, item);
+    //     status_arr.push('</div>');
+    // }
+
     details_arr = [...details_arr,...status_arr];
 
     return details_arr;

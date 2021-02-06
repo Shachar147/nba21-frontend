@@ -93,3 +93,5 @@ export const ICE_COLD_STYLE = "width:16px; top: -2px; position: relative";
 export const ICE_COLD_COLOR = "rgb(0,173,239)";
 export const ICE_COLD_ICON = "/icecold.jpg";
 export const ICE_COLD_THRESHOLD = 3;
+
+export const PLAYER_STATS_SHOW_MORE_THRESHOLD = 5;

@@ -53,9 +53,9 @@ export default class RealStats extends React.Component {
                 { 'Career FT Made': (a,b) => specificSort('FTM', a, b) },
                 { 'Career FT Attempts': (a,b) => specificSort('FTA', a, b) },
                 { 'Career FT Percents': (a,b) => specificSort('FTP', a, b) },
-                { 'Career 3PT Made': (a,b) => specificSort('_3PM', a, b) },
-                { 'Career 3PT Attempts': (a,b) => specificSort('_3PA', a, b) },
-                { 'Career 3PT Percents': (a,b) => specificSort('_3PP', a, b) },
+                { 'Career 3P Made': (a,b) => specificSort('_3PM', a, b) },
+                { 'Career 3P Attempts': (a,b) => specificSort('_3PA', a, b) },
+                { 'Career 3P Percents': (a,b) => specificSort('_3PP', a, b) },
                 { 'Career Total Minutes': (a,b) => specificSort('MIN', a, b) },
                 { 'Career Total Points': (a,b) => specificSort('PTS', a, b) },
                 { 'Career Total Rebounds': (a,b) => specificSort('REB', a, b) },
@@ -163,8 +163,9 @@ export default class RealStats extends React.Component {
             if (records[player.name]){
 
                 Object.keys(records[player.name]).forEach((recordDetail) => {
-                    if (typeof(records[player.name][recordDetail]) !== "object" &&
-                        !isDefined(player[recordDetail])){
+                    if (typeof(records[player.name][recordDetail]) !== "object"
+                        && !isDefined(player[recordDetail])
+                    ){
 
                         player[recordDetail] = records[player.name][recordDetail];
 
@@ -312,6 +313,9 @@ export default class RealStats extends React.Component {
                                     _2k_rating: _2k_rating,
                                     team: player?.team?.name,
                                     place: idx+1,
+
+                                    height_meters:player.height_meters,
+                                    weight_kgs:player.weight_kgs,
                                 }}
                                 position={player.position}
                                 debut_year={player.debut_year}
