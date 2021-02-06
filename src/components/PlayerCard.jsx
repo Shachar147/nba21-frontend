@@ -407,7 +407,7 @@ PlayerCard.propTypes = {
      *
      * \> team
      *
-     * /> lastSyncAt - date of last details sync.
+     * \> lastSyncAt - date of last details sync.
      *
      * Example:
      *
@@ -454,65 +454,65 @@ PlayerCard.propTypes = {
      *
      * Real Stats:
      *
-     * /> WP - Career win percents
+     * \> WP - Career win percents
      *
-     * /> GP - Career games played
+     * \> GP - Career games played
      *
-     * /> MPG - Minutes per game
+     * \> MPG - Minutes per game
      *
-     * /> PPG - Points per game
+     * \> PPG - Points per game
      *
-     * /> RPG - Rebounds per game
+     * \> RPG - Rebounds per game
      *
-     * /> APG - Assists per game
+     * \> APG - Assists per game
      *
-     * /> SPG - Steals per game
+     * \> SPG - Steals per game
      *
-     * /> BPG - Blocks per game
+     * \> BPG - Blocks per game
      *
-     * /> TPG - Turnovers per game
+     * \> TPG - Turnovers per game
      *
-     * /> FGM - Field Goals Made
+     * \> FGM - Field Goals Made
      *
-     * /> FGA - Field Goals Attempted
+     * \> FGA - Field Goals Attempted
      *
-     * /> FGP - Field Goals Percents
+     * \> FGP - Field Goals Percents
      *
-     * /> FTM - Free Throws Made
+     * \> FTM - Free Throws Made
      *
-     * /> FTA - Free Throws Attempted
+     * \> FTA - Free Throws Attempted
      *
-     * /> FTP - Free Throws Percents
+     * \> FTP - Free Throws Percents
      *
-     * /> _3PM - Three Points Made
+     * \> _3PM - Three Points Made
      *
-     * /> _3PA - Three Points Attempted
+     * \> _3PA - Three Points Attempted
      *
-     * /> _3PP - Three Points Percents
+     * \> _3PP - Three Points Percents
      *
-     * /> MIN - Career Total Minutes
+     * \> MIN - Career Total Minutes
      *
-     * /> PTS - Career Total Points
+     * \> PTS - Career Total Points
      *
-     * /> REB - Career Total Rebounds
+     * \> REB - Career Total Rebounds
      *
-     * /> AST - Career Total Assists
+     * \> AST - Career Total Assists
      *
-     * /> STL - Career Total Steals
+     * \> STL - Career Total Steals
      *
-     * /> BLK - Career Total Blocks
+     * \> BLK - Career Total Blocks
      *
-     * /> TOV - Career Total Turnovers
+     * \> TOV - Career Total Turnovers
      *
-     * /> PF - Career Total Personal Fouls
+     * \> PF - Career Total Personal Fouls
      *
-     * /> PM - Career Total +/-
+     * \> PM - Career Total +/-
      *
-     * /> PFP - Personal Fouls Per Game
+     * \> PFP - Personal Fouls Per Game
      *
-     * /> PMP - +/- per Game
+     * \> PMP - +/- per Game
      *
-     * /> lastSyncAt - date of last stats sync
+     * \> lastSyncAt - date of last stats sync
      *
      *
      * Example:
@@ -605,7 +605,7 @@ PlayerCard.propTypes = {
      *
      * Notes:
      *
-     * /> Replace link will appear only if this function is being passed as property (!!)
+     * \> Replace link will appear only if this function is being passed as property (!!)
      */
     onReplace: PropTypes.func,
     /**
@@ -657,15 +657,15 @@ PlayerCard.propTypes = {
     /**
      * optional styles property, hash of the following UI settings you can control:
      *
-     * /> placeRibbon - color (red/orange/blue etc) should we show a place ribbon that indicates player's place in a more noticeable way.
+     * \> placeRibbon - color (red/orange/blue etc) should we show a place ribbon that indicates player's place in a more noticeable way.
      *
-     * /> imageContainerStyle - hash of styles for image container
+     * \> imageContainerStyle - hash of styles for image container
      *
-     * /> imageStyle - hash of styles for the image itself
+     * \> imageStyle - hash of styles for the image itself
      *
-     * /> descriptionStyle - hash of styles for description block
+     * \> descriptionStyle - hash of styles for description block
      *
-     * /> extraContentStyle - hash of styles for the bottom part of the card.
+     * \> extraContentStyle - hash of styles for the bottom part of the card.
      *
      * Example:
      *

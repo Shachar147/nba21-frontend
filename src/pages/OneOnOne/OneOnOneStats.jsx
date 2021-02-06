@@ -307,7 +307,9 @@ export default class OneOnOneStats extends React.Component {
                                     _2k_rating: _2k_rating,
                                     percents: player['3pt_percents'],
                                     team: player.team.name,
-                                    place: idx+1
+                                    place: idx+1,
+
+                                    lastSyncAt: player.lastSyncAt
                                 }}
                                 position={player.position}
                                 debut_year={player.debut_year}
@@ -331,8 +333,6 @@ export default class OneOnOneStats extends React.Component {
                                     max_win_streak: records[player.name].max_win_streak,
                                     max_lose_streak: records[player.name].max_lose_streak,
                                     highlights: (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
-
-                                    lastSyncAt: player.lastSyncAt
                                 }}
 
                                 onClick={() => {

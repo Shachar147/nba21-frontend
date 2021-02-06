@@ -1,4 +1,4 @@
-import {formatDate, isDefined, nth} from "./utils";
+import {formatDate, isDefined, nth, numberWithCommas} from "./utils";
 import {
     ICE_COLD_COLOR, ICE_COLD_ICON, ICE_COLD_STYLE,
     ICE_COLD_THRESHOLD,
@@ -100,7 +100,7 @@ export function buildDetails(details, stats){
 
         // real stats
         'Career Win%': `${WP}%`,
-        'Career Games Played': GP,
+        'Career Games Played': numberWithCommas(GP),
         'Career Minutes Per Game': `${MPG}`,
         'Career Points Per Game': `${PPG}`,
         'Career Rebounds Per Game': `${RPG}`,
@@ -117,15 +117,15 @@ export function buildDetails(details, stats){
         'Career 3P Made': `${_3PM}`,
         'Career 3P Attempts': `${_3PA}`,
         'Career 3P%': `${_3PP}%`,
-        'Career Total Minutes': `${MIN}`,
-        'Career Total Points': `${PTS}`,
-        'Career Total Rebounds': `${REB}`,
-        'Career Total Assists': `${AST}`,
-        'Career Total Steals': `${STL}`,
-        'Career Total Blocks': `${BLK}`,
-        'Career Total Turnovers': `${TOV}`,
-        'Career Total Personal Fouls': `${PF}`,
-        'Career Total +/-': `${PM}`,
+        'Career Total Minutes': `${numberWithCommas(MIN)}`,
+        'Career Total Points': `${numberWithCommas(PTS)}`,
+        'Career Total Rebounds': `${numberWithCommas(REB)}`,
+        'Career Total Assists': `${numberWithCommas(AST)}`,
+        'Career Total Steals': `${numberWithCommas(STL)}`,
+        'Career Total Blocks': `${numberWithCommas(BLK)}`,
+        'Career Total Turnovers': `${numberWithCommas(TOV)}`,
+        'Career Total Personal Fouls': `${numberWithCommas(PF)}`,
+        'Career Total +/-': `${numberWithCommas(PM)}`,
 
         'Personal Fouls Per Game': `${PFP}`,
         '+/- Per Game': `${PMP}`,
@@ -240,7 +240,7 @@ export function buildDetails(details, stats){
         details_arr.unshift(`<span style="opacity:0.6">Updated To: ${lastSync1}</span>`);
     }
 
-    if (lastSync1 !== lastSync2){
+    if (lastSync2 && lastSync1 !== lastSync2){
         status_arr.unshift(`<span style="opacity:0.6">Updated To: ${lastSync2}</span>`);
     }
 
