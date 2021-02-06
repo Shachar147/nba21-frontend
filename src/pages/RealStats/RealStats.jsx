@@ -165,12 +165,14 @@ export default class RealStats extends React.Component {
             if (records[player.name]){
 
                 Object.keys(records[player.name]).forEach((recordDetail) => {
-                    if (typeof(records[player.name][recordDetail]) !== "object"
-                        && !isDefined(player[recordDetail])
-                    ){
+                    if (typeof(records[player.name][recordDetail]) !== "object") {
 
-                        player[recordDetail] = records[player.name][recordDetail];
-
+                        if (!isDefined(player[recordDetail])) {
+                            player[recordDetail] = records[player.name][recordDetail];
+                        }
+                        else if (recordDetail === 'lastSyncAt'){
+                            player['lastStatsSyncAt'] = records[player.name][recordDetail];
+                        }
                     }
                 })
 
@@ -318,6 +320,8 @@ export default class RealStats extends React.Component {
 
                                     height_meters:player.height_meters,
                                     weight_kgs:player.weight_kgs,
+
+                                    lastSyncAt: player.lastSyncAt,
                                 }}
                                 position={player.position}
                                 debut_year={player.debut_year}
@@ -352,6 +356,8 @@ export default class RealStats extends React.Component {
                                     PM: player.PM,
                                     PFP: player.PFP,
                                     PMP: player.PMP,
+
+                                    lastSyncAt: player.lastStatsSyncAt,
 
                                     highlights: (this.state.orderBy === 'Career Win%, 300 Games or more') ? ['Career Win%','Career Games Played'] : [this.state.orderBy],
                                 }}

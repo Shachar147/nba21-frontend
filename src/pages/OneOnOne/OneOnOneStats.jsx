@@ -331,6 +331,8 @@ export default class OneOnOneStats extends React.Component {
                                     max_win_streak: records[player.name].max_win_streak,
                                     max_lose_streak: records[player.name].max_lose_streak,
                                     highlights: (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
+
+                                    lastSyncAt: player.lastSyncAt
                                 }}
 
                                 onClick={() => {

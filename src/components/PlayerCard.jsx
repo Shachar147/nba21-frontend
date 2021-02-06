@@ -407,6 +407,8 @@ PlayerCard.propTypes = {
      *
      * \> team
      *
+     * /> lastSyncAt - date of last details sync.
+     *
      * Example:
      *
      * {"\_2k\_rating": "95","height\_meters": 1.9,"percents":"43.43%","team": "Golden State Warriors","weight\_kgs": "83.9"}
@@ -509,6 +511,8 @@ PlayerCard.propTypes = {
      * /> PFP - Personal Fouls Per Game
      *
      * /> PMP - +/- per Game
+     *
+     * /> lastSyncAt - date of last stats sync
      *
      *
      * Example:

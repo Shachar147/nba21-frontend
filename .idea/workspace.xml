@@ -9,6 +9,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/PlayerCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PlayerCard.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/playercard.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/playercard.helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOneStats.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/RealStats/RealStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/RealStats/RealStats.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -1,4 +1,4 @@
-import {isDefined, nth} from "./utils";
+import {formatDate, isDefined, nth} from "./utils";
 import {
     ICE_COLD_COLOR, ICE_COLD_ICON, ICE_COLD_STYLE,
     ICE_COLD_THRESHOLD,
@@ -231,7 +231,17 @@ export function buildDetails(details, stats){
 
         const end_item = '<a class="hide-more-btn" style="display:none;" onClick="$(this).parent().parent().find(\'div.show-more\').hide(); $(this).hide(); $(this).parent().parent().find(\'.show-more-btn\').show();">Fewer Details</a><span style="display:none;" class="full-details">'
         status_arr.push(end_item);
+    }
 
+    const lastSync1 = (details.lastSyncAt) ? formatDate(new Date(details.lastSyncAt)) : undefined;
+    const lastSync2 = (stats.lastSyncAt) ? formatDate(new Date(stats.lastSyncAt)) : undefined;
+
+    if (lastSync1){
+        details_arr.unshift(`<span style="opacity:0.6">Updated To: ${lastSync1}</span>`);
+    }
+
+    if (lastSync1 !== lastSync2){
+        status_arr.unshift(`<span style="opacity:0.6">Updated To: ${lastSync2}</span>`);
     }
 
     details_arr = [...details_arr,...status_arr];
