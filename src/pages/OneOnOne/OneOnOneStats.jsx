@@ -114,6 +114,10 @@ export default class OneOnOneStats extends React.Component {
             },
             function() {
                 self.setState({ loaded2: true });
+
+                if (self.state.loaded1 && self.state.loaded2 && !self.state.merged){
+                    self.merge();
+                }
             }
         );
     }
@@ -136,8 +140,13 @@ export default class OneOnOneStats extends React.Component {
             },
             function() {
 
-                setTimeout(() => {
-                    self.setState({ loaded1: true })},
+                setTimeout(async() => {
+                        await self.setState({ loaded1: true })
+
+                        if (self.state.loaded1 && self.state.loaded2 && !self.state.merged){
+                            self.merge();
+                        }
+                    },
                 LOADING_DELAY);
             }
         );
@@ -207,10 +216,6 @@ export default class OneOnOneStats extends React.Component {
 
     render() {
         const players = this.applyFilters();
-
-        if (this.state.loaded1 && this.state.loaded2 && !this.state.merged){
-            this.merge();
-        }
 
         let error = this.state.error;
         const is_loading = !(this.state.loaded1 && this.state.loaded2 && this.state.merged);

@@ -17,8 +17,13 @@ export default class PlayerDetails extends React.Component {
         };
     }
 
-    componentDidMount() {
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.stats){
+            this.init();
+        }
+    }
 
+    init() {
         const { details, stats, custom_details } = this.props;
 
         let show_more = false;
@@ -40,6 +45,11 @@ export default class PlayerDetails extends React.Component {
         this.setState({ details_arr, stats_arr, show_more });
     }
 
+    componentDidMount() {
+
+        this.init();
+    }
+
     render() {
 
         const { custom_details_title, styles } = this.props;
@@ -55,13 +65,13 @@ export default class PlayerDetails extends React.Component {
                 <div dangerouslySetInnerHTML={{ __html: custom_details_title }} />
                 {
                     [...details_arr].map((x, idx) => {
-                        return (<div dangerouslySetInnerHTML={{__html: x}}/>);
+                        return (<div key={`details-${idx}`} dangerouslySetInnerHTML={{__html: x}}/>);
                     })
                 }
                 {
                     [...stats_arr].map((x,idx) => {
                         if (idx <= PLAYER_STATS_SHOW_MORE_THRESHOLD || show_more_opened) {
-                            return (<div dangerouslySetInnerHTML={{__html: x}}/>);
+                            return (<div key={`stats-${idx}`} dangerouslySetInnerHTML={{__html: x}}/>);
                         }
                     })
                 }
