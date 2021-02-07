@@ -19,8 +19,6 @@ export default class PlayerPicture extends React.Component {
                 PLAYER_NO_PICTURE
             ],
 
-            shoot_score: 0,
-
             specific_replace: false,
             select_replacement: false,
         };

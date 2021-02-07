@@ -8,15 +8,14 @@ import PropTypes, {string} from "prop-types";
 import {buildDetails} from "../helpers/playercard.helper";
 import LostImage from "./internal/LostImage";
 import PlayerPicture from "./internal/PlayerPicture";
+import ShootingBox from "./internal/ShootingBox";
 
 export default class PlayerCard extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            shoot_score: 0,
-        };
+        this.state = {};
 
     }
 
@@ -78,10 +77,6 @@ export default class PlayerCard extends React.Component {
             curr_players = [name];
         }
 
-        const {
-            shoot_score,
-        } = this.state;
-
         const stats = {...this.props.stats};
         const details = {...this.props.details};
         const { team } = details;
@@ -90,67 +85,6 @@ export default class PlayerCard extends React.Component {
 
         // debut year
         const debut_year_block = (debut_year !== undefined) ? `Joined in ${debut_year}` : "";
-
-        // shoot
-        let input_style= { height: "38px", width: "30%", border: "1px solid #eaeaea", padding:"0px 5px" };
-        let shoot_block = (shoot && !winner) ? (
-            <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea"}}>
-                <input
-                    type={"number"}
-                    value={shoot_score}
-                    min={0}
-                    max={round_length}
-                    onChange={(e) => {
-                        e.target.value = Number(e.target.value);
-                        this.setState({
-                            shoot_score: Math.min(round_length, e.target.value)
-                        })
-                    }}
-                    style={input_style}
-                />
-                <span style={{ margin: "0px 5px" }} > / </span>
-                <input type={"number"} value={round_length} disabled style={input_style}/>
-                <div className={"ui basic buttons"} style={{ marginLeft: "10px" }}>
-                    <input
-                        type={"button"}
-                        className={"ui basic button"}
-                        value={"Go"}
-                        onClick={() => {
-                            onScore(shoot_score);
-                            this.setState({ shoot_score: 0});
-                        }}
-                    />
-                </div>
-            </div>
-        ) : undefined;
-
-        // single shoot (one on one)
-        if (isDefined(singleShot)) {
-            input_style.width = "100%";
-            const shot_style = {
-                display: "inline-block",
-                paddingTop: "10px",
-                marginTop: "10px",
-                paddingBottom: "10px",
-                marginBottom: "10px",
-                borderTop: "1px solid #eaeaea",
-                width: "100%"
-            };
-            shoot_block = (
-               <div style={shot_style}>
-                   <input
-                       type={"number"}
-                       value={singleShot}
-                       min={0}
-                       onChange={(e) => {
-                           e.target.value = Number(e.target.value);
-                           onChange(e);
-                       }}
-                       style={input_style}
-                   />
-               </div>
-            );
-        }
 
         // place
         const place_block = (place) ? "Place: " + place + nth(place) : "";
@@ -230,7 +164,14 @@ export default class PlayerCard extends React.Component {
                     </div>
                     <div className="description" style={descriptionStyle} dangerouslySetInnerHTML={{__html: title + details_arr.map((x) => `<div>${x}</div>`).join("")}}/>
                     {rounds_block}
-                    {shoot_block}
+                    <ShootingBox
+                        show={(shoot || isDefined(singleShot)) ? true : false} // isDefined because value can be 0
+                        is_winner={winner}
+                        round_length={round_length}
+                        onScore={onScore}
+                        singleShot={singleShot}
+                        onChange={onChange}
+                    />
                     {lost_block}
                     {winner_block}
                 </div>
