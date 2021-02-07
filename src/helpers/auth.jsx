@@ -12,8 +12,12 @@ export function getToken(){
 }
 
 export function getUser(){
-    const decodedPayload = jwtDecode(getToken())
-    return decodedPayload.username;
+    const token = getToken();
+    if (token) {
+        const decodedPayload = jwtDecode(token)
+        return decodedPayload.username;
+    }
+    return undefined;
 }
 
 export function isLoggedOn(){

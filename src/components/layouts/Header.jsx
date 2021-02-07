@@ -11,6 +11,8 @@ export default function Header(props) {
                         <Logo />
                     </div>): "";
 
+    const user = getUser();
+
     return (
         <div>
             <div style={{ padding: "0px 20px", zIndex: 9999, textalign: "left", marginTop: "0px", height:"36px", lineHeight: "36px", width: "100%", position: "fixed", top:"0px", backgroundColor: "white", borderBottom: "1px solid #eaeaea"}}>
@@ -18,7 +20,7 @@ export default function Header(props) {
                 <span style={{ margin: "0px 10px" }}>/</span>
                 <Link to={"/logout"}>Logout</Link>
                 <span style={{ float: "right" , opacity: "0.6"}}>
-                    Connected as: {getUser()}
+                    {(user) ? `Connected as: ${user}` : ""}
                 </span>
             </div>
             <br/><br/>
