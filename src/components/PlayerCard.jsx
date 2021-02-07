@@ -1,12 +1,12 @@
 import React from "react";
 import {
-    LOST_X_IMAGE,
     PLAYER_NO_PICTURE
 } from "../helpers/consts";
 import {isDefined, nth} from "../helpers/utils";
 import DropdownInput from "./inputs/DropdownInput";
-import PropTypes, {objectOf, string} from "prop-types";
+import PropTypes, {string} from "prop-types";
 import {buildDetails} from "../helpers/playercard.helper";
+import LostImage from "./internal/LostImage";
 
 export default class PlayerCard extends React.Component {
 
@@ -232,7 +232,6 @@ export default class PlayerCard extends React.Component {
 
         // lost / win
         const lost_block = (lost) ? "Loser" : "";
-        const lostImage = (lost) ? (<img className="lost-image" style={{ position: "absolute", top: "-30px", zIndex:"9999999"}} alt={"lost"} src={LOST_X_IMAGE} />) : undefined;
         const winner_block = (winner) ? "Winner!" : "";
 
         // position / division
@@ -277,7 +276,7 @@ export default class PlayerCard extends React.Component {
 
         const card = (
             <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
-                {lostImage}
+                <LostImage show={lost} />
                 <div className="image" style={imageContainerStyle}>
                     {place_tag}
                     <img src={picture} onError={this.onError} alt={name} style={imageStyle} />
