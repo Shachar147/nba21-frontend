@@ -15,7 +15,7 @@ import {
 } from "../../helpers/consts";
 import {
     GPSort,
-    OVERALL_HIGHLIGHTS, specificSort,
+    OVERALL_HIGHLIGHTS, specificSort, specificSortDate,
     WPSort
 } from "../../helpers/sort";
 import DropdownInput from "../../components/inputs/DropdownInput";
@@ -67,6 +67,8 @@ export default class RealStats extends React.Component {
                 { 'Career Total +/-': (a,b) => specificSort('PM', a, b) },
                 { 'Personal Fouls Per Game': (a,b) => specificSort('PFP', a, b) },
                 { '+/- Per Game': (a,b) => specificSort('PMP', a, b) },
+
+                { 'Updated To (Stats)': (a,b) => specificSortDate('lastSyncAt', a, b) },
             ],
             "orderBy": DEFAULT_REAL_STATS_ORDER,
             loaderDetails: LOADER_DETAILS(),

@@ -72,7 +72,79 @@ export const LOADERS = {
     'CP3.gif': {
         backgroundColor: 'white',
         top: '0px',
-    }
+    },
+    'Simmons1.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Simmons2.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'GPNt.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'CP3-2.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Ja.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Zion.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'DRose.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Embid.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Giannis.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Kawaii.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Klay.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'KD.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Lebron2.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Wall.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'PG13.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Booker.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Doncic.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
+    'Embid2.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
 }
 export const LOADER_DETAILS = () => {
     const options = shuffle(Object.keys(LOADERS));

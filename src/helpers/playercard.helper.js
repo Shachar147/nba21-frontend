@@ -167,9 +167,9 @@ export function buildDetails(details, stats){
     let status_arr = [];
     if (total_win_percents) status_arr.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
     if (total_games) status_arr.push(`Total Games: ${settings['Total Games']}`);
-    if (isDefined(total_home_games) && isDefined(total_away_games)) status_arr.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
     if (isDefined(win_streak)) { status_arr.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
     if (isDefined(lose_streak)) { status_arr.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}` + icecold); }
+    if (isDefined(total_home_games) && isDefined(total_away_games)) status_arr.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
     if (isDefined(total_diff)) status_arr.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
     if (isDefined(total_scored)) status_arr.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
     if (isDefined(total_knockouts)) status_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);

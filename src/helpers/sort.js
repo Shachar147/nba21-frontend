@@ -1,3 +1,5 @@
+import {reFormatDate} from "./utils";
+
 export function overallSort(a,b){
 
     // first sort
@@ -38,6 +40,20 @@ export function specificSort(key, a, b){
     else if (value1 < value2) return -1;
 
     return 0;
+}
+
+export function specificSortDate(key, a, b){
+    const value1 = (b[key]) ? new Date(reFormatDate(b[key])) : -1;
+    const value2 = (b[key]) ? new Date(reFormatDate(a[key])) : -1;
+
+    console.log(a,b,key,value1,value2);
+
+    return value1 - value2;
+
+    // if (value1 > value2) return 1;
+    // else if (value1 < value2) return -1;
+    //
+    // return 0;
 }
 
 export function totalGamesSort(a,b){

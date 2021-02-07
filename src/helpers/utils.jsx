@@ -66,6 +66,10 @@ export function formatDate(dt){
     return dt.toISOString().slice(0,10).split('-').reverse().join('/');
 }
 
+export function reFormatDate(dtString){
+    return new Date(dtString.split('/').reverse().join("-"));
+}
+
 export function numberWithCommas(x) {
     return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
