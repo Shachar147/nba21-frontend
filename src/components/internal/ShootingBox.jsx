@@ -14,7 +14,7 @@ export default class ShootingBox extends React.Component {
 
     render() {
 
-        const { wrapper, show, is_winner, round_length, onScore,
+        const { wrapper, show, is_winner, is_loser, round_length, onScore,
                 singleShot, onChange } = this.props;
         const { shoot_score } = this.state;
 
@@ -25,7 +25,7 @@ export default class ShootingBox extends React.Component {
         let input_style= { height: "38px", width: "30%", border: "1px solid #eaeaea", padding:"0px 5px" };
 
         // shoot
-        let shoot_block = (!is_winner) ? (
+        let shoot_block = (!is_winner && !is_loser) ? (
             <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea"}}>
                 <input
                     type={"number"}
@@ -84,6 +84,13 @@ export default class ShootingBox extends React.Component {
             );
         }
 
+        shoot_block = (
+            <div>
+                {shoot_block}
+                {(is_winner) ? "Winner!" : (is_loser) ? "Loser" : ""}
+            </div>
+        )
+
         if (wrapper) {
             return (
                 <div className={"card ui centered"}>
@@ -105,9 +112,16 @@ ShootingBox.propTypes = {
     show: PropTypes.bool,
     /**
      * Is this player won? if so, range shooting box won't appear.
+     * Also it will show appropriate message.
      *
      */
     is_winner: PropTypes.bool,
+    /**
+     * Is this player lost? if so, range shooting box won't appear.
+     * Also it will show appropriate message.
+     *
+     */
+    is_loser: PropTypes.bool,
     /**
      * Round length, for range shooting box.
      *

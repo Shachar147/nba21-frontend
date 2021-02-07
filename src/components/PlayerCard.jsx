@@ -128,10 +128,6 @@ export default class PlayerCard extends React.Component {
             );
         }
 
-        // lost / win
-        const lost_block = (lost) ? "Loser" : "";
-        const winner_block = (winner) ? "Winner!" : "";
-
         // position / division
         let position_block = <div />
         if (position) position_block = `Position: ${position}`;
@@ -165,15 +161,14 @@ export default class PlayerCard extends React.Component {
                     <div className="description" style={descriptionStyle} dangerouslySetInnerHTML={{__html: title + details_arr.map((x) => `<div>${x}</div>`).join("")}}/>
                     {rounds_block}
                     <ShootingBox
-                        show={(shoot || isDefined(singleShot)) ? true : false} // isDefined because value can be 0
+                        show={(shoot || isDefined(singleShot) || lost) ? true : false} // isDefined because value can be 0
                         is_winner={winner}
+                        is_loser={lost}
                         round_length={round_length}
                         onScore={onScore}
                         singleShot={singleShot}
                         onChange={onChange}
                     />
-                    {lost_block}
-                    {winner_block}
                 </div>
                 <div className="extra content" style={extraContentStyle}>
                     <span className="right floated">{debut_year_block}</span>

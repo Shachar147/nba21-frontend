@@ -8,6 +8,7 @@ export default {
     argTypes: {
         show: { control: 'boolean' },
         is_winner: { control: 'boolean' },
+        is_loser: { control: 'boolean' },
         round_length: { control: 'number' },
         singleShot: { control: 'number' },
         onScore: { control: 'func' },
@@ -60,4 +61,26 @@ export const Winner = Template.bind({});
 Winner.args = {
     is_winner: true,
     wrapper: true,
+};
+
+export const Loser = Template.bind({});
+Loser.args = {
+    is_loser: true,
+    wrapper: true,
+};
+
+export const WinnerSingleShot = Template.bind({});
+WinnerSingleShot.args = {
+    is_winner: true,
+    singleShot: 0,
+    wrapper: true,
+    onChange: (e) => { alert(`value is ${e.target.value}`) }
+};
+
+export const LoserSingleShot = Template.bind({});
+LoserSingleShot.args = {
+    is_loser: true,
+    singleShot: 0,
+    wrapper: true,
+    onChange: (e) => { alert(`value is ${e.target.value}`) }
 };
