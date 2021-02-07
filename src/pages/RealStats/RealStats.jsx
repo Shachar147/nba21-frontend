@@ -169,12 +169,21 @@ export default class RealStats extends React.Component {
                 Object.keys(records[player.name]).forEach((recordDetail) => {
                     if (typeof(records[player.name][recordDetail]) !== "object") {
 
-                        if (!isDefined(player[recordDetail])) {
-                            player[recordDetail] = records[player.name][recordDetail];
-                        }
-                        else if (recordDetail === 'lastSyncAt'){
+                        if (recordDetail === 'lastSyncAt'){
                             player['lastStatsSyncAt'] = records[player.name][recordDetail];
                         }
+                        else if (['picture'].indexOf(recordDetail) !== -1) {
+                            // ignore
+                        }
+                        else {
+                            player[recordDetail] = records[player.name][recordDetail];
+                        }
+                        // if (!isDefined(player[recordDetail])) {
+                        //     player[recordDetail] = records[player.name][recordDetail];
+                        // }
+                        // else if (recordDetail === 'lastSyncAt'){
+                        //     player['lastStatsSyncAt'] = records[player.name][recordDetail];
+                        // }
                     }
                 })
 
