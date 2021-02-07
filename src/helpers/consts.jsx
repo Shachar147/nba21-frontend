@@ -145,6 +145,14 @@ export const LOADERS = {
         backgroundColor: 'white',
         top: '0px',
     },
+    'MJ.gif': {
+        backgroundColor: 'rgb(200,200,200)',
+        top: '0px',
+    },
+    'Griffin3.gif': {
+        backgroundColor: 'white',
+        top: '0px',
+    },
 }
 export const LOADER_DETAILS = () => {
     const options = shuffle(Object.keys(LOADERS));
