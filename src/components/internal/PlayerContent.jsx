@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ShootingBox from "./ShootingBox";
 import {isDefined, nth} from "../../helpers/utils";
-import {buildDetails} from "../../helpers/playercard.helper";
+import PlayerDetails from "./PlayerDetails";
 
 export default function PlayerContent(props) {
     let { name, team,
@@ -10,8 +10,6 @@ export default function PlayerContent(props) {
           shoot, singleShot, winner, lost, round_length, onScore, onChange,
           place, rounds, singleRounds,
           styles, wrapper } = props;
-
-    let details_arr = (custom_details) ? custom_details : buildDetails(details, stats)
 
     // rounds
     const place_block = (place) ? "Place: " + place + nth(place) : "";
@@ -61,7 +59,13 @@ export default function PlayerContent(props) {
                     {team}
                 </a>
             </div>
-            <div className="description" style={styles.description} dangerouslySetInnerHTML={{__html: custom_details_title + details_arr.map((x) => `<div>${x}</div>`).join("")}}/>
+            <PlayerDetails
+                details={details}
+                stats={stats}
+                custom_details={custom_details}
+                custom_details_title={custom_details_title}
+                styles={styles}
+            />
             {rounds_block}
             <ShootingBox
                 show={(shoot || isDefined(singleShot) || lost)} // isDefined because value can be 0

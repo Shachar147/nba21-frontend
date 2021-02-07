@@ -164,74 +164,63 @@ export function buildDetails(details, stats){
     const divider = "<hr style='" + hr_style + "'/>";
 
     // stats
-    let status_arr = [];
-    if (total_win_percents) status_arr.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
-    if (total_games) status_arr.push(`Total Games: ${settings['Total Games']}`);
-    if (isDefined(win_streak)) { status_arr.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
-    if (isDefined(lose_streak)) { status_arr.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}` + icecold); }
-    if (isDefined(total_home_games) && isDefined(total_away_games)) status_arr.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
-    if (isDefined(total_diff)) status_arr.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
-    if (isDefined(total_scored)) status_arr.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
-    if (isDefined(total_knockouts)) status_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);
+    let stats_arr = [];
+    if (total_win_percents) stats_arr.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
+    if (total_games) stats_arr.push(`Total Games: ${settings['Total Games']}`);
+    if (isDefined(win_streak)) { stats_arr.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
+    if (isDefined(lose_streak)) { stats_arr.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}` + icecold); }
+    if (isDefined(total_home_games) && isDefined(total_away_games)) stats_arr.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
+    if (isDefined(total_diff)) stats_arr.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
+    if (isDefined(total_scored)) stats_arr.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
+    if (isDefined(total_knockouts)) stats_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts'] || "N/A"}`);
 
     // real stats
-    if (isDefined(WP)) status_arr.push(`Career Win%: ${settings['Career Win%']}`);
-    if (isDefined(GP)) status_arr.push(`Career Games Played: ${settings['Career Games Played']}`);
-    if (isDefined(_3PP)) status_arr.push(`Career 3P%: ${settings['Career 3P%']}`);
-    if (isDefined(FGP)) status_arr.push(`Career FG%: ${settings['Career FG%']}`);
-    if (isDefined(FTP)) status_arr.push(`Career FT%: ${settings['Career FT%']}`);
-    if (isDefined(MPG)) status_arr.push(`Career MPG: ${settings['Career Minutes Per Game']}`);
-    if (isDefined(PPG)) status_arr.push(`Career PPG: ${settings['Career Points Per Game']}`);
-    if (isDefined(RPG)) status_arr.push(`Career RPG: ${settings['Career Rebounds Per Game']}`);
-    if (isDefined(APG)) status_arr.push(`Career APG: ${settings['Career Assists Per Game']}`);
-    if (isDefined(SPG)) status_arr.push(`Career SPG: ${settings['Career Steals Per Game']}`);
-    if (isDefined(BPG)) status_arr.push(`Career BPG: ${settings['Career Blocks Per Game']}`);
-    if (isDefined(TPG)) status_arr.push(`Career TPG: ${settings['Career Turnovers Per Game']}`);
-    if (isDefined(FGM)) status_arr.push(`Career FGM: ${settings['Career FG Made']}`);
-    if (isDefined(FGA)) status_arr.push(`Career FGA: ${settings['Career FG Attempts']}`);
-    if (isDefined(FTM)) status_arr.push(`Career FTM: ${settings['Career FT Made']}`);
-    if (isDefined(FTA)) status_arr.push(`Career FTA: ${settings['Career FT Attempts']}`);
-    if (isDefined(_3PM)) status_arr.push(`Career 3PM: ${settings['Career 3P Made']}`);
-    if (isDefined(_3PA)) status_arr.push(`Career 3PA: ${settings['Career 3P Attempts']}`);
-    if (isDefined(MIN)) status_arr.push(`Career Total Minutes: ${settings['Career Total Minutes']}`);
-    if (isDefined(PTS)) status_arr.push(`Career Total Points: ${settings['Career Total Points']}`);
-    if (isDefined(REB)) status_arr.push(`Career Total Rebounds: ${settings['Career Total Rebounds']}`);
-    if (isDefined(AST)) status_arr.push(`Career Total Assists: ${settings['Career Total Assists']}`);
-    if (isDefined(STL)) status_arr.push(`Career Total Steals: ${settings['Career Total Steals']}`);
-    if (isDefined(BLK)) status_arr.push(`Career Total Blocks: ${settings['Career Total Blocks']}`);
-    if (isDefined(TOV)) status_arr.push(`Career Total Turnovers: ${settings['Career Total Turnovers']}`);
-    if (isDefined(PF)) status_arr.push(`Career Total Personal Fouls: ${settings['Career Total Personal Fouls']}`);
-    if (isDefined(PM)) status_arr.push(`Career Total +/-: ${settings['Career Total +/-']}`);
-    if (isDefined(PFP)) status_arr.push(`Personal Fouls Per Game: ${settings['Personal Fouls Per Game']}`);
-    if (isDefined(PMP)) status_arr.push(`+/- Per Game: ${settings['+/- Per Game']}`);
+    if (isDefined(WP)) stats_arr.push(`Career Win%: ${settings['Career Win%']}`);
+    if (isDefined(GP)) stats_arr.push(`Career Games Played: ${settings['Career Games Played']}`);
+    if (isDefined(_3PP)) stats_arr.push(`Career 3P%: ${settings['Career 3P%']}`);
+    if (isDefined(FGP)) stats_arr.push(`Career FG%: ${settings['Career FG%']}`);
+    if (isDefined(FTP)) stats_arr.push(`Career FT%: ${settings['Career FT%']}`);
+    if (isDefined(MPG)) stats_arr.push(`Career MPG: ${settings['Career Minutes Per Game']}`);
+    if (isDefined(PPG)) stats_arr.push(`Career PPG: ${settings['Career Points Per Game']}`);
+    if (isDefined(RPG)) stats_arr.push(`Career RPG: ${settings['Career Rebounds Per Game']}`);
+    if (isDefined(APG)) stats_arr.push(`Career APG: ${settings['Career Assists Per Game']}`);
+    if (isDefined(SPG)) stats_arr.push(`Career SPG: ${settings['Career Steals Per Game']}`);
+    if (isDefined(BPG)) stats_arr.push(`Career BPG: ${settings['Career Blocks Per Game']}`);
+    if (isDefined(TPG)) stats_arr.push(`Career TPG: ${settings['Career Turnovers Per Game']}`);
+    if (isDefined(FGM)) stats_arr.push(`Career FGM: ${settings['Career FG Made']}`);
+    if (isDefined(FGA)) stats_arr.push(`Career FGA: ${settings['Career FG Attempts']}`);
+    if (isDefined(FTM)) stats_arr.push(`Career FTM: ${settings['Career FT Made']}`);
+    if (isDefined(FTA)) stats_arr.push(`Career FTA: ${settings['Career FT Attempts']}`);
+    if (isDefined(_3PM)) stats_arr.push(`Career 3PM: ${settings['Career 3P Made']}`);
+    if (isDefined(_3PA)) stats_arr.push(`Career 3PA: ${settings['Career 3P Attempts']}`);
+    if (isDefined(MIN)) stats_arr.push(`Career Total Minutes: ${settings['Career Total Minutes']}`);
+    if (isDefined(PTS)) stats_arr.push(`Career Total Points: ${settings['Career Total Points']}`);
+    if (isDefined(REB)) stats_arr.push(`Career Total Rebounds: ${settings['Career Total Rebounds']}`);
+    if (isDefined(AST)) stats_arr.push(`Career Total Assists: ${settings['Career Total Assists']}`);
+    if (isDefined(STL)) stats_arr.push(`Career Total Steals: ${settings['Career Total Steals']}`);
+    if (isDefined(BLK)) stats_arr.push(`Career Total Blocks: ${settings['Career Total Blocks']}`);
+    if (isDefined(TOV)) stats_arr.push(`Career Total Turnovers: ${settings['Career Total Turnovers']}`);
+    if (isDefined(PF)) stats_arr.push(`Career Total Personal Fouls: ${settings['Career Total Personal Fouls']}`);
+    if (isDefined(PM)) stats_arr.push(`Career Total +/-: ${settings['Career Total +/-']}`);
+    if (isDefined(PFP)) stats_arr.push(`Personal Fouls Per Game: ${settings['Personal Fouls Per Game']}`);
+    if (isDefined(PMP)) stats_arr.push(`+/- Per Game: ${settings['+/- Per Game']}`);
 
     // highlighted items first
     let first = [];
-    status_arr = status_arr.filter((x) => {
+    stats_arr = stats_arr.filter((x) => {
         if (x.indexOf('<b>') !== -1){
             first.push(x);
             return false;
         }
         return true;
     });
-    status_arr = [...first,...status_arr];
+    stats_arr = [...first,...stats_arr];
 
-    if(status_arr.length > 3){
-        details_arr.push(divider);
-    }
+    details_arr.push(divider);
 
-    if (status_arr.length >= PLAYER_STATS_SHOW_MORE_THRESHOLD){
-        const item = '<a class="show-more-btn" onClick="$(this).parent().parent().find(\'div.show-more\').show(); $(this).hide(); $(this).parent().parent().find(\'.hide-more-btn\').show(); ">More Details</a><span style="display:none;" class="full-details">'
-        status_arr.splice(PLAYER_STATS_SHOW_MORE_THRESHOLD, 0, item);
-
-        for (let i=PLAYER_STATS_SHOW_MORE_THRESHOLD+1; i< status_arr.length; i++){
-            status_arr[i] = `<div class='show-more' style="display:none;">${status_arr[i]}</div>`;
-        }
-        status_arr.push('</span>');
-
-        const end_item = '<a class="hide-more-btn" style="display:none;" onClick="$(this).parent().parent().find(\'div.show-more\').hide(); $(this).hide(); $(this).parent().parent().find(\'.show-more-btn\').show();">Fewer Details</a><span style="display:none;" class="full-details">'
-        status_arr.push(end_item);
-    }
+    // if(stats_arr.length > 3){
+    //     details_arr.push(divider);
+    // }
 
     const lastSync1 = (details.lastSyncAt) ? formatDate(new Date(details.lastSyncAt)) : undefined;
     const lastSync2 = (stats.lastSyncAt) ? formatDate(new Date(stats.lastSyncAt)) : undefined;
@@ -241,10 +230,10 @@ export function buildDetails(details, stats){
     }
 
     if (lastSync2 && lastSync1 !== lastSync2){
-        status_arr.unshift(`<span style="opacity:0.6">Updated To: ${lastSync2}</span>`);
+        stats_arr.unshift(`<span style="opacity:0.6">Updated To: ${lastSync2}</span>`);
     }
 
-    details_arr = [...details_arr,...status_arr];
+    // details_arr = [...details_arr,...stats_arr];
 
-    return details_arr;
+    return { details_arr, stats_arr };
 }
