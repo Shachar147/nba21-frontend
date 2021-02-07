@@ -38,5 +38,6 @@ LostImage.propTypes = {
 };
 
 LostImage.defaultProps = {
+    show: true,
     alt: "lost"
 };

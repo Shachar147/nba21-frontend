@@ -7,50 +7,17 @@ import DropdownInput from "./inputs/DropdownInput";
 import PropTypes, {string} from "prop-types";
 import {buildDetails} from "../helpers/playercard.helper";
 import LostImage from "./internal/LostImage";
+import PlayerPicture from "./internal/PlayerPicture";
 
 export default class PlayerCard extends React.Component {
 
     constructor(props) {
         super(props);
 
-        const fallback_image = this.getFallbackImage(this.props.name)
-
         this.state = {
-            picture: this.props.picture,
-            fallback: 0,
-            fallbacks: [
-                this.props.picture,
-                fallback_image,
-                PLAYER_NO_PICTURE
-            ],
-
             shoot_score: 0,
-
-            specific_replace: false,
-            select_replacement: false,
         };
 
-        this.onError = this.onError.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.picture){
-            this.setState({ picture: nextProps.picture })
-        }
-    }
-
-    getFallbackImage(name){
-        return 'https://nba-players.herokuapp.com/players/' + name.replace(".", "").split(' ').reverse().join('/');
-    }
-
-    onError(){
-        let fallback = this.state.fallback;
-        const fallbacks = this.state.fallbacks;
-
-        fallback++;
-        if (fallback > fallbacks.length-1) return;
-        const picture = fallbacks[fallback];
-        this.setState({ picture, fallback });
     }
 
     render() {
@@ -58,6 +25,7 @@ export default class PlayerCard extends React.Component {
 
             // required
             name,
+            picture,
 
             all_players,
             curr_players,
@@ -111,11 +79,7 @@ export default class PlayerCard extends React.Component {
         }
 
         const {
-            picture,
             shoot_score,
-            specific_replace,
-            select_replacement,
-
         } = this.state;
 
         const stats = {...this.props.stats};
@@ -241,50 +205,24 @@ export default class PlayerCard extends React.Component {
 
         let title = (custom_details_title) ? custom_details_title : "";
 
-        // replace / specific replace
-        let replace = (onReplace) ? (
-            <a onClick={() => { this.setState({ specific_replace: true }); onReplace(); }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
-        ) : "";
-        let specific_replace_block =  (specific_replace && onSpecificReplace) ? (
-            <a onClick={() => {
-                if (select_replacement) {
-                    this.setState({ specific_replace: false, select_replacement: false });
-                } else {
-                    this.setState({ select_replacement: true });
-                }
-            }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "80px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Specific Replace</a>
-        ) : "";
-
-        // name / select specific replace
-        let name_block =
-            (select_replacement) ? (
-                <DropdownInput
-                    options={all_players?.filter((player) => { return curr_players?.indexOf(player.name) === -1 })}
-                    name={"select_replacement"}
-                    placeholder={"Select Replacement..."}
-                    nameKey={"name"}
-                    valueKey={"name"}
-                    idKey={"id"}
-                    onChange={(player) => { onSpecificReplace(player); this.setState({ select_replacement: false, specific_replace: false }); }}
-                />
-            ) : name;
-
-        // place ribbon
-        const place_tag = (!place || !placeRibbon) ? null : (
-            <a className={`ui ${placeRibbon} ribbon label`} style={{ left: "-15px", top: "3px", position: "absolute" }}>#{place}</a>
-        )
-
         const card = (
             <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
-                <LostImage show={lost} />
-                <div className="image" style={imageContainerStyle}>
-                    {place_tag}
-                    <img src={picture} onError={this.onError} alt={name} style={imageStyle} />
-                    {replace}
-                    {specific_replace_block}
-                </div>
+                <LostImage show={(lost) ? true : false} />
+                <PlayerPicture
+                    picture={picture}
+                    name={name}
+                    place={place}
+                    onReplace={onReplace}
+                    replace_options={all_players?.filter((player) => { return curr_players?.indexOf(player.name) === -1 })}
+                    onSpecificReplace={onSpecificReplace}
+                    styles={{
+                        container: imageContainerStyle,
+                        image: imageStyle,
+                        placeRibbon: placeRibbon,
+                    }}
+                />
                 <div className="content">
-                    <div className="header">{name_block}</div>
+                    <div className="header">{name}</div>
                     <div className="meta">
                         <a disabled={true} style={{ cursor: "default" }}>
                             {team}
@@ -528,6 +466,10 @@ PlayerCard.propTypes = {
      * If so, a "scored/from" inputs will appear.
      */
     shoot: PropTypes.bool,
+    /**
+     * What is the current place of this player?
+     */
+    place: PropTypes.number,
     /**
      * Is this player won? if so, a "Winner" message will appear
      */

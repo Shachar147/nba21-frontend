@@ -39,6 +39,7 @@ export default class DropdownInput extends React.Component {
 
     render() {
 
+        const { style } = this.props;
         const placeholder = this.props.placeholder;
 
         const selected = this.state.selectedOption || { [this.props.valueKey]: placeholder };
@@ -67,7 +68,7 @@ export default class DropdownInput extends React.Component {
         }
 
         return (
-            <div>
+            <div style={style}>
                 {label}
                 <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px" }} defaultValue={selected[this.props.valueKey]} defaultValue={selected[this.props.valueKey]} onChange={this.onChange}>
                     {
@@ -141,6 +142,11 @@ DropdownInput.propTypes = {
      * Optional onChange function
      */
     onChange: PropTypes.func,
+    /**
+     * optional style property to apply on the wrapper div
+     *
+     */
+    styles: PropTypes.object,
 };
 
 DropdownInput.defaultProps = {
