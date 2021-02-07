@@ -1,23 +1,11 @@
 import React from "react";
-import {
-    PLAYER_NO_PICTURE
-} from "../helpers/consts";
-import {isDefined, nth} from "../helpers/utils";
-import DropdownInput from "./inputs/DropdownInput";
+import {isDefined} from "../helpers/utils";
 import PropTypes, {string} from "prop-types";
-import {buildDetails} from "../helpers/playercard.helper";
 import LostImage from "./internal/LostImage";
 import PlayerPicture from "./internal/PlayerPicture";
-import ShootingBox from "./internal/ShootingBox";
+import PlayerContent from "./internal/PlayerContent";
 
 export default class PlayerCard extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-
-    }
 
     render() {
         let {
@@ -81,59 +69,13 @@ export default class PlayerCard extends React.Component {
         const details = {...this.props.details};
         const { team } = details;
 
-        let details_arr = (custom_details) ? custom_details : buildDetails(details, stats)
-
         // debut year
         const debut_year_block = (debut_year !== undefined) ? `Joined in ${debut_year}` : "";
-
-        // place
-        const place_block = (place) ? "Place: " + place + nth(place) : "";
-
-        // rounds
-        const total_made = (!rounds || !rounds.length) ? 0 : rounds.reduce((a, b) => a + b);
-        const total_attempt = (!rounds || !rounds.length) ? 0 : rounds.length * round_length;
-        let rounds_block = (rounds) ? (
-            <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
-                { <div style={{ marginBottom: "5px", fontWeight: "bold" }}>
-                    Total: {total_made}/{total_attempt} - { ( (total_made/total_attempt)* 100).toFixed(2) + "%" }
-                </div> }
-                {place_block}
-                { rounds.map(function(iter,idx) {
-                    return (
-                        <div key={`round-` + idx}>
-                            <span>{iter}/{round_length}</span>
-                        </div>
-                    );
-                }) }
-
-            </div>
-        ) : undefined;
-
-        // Single Rounds (one on One, random teams)
-        if (singleRounds){
-            rounds_block = (
-                <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea", width: "100%"}}>
-                    { <div style={{ marginBottom: "5px", fontWeight: "bold" }}>
-                        Total: {singleRounds.reduce((a, b) => a + b, 0) } Points
-                    </div> }
-                    { singleRounds.map(function(iter,idx) {
-                        return (
-                            <div key={`round-` + idx}>
-                                <span>{iter} Points</span>
-                            </div>
-                        );
-                    }) }
-
-                </div>
-            );
-        }
 
         // position / division
         let position_block = <div />
         if (position) position_block = `Position: ${position}`;
         if (team_division) position_block = `Division: ${team_division}`;
-
-        let title = (custom_details_title) ? custom_details_title : "";
 
         const card = (
             <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
@@ -151,25 +93,27 @@ export default class PlayerCard extends React.Component {
                         placeRibbon: placeRibbon,
                     }}
                 />
-                <div className="content">
-                    <div className="header">{name}</div>
-                    <div className="meta">
-                        <a disabled={true} style={{ cursor: "default" }}>
-                            {team}
-                        </a>
-                    </div>
-                    <div className="description" style={descriptionStyle} dangerouslySetInnerHTML={{__html: title + details_arr.map((x) => `<div>${x}</div>`).join("")}}/>
-                    {rounds_block}
-                    <ShootingBox
-                        show={(shoot || isDefined(singleShot) || lost) ? true : false} // isDefined because value can be 0
-                        is_winner={winner}
-                        is_loser={lost}
-                        round_length={round_length}
-                        onScore={onScore}
-                        singleShot={singleShot}
-                        onChange={onChange}
-                    />
-                </div>
+                <PlayerContent
+                    name={name}
+                    team={team}
+                    custom_details_title={custom_details_title}
+                    custom_details={custom_details}
+                    details={details}
+                    stats={stats}
+                    shoot={shoot}
+                    singleShot={singleShot}
+                    winner={winner}
+                    lost={lost}
+                    round_length={round_length}
+                    onScore={onScore}
+                    onChange={onChange}
+                    place={place}
+                    rounds={rounds}
+                    singleRounds={singleRounds}
+                    styles={{
+                        description: descriptionStyle,
+                    }}
+                />
                 <div className="extra content" style={extraContentStyle}>
                     <span className="right floated">{debut_year_block}</span>
                     <span>
@@ -566,4 +510,6 @@ PlayerCard.defaultProps = {
     onReplace: undefined,
     wrapper: false,
     styles: {},
+    stats: {},
+    details: {},
 };
