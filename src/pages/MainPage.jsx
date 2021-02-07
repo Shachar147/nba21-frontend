@@ -73,13 +73,29 @@ export default class MainPage extends React.Component {
                                     disabled={true}
                                     disabledAltAddition={"(not available yet)"}
                                 />
+
+                                <Card
+                                    name={"AllStar Weekend"}
+                                    picture={"/thumbnails/allstar.png"}
+                                    style={{ width: "160px" }}
+                                    href={"/"} // todo complete
+                                    disabled={true}
+                                    disabledAltAddition={"(not available yet)"}
+                                />
+                                <Card
+                                    name={"Space Jam Eddition"}
+                                    picture={"/thumbnails/tunesquad.png"}
+                                    style={{ width: "160px" }}
+                                    href={"/"} // todo complete
+                                    disabled={true}
+                                    disabledAltAddition={"(not available yet)"}
+                                />
+
                                 <Card
                                     name={"View Real Stats"}
                                     picture={"/thumbnails/stats.png"}
                                     style={{ width: "160px" }}
-                                    href={"/real-stats"} // todo complete
-                                    // disabled={true}
-                                    disabledAltAddition={"(not available yet)"}
+                                    href={"/real-stats"}
                                 />
                             </div>
                         </div>
