@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/stories/pages/ErrorPage.stories.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stories/pages/MainPage.stories.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/internal/PlayerDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/PlayerDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/RealStats/RealStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/RealStats/RealStats.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ErrorPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ErrorPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LoadingPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoadingPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

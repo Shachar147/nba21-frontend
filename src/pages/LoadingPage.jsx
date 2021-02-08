@@ -8,18 +8,13 @@ export default class LoadingPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-        };
+        this.state = {};
     }
 
     render() {
 
         let { title, message, loaderDetails } = this.props;
-
         loaderDetails = loaderDetails || LOADER_DETAILS();
-        // const title = this.props.title || "Loading";
-        // const message = this.props.message || "Please wait while loading...";
-        // const loaderDetails = this.props.loaderDetails || LOADER_DETAILS();
 
         return (
             <div>

@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/layouts/Header";
 import Logo from "../components/layouts/Logo";
 import Card from "../components/Card";
+import PropTypes from "prop-types";
 
 export default class MainPage extends React.Component {
 
@@ -17,7 +18,7 @@ export default class MainPage extends React.Component {
             <div>
                 <Header nologo={true} />
                 <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >
-                    <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
                         <Logo />
                         <div className="sub cards header content" style={{ width:"100%", bottom: "0px" }}>
                             Hello! Choose the activity you want to use:
@@ -105,3 +106,11 @@ export default class MainPage extends React.Component {
         );
     }
 }
+
+MainPage.propTypes = {
+
+};
+
+MainPage.defaultProps = {
+
+};
