@@ -2,8 +2,8 @@ import React from 'react';
 import PlayerCard from '../../components/PlayerCard';
 import SearchInput from '../../components/inputs/SearchInput';
 import {formatDate, isDefined} from "../../helpers/utils";
-import LoadingPage from "../LoadingPage";
-import ErrorPage from "../ErrorPage";
+import LoadingPage from "../../pages/LoadingPage";
+import ErrorPage from "../../pages/ErrorPage";
 
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";

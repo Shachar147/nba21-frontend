@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OneOnOne from "../OneOnOne/OneOnOne";
+import OneOnOneManager from "../../activities/OneOnOne/OneOnOneManager";
 
 export default class Random extends React.Component {
 
@@ -13,7 +13,7 @@ export default class Random extends React.Component {
     render() {
 
         return (
-            <OneOnOne
+            <OneOnOneManager
 
                 // game_mode={"One on One"}
                 // get_route={"/player/popular"}

@@ -1,0 +1,755 @@
+import React from 'react';
+import {formatDate, getRandomElement, isDefined, toPascalCase} from "../../helpers/utils";
+import Header from "../../components/layouts/Header";
+import {apiGet, apiPost, apiPut} from "../../helpers/api";
+import PlayerCard from "../../components/PlayerCard";
+import LoadingPage from "../../pages/LoadingPage";
+import ErrorPage from "../../pages/ErrorPage";
+import {
+    APP_BACKGROUND_COLOR,
+    LOADER_DETAILS,
+    LOADING_DELAY, PLAYER_NO_PICTURE,
+    UNAUTHORIZED_ERROR
+} from "../../helpers/consts";
+import OneOnOneStats from "./OneOnOneStats";
+import StatsTable from "../../components/StatsTable";
+import ButtonInput from "../../components/inputs/ButtonInput";
+import {buildStatsInformation, BuildStatsTable, statsStyle} from "./OneOnOneHelper";
+import PropTypes from "prop-types";
+
+export default class OneOnOneManager extends React.Component {
+
+    constructor (props){
+        super(props);
+
+        this.state = {
+            players: [],
+            player1: undefined,
+            player2: undefined,
+            loaded: false,
+            scores:{
+
+            },
+            scores_history:{
+
+            },
+            winner: "",
+            loser: "",
+            saved: false,
+            saving: false,
+
+            loadedStats: false,
+            stats: [], // all players stats
+            curr_stats: ["Loading Stats..."],
+            player_stats: ["Loading Stats..."],
+
+            matchups_values: {
+                'Total Previous Matchups': [],
+                'Wins': [],
+                'Total Scored': [],
+                'Total Diff': [],
+                'Knockouts': [],
+            },
+            player_stats_values: {
+                'Total Played Games': [],
+                'Standing': [],
+                'Current Win Streak': [],
+                'Current Lose Streak': [],
+                'Best Win Streak': [],
+                'Worst Lose Streak': [],
+                'Total Knockouts': [],
+                'Total Diff': [],
+                'Total Diff Per Game': [],
+            },
+            met_each_other: 0,
+
+            view_stats: false,
+            loaderDetails: LOADER_DETAILS(),
+            general_stats: {
+                'total_games': 0,
+                'total_games_per_day': {},
+                'total_points': 0,
+                'total_points_per_day': {},
+            },
+
+            saved_game_id: undefined,
+        };
+
+        this.restart = this.restart.bind(this);
+        this.init = this.init.bind(this);
+        this.saveResult = this.saveResult.bind(this);
+        this.updateResult = this.updateResult.bind(this);
+        this.replaceOne = this.replaceOne.bind(this);
+        this.onSpecificReplace = this.onSpecificReplace.bind(this);
+    }
+
+    componentDidMount() {
+        const {
+            get_route,
+            get_stats_route,
+            game_mode,
+            what
+        } = this.props;
+
+        if (!get_route || get_route === ""){
+            this.setState({ loaded:true, error: "Internal Server Error<br/>Missing GET route." });
+            return;
+        }
+
+        if (!game_mode || game_mode === ""){
+            this.setState({ loaded:true, error: "Internal Server Error<br/>Game Mode not specified." });
+            return;
+        }
+
+        if (!what || what === ""){
+            this.setState({ loaded:true, error: "Internal Server Error<br/>Opponents Type not specified." });
+            return;
+        }
+
+        let self = this;
+        apiGet(this,
+            get_route,
+            function(res) {
+                let players = res.data.data || res.data;
+                self.setState({ players });
+                self.init();
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
+                self.setState({ error: req_error });
+            },
+            function() {
+                setTimeout(async () => {
+                    await self.setState({ loaded: true })
+
+                    // initialize stats
+                    if (self.canInitStats()){
+                        self.initStats();
+                    }
+                },
+                LOADING_DELAY);
+            }
+        );
+
+        if (get_stats_route && get_stats_route !== "") {
+            apiGet(this,
+                get_stats_route,
+                function(res) {
+                    let stats = res.data.data;
+                    self.setState({ stats });
+                },
+                function(error) {
+                    console.log(error);
+                    let req_error = error.message;
+                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                    if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
+                    self.setState({ error: req_error });
+                },
+                async function() {
+                    await self.setState({ loadedStats: true });
+
+                    // initialize stats
+                    if (self.canInitStats()){
+                        self.initStats();
+                    }
+                }
+            );
+        } else {
+            self.setState({ loadedstats: true })
+        }
+    }
+
+    initStats(){
+
+        const { what } = this.props;
+
+        const { curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats } =
+            buildStatsInformation(
+                this.state.player1,
+                this.state.player2,
+                this.state.stats,
+                this.state.player_stats_values,
+                this.state.matchups_values, what);
+
+        this.setState({ curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats })
+    }
+
+    async init(){
+        let scores = {};
+        let scores_history = {};
+        const player1 = getRandomElement(this.state.players);
+        let player2 = getRandomElement(this.state.players);
+
+        // prevent same player
+        if (this.state.players.length >= 2) {
+            while (player1.name === player2.name) {
+                player2 = getRandomElement(this.state.players);
+            }
+        }
+
+        scores[player1.name] = 0;
+        scores[player2.name] = 0;
+        scores_history[player1.name] = [];
+        scores_history[player2.name] = [];
+        await this.setState({
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined,
+        });
+
+        if (this.state.loaded && this.state.loadedStats){
+            this.initStats();
+        }
+    }
+
+    canInitStats(){
+        return this.state.loaded && this.state.loadedStats && this.state.curr_stats.length === 1 && this.state.curr_stats[0] === "Loading Stats...";
+    }
+
+    async replaceOne(idx){
+        let scores = {};
+        let scores_history = {};
+        let player1 = this.state.player1;
+        let player2 = this.state.player2;
+
+        if (idx === 0){
+            player1 = getRandomElement(this.state.players);
+
+            // prevent same player
+            if (this.state.players.length >= 2) {
+                while (player1.name === player2.name) {
+                    player1 = getRandomElement(this.state.players);
+                }
+            }
+
+        } else if (idx === 1){
+            player2 = getRandomElement(this.state.players);
+
+            // prevent same player
+            if (this.state.players.length >= 2) {
+                while (player1.name === player2.name) {
+                    player2 = getRandomElement(this.state.players);
+                }
+            }
+        }
+
+        scores[player1.name] = 0;
+        scores[player2.name] = 0;
+        scores_history[player1.name] = [];
+        scores_history[player2.name] = [];
+        await this.setState({
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined,
+        });
+        this.initStats();
+    }
+
+    restart(){
+        let scores = this.state.scores;
+        let scores_history = this.state.scores_history;
+        Object.keys(scores).forEach(function(key, idx){
+            scores[key] = 0;
+            scores_history[key] = [];
+        });
+        this.setState({ scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, });
+    }
+
+    async updateResult(){
+
+        const {
+            update_result_route,
+        } = this.props;
+
+        this.setState({ saving: true });
+
+        const score1 = this.state.scores[this.state.player1.name];
+        const score2 = this.state.scores[this.state.player2.name];
+
+        const self = this;
+
+        if (!update_result_route || update_result_route === ""){
+            const player1 = this.state.player1.name;
+            const player2 = this.state.player2.name;
+
+            let winner = "";
+            let loser = "";
+            if (score1 > score2) {
+                winner = player1;
+                loser = player2;
+            } else if (score2 > score1) {
+                winner = player2;
+                loser = player1;
+            }
+            const scores_history = {...this.state.scores_history};
+            scores_history[player1][scores_history[player1].length-1] = score1;
+            scores_history[player2][scores_history[player2].length-1] = score2;
+
+            await self.setState({ saved: true, winner, loser, scores_history });
+        }
+        else {
+            await apiPut(this,
+                update_result_route + this.state.saved_game_id,
+                {
+                    score1: score1,
+                    score2: score2,
+                },
+                async function(res) {
+
+                    const stats = self.state.stats;
+                    let scores_history = self.state.scores_history;
+
+                    const response = res.data;
+                    Object.keys(response).forEach((player_name) => {
+                        stats[player_name] = response[player_name];
+
+                        const lastRecord = response[player_name].records.slice(-1)[0];
+                        scores_history[player_name][scores_history[player_name].length-1] = (lastRecord.player1_name === player_name) ? lastRecord.score1 : lastRecord.score2;
+                    });
+
+                    let scores = self.state.scores;
+
+                    let arr = Object.keys(scores).map(function(name){
+                        scores_history[name].slice(-1)[0] = Number(scores[name]);
+                        return {
+                            name: name,
+                            score: Number(scores[name])
+                        }
+                    });
+
+                    arr = arr.sort(function(a,b) { return b.score - a.score });
+
+                    let winner = arr[0].name;
+                    let loser = arr[1].name;
+
+                    if (arr[0].score === arr[1].score){
+                        winner = "";
+                        loser = "";
+                    }
+
+                    await self.setState({ saved: true, winner, loser, scores_history, scores, stats });
+                    self.initStats();
+                },
+                function(error) {
+                    console.log(error);
+                    let req_error = error.message;
+                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                    if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
+                    self.setState({ error: req_error });
+                },
+                function() {
+                    // finally
+                }
+            );
+        }
+
+        this.setState({ saving: false });
+    }
+
+    async saveResult(){
+
+        this.setState({ saving: true });
+
+        const {
+            save_result_route,
+        } = this.props;
+
+        const self = this;
+
+        const player1 = this.state.player1.name;
+        const player2 = this.state.player2.name;
+        const score1 = this.state.scores[this.state.player1.name];
+        const score2 = this.state.scores[this.state.player2.name];
+
+        // no save route
+        if (!save_result_route || save_result_route === "") {
+            let winner = "";
+            let loser = "";
+            if (score1 > score2) {
+                winner = player1;
+                loser = player2;
+            } else if (score2 > score1) {
+                winner = player2;
+                loser = player1;
+            }
+            let scores_history = self.state.scores_history;
+            scores_history[player1].push(score1);
+            scores_history[player2].push(score2);
+            await self.setState({saved: true, winner, loser, scores_history});
+        }
+        // save route - save it on db.
+        else {
+            await apiPost(this,
+                save_result_route,
+                {
+                    player1: player1,
+                    player2: player2,
+                    score1: score1,
+                    score2: score2,
+                },
+                async function(res) {
+
+                    const stats = self.state.stats;
+
+                    const response = res.data;
+                    Object.keys(response).forEach((player_name) => {
+                        stats[player_name] = response[player_name];
+                    });
+
+                    const saved_game_id = response[Object.keys(response)[0]].records.slice(-1)[0].id;
+
+                    let scores = self.state.scores;
+                    let scores_history = self.state.scores_history;
+
+                    let arr = Object.keys(scores).map(function(name){
+                        scores_history[name].push(Number(scores[name]));
+                        return {
+                            name: name,
+                            score: Number(scores[name])
+                        }
+                    });
+
+                    arr = arr.sort(function(a,b) { return b.score - a.score });
+
+                    let winner = arr[0].name;
+                    let loser = arr[1].name;
+
+                    if (arr[0].score === arr[1].score){
+                        winner = "";
+                        loser = "";
+                    }
+
+                    await self.setState({ saved: true, winner, loser, scores_history, scores, stats, saved_game_id });
+                    self.initStats();
+                },
+                function(error) {
+                    console.log(error);
+                    let req_error = error.message;
+                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                    if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
+                    self.setState({ error: req_error });
+                },
+                function() {
+                    // finally
+                }
+            );
+        }
+
+        this.setState({ saving: false });
+    }
+
+    async onSpecificReplace(player, new_player){
+        let { scores, scores_history, player1, player2} = this.state;
+
+        if (player1.name === player.name){
+            player1 = new_player;
+        }
+        else if (player2.name === player.name){
+            player2 = new_player;
+        }
+
+        scores[player1.name] = 0;
+        scores[player2.name] = 0;
+        scores_history[player1.name] = [];
+        scores_history[player2.name] = [];
+        await this.setState({
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id:undefined,
+        });
+        this.initStats();
+    }
+
+    render(){
+
+        let { what, game_mode, custom_details_title, styles, get_stats_route, update_result_route, stats_page } = this.props;
+
+        let error = this.state.error;
+        const is_loading = !this.state.loaded;
+        if (is_loading) {
+            return (
+                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
+            );
+        } else if (error || this.state.players.length === 0) {
+            error = error || `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error`;
+            return (
+                <ErrorPage message={error} />
+            );
+        }
+
+        if (this.state.view_stats && stats_page){
+            return (
+                <OneOnOneStats
+                    onBack={() => { this.setState({ view_stats: false }) }}
+                />
+            );
+        }
+
+        if (custom_details_title){
+            custom_details_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>${custom_details_title}</div>`;
+        }
+
+        const { stats } = this.state;
+
+        if (what === 'teams'){
+            const maxPlayers = Math.max(this.state.player1.players.length, this.state.player2.players.length);
+            const minHeight = maxPlayers * 51;
+            styles['descriptionStyle'] = { minHeight: minHeight };
+        }
+
+        const blocks =
+        [this.state.player1, this.state.player2].map((player, idx) => {
+            const _2k_rating = player['_2k_rating'] || 'N/A';
+
+            let custom_details = undefined;
+            if (what === 'teams'){
+                custom_details = [];
+
+                player.players.forEach(function(player){
+                    let rate = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
+                    player["rate"] = rate;
+                })
+
+                const arr = player.players.sort((a,b) => {
+
+                    let rate1 = (a["rate"] === "N/A") ? 0 : Number(a["rate"]);
+                    let rate2 = (b["rate"] === "N/A") ? 0 : Number(b["rate"]);
+
+                    return rate2 - rate1;
+                }).map((x) => {
+                    return (
+                        `<div>
+                            <img class="ui avatar image" src=${x.picture} onError="this.src='${PLAYER_NO_PICTURE}';" style="width: 39px;" />
+                            <span>${x.name} <span style='opacity:0.6; display:block; padding-left: 45px;top: -8px;position: relative;'>2K Rating: ${x.rate}</span></span>
+                        </div>`
+                    )
+                });
+                custom_details = [custom_details.concat(...arr).join("")];
+            }
+
+            return <PlayerCard
+                        key={"player" + "-" + idx}
+                        className={"in-game"}
+                        style={{ cursor: "default", textAlign: "left" }}
+                        styles={styles}
+                        name={player.name}
+                        picture={player.picture || player.logo}
+                        position={player.position}
+                        debut_year={player.debut_year}
+                        details={{
+                            _2k_rating: _2k_rating,
+                            percents: player['3pt_percents'], // 3pt percents
+                            height_meters:player.height_meters,
+                            weight_kgs:player.weight_kgs,
+                            team: player.team?.name, // on random tems it won't exist.
+                        }}
+                        custom_details_title={custom_details_title}
+                        custom_details={custom_details}
+                        stats={{
+                            win_streak: stats[player.name]?.win_streak || "0",
+                            max_win_streak: stats[player.name]?.max_win_streak || "0",
+                            lose_streak: stats[player.name]?.lose_streak || "0",
+                            max_lose_streak: stats[player.name]?.max_lose_streak || "0",
+                        }}
+
+                        onChange={(e) => {
+                            let scores = this.state.scores;
+                            scores[player.name] = Number(Math.max(0,e.target.value));
+                            this.setState({ scores });
+                        }}
+                        singleShot={this.state.scores[player.name]}
+                        singleRounds={this.state.scores_history[player.name]}
+                        lost={(this.state.saved && this.state.loser === player.name)}
+                        winner={(this.state.saved && this.state.winner === player.name)}
+
+                        all_players={this.state.players}
+                        curr_players={[this.state.player1.name, this.state.player2.name]}
+                        onReplace={(e) => { this.replaceOne(idx); }}
+                        onSpecificReplace={(new_player) => { this.onSpecificReplace(player, new_player) }}
+                    />
+        })
+
+        let bottom = (what === 'teams') ? 35 : 75;
+        let teams = Object.keys(this.state.scores_history);
+        if (teams.length > 0) {
+            let team1 = this.state.scores_history[teams[0]];
+            let team2 = this.state.scores_history[teams[1]];
+            if (team1.length > 0 && team2.length > 0 && team1[team1.length-1] !== team2[team2.length-1]){
+                bottom += 21;
+            }
+        }
+
+        const { met_each_other } = this.state;
+        const plural = (met_each_other > 1) ? "s" : "";
+        let matchups_description = `These ${what} met each other ${met_each_other} time${plural}.`;
+        if (met_each_other === 0) matchups_description = `This is the first time these ${what} meet each other.`;
+
+        // one on one stats
+        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode) : "";
+
+        return (
+
+            <div style={{ paddingTop: "20px" }}>
+                <Header />
+
+                {(get_stats_route && get_stats_route !== "") ?
+                <div className="ui link cards centered" style={statsStyle}>
+                    {general_stats_block}
+                    <StatsTable
+                        title={"Previous Matchups Stats"}
+                        marginTop="10px"
+                        description={matchups_description}
+                        hidden={(met_each_other === 0)}
+                        cols={["",this.state.player1.name,this.state.player2.name]}
+                        stats={this.state.matchups_values}
+                    />
+                    <StatsTable
+                        title={`${toPascalCase(what)} Individual Stats`}
+                        marginTop="10px"
+                        cols={["",this.state.player1.name,this.state.player2.name]}
+                        stats={this.state.player_stats_values}
+                    />
+                </div> : ""}
+
+                <div className="ui link cards centered" style={{margin: "auto", marginBottom:"5px"}}>
+                    <ButtonInput
+                        text={"Restart Game"}
+                        onClick={this.restart}
+                    />
+                    <ButtonInput
+                        text={"New Game"}
+                        style={{ marginLeft:"5px" }}
+                        onClick={this.init}
+                    />
+                    {(stats_page) ?
+                    <ButtonInput
+                        text={"View Stats"}
+                        style={{ marginLeft:"5px" }}
+                        onClick={() => { this.setState({ view_stats: true }) }}
+                    /> : ""}
+                </div>
+
+                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
+                    {blocks[0]}
+                    <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
+                        {(this.state.saved_game_id && update_result_route && update_result_route !== "") ?
+                            (
+                                <ButtonInput
+                                    text={"Update"}
+                                    style={{ position: "absolute", bottom: bottom }}
+                                    onClick={this.updateResult}
+                                />
+                            ): (
+                                <ButtonInput
+                                    text={"Save"}
+                                    style={{ position: "absolute", bottom: bottom }}
+                                    onClick={this.saveResult}
+                                    disabled={this.state.saved || this.state.saving}
+                                />
+                            )}
+                    </div>
+                    {blocks[1]}
+                </div>
+            </div>
+        );
+    }
+};
+
+OneOnOneManager.propTypes = {
+    /**
+     * Which game mode is that?.
+     * Will be used for stats titles for example.
+     *
+     * For example - 1 on 1, Random Games
+     */
+    game_mode: PropTypes.string.isRequired,
+
+    /**
+     * What are we talking about? will be used for custom messages.
+     *
+     * In plural.
+     *
+     * For example - players, teams.
+     */
+    what: PropTypes.string.isRequired,
+
+    /**
+     * option to pass a title to custom details.
+     *
+     * for example: "Players", and then on custom_details pass array of players names.
+     */
+    custom_details_title: PropTypes.string,
+
+    /**
+     * option to pass custom details array. will override 'details' and 'stats'.
+     *
+     * for example, you can pass array of all players of specific team.
+     */
+    custom_details: PropTypes.arrayOf(PropTypes.string),
+
+    /**
+     * The route to get players/teams from.
+     *
+     * GET method will be used
+     *
+     * for example /team or /player/popular
+     */
+    get_route: PropTypes.string.isRequired,
+
+    /**
+     * The route to get players/teams stats from.
+     *
+     * GET method will be used
+     *
+     * for example /records/one-on-one/player
+     */
+    get_stats_route: PropTypes.string,
+
+    /**
+     * The route to save game result.
+     *
+     * POST method will be used
+     *
+     * for example /records/one-on-one/
+     */
+    save_result_route: PropTypes.string,
+
+    /**
+     * The route to update game result after it was saved (in order to fix typos for example)
+     *
+     * PUT method will be used
+     *
+     * for example /records/one-on-one/
+     */
+    update_result_route: PropTypes.string,
+
+    /**
+     * optional styles property, hash of the following UI settings you can control:
+     *
+     * \> placeRibbon - color (red/orange/blue etc) should we show a place ribbon that indicates player's place in a more noticeable way.
+     *
+     * \> imageContainerStyle - hash of styles for image container
+     *
+     * \> imageStyle - hash of styles for the image itself
+     *
+     * \> descriptionStyle - hash of styles for description block
+     *
+     * \> extraContentStyle - hash of styles for the bottom part of the card.
+     *
+     * Example:
+     *
+     * {
+     * descriptionStyle: { minHeight: minHeight }, imageContainerStyle: { backgroundColor: "#F2F2F2" },
+     * imageStyle: { width: 200, margin: "auto", padding: "20px" }, extraContentStyle: { display: "none" }
+     * }
+     */
+    styles: PropTypes.object,
+};
+
+OneOnOneManager.defaultProps = {
+    // game_mode: 'One on One',
+    // what: 'players',
+    // get_route: `/player/popular`, // get
+    // // `/player/popular?names=James Harden,Stephen Curry,LeBron James`,
+    // get_stats_route: `/records/one-on-one/by-player`, // get
+    // update_result_route: `/records/one-on-one/`, // put
+    // save_result_route: `/records/one-on-one`, // post
+    // stats_page: true, // todo change
+};

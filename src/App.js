@@ -12,7 +12,7 @@ import LogoutPage from "./pages/Logout";
 import RegisterPage from "./pages/RegisterPage";
 import OneOnOne from "./pages/OneOnOne/OneOnOne";
 import RandomOld from "./pages/Random/Random";
-import OneOnOneStats from "./pages/OneOnOne/OneOnOneStats";
+import OneOnOneStats from "./activities/OneOnOne/OneOnOneStats";
 import RealStats from "./pages/RealStats/RealStats";
 import Random from "./pages/Random/Random";
 
