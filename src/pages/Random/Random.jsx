@@ -14,17 +14,6 @@ export default class Random extends React.Component {
 
         return (
             <OneOnOneManager
-
-                // game_mode={"One on One"}
-                // get_route={"/player/popular"}
-                // get_stats_route={"/records/one-on-one/by-player"}
-                // what={"players"}
-                // custom_details_title={"Players:"}
-                // save_result_route={"/records/one-on-one/"}
-                // update_result_route={"/records/one-on-one/"}
-                // stats_page={true}
-
-
                 game_mode={"Random Games"}
                 get_route={"/team"}
                 get_stats_route={""}
