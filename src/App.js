@@ -11,10 +11,10 @@ import MainPage from "./pages/MainPage";
 import LogoutPage from "./pages/Logout";
 import RegisterPage from "./pages/RegisterPage";
 import OneOnOne from "./pages/OneOnOne/OneOnOne";
-import Random from "./pages/Random/Random";
+import RandomOld from "./pages/Random/Random";
 import OneOnOneStats from "./pages/OneOnOne/OneOnOneStats";
 import RealStats from "./pages/RealStats/RealStats";
-import RandomNew from "./pages/Random/RandomNew";
+import Random from "./pages/Random/Random";
 
 function App() {
 
@@ -31,8 +31,8 @@ function App() {
                     <PrivateRoute exact path ="/1on1/" component={OneOnOne} />
                     <PrivateRoute path ="/1on1/stats" component={OneOnOneStats} />
                     <PrivateRoute path ="/real-stats/" component={RealStats} />
-                    <PrivateRoute path ="/random/new" component={RandomNew} />
-                    <PrivateRoute path ="/random/" component={Random} />
+                    <PrivateRoute path ="/random/new" component={Random} />
+                    <PrivateRoute path ="/random/" component={RandomOld} />
                     <PrivateRoute path ="/" component={MainPage} />
                 </Switch>
             </BrowserRouter>

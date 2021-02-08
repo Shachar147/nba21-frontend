@@ -89,6 +89,11 @@ export default class OneOnOne extends React.Component {
             get_stats_route,
         } = this.props;
 
+        if (!get_route || get_route === ""){
+            this.setState({ loaded:true, error: "Internal Server Error, Missing GET route" });
+            return;
+        }
+
         let self = this;
         apiGet(this,
             get_route,
