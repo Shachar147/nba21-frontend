@@ -11,15 +11,13 @@ export default class PlayerDetails extends React.Component {
         this.state = {
             show_more: false,
             show_more_opened: false,
-
-            details_arr: [],
-            stats_arr: [],
         };
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.stats){
-            this.init();
+            const { show_more } = this.init();
+            this.setState({ show_more });
         }
     }
 
@@ -42,20 +40,20 @@ export default class PlayerDetails extends React.Component {
             show_more = true;
         }
 
-        this.setState({ details_arr, stats_arr, show_more });
+        return { details_arr, stats_arr, show_more };
     }
 
     componentDidMount() {
-
-        this.init();
+        const { show_more } = this.init();
+        this.setState({ show_more });
     }
 
     render() {
 
         const { custom_details_title, styles } = this.props;
-        const { details_arr, stats_arr, show_more, show_more_opened } = this.state;
+        const { show_more, show_more_opened } = this.state;
 
-
+        const { details_arr, stats_arr } = this.init();
 
         return (
             <div

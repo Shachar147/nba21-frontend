@@ -204,6 +204,8 @@ export default class RealStats extends React.Component {
 
         const players = [...this.state.players];
 
+        console.log(leaderboard);
+
         return players.filter((iter) => {
 
             if (!records[iter.name]) { return false; }
