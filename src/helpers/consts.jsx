@@ -157,7 +157,7 @@ export const LOADERS = {
 export const LOADER_DETAILS = () => {
     const options = shuffle(Object.keys(LOADERS));
     let option = LOADERS[options[0]];
-    option.loader = `loaders/${options[0]}`;
+    option.loader = `/loaders/${options[0]}`;
     return option;
 
 }

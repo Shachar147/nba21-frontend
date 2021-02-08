@@ -87,11 +87,11 @@ export default class PlayerPicture extends React.Component {
                 nameKey={"name"}
                 valueKey={"name"}
                 idKey={"id"}
-                style={{ height: "50px",
+                style={{ height: "60px",
                     position: "absolute",
                     width: "100%",
                     padding: "5px",
-                    bottom: "-55px",
+                    bottom: "-61px",
                     backgroundColor: "white",
                 }}
                 onChange={(player) => { onSpecificReplace(player); this.setState({ select_replacement: false, specific_replace: false }); }}

@@ -13,7 +13,7 @@ export const statsStyle = {
     borderRadius: "20px",
 }
 
-export function BuildStatsTable(general_stats, wrap) {
+export function BuildStatsTable(general_stats, wrap, game_mode) {
 
     let general_stats_block = null;
     if (general_stats['total_games'] > 0) {
@@ -59,7 +59,7 @@ export function BuildStatsTable(general_stats, wrap) {
 
         general_stats_block = (
             <StatsTable
-                title={"One on One Stats"}
+                title={`${game_mode} Stats`}
                 description={description.join(' | ')}
                 cols={["","Days with most games", "Days with most points"]}
                 stats={values}
@@ -78,7 +78,7 @@ export function BuildStatsTable(general_stats, wrap) {
     return general_stats_block;
 }
 
-export function buildStatsInformation(player1, player2, stats, player_stats_values, matchups_values){
+export function buildStatsInformation(player1, player2, stats, player_stats_values, matchups_values, what){
 
     const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0, total_games:0, total_wins: 0, total_lost: 0, total_win_percents: "" };
 
@@ -135,7 +135,7 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
 
     // met each other stat
     if (met_each_other === 0) {
-        curr_stats.push("This is the first time these players meet each other.");
+        curr_stats.push(`This is the first time these ${what} meet each other.`);
     } else {
         const plural = (met_each_other > 1) ? "s" : "";
 
@@ -146,7 +146,7 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
         }
 
         // matchups stats
-        curr_stats.push(`These players met each other ${met_each_other} time${plural}.`);
+        curr_stats.push(`These ${what} met each other ${met_each_other} time${plural}.`);
         curr_stats.push(`Wins: ${mutual_games_wins1} - ${mutual_games_wins2}`);
         curr_stats.push(`Total Scored: ${mutual_scored1} - ${mutual_scored2}`);
         curr_stats.push(`Total Diff: ${Math.max(0,mutual_scored1-mutual_scored2)} - ${Math.max(0,mutual_scored2-mutual_scored1)}`);

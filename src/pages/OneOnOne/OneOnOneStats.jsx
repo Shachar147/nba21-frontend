@@ -247,7 +247,7 @@ export default class OneOnOneStats extends React.Component {
         }).sort((a,b) => { return a.name - b.name; });
 
         // one on one stats
-        let general_stats_block = BuildStatsTable(this.state.general_stats, 1);
+        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, "One on One");
 
         return (
             <div style={{ paddingTop: "20px" }}>
