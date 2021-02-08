@@ -91,8 +91,8 @@ export default class OneOnOneManager extends React.Component {
             what
         } = this.props;
 
-        if (!get_route || get_route === ""){
-            this.setState({ loaded:true, error: "Internal Server Error<br/>Missing GET route." });
+        if (!what || what === ""){
+            this.setState({ loaded:true, error: "Internal Server Error<br/>Opponents Type not specified." });
             return;
         }
 
@@ -101,8 +101,8 @@ export default class OneOnOneManager extends React.Component {
             return;
         }
 
-        if (!what || what === ""){
-            this.setState({ loaded:true, error: "Internal Server Error<br/>Opponents Type not specified." });
+        if (!get_route || get_route === ""){
+            this.setState({ loaded:true, error: "Internal Server Error<br/>Missing GET route." });
             return;
         }
 
@@ -744,12 +744,4 @@ OneOnOneManager.propTypes = {
 };
 
 OneOnOneManager.defaultProps = {
-    // game_mode: 'One on One',
-    // what: 'players',
-    // get_route: `/player/popular`, // get
-    // // `/player/popular?names=James Harden,Stephen Curry,LeBron James`,
-    // get_stats_route: `/records/one-on-one/by-player`, // get
-    // update_result_route: `/records/one-on-one/`, // put
-    // save_result_route: `/records/one-on-one`, // post
-    // stats_page: true, // todo change
 };

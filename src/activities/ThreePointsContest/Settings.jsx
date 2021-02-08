@@ -13,8 +13,8 @@ import {
     TEAM1_COLOR, TEAM2_COLOR, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
 import {deepClone, isDefined} from "../../helpers/utils";
-import LoadingPage from "../LoadingPage";
-import ErrorPage from "../ErrorPage";
+import LoadingPage from "../../pages/LoadingPage";
+import ErrorPage from "../../pages/ErrorPage";
 
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";

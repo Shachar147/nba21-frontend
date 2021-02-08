@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/stories/activities/OneOnOneManager.stories.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Random/Random.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Random/Random.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneManager.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ThreePointsContest/three.points.contest.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/three.points.contest.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +61,8 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\repos\node-js\nba21-frontend\src\pages\OneOnOne" />
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
+      <recent name="C:\repos\node-js\nba21-frontend\src\pages\OneOnOne" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components\internal" />
       <recent name="C:\repos\node-js\nba21-frontend\src\stories\components" />
       <recent name="C:\repos\node-js\nba21-frontend\src\stories\components\inputs" />
@@ -74,7 +80,7 @@
       <workItem from="1610702572979" duration="43598000" />
       <workItem from="1610883426321" duration="105650000" />
       <workItem from="1612132367271" duration="94557000" />
-      <workItem from="1612806802435" duration="585000" />
+      <workItem from="1612806802435" duration="3029000" />
     </task>
     <servers />
   </component>

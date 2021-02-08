@@ -5,7 +5,7 @@ import {APP_BACKGROUND_COLOR} from "./helpers/consts";
 import axios from "axios";
 import PrivateRoute from "./components/PrivateRoute";
 import {getToken} from "./helpers/auth";
-import Settings from './pages/ThreePointsContest/Settings';
+import Settings from './activities/ThreePointsContest/Settings';
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import LogoutPage from "./pages/Logout";
