@@ -73,3 +73,11 @@ export function reFormatDate(dtString){
 export function numberWithCommas(x) {
     return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+export function swap(json){
+    var ret = {};
+    for(var key in json){
+        ret[json[key]] = key;
+    }
+    return ret;
+}

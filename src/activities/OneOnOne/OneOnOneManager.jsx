@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatDate, getRandomElement, isDefined, toPascalCase} from "../../helpers/utils";
+import {formatDate, getRandomElement, isDefined, swap, toPascalCase} from "../../helpers/utils";
 import Header from "../../components/layouts/Header";
 import {apiGet, apiPost, apiPut} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
@@ -139,6 +139,7 @@ export default class OneOnOneManager extends React.Component {
                 get_stats_route,
                 function(res) {
                     let stats = res.data.data;
+                    stats = self.customKeysStats(self, stats);
                     self.setState({ stats });
                 },
                 function(error) {
@@ -160,6 +161,26 @@ export default class OneOnOneManager extends React.Component {
         } else {
             self.setState({ loadedstats: true })
         }
+    }
+
+    customKeysStats(self, stats){
+        let custom_keys = self.props.custom_keys || {};
+        if (Object.keys(custom_keys).length > 0 ){
+            custom_keys = swap(custom_keys);
+            console.log(custom_keys);
+            Object.keys(stats).forEach((name) => {
+                stats[name].records.forEach((record) => {
+                    Object.keys(custom_keys).forEach((key) => {
+                        if (isDefined(record[key])) {
+                            record[custom_keys[key]] = record[key];
+                        }
+                        return record;
+                    });
+
+                });
+            });
+        }
+        return stats;
     }
 
     initStats(){
@@ -378,20 +399,27 @@ export default class OneOnOneManager extends React.Component {
         }
         // save route - save it on db.
         else {
+
+            const key1 = this.props.custom_keys?.player1 || 'player1';
+            const key2 = this.props.custom_keys?.player2 || 'player2';
+
             await apiPost(this,
                 save_result_route,
                 {
-                    player1: player1,
-                    player2: player2,
+                    [key1]: player1,
+                    [key2]: player2,
                     score1: score1,
                     score2: score2,
                 },
                 async function(res) {
 
-                    const stats = self.state.stats;
+                    let stats = self.state.stats;
+                    stats = self.customKeysStats(self, stats);
 
                     const response = res.data;
                     Object.keys(response).forEach((player_name) => {
+
+                        // todo complete team1 player1
                         stats[player_name] = response[player_name];
                     });
 

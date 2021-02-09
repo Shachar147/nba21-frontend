@@ -16,7 +16,7 @@ export default class Random extends React.Component {
             <OneOnOneManager
                 game_mode={"Random Games"}
                 get_route={"/team"}
-                get_stats_route={""}
+                get_stats_route={"/records/random/by-team"}
                 what={"teams"}
                 custom_details_title={"Players:"}
                 styles={{
@@ -24,13 +24,17 @@ export default class Random extends React.Component {
                     imageStyle: { width: 200, margin: "auto", padding: "20px" },
                     extraContentStyle: { display: "none" },
                 }}
-                save_result_route={""}
-                stats_page={false}
-
-                // > stat route
-                // > do not use default get route and stats route. move OneOnOne to wrapper as on Random
-                // > if no route was passed, display error message.
-                // > save results routes
+                save_result_route={"/records/random/"}
+                update_result_route={"/records/random/"}
+                custom_keys={{
+                    player1: 'team1',
+                    player2: 'team2',
+                    player1Id: 'team1Id',
+                    player2Id: 'team2Id',
+                    player1_name: 'team1_name',
+                    player2_name: 'team2_name',
+                }}
+                stats_page={false} // todo complete
             />
         );
     }
