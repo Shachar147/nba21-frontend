@@ -552,7 +552,8 @@ export default class OneOnOneManager extends React.Component {
                 custom_details = [custom_details.concat(...arr).join("")];
             }
 
-            return <PlayerCard
+            return (
+                <PlayerCard
                         key={"player" + "-" + idx}
                         className={"in-game"}
                         style={{ cursor: "default", textAlign: "left" }}
@@ -592,6 +593,7 @@ export default class OneOnOneManager extends React.Component {
                         onReplace={(e) => { this.replaceOne(idx); }}
                         onSpecificReplace={(new_player) => { this.onSpecificReplace(player, new_player) }}
                     />
+            );
         })
 
         let bottom = (what === 'teams') ? 35 : 75;
@@ -611,6 +613,15 @@ export default class OneOnOneManager extends React.Component {
 
         // one on one stats
         let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode) : "";
+
+        const titleStyle = {
+            margin: 0,
+            padding: 0,
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            fontWeight: "bold",
+            fontSize: "18px",
+        }
 
         return (
 
@@ -652,6 +663,13 @@ export default class OneOnOneManager extends React.Component {
                         style={{ marginLeft:"5px" }}
                         onClick={() => { this.setState({ view_stats: true }) }}
                     /> : ""}
+                </div>
+
+
+                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginTop: "20px" }}>
+                    <div className={"card in-game"} style={titleStyle}>Guest</div>
+                    <div style={{ width: 110 }}></div>
+                    <div className={"card in-game"} style={titleStyle}>Home</div>
                 </div>
 
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
@@ -769,6 +787,15 @@ OneOnOneManager.propTypes = {
      * }
      */
     styles: PropTypes.object,
+
+    /**
+     * optional object to replace stats records keys with different keys, for example team1 and player1
+     *
+     * example:
+     *
+     * { player1: 'team1', player2: 'team2', player1Id: 'team1Id', player2Id: 'team2Id', player1_name: 'team1_name', player2_name: 'team2_name' }
+     */
+    custom_keys: PropTypes.object,
 };
 
 OneOnOneManager.defaultProps = {
