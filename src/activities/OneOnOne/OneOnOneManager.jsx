@@ -487,24 +487,29 @@ export default class OneOnOneManager extends React.Component {
 
     render(){
 
-        let { what, game_mode, custom_details_title, styles, get_stats_route, update_result_route, stats_page } = this.props;
+        let { what, game_mode, custom_details_title, styles, get_route, get_stats_route, update_result_route, stats_page, stats_title } = this.props;
 
         let error = this.state.error;
         const is_loading = !this.state.loaded;
-        if (is_loading) {
-            return (
-                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
-            );
-        } else if (error || this.state.players.length === 0) {
+        if (error || (!is_loading && this.state.players.length === 0)) {
             error = error || `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error`;
             return (
                 <ErrorPage message={error} />
+            );
+        } else if (is_loading) {
+            return (
+                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
             );
         }
 
         if (this.state.view_stats && stats_page){
             return (
                 <OneOnOneStats
+                    what={what}
+                    stats_title={stats_title}
+                    game_mode={game_mode}
+                    get_route={get_route}
+                    get_stats_route={get_stats_route}
                     onBack={() => { this.setState({ view_stats: false }) }}
                 />
             );

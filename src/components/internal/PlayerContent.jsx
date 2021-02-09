@@ -51,6 +51,15 @@ export default function PlayerContent(props) {
         );
     }
 
+    if (shoot) {
+        console.log("shoot");
+    }
+    if (isDefined(singleShot)){
+        console.log("singleShot", singleShot);
+    }
+    if (lost){
+        console.log(lost);
+    }
     const playerContent = (
         <div className="content">
             <div className="header">{name}</div>
@@ -68,7 +77,7 @@ export default function PlayerContent(props) {
             />
             {rounds_block}
             <ShootingBox
-                show={(shoot || isDefined(singleShot) || lost)} // isDefined because value can be 0
+                show={(shoot || isDefined(singleShot) || lost) ? true : false} // isDefined because value can be 0
                 is_winner={winner}
                 is_loser={lost}
                 round_length={round_length}

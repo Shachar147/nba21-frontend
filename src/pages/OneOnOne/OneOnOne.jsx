@@ -13,6 +13,7 @@ export default class OneOnOne extends React.Component {
 
         return (
             <OneOnOneManager
+                stats_title={"1 on 1"}
                 game_mode={"One on One"}
                 get_route={"/player/popular"}
                 get_stats_route={"/records/one-on-one/by-player"}

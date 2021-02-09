@@ -98,60 +98,74 @@ export default class OneOnOneStats extends React.Component {
     loadRecords(){
         const self = this;
 
-        apiGet(this,
-            `/records/one-on-one/by-player`,
-            function(res) {
-                let records = res.data.data;
-                const leaderboard = self.buildLeaderBoard(records);
-                self.setState({ records, leaderboard });
-            },
-            function(error) {
-                console.log(error);
-                let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
-                if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-                self.setState({ error: req_error });
-            },
-            function() {
-                self.setState({ loaded2: true });
+        const { get_stats_route, what } = this.props;
 
-                if (self.state.loaded1 && self.state.loaded2 && !self.state.merged){
-                    self.merge();
+        if (get_stats_route && get_stats_route !== "") {
+            apiGet(this,
+                get_stats_route,
+                function(res) {
+                    let records = res.data.data;
+                    const leaderboard = self.buildLeaderBoard(records);
+                    self.setState({ records, leaderboard });
+                },
+                function(error) {
+                    console.log(error);
+                    let req_error = error.message;
+                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                    if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
+                    self.setState({ error: req_error });
+                },
+                function() {
+                    self.setState({ loaded2: true });
+
+                    if (self.state.loaded1 && self.state.loaded2 && !self.state.merged){
+                        self.merge();
+                    }
                 }
-            }
-        );
+            );
+        } else {
+            this.setState({ error: "Internal Server Error<br/>Missing GET stats route." })
+        }
     }
 
     componentDidMount() {
 
         let self = this;
-        apiGet(this,
-            `/player`,
-            function(res) {
-                let players = res.data.data;
-                self.setState({ players });
-            },
-            function(error) {
-                console.log(error);
-                let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
-                if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-                self.setState({ error: req_error });
-            },
-            function() {
 
-                setTimeout(async() => {
-                        await self.setState({ loaded1: true })
+        const { get_route, what } = this.props;
 
-                        if (self.state.loaded1 && self.state.loaded2 && !self.state.merged){
-                            self.merge();
-                        }
-                    },
-                LOADING_DELAY);
-            }
-        );
+        if (get_route && get_route !== "") {
+            apiGet(this,
+                get_route,
+                function(res) {
+                    let players = res.data.data;
+                    self.setState({ players });
+                },
+                function(error) {
+                    console.log(error);
+                    let req_error = error.message;
+                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                    if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
+                    self.setState({ error: req_error });
+                },
+                function() {
 
-        this.loadRecords();
+                    setTimeout(async() => {
+                            await self.setState({ loaded1: true })
+
+                            if (self.state.loaded1 && self.state.loaded2 && !self.state.merged){
+                                self.merge();
+                            }
+                        },
+                        LOADING_DELAY);
+                }
+            );
+
+            this.loadRecords();
+        }
+        else {
+            this.setState({ error: "Internal Server Error<br/>Missing GET route." })
+        }
     }
 
     merge(){
@@ -217,16 +231,19 @@ export default class OneOnOneStats extends React.Component {
     render() {
         const players = this.applyFilters();
 
+        const { what, game_mode, stats_title } = this.props;
+
         let error = this.state.error;
         const is_loading = !(this.state.loaded1 && this.state.loaded2 && this.state.merged);
-        if (is_loading) {
-            return (
-                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
-            );
-        } else if (error || this.state.players.length === 0) {
-            error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
+        if (error || (!is_loading && this.state.players.length === 0)) {
+            error = error || `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error`;
             return (
                 <ErrorPage message={error} />
+            );
+        }
+        else if (is_loading) {
+            return (
+                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
             );
         }
 
@@ -255,10 +272,10 @@ export default class OneOnOneStats extends React.Component {
 
                 <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px" }}>
                     <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
-                        1 on 1 Stats
+                        {stats_title || game_mode} Stats
                     </h2>
                     <div style={{ color:"rgba(0,0,0,.6)" }}>
-                         Here you can see all  NBA players that played on 1on1, ordered from the one with best percentages to the worst.
+                         Here you can see all NBA {what} that played on {game_mode}, ordered from the one with best percentages to the worst.
                     </div>
                 </div>
 
@@ -308,11 +325,11 @@ export default class OneOnOneStats extends React.Component {
                                 style={{}}
 
                                 name={player.name}
-                                picture={player.picture}
+                                picture={player.picture || player.logo}
                                 details={{
                                     _2k_rating: _2k_rating,
                                     percents: player['3pt_percents'],
-                                    team: player.team.name,
+                                    team: player?.team?.name,
                                     place: idx+1,
 
                                     lastSyncAt: player.lastSyncAt
@@ -349,7 +366,7 @@ export default class OneOnOneStats extends React.Component {
                     })}
                     {(players.length === 0) ? <div style={{ marginTop: "20px"}}>
                         {
-                            (this.state.keyword.length === 0) ? "Oops, it seems like you didn't played 1 on 1 yet, so there is no player in this list" :
+                            (this.state.keyword.length === 0) ? `Oops, it seems like you didn't played ${game_mode} yet, so there is no player in this list` :
                             `No Results Found for "${this.state.keyword}"`
                         }
                     </div> : "" }
