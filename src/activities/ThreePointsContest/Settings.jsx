@@ -144,7 +144,7 @@ export default class Settings extends React.Component {
             Object.keys(iter).forEach(function(a){
                 let val = (a === 'team') ? iter[a]["name"] : iter[a];
                 if (a === 'picture') val = '';
-                if (isDefined(val) && val?.toString().toLowerCase().indexOf(keyword.toLowerCase()) !== -1){
+                if (isDefined(val) && val != undefined && val.toString().toLowerCase().indexOf(keyword.toLowerCase()) !== -1){
                     isOk = true;
                     return;
                 }

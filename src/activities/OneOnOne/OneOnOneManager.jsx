@@ -508,8 +508,6 @@ export default class OneOnOneManager extends React.Component {
             );
         }
 
-        console.log(this.state.view_stats, stats_page);
-
         if (this.state.view_stats && stats_page){
             return (
                 <OneOnOneStats
