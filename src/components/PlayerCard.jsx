@@ -51,6 +51,9 @@ export default class PlayerCard extends React.Component {
             styles,
 
             wrapper,
+
+            disabled,
+
         } = this.props;
 
         const {
@@ -76,6 +79,11 @@ export default class PlayerCard extends React.Component {
         let position_block = <div />
         if (position) position_block = `Position: ${position}`;
         if (team_division) position_block = `Division: ${team_division}`;
+
+
+        if (disabled){
+            onClick = undefined;
+        }
 
         const card = (
             <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
@@ -503,6 +511,11 @@ PlayerCard.propTypes = {
      * default is false because usually we would like to print multiple cards under the same wrapper, so we will print the wrapper outside.
      */
     wrapper: PropTypes.bool,
+
+    /**
+     * Is this card disabled? if so onClick event won't be available and card will appear in disabled mode.
+     */
+    disabled: PropTypes.bool,
 };
 
 PlayerCard.defaultProps = {
@@ -512,4 +525,5 @@ PlayerCard.defaultProps = {
     styles: {},
     stats: {},
     details: {},
+    disabled: false,
 };

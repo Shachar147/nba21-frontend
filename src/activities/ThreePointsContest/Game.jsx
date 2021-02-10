@@ -4,6 +4,7 @@ import PlayerCard from "../../components/PlayerCard";
 import Header from "../../components/layouts/Header";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import {_3PT_COMPUTER_SCORE_DELAY} from "../../helpers/consts";
+import ErrorPage from "../../pages/ErrorPage";
 
 export default class Game extends React.Component {
 
@@ -24,6 +25,7 @@ export default class Game extends React.Component {
             computer_level: this.props.computer_level,
             levels: this.props.computer_levels,
             game_started: true,
+            error:"",
         };
 
         this.onScore = this.onScore.bind(this);
@@ -64,6 +66,25 @@ export default class Game extends React.Component {
         return scored;
     }
 
+    randUniquePlayer(){
+
+        const { teams, all_players } = this.state;
+
+        const team_players = [...teams[0],...teams[1]];
+        const existing_ids = team_players.map(x => x.id);
+
+        let non_existing_players = all_players.filter((player) => {
+           return existing_ids.indexOf(player.id) === -1;
+        });
+
+        if (non_existing_players.length === 0){
+            this.setState({ error: "Oops, Something went wrong.<br>Seems like there are more selected players then actual players." });
+            return {};
+        }
+
+        return deepClone(getRandomElement(non_existing_players));
+    }
+
     StartRound() {
 
         if (!this.state.game_started){
@@ -80,7 +101,7 @@ export default class Game extends React.Component {
 
             if (current_player.name.indexOf("Random Player") !== -1 || current_player.name.indexOf("Computer Player") !== -1){
                 let random_name = current_player.name;
-                current_player = deepClone(getRandomElement(deepClone(this.state.all_players)));
+                current_player = this.randUniquePlayer();
                 current_player.name += " (" + random_name.replace("Random Player","Random").replace("Computer Player","Computer") + ")";
 
                 let teams = this.state.teams;
@@ -217,6 +238,13 @@ export default class Game extends React.Component {
     }
 
     render(){
+
+        const { error } = this.state;
+        if (error) {
+            return (
+                <ErrorPage message={error} />
+            );
+        }
 
         // variables
         const lost = this.state.lost;

@@ -72,6 +72,7 @@ export default class Settings extends React.Component {
         let self = this;
         apiGet(this,
             `/player/3pts`,
+            // `/player/3pts?names=Kyrie Irving,Stephen Curry,Seth Curry,James Harden,Klay Thompson,Duncan robinson,Joe Harris`,
             function(res) {
                 let players = res.data;
                 players = players.sort(function(a,b) { return parseFloat(b['3pt_percents'].replace('%','')) - parseFloat(a['3pt_percents'].replace('%','')); })
@@ -282,11 +283,11 @@ export default class Settings extends React.Component {
         let can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0 || this.state.computers[0].length > 0) && (this.state.teams[1].length > 0 || this.state.randoms[1].length > 0 || this.state.computers[1].length > 0);
         if (this.state.error) can_start = false;
 
-        if (this.state.game_started){
+        const game_teams = [
+            this.state.teams[0].concat(this.state.randoms[0]).concat(this.state.computers[0]),
+            this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])];
 
-            let game_teams = [
-                this.state.teams[0].concat(this.state.randoms[0]).concat(this.state.computers[0]),
-                this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])];
+        if (this.state.game_started){
 
             return (
               <Game
@@ -305,18 +306,21 @@ export default class Settings extends React.Component {
 
         let error = this.state.error;
         const is_loading = !this.state.loaded;
-        if (is_loading) {
-            return (
-                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
-            );
-        } else if (error || this.state.players.length === 0) {
+        if (error || (!is_loading && this.state.players.length === 0)) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
             return (
                 <ErrorPage message={error} />
             );
+        } else if (is_loading) {
+            return (
+                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
+            );
         }
 
         const self = this;
+
+        // avoid selecting more players then we have
+        const total_selected_players = game_teams[0].length + game_teams[1].length;
 
         return (
             <div style={{ paddingTop: "20px" }}>
@@ -328,14 +332,14 @@ export default class Settings extends React.Component {
                                      onClear={() => this.onClear(0)} toggle={this.toggleState}
                                      onAddRandom={() => this.onAddRandom(0)}
                                      onAddComputer={() => this.onAddComputer(0)}
-                                     enabled={this.state.players.length > 0}
+                                     enabled={this.state.players.length > 0 && total_selected_players < this.state.players.length}
                     />
                     <SelectedPlayers title={"Team Two"}
                                      team={this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])}
                                      onClear={() => this.onClear(1)} toggle={this.toggleState}
                                      onAddRandom={() => this.onAddRandom(1)}
                                      onAddComputer={() => this.onAddComputer(1)}
-                                     enabled={this.state.players.length > 0}
+                                     enabled={this.state.players.length > 0 && total_selected_players < this.state.players.length}
                     />
                 </div>
 
@@ -362,7 +366,7 @@ export default class Settings extends React.Component {
                 </div>
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
-                    { players.map(function(player,idx) {
+                    { players.map((player,idx) => {
                         const _2k_rating = player['_2k_rating'] || 'N/A';
 
                         return (<PlayerCard
@@ -378,10 +382,11 @@ export default class Settings extends React.Component {
                                     }}
                                     position={player.position}
                                     debut_year={player.debut_year}
-                                    style={isDefined(player.selected) ? self.state.styles[player.selected] : {opacity: 0.6}}
+                                    style={isDefined(player.selected) ? this.state.styles[player.selected] : {opacity: 0.6}}
                                     onClick={() => {
-                                        self.toggleState(player);
+                                        this.toggleState(player);
                                     }}
+                                    disabled={(total_selected_players >= this.state.players.length)}
                                 />
                         );
                     })}
