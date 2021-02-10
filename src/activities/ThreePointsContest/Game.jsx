@@ -20,6 +20,7 @@ export default class Game extends React.Component {
             lost: {},
             winner: "",
             leaderboard: [],
+            total_leader_board: {},
             computer_level: this.props.computer_level,
             levels: this.props.computer_levels,
             game_started: true,
@@ -163,7 +164,10 @@ export default class Game extends React.Component {
         // leaderboard
         const leaderboard = this.buildLeaderBoard(scores);
 
-        await this.setState({ played_players, round_players, scores, leaderboard });
+        const total_leader_board = this.state.total_leader_board;
+        leaderboard.forEach((player,idx) => { total_leader_board[idx+1] = player });
+
+        await this.setState({ played_players, round_players, scores, leaderboard, total_leader_board });
 
         this.StartRound();
     }
@@ -258,7 +262,7 @@ export default class Game extends React.Component {
                             const _2k_rating = player['_2k_rating'] || 'N/A';
 
                             let placeRibbon = "blue";
-                            const in_game = this.state.leaderboard;
+                            const in_game = this.state.leaderboard.filter((a) => { return !this.state.lost[a] });
                             if (in_game.indexOf(player.name) === in_game.length-1 && in_game.length > 1){
                                 placeRibbon = "red";
                             }
