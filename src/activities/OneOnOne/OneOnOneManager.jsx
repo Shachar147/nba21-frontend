@@ -516,6 +516,7 @@ export default class OneOnOneManager extends React.Component {
                     game_mode={game_mode}
                     get_route={get_route}
                     get_stats_route={get_stats_route}
+                    mvp_block={this.props.mvp_block}
                     onBack={() => { this.setState({ view_stats: false }) }}
                 />
             );

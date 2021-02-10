@@ -31,8 +31,8 @@ function App() {
                     <PrivateRoute exact path ="/1on1/" component={OneOnOne} />
                     <PrivateRoute path ="/1on1/stats" component={OneOnOne} data={{view_stats:true}} />
                     <PrivateRoute path ="/real-stats/" component={RealStats} />
-                    <PrivateRoute path ="/random/new" component={Random} />
-                    <PrivateRoute path ="/random/" component={RandomOld} />
+                    <PrivateRoute exact path ="/random" component={Random} />
+                    <PrivateRoute path ="/random/stats" component={Random} data={{view_stats:true}} />
                     <PrivateRoute path ="/" component={MainPage} />
                 </Switch>
             </BrowserRouter>

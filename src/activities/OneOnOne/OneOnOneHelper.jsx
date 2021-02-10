@@ -13,7 +13,111 @@ export const statsStyle = {
     borderRadius: "20px",
 }
 
-export function BuildStatsTable(general_stats, wrap, game_mode) {
+export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_stats) {
+
+    let mvp_stats_block = null;
+    let general_stats_block = null;
+    console.log(general_stats);
+    if (general_stats['total_games'] > 0) {
+
+        const description = [];
+
+        const dtToday = formatDate(new Date());
+        const total_games_today = general_stats['total_games_per_day'][dtToday] || 0;
+        const total_points_today = general_stats['total_points_per_day'][dtToday] || 0;
+
+        description.push(`Total Games Today: ${total_games_today}`);
+        description.push(`Total Points Today: ${total_points_today}`);
+        description.push(`Total Games: ${general_stats['total_games']}`);
+        description.push(`Total Points: ${general_stats['total_points']}`);
+
+        const values = {};
+        const mvp_values = {};
+
+        const ppd = Object.keys(general_stats['total_points_per_day']).sort((a, b) => {
+            return general_stats['total_points_per_day'][b] - general_stats['total_points_per_day'][a];
+        });
+
+        const gpd = Object.keys(general_stats['total_games_per_day']).sort((a, b) => {
+            return general_stats['total_games_per_day'][b] - general_stats['total_games_per_day'][a];
+        });
+
+        if (gpd.length === 0) {
+            values['#1'] = values['#1'] || [];
+            values[`#1`].push(`-`);
+        }
+        for (let i = 0; i < gpd.length && i <= TOP_STATS_NUMBER - 1; i++) {
+            values[`#${i+1}`] = values[`#${i+1}`] || [];
+            values[`#${i+1}`].push(`${gpd[i]} - ${general_stats['total_games_per_day'][gpd[i]]}`);
+        }
+
+        if (ppd.length === 0) {
+            values[`#1`] = values[`#1`] || [];
+            values[`#1`].push(`-`);
+        }
+        for (let i = 0; i < ppd.length && i <= TOP_STATS_NUMBER - 1; i++) {
+            values[`#${i+1}`] = values[`#${i+1}`] || [];
+            values[`#${i+1}`].push(`${ppd[i]} - ${general_stats['total_points_per_day'][ppd[i]]}`);
+        }
+
+        general_stats_block = (
+            <StatsTable
+                title={`${game_mode} Stats`}
+                description={description.join(' | ')}
+                cols={["","Days with most games", "Days with most points"]}
+                stats={values}
+            />
+        );
+
+        if (mvp_block && Object.keys(mvp_stats).length > 0) {
+
+            const { total_mvps_per_player, total_mvps_on_knockouts_per_player, total_mvps, total_mvps_on_knockouts } = mvp_stats;
+
+            const mvps_leaderboard = Object.keys(total_mvps_per_player).sort((a,b) => { return total_mvps_per_player[b] - total_mvps_per_player[a] });
+            mvps_leaderboard.forEach((player, i) => {
+
+                if (i < TOP_STATS_NUMBER) {
+                    mvp_values[`#${i + 1}`] = mvp_values[`#${i + 1}`] || [];
+                    mvp_values[`#${i + 1}`].push(`${player} - ${total_mvps_per_player[player]}`);
+                }
+            });
+
+            const mvps_knockouts_leaderboard = Object.keys(total_mvps_on_knockouts_per_player).sort((a,b) => { return total_mvps_on_knockouts_per_player[b] - total_mvps_on_knockouts_per_player[a] });
+            mvps_knockouts_leaderboard.forEach((player, i) => {
+                if (i < TOP_STATS_NUMBER) {
+                    mvp_values[`#${i + 1}`] = mvp_values[`#${i + 1}`] || [];
+                    mvp_values[`#${i + 1}`].push(`${player} - ${total_mvps_on_knockouts_per_player[player]}`);
+                }
+            });
+
+            const mvp_description = [];
+            mvp_description.push(`Total MVPs: ${total_mvps}`);
+            mvp_description.push(`Total Knockouts MVPs: ${total_mvps_on_knockouts}`);
+
+            mvp_stats_block = (
+                <StatsTable
+                    title={`MVP Stats`}
+                    description={mvp_description.join(' | ')}
+                    cols={["","Most MVPs", "Most MVPs on Knockouts with"]}
+                    stats={mvp_values}
+                />
+            );
+        }
+
+        if (wrap){
+            general_stats_block = (
+                <div className="ui link cards centered" style={statsStyle}>
+                    {general_stats_block}
+                    {mvp_stats_block}
+                </div>
+            );
+        }
+    }
+
+    return general_stats_block;
+}
+
+export function BuildMVPStatsTable(general_stats, wrap, game_mode) {
 
     let general_stats_block = null;
     if (general_stats['total_games'] > 0) {
@@ -183,7 +287,7 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
     player_stats_values['Total Diff Per Game'] = [stats1.total_diff_per_game, stats2.total_diff_per_game];
 
     // general stats
-    const general_stats = buildGeneralStats(stats);
+    const { general_stats } = buildGeneralStats(stats);
 
     return {curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats};
 }
@@ -195,6 +299,14 @@ export function buildGeneralStats(stats) {
         'total_points': 0,
         'total_points_per_day': {},
     };
+
+    const mvp_stats = {
+        'total_mvps': 0,
+        'total_mvps_per_player': {},
+        'total_mvps_on_knockouts': 0,
+        'total_mvps_on_knockouts_per_player': {},
+    };
+
     Object.keys(stats).forEach((player) => {
         stats[player].records.forEach((record) => {
             general_stats['total_games'] += 0.5;
@@ -204,8 +316,21 @@ export function buildGeneralStats(stats) {
             general_stats['total_games_per_day'][dt] += 0.5;
             general_stats['total_points_per_day'][dt] = general_stats['total_points_per_day'][dt] || 0;
             general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2)/2);
+
+            if (record.mvp_player){
+                const mvp = record.mvp_player.name;
+                mvp_stats['total_mvps'] += 0.5;
+                mvp_stats['total_mvps_per_player'][mvp] = mvp_stats['total_mvps_per_player'][mvp] || 0;
+                mvp_stats['total_mvps_per_player'][mvp] += 0.5;
+
+                if (record.score1 === 0 || record.score2 === 0){
+                    mvp_stats['total_mvps_on_knockouts'] += 0.5;
+                    mvp_stats['total_mvps_on_knockouts_per_player'][mvp] = mvp_stats['total_mvps_on_knockouts_per_player'][mvp] || 0;
+                    mvp_stats['total_mvps_on_knockouts_per_player'][mvp] += 0.5;
+                }
+            }
         })
     });
 
-    return general_stats;
+    return { general_stats, mvp_stats };
 }

@@ -62,6 +62,12 @@ export default class OneOnOneStats extends React.Component {
                 'total_games_per_day': {},
                 'total_points': 0,
                 'total_points_per_day': {},
+            },
+            mvp_stats: {
+                'total_mvps': 0,
+                'total_mvps_per_player': {},
+                'total_mvps_on_knockouts': 0,
+                'total_mvps_on_knockouts_per_player': {},
             }
         };
 
@@ -192,9 +198,9 @@ export default class OneOnOneStats extends React.Component {
         });
 
         // general stats
-        const general_stats = buildGeneralStats(records);
+        const { general_stats, mvp_stats } = buildGeneralStats(records);
 
-        this.setState({ players, merged, general_stats })
+        this.setState({ players, merged, general_stats, mvp_stats })
     }
 
     searchPlayers(event){
@@ -267,7 +273,7 @@ export default class OneOnOneStats extends React.Component {
         }).sort((a,b) => { return a.name - b.name; });
 
         // one on one stats
-        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, "One on One");
+        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats);
 
         return (
             <div style={{ paddingTop: "20px" }}>
