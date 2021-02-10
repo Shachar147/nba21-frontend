@@ -380,7 +380,7 @@ export default class OneOnOneStats extends React.Component {
                     })}
                     {(players.length === 0) ? <div style={{ marginTop: "20px"}}>
                         {
-                            (this.state.keyword.length === 0) ? `Oops, it seems like you didn't played ${game_mode} yet, so there is no player in this list` :
+                            (this.state.keyword.length === 0) ? `Oops, it seems like you didn't played ${game_mode} yet, so there are no ${what} in this list` :
                             `No Results Found for "${this.state.keyword}"`
                         }
                     </div> : "" }

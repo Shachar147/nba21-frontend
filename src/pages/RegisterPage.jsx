@@ -123,7 +123,7 @@ export default class RegisterPage extends React.Component {
                 name: 'username',
                 type: 'text',
                 placeholder: 'Username',
-                icon: 'icon',
+                icon: 'user',
             },
             {
                 name: 'password',
