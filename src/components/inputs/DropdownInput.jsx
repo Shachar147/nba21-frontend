@@ -39,7 +39,7 @@ export default class DropdownInput extends React.Component {
 
     render() {
 
-        const { style } = this.props;
+        const { style, disabled } = this.props;
         const placeholder = this.props.placeholder;
 
         const selected = this.state.selectedOption || { [this.props.valueKey]: placeholder };
@@ -70,7 +70,7 @@ export default class DropdownInput extends React.Component {
         return (
             <div style={style}>
                 {label}
-                <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px" }} defaultValue={selected[this.props.valueKey]} defaultValue={selected[this.props.valueKey]} onChange={this.onChange}>
+                <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px", cursor: (disabled) ? "default" : "pointer" }} defaultValue={selected[this.props.valueKey]} defaultValue={selected[this.props.valueKey]} onChange={this.onChange} disabled={disabled}>
                     {
                         (options.length === 0) ?
                             <option>No Options</option>
@@ -147,6 +147,11 @@ DropdownInput.propTypes = {
      *
      */
     styles: PropTypes.object,
+    /**
+     * should this dropdown be disabled?
+     *
+     */
+    disabled: PropTypes.bool,
 };
 
 DropdownInput.defaultProps = {
@@ -154,4 +159,5 @@ DropdownInput.defaultProps = {
     nameKey: "name",
     valueKey: "value",
     idKey: "id",
+    disabled: false,
 };

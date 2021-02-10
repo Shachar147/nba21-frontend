@@ -34,7 +34,8 @@ export default class Random extends React.Component {
                     player1_name: 'team1_name',
                     player2_name: 'team2_name',
                 }}
-                stats_page={true} // todo complete
+                stats_page={true}
+                mvp_block={true}
             />
         );
     }

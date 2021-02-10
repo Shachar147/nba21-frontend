@@ -16,6 +16,7 @@ import StatsTable from "../../components/StatsTable";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import {buildStatsInformation, BuildStatsTable, statsStyle} from "./OneOnOneHelper";
 import PropTypes from "prop-types";
+import DropdownInput from "../../components/inputs/DropdownInput";
 
 export default class OneOnOneManager extends React.Component {
 
@@ -35,6 +36,7 @@ export default class OneOnOneManager extends React.Component {
             },
             winner: "",
             loser: "",
+            mvp_player: undefined,
             saved: false,
             saving: false,
 
@@ -216,7 +218,7 @@ export default class OneOnOneManager extends React.Component {
         scores_history[player1.name] = [];
         scores_history[player2.name] = [];
         await this.setState({
-            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined,
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, mvp_player: undefined,
         });
 
         if (this.state.loaded && this.state.loadedStats){
@@ -260,7 +262,7 @@ export default class OneOnOneManager extends React.Component {
         scores_history[player1.name] = [];
         scores_history[player2.name] = [];
         await this.setState({
-            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined,
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, mvp_player: undefined,
         });
         this.initStats();
     }
@@ -272,7 +274,7 @@ export default class OneOnOneManager extends React.Component {
             scores[key] = 0;
             scores_history[key] = [];
         });
-        this.setState({ scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, });
+        this.setState({ scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, mvp_player: undefined, });
     }
 
     async updateResult(){
@@ -285,6 +287,7 @@ export default class OneOnOneManager extends React.Component {
 
         const score1 = this.state.scores[this.state.player1.name];
         const score2 = this.state.scores[this.state.player2.name];
+        const mvp_player = this.state.mvp_player;
 
         const self = this;
 
@@ -313,6 +316,7 @@ export default class OneOnOneManager extends React.Component {
                 {
                     score1: score1,
                     score2: score2,
+                    mvp_player: mvp_player,
                 },
                 async function(res) {
 
@@ -349,7 +353,7 @@ export default class OneOnOneManager extends React.Component {
                         loser = "";
                     }
 
-                    await self.setState({ saved: true, winner, loser, scores_history, scores, stats });
+                    await self.setState({ saved: true, winner, loser, scores_history, scores, stats, });
                     self.initStats();
                 },
                 function(error) {
@@ -382,6 +386,7 @@ export default class OneOnOneManager extends React.Component {
         const player2 = this.state.player2.name;
         const score1 = this.state.scores[this.state.player1.name];
         const score2 = this.state.scores[this.state.player2.name];
+        const mvp_player = this.state.mvp_player;
 
         // no save route
         if (!save_result_route || save_result_route === "") {
@@ -412,6 +417,7 @@ export default class OneOnOneManager extends React.Component {
                     [key2]: player2,
                     score1: score1,
                     score2: score2,
+                    mvp_player: mvp_player
                 },
                 async function(res) {
 
@@ -480,7 +486,7 @@ export default class OneOnOneManager extends React.Component {
         scores_history[player1.name] = [];
         scores_history[player2.name] = [];
         await this.setState({
-            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id:undefined,
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id:undefined, mvp_player: undefined,
         });
         this.initStats();
     }
@@ -519,7 +525,7 @@ export default class OneOnOneManager extends React.Component {
             custom_details_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>${custom_details_title}</div>`;
         }
 
-        const { stats } = this.state;
+        const { stats, scores, scores_history } = this.state;
 
         if (what === 'teams'){
             const maxPlayers = Math.max(this.state.player1.players.length, this.state.player2.players.length);
@@ -589,8 +595,8 @@ export default class OneOnOneManager extends React.Component {
                             scores[player.name] = Number(Math.max(0,e.target.value));
                             this.setState({ scores });
                         }}
-                        singleShot={this.state.scores[player.name]}
-                        singleRounds={this.state.scores_history[player.name]}
+                        singleShot={scores[player.name]}
+                        singleRounds={scores_history[player.name]}
                         lost={(this.state.saved && this.state.loser === player.name)}
                         winner={(this.state.saved && this.state.winner === player.name)}
 
@@ -603,10 +609,10 @@ export default class OneOnOneManager extends React.Component {
         })
 
         let bottom = 75; // (what === 'teams') ? 34 : 75;
-        let teams = Object.keys(this.state.scores_history);
+        let teams = Object.keys(scores_history);
         if (teams.length > 0) {
-            let team1 = this.state.scores_history[teams[0]];
-            let team2 = this.state.scores_history[teams[1]];
+            let team1 = scores_history[teams[0]];
+            let team2 = scores_history[teams[1]];
             if (team1.length > 0 && team2.length > 0 && team1[team1.length-1] !== team2[team2.length-1]){
                 bottom += 21;
             }
@@ -627,6 +633,32 @@ export default class OneOnOneManager extends React.Component {
             boxShadow: "none",
             fontWeight: "bold",
             fontSize: "18px",
+        }
+
+        let mvp_block = "";
+        if (this.props.mvp_block){
+
+            const { player1, player2 } = this.state;
+
+            const options = (scores[player1.name] > scores[player2.name]) ? player1.players : (scores[player2.name] > scores[player1.name]) ? player2.players : [];
+
+            mvp_block = (
+                <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", paddingBottom: "20px" }}>
+                    <DropdownInput
+                        options={(options)}
+                        name={"select_mvp"}
+                        placeholder={"Select MVP..."}
+                        nameKey={"name"}
+                        valueKey={"name"}
+                        idKey={"id"}
+                        style={{ width: "650px", paddingBottom: "30px" }}
+                        disabled={options.length === 0}
+                        onChange={(player) => {
+                            this.setState({ mvp_player: player.name });
+                        }}
+                    />
+                </div>
+                );
         }
 
         return (
@@ -699,6 +731,8 @@ export default class OneOnOneManager extends React.Component {
                     </div>
                     {blocks[1]}
                 </div>
+
+                {mvp_block}
             </div>
         );
     }
@@ -802,6 +836,12 @@ OneOnOneManager.propTypes = {
      * { player1: 'team1', player2: 'team2', player1Id: 'team1Id', player2Id: 'team2Id', player1_name: 'team1_name', player2_name: 'team2_name' }
      */
     custom_keys: PropTypes.object,
+
+    /**
+     * should we display a mvp select box?
+     *
+     */
+    mvp_block: PropTypes.bool,
 };
 
 OneOnOneManager.defaultProps = {
