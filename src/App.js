@@ -29,7 +29,7 @@ function App() {
                     <Route path="/logout" component={LogoutPage} />
                     <PrivateRoute path ="/three-points/" component={Settings} />
                     <PrivateRoute exact path ="/1on1/" component={OneOnOne} />
-                    <PrivateRoute path ="/1on1/stats" component={OneOnOneStats} />
+                    <PrivateRoute path ="/1on1/stats" component={OneOnOne} data={{view_stats:true}} />
                     <PrivateRoute path ="/real-stats/" component={RealStats} />
                     <PrivateRoute path ="/random/new" component={Random} />
                     <PrivateRoute path ="/random/" component={RandomOld} />

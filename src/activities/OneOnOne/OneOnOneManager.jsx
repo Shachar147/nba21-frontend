@@ -65,7 +65,7 @@ export default class OneOnOneManager extends React.Component {
             },
             met_each_other: 0,
 
-            view_stats: false,
+            view_stats: this.props.view_stats || false,
             loaderDetails: LOADER_DETAILS(),
             general_stats: {
                 'total_games': 0,
@@ -507,6 +507,8 @@ export default class OneOnOneManager extends React.Component {
                 <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
             );
         }
+
+        console.log(this.state.view_stats, stats_page);
 
         if (this.state.view_stats && stats_page){
             return (

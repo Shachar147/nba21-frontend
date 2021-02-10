@@ -21,6 +21,7 @@ export default class OneOnOne extends React.Component {
                 save_result_route={"/records/one-on-one/"}
                 update_result_route={"/records/one-on-one/"}
                 stats_page={true}
+                view_stats={this.props.view_stats||false}
             />
         );
     }

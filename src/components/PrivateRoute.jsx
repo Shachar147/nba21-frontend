@@ -7,7 +7,7 @@ import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import {isLoggedOn} from "../helpers/auth";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, data, ...rest }) => {
 
     const isLoggedIn = isLoggedOn();
 
@@ -16,7 +16,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             {...rest}
             render={props =>
                 isLoggedIn ? (
-                    <Component {...props} />
+                    <Component {...props} {...data} />
                 ) : (
                     <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
                 )
