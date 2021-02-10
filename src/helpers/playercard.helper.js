@@ -172,7 +172,7 @@ export function buildDetails(details, stats){
     if (isDefined(total_home_games) && isDefined(total_away_games)) stats_arr.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
     if (isDefined(total_diff)) stats_arr.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
     if (isDefined(total_scored)) stats_arr.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
-    if (isDefined(total_knockouts)) stats_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts'] || "N/A"}`);
+    if (isDefined(total_knockouts)) stats_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);
 
     // real stats
     if (isDefined(WP)) stats_arr.push(`Career Win%: ${settings['Career Win%']}`);

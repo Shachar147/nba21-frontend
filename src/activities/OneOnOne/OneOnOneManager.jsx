@@ -167,7 +167,7 @@ export default class OneOnOneManager extends React.Component {
         let custom_keys = self.props.custom_keys || {};
         if (Object.keys(custom_keys).length > 0 ){
             custom_keys = swap(custom_keys);
-            console.log(custom_keys);
+            // console.log(custom_keys);
             Object.keys(stats).forEach((name) => {
                 stats[name].records.forEach((record) => {
                     Object.keys(custom_keys).forEach((key) => {
@@ -319,7 +319,9 @@ export default class OneOnOneManager extends React.Component {
                     const stats = self.state.stats;
                     let scores_history = self.state.scores_history;
 
-                    const response = res.data;
+                    let response = res.data;
+                    response = self.customKeysStats(self, response);
+
                     Object.keys(response).forEach((player_name) => {
                         stats[player_name] = response[player_name];
 
@@ -418,8 +420,6 @@ export default class OneOnOneManager extends React.Component {
 
                     const response = res.data;
                     Object.keys(response).forEach((player_name) => {
-
-                        // todo complete team1 player1
                         stats[player_name] = response[player_name];
                     });
 
@@ -566,6 +566,7 @@ export default class OneOnOneManager extends React.Component {
                         name={player.name}
                         picture={player.picture || player.logo}
                         position={player.position}
+                        team_division={(player.conference && player.division) ? player.division + " (" + player.conference + ")" : undefined}
                         debut_year={player.debut_year}
                         details={{
                             _2k_rating: _2k_rating,
@@ -601,7 +602,7 @@ export default class OneOnOneManager extends React.Component {
             );
         })
 
-        let bottom = (what === 'teams') ? 35 : 75;
+        let bottom = 75; // (what === 'teams') ? 34 : 75;
         let teams = Object.keys(this.state.scores_history);
         if (teams.length > 0) {
             let team1 = this.state.scores_history[teams[0]];

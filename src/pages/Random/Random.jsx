@@ -22,7 +22,7 @@ export default class Random extends React.Component {
                 styles={{
                     imageContainerStyle: { backgroundColor: "#F2F2F2" },
                     imageStyle: { width: 200, margin: "auto", padding: "20px" },
-                    extraContentStyle: { display: "none" },
+                    // extraContentStyle: { display: "none" },
                 }}
                 save_result_route={"/records/random/"}
                 update_result_route={"/records/random/"}

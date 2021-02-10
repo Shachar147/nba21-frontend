@@ -47,12 +47,10 @@ export default class OneOnOneStats extends React.Component {
                 { "Total Suffered Knockouts": totalSufferedKnockoutsSort },
                 { "Total Diff": totalDiffSort },
                 { "Total Diff Per Game": totalDiffPerGameSort },
-                { "2K Rating": _2kRatingSort },
                 { "Total Home Games": totalHomeGames },
                 { "Total Road Games": totalAwayGames },
                 { "Total Scored": totalScored },
                 { "Total Suffered": totalSuffered },
-                { "Average Opponent 2K Rating": average2kRatingSort },
                 { "Total Wins": totalWinsSort },
                 { "Total Lost": totalLostSort },
             ],
@@ -66,6 +64,11 @@ export default class OneOnOneStats extends React.Component {
                 'total_points_per_day': {},
             }
         };
+
+        if (this.props.what === "players"){
+            this.state.orderByOptions.push({ "2K Rating": _2kRatingSort });
+            this.state.orderByOptions.push({ "Average Opponent 2K Rating": average2kRatingSort });
+        }
 
         this.applyFilters = this.applyFilters.bind(this);
         this.loadRecords = this.loadRecords.bind(this);
@@ -318,7 +321,11 @@ export default class OneOnOneStats extends React.Component {
                         Total Results: {players.length}
                     </div>
                     { players.map((player,idx) => {
-                        const _2k_rating = player['_2k_rating'] || 'N/A';
+                        let _2k_rating = player['_2k_rating'] || 'N/A';
+
+                        if (what === 'teams'){
+                            _2k_rating = undefined;
+                        }
 
                         return (<PlayerCard
                                 key={idx}
@@ -335,6 +342,7 @@ export default class OneOnOneStats extends React.Component {
                                     lastSyncAt: player.lastSyncAt
                                 }}
                                 position={player.position}
+                                team_division={(player.conference && player.division) ? player.division + " (" + player.conference + ")" : undefined}
                                 debut_year={player.debut_year}
 
                                 stats={{
