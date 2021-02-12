@@ -3,8 +3,10 @@ import {deepClone, getRandomElement, shuffle} from "../../helpers/utils";
 import PlayerCard from "../../components/PlayerCard";
 import Header from "../../components/layouts/Header";
 import ButtonInput from "../../components/inputs/ButtonInput";
-import {_3PT_COMPUTER_SCORE_DELAY} from "../../helpers/consts";
+import {_3PT_COMPUTER_SCORE_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import ErrorPage from "../../pages/ErrorPage";
+import Notification from "../../components/internal/Notification";
+import {apiPost} from "../../helpers/api";
 
 export default class Game extends React.Component {
 
@@ -26,6 +28,8 @@ export default class Game extends React.Component {
             levels: this.props.computer_levels,
             game_started: true,
             error:"",
+
+            saved: false,
         };
 
         this.onScore = this.onScore.bind(this);
@@ -153,6 +157,8 @@ export default class Game extends React.Component {
             let current_player = round_players.concat(played_players).map(function(iter){ return iter })[0];
             let winner = current_player.name;
             this.setState({ current_player, winner });
+
+            this.SaveResult();
         }
         else {
             this.StartRound();
@@ -226,15 +232,65 @@ export default class Game extends React.Component {
             current_player: {},
             lost: {},
             winner: "",
-            leaderboard: []
+            leaderboard: [],
+            saved: false,
         });
 
         this.StartRound();
     }
 
     async goHome(){
-        await this.setState({ game_started: false });
+        await this.setState({ game_started: false, saved: false, });
         this.props.goHome();
+    }
+
+    async SaveResult(){
+
+        const self = this;
+
+        const team1_players = this.state.teams[0].map(x => x.name);
+        const team2_players = this.state.teams[1].map(x => x.name);
+        const all_players = [...team1_players, ...team2_players];
+        const computer_players = [];
+        const random_players = [];
+        all_players.forEach((player) => {
+            if (player.indexOf("Computer") !== -1){
+                computer_players.push(player.split(' (')[0])
+            }
+            if (player.indexOf("Random") !== -1){
+                random_players.push(player.split(' (')[0])
+            }
+        })
+
+        await apiPost(this,
+            '/records/three-points-contest',
+            {
+                team1_players: team1_players.map(x => x.split(' (')[0]),
+                team2_players: team2_players.map(x => x.split(' (')[0]),
+                roundLength: this.props.round_length,
+                computerLevel: this.props.computer_level,
+                computer_players: computer_players,
+                random_players: random_players,
+                winner_name: this.state.winner.split(' (')[0],
+                leaderboard: this.state.total_leader_board,
+                scoresHistory: this.state.scores,
+            },
+            async function(res) {
+
+                await self.setState({ saved: true });
+                // self.initStats();
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed saving this game.` }
+                self.setState({ error: req_error });
+            },
+            function() {
+                // finally
+            }
+        );
     }
 
     render(){
@@ -344,6 +400,14 @@ export default class Game extends React.Component {
                 </div>
             ): "";
 
+
+        const game_saved = (this.state.saved) ? (
+            <Notification
+                title={"Game was saved!"}
+                description={"This game was saved. you can take a look at stats page to see details about past games."}
+            />
+        ) : "";
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
@@ -368,6 +432,8 @@ export default class Game extends React.Component {
                     </div>
                 </div>
                 {teams_blocks[1]}
+
+                {game_saved}
             </div>
         );
 
