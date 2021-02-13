@@ -1,7 +1,7 @@
 import React from 'react';
 import PlayerCard from '../../components/PlayerCard';
 import SearchInput from '../../components/inputs/SearchInput';
-import {formatDate, isDefined} from "../../helpers/utils";
+import {formatDate, isDefined, nth} from "../../helpers/utils";
 import LoadingPage from "../../pages/LoadingPage";
 import ErrorPage from "../../pages/ErrorPage";
 
@@ -12,7 +12,7 @@ import {
     _2kRatingSort, average2kRatingSort,
     currentLoseStreakSort,
     currentWinStreakSort, maxLoseStreakSort, maxWinStreakSort, OVERALL_HIGHLIGHTS,
-    overallSort, totalAwayGames, totalDiffPerGameSort, totalDiffSort,
+    overallSort, specificSort, totalAwayGames, totalDiffPerGameSort, totalDiffSort,
     totalGamesSort, totalHomeGames,
     totalKnockoutsSort, totalLostSort, totalScored, totalSuffered, totalSufferedKnockoutsSort,
     totalWinsPercentsSort, totalWinsSort,
@@ -43,14 +43,7 @@ export default class OneOnOneStats extends React.Component {
                 { "Current Lose Streak": currentLoseStreakSort },
                 { "Max Win Streak": maxWinStreakSort },
                 { "Max Lose Streak": maxLoseStreakSort },
-                { "Total Knockouts": totalKnockoutsSort },
-                { "Total Suffered Knockouts": totalSufferedKnockoutsSort },
-                { "Total Diff": totalDiffSort },
-                { "Total Diff Per Game": totalDiffPerGameSort },
-                { "Total Home Games": totalHomeGames },
-                { "Total Road Games": totalAwayGames },
                 { "Total Scored": totalScored },
-                { "Total Suffered": totalSuffered },
                 { "Total Wins": totalWinsSort },
                 { "Total Lost": totalLostSort },
             ],
@@ -71,9 +64,30 @@ export default class OneOnOneStats extends React.Component {
             }
         };
 
+        if (this.props.game_mode === "Three Points Contest") {
+            this.state.orderByOptions.push({ 'Average Place': (a,b) => specificSort('average_place',b,a) });
+            this.state.orderByOptions.push({ 'Total Games Played as Random': (a,b) => specificSort('total_randoms',a,b) });
+            this.state.orderByOptions.push({ 'Total Games Played as Computer': (a,b) => specificSort('total_computers',a,b) });
+            this.state.orderByOptions.push({ 'Total Shots Attempts': (a,b) => specificSort('total_from',a,b) });
+            this.state.orderByOptions.push({ 'Total Shots Average': (a,b) => specificSort('total_shot_average',a,b) });
+        }
+        else {
+            // all of these are for other games modes. (not 3pt contest)
+            this.state.orderByOptions.push({ "Total Diff": totalDiffSort });
+            this.state.orderByOptions.push({ "Total Diff Per Game": totalDiffPerGameSort });
+            this.state.orderByOptions.push({ "Total Home Games": totalHomeGames });
+            this.state.orderByOptions.push({ "Total Road Games": totalAwayGames });
+            this.state.orderByOptions.push({ "Total Suffered": totalSuffered });
+            this.state.orderByOptions.push({ "Total Knockouts": totalKnockoutsSort });
+            this.state.orderByOptions.push({ "Total Suffered Knockouts": totalSufferedKnockoutsSort });
+        }
+
         if (this.props.what === "players"){
             this.state.orderByOptions.push({ "2K Rating": _2kRatingSort });
-            this.state.orderByOptions.push({ "Average Opponent 2K Rating": average2kRatingSort });
+
+            if (this.props.game_mode !== "Three Points Contest") {
+                this.state.orderByOptions.push({"Average Opponent 2K Rating": average2kRatingSort});
+            }
         }
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -114,6 +128,18 @@ export default class OneOnOneStats extends React.Component {
                 get_stats_route,
                 function(res) {
                     let records = res.data.data;
+
+                    // on 3pt contest, we may have records of players played only by computer. in these cases, total games will be 0.
+                    // do not show these players.
+                    let filtered = {};
+                    Object.keys(records).forEach((player_name) => {
+                        const player = records[player_name];
+                        if (player.total_games > 0){
+                            filtered[player_name] = player;
+                        }
+                    });
+                    records = filtered;
+
                     const leaderboard = self.buildLeaderBoard(records);
                     self.setState({ records, leaderboard });
                 },
@@ -309,7 +335,7 @@ export default class OneOnOneStats extends React.Component {
                         options={orderByOptions}
                         label={"Order By: "}
                         name={"orderBy"}
-                        width={"230px"}
+                        width={"250px"}
                         nameKey={"name"}
                         valueKey={"name"}
                         idKey={"id"}
@@ -370,6 +396,14 @@ export default class OneOnOneStats extends React.Component {
                                     max_win_streak: records[player.name].max_win_streak,
                                     max_lose_streak: records[player.name].max_lose_streak,
                                     highlights: (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
+
+
+                                    // 3pt
+                                    average_place: records[player.name].average_place,
+                                    total_computers: records[player.name].total_computers,
+                                    total_randoms: records[player.name].total_randoms,
+                                    total_from: records[player.name].total_from,
+                                    total_shot_average: records[player.name].total_shot_average,
                                 }}
 
                                 onClick={() => {

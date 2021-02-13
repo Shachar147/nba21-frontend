@@ -17,7 +17,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
 
     let mvp_stats_block = null;
     let general_stats_block = null;
-    console.log(general_stats);
+    // console.log(general_stats);
     if (general_stats['total_games'] > 0) {
 
         const description = [];
@@ -308,6 +308,9 @@ export function buildGeneralStats(stats) {
     };
 
     Object.keys(stats).forEach((player) => {
+
+        if (!stats[player].records) { return; }
+
         stats[player].records.forEach((record) => {
             general_stats['total_games'] += 0.5;
             general_stats['total_points'] += ((record.score1 + record.score2)/2);

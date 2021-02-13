@@ -18,6 +18,8 @@ import ErrorPage from "../../pages/ErrorPage";
 
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
+import ButtonInput from "../../components/inputs/ButtonInput";
+import OneOnOneStats from "../OneOnOne/OneOnOneStats";
 
 export default class Settings extends React.Component {
 
@@ -287,6 +289,19 @@ export default class Settings extends React.Component {
             this.state.teams[0].concat(this.state.randoms[0]).concat(this.state.computers[0]),
             this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])];
 
+        if (this.state.view_stats){
+            return (
+                <OneOnOneStats
+                    what={"players"}
+                    stats_title={"Three Points Contest"}
+                    game_mode={"Three Points Contest"}
+                    get_route={"/player"}
+                    get_stats_route={"/records/three-points-contest/by-player"}
+                    onBack={() => { this.setState({ view_stats: false }) }}
+                />
+            );
+        }
+
         if (this.state.game_started){
 
             return (
@@ -348,9 +363,22 @@ export default class Settings extends React.Component {
                     <input type={"number"} value={this.state.round_length} min={MIN_ROUND_LENGTH} max={MAX_ROUND_LENGTH} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
 
                     <div className={"ui basic buttons"} style={{ margin: "auto", marginBottom: "10px", width: "150px" }}>
-                        <button className={"ui button" + (can_start ? " basic blue" : "")} disabled={!can_start} onClick={this.startGame}>
-                            Start Game
-                        </button>
+                        {/*<button className={"ui button" + (can_start ? " basic blue" : "")} disabled={!can_start} onClick={this.startGame}>*/}
+                        {/*    Start Game*/}
+                        {/*</button>*/}
+
+                        <ButtonInput
+                            text={"Start Game"}
+                            style={{ width:"150px" }}
+                            disabled={!can_start}
+                            onClick={this.startGame}
+                        />
+
+                        <ButtonInput
+                            text={"View Stats"}
+                            style={{ marginLeft:"5px" }}
+                            onClick={() => { this.setState({ view_stats: true }) }}
+                        />
                     </div>
                 </div>
 

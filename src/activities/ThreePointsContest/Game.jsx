@@ -7,6 +7,7 @@ import {_3PT_COMPUTER_SCORE_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/const
 import ErrorPage from "../../pages/ErrorPage";
 import Notification from "../../components/internal/Notification";
 import {apiPost} from "../../helpers/api";
+import OneOnOneStats from "../OneOnOne/OneOnOneStats";
 
 export default class Game extends React.Component {
 
@@ -302,6 +303,19 @@ export default class Game extends React.Component {
             );
         }
 
+        if (this.state.view_stats){
+            return (
+                <OneOnOneStats
+                    what={"players"}
+                    stats_title={"Three Points Contest"}
+                    game_mode={"Three Points Contest"}
+                    get_route={"/player"}
+                    get_stats_route={"/records/three-points-contest/by-player"}
+                    onBack={() => { this.setState({ view_stats: false }) }}
+                />
+            );
+        }
+
         // variables
         const lost = this.state.lost;
         const round_length = this.props.round_length;
@@ -422,6 +436,11 @@ export default class Game extends React.Component {
                         text={"End Game"}
                         style={{ marginLeft: "5px" }}
                         onClick={this.goHome}
+                    />
+                    <ButtonInput
+                        text={"View Stats"}
+                        style={{ marginLeft:"5px" }}
+                        onClick={() => { this.setState({ view_stats: true }) }}
                     />
                 </div>
                 {computers_block}

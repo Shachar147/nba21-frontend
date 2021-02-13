@@ -2,9 +2,11 @@ import {reFormatDate} from "./utils";
 
 export function overallSort(a,b){
 
+    // console.log(a,b);
+
     // first sort
-    const percent1 = parseFloat(b['total_win_percents'].replace('%', ''));
-    const percent2 = parseFloat(a['total_win_percents'].replace('%', ''));
+    const percent1 = parseFloat(b['total_win_percents'].toString().replace('%', ''));
+    const percent2 = parseFloat(a['total_win_percents'].toString().replace('%', ''));
 
     // // second sort
     // const total_games1 = parseFloat(b['total_games']);
@@ -36,6 +38,8 @@ export function specificSort(key, a, b){
     const value1 = parseFloat(b[key]);
     const value2 = parseFloat(a[key]);
 
+    // console.log(value1,value2);
+
     if (value1 > value2) return 1;
     else if (value1 < value2) return -1;
 
@@ -46,7 +50,7 @@ export function specificSortDate(key, a, b){
     const value1 = (b[key]) ? new Date(reFormatDate(b[key])) : -1;
     const value2 = (b[key]) ? new Date(reFormatDate(a[key])) : -1;
 
-    console.log(a,b,key,value1,value2);
+    // console.log(a,b,key,value1,value2);
 
     return value1 - value2;
 

@@ -71,9 +71,17 @@ export function buildDetails(details, stats){
         PM,
         PFP,
         PMP,
+
+        average_place,
+        total_computers,
+        total_randoms,
+        total_shot_average,
+        total_from,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
+    if(total_win_percents === 0) total_win_percents = "0.00%";
 
     let settings = {
         '2K Rating': _2k_rating,
@@ -126,9 +134,15 @@ export function buildDetails(details, stats){
         'Career Total Turnovers': `${numberWithCommas(TOV)}`,
         'Career Total Personal Fouls': `${numberWithCommas(PF)}`,
         'Career Total +/-': `${numberWithCommas(PM)}`,
-
         'Personal Fouls Per Game': `${PFP}`,
         '+/- Per Game': `${PMP}`,
+
+        // three points contest
+        'Average Place': (average_place === 9999) ? "N/A" : `${average_place}${nth(average_place)}`, // 9999 - never played as regular player. only computer
+        'Total Games Played as Random': `${total_randoms}`,
+        'Total Games Played as Computer': `${total_computers}`,
+        'Total Shots Average': `${total_shot_average}`,
+        'Total Shots Attempts': `${total_from}`,
     };
 
     // on fire / ice cold
@@ -171,7 +185,8 @@ export function buildDetails(details, stats){
     if (isDefined(lose_streak)) { stats_arr.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}` + icecold); }
     if (isDefined(total_home_games) && isDefined(total_away_games)) stats_arr.push(`Home/Road Games: ${settings['Total Home Games']} - ${settings['Total Road Games']}`);
     if (isDefined(total_diff)) stats_arr.push(`Total Diff: ${settings['Total Diff']} ${settings['Total Diff Per Game']}`);
-    if (isDefined(total_scored)) stats_arr.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
+    if (isDefined(total_scored) && isDefined(total_suffered)) stats_arr.push(`Total Scored/Suffered: ${settings['Total Scored']} - ${settings['Total Suffered']}`);
+    else if (isDefined(total_scored)) stats_arr.push(`Total Scored: ${settings['Total Scored']}`);
     if (isDefined(total_knockouts)) stats_arr.push(`Total Knockouts Did/Suffered: ${settings['Total Knockouts']} - ${settings['Total Suffered Knockouts']}`);
 
     // real stats
@@ -204,6 +219,14 @@ export function buildDetails(details, stats){
     if (isDefined(PM)) stats_arr.push(`Career Total +/-: ${settings['Career Total +/-']}`);
     if (isDefined(PFP)) stats_arr.push(`Personal Fouls Per Game: ${settings['Personal Fouls Per Game']}`);
     if (isDefined(PMP)) stats_arr.push(`+/- Per Game: ${settings['+/- Per Game']}`);
+
+    // 3pts
+    if (isDefined(average_place)) stats_arr.push(`Average Place: ${settings['Average Place']}`);
+    if (isDefined(total_randoms)) stats_arr.push(`Total Games Played as Random: ${settings['Total Games Played as Random']}`);
+    if (isDefined(total_computers)) stats_arr.push(`Total Games Played as Computer: ${settings['Total Games Played as Computer']}`);
+
+    if (isDefined(total_from)) stats_arr.push(`Total Shots Attempts: ${settings['Total Shots Attempts']}`);
+    if (isDefined(total_shot_average)) stats_arr.push(`Total Shots Average: ${settings['Total Shots Average']}`);
 
     // highlighted items first
     let first = [];
