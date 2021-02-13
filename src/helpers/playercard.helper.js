@@ -138,7 +138,7 @@ export function buildDetails(details, stats){
         '+/- Per Game': `${PMP}`,
 
         // three points contest
-        'Average Place': (average_place === 9999) ? "N/A" : `${average_place}${nth(average_place)}`, // 9999 - never played as regular player. only computer
+        'Average Place': (average_place === 0) ? "N/A" : `${average_place}${nth(average_place)}`, // 0 - never played as regular player. only computer
         'Total Games Played as Random': `${total_randoms}`,
         'Total Games Played as Computer': `${total_computers}`,
         'Total Shots Average': `${total_shot_average}`,
