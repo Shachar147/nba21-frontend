@@ -23,6 +23,15 @@ export function overallSort(a,b){
     if (percent1 > percent2) return 1;
     else if (percent1 < percent2) return -1;
 
+    // 3pt
+    if (a["total_shot_average"] != undefined && b["total_shot_average"] != undefined){
+        const shot1 = parseFloat(b["total_shot_average"].toString().replace('%',''))
+        const shot2 = parseFloat(["total_shot_average"].toString().replace('%',''))
+
+        if (shot1 > shot2) return 1;
+        else if (shot1 < shot2) return -1;
+    }
+
     if (diff1 > diff2) return 1;
     else if (diff1 < diff2) return -1;
 
@@ -32,7 +41,7 @@ export function overallSort(a,b){
     return 0;
 }
 
-export const OVERALL_HIGHLIGHTS = ['Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts'];
+export const OVERALL_HIGHLIGHTS = ['Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts', 'Total Shots Average'];
 
 export function specificSort(key, a, b){
     const value1 = parseFloat(b[key]);
