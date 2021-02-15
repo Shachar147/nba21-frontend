@@ -44,7 +44,9 @@ export default class Game extends React.Component {
 
     // computer
     randNum(){
-        const level = (this.state.computer_level === 'Real Life') ? (1 - (parseFloat(this.state.current_player["3pt_percents"].replace("%",""))/100)) : this.state.levels[this.state.computer_level];
+        let percents = this.state.current_player["3pt_percents"].replace("%","");
+        if (percents === "N/A") { percents = "33.33"; }
+        const level = (this.state.computer_level === 'Real Life') ? (1 - (parseFloat(percents/100))) : this.state.levels[this.state.computer_level];
         let y = Math.random();
         if(y <= level){
             y = Math.floor(y)
@@ -81,12 +83,6 @@ export default class Game extends React.Component {
         let non_existing_players = all_players.filter((player) => {
            return existing_ids.indexOf(player.id) === -1;
         });
-
-        if (computer_level === "Real Life"){
-            non_existing_players = all_players.filter((player) => {
-                return player['3pt_percents'] !== 'N/A';
-            });
-        }
 
         if (non_existing_players.length === 0){
             this.setState({ error: "Oops, Something went wrong.<br>Seems like there are more selected players then actual players." });
