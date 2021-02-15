@@ -82,6 +82,12 @@ export default class Game extends React.Component {
            return existing_ids.indexOf(player.id) === -1;
         });
 
+        if (computer_level === "Real Life"){
+            non_existing_players = all_players.filter((player) => {
+                return player['3pt_percents'] !== 'N/A';
+            });
+        }
+
         if (non_existing_players.length === 0){
             this.setState({ error: "Oops, Something went wrong.<br>Seems like there are more selected players then actual players." });
             return {};
