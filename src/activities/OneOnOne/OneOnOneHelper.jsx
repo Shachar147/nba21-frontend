@@ -385,6 +385,8 @@ export function buildGeneralStats(stats, percents) {
         })
     });
 
+    general_stats['total_games'] = Math.round(general_stats['total_games']);
+
     if (percents) {
         const days_with_most_percents = Object.keys(date_stats).sort((a, b) => {
             return date_stats[b].total_percents - date_stats[a].total_percents;
