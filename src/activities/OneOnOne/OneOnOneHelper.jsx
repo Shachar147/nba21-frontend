@@ -338,15 +338,22 @@ export function buildGeneralStats(stats, percents) {
 
         if (!stats[player].records) { return; }
 
-        stats[player].records.forEach((record) => {
-            general_stats['total_games'] += 0.5;
+        stats[player].records.forEach((record,idx) => {
+
+            const divide = (percents && record.scoresHistory) ? Object.keys(record.scoresHistory).filter(x => x.indexOf('Computer') === -1).length : 2;
+
+            console.log(player, "game #" + idx, "participants " + divide);
+
+            general_stats['total_games'] += (1/divide);
+
+            console.log("total games: ", general_stats['total_games']);
 
             if (percents) { }
             else { general_stats['total_points'] += ((record.score1 + record.score2)/2); }
 
             const dt = formatDate(new Date(record.addedAt));
             general_stats['total_games_per_day'][dt] = general_stats['total_games_per_day'][dt] || 0;
-            general_stats['total_games_per_day'][dt] += 0.5;
+            general_stats['total_games_per_day'][dt] += 1/divide;
 
             if (percents) {
 
@@ -389,7 +396,6 @@ export function buildGeneralStats(stats, percents) {
             general_stats.total_percents_per_day[dt] = curr_percents;
             arr.push(curr_percents);
         });
-        debugger;
         const sum = arr.reduce((a, b) => Number(a) + Number(b), 0);
         const avg = sum/arr.length;
         general_stats.total_percents = avg.toFixed(2);
