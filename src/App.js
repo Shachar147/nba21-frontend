@@ -27,7 +27,8 @@ function App() {
                     <Route path="/login" component={LoginPage} />
                     <Route path="/register" component={RegisterPage} />
                     <Route path="/logout" component={LogoutPage} />
-                    <PrivateRoute path ="/three-points/" component={Settings} />
+                    <PrivateRoute exact path ="/three-points/" component={Settings} />
+                    <PrivateRoute path ="/three-points/stats" component={Settings} data={{view_stats:true}} />
                     <PrivateRoute exact path ="/1on1/" component={OneOnOne} />
                     <PrivateRoute path ="/1on1/stats" component={OneOnOne} data={{view_stats:true}} />
                     <PrivateRoute path ="/real-stats/" component={RealStats} />

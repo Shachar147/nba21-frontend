@@ -224,7 +224,7 @@ export default class OneOnOneStats extends React.Component {
         });
 
         // general stats
-        const { general_stats, mvp_stats } = buildGeneralStats(records);
+        const { general_stats, mvp_stats } = buildGeneralStats(records, this.props.percents);
 
         this.setState({ players, merged, general_stats, mvp_stats })
     }
@@ -299,7 +299,7 @@ export default class OneOnOneStats extends React.Component {
         }).sort((a,b) => { return a.name - b.name; });
 
         // one on one stats
-        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats);
+        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats, this.props.percents);
 
         return (
             <div style={{ paddingTop: "20px" }}>

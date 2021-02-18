@@ -13,7 +13,7 @@ export const statsStyle = {
     borderRadius: "20px",
 }
 
-export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_stats) {
+export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_stats, percents) {
 
     let mvp_stats_block = null;
     let general_stats_block = null;
@@ -24,18 +24,27 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
 
         const dtToday = formatDate(new Date());
         const total_games_today = general_stats['total_games_per_day'][dtToday] || 0;
-        const total_points_today = general_stats['total_points_per_day'][dtToday] || 0;
 
+        const key1 = (percents) ? 'total_percents_per_day' : 'total_points_per_day';
+        const total_points_today = general_stats[key1][dtToday] || 0
+
+        const what_stat = (percents) ? "Percents" : "Points";
+
+        // console.log(general_stats);
+
+        const key2 = (percents) ? 'total_percents' : 'total_points';
         description.push(`Total Games Today: ${total_games_today}`);
-        description.push(`Total Points Today: ${total_points_today}`);
+        description.push(`Total ${what_stat} Today: ${total_points_today}`);
         description.push(`Total Games: ${general_stats['total_games']}`);
-        description.push(`Total Points: ${general_stats['total_points']}`);
+        description.push(`Total ${what_stat}: ${general_stats[key2]}`);
 
         const values = {};
         const mvp_values = {};
 
-        const ppd = Object.keys(general_stats['total_points_per_day']).sort((a, b) => {
-            return general_stats['total_points_per_day'][b] - general_stats['total_points_per_day'][a];
+        let cols = (percents) ? ["","Days with most games", "Days with most percents"] : false;
+
+        const ppd = Object.keys(general_stats[key1]).sort((a, b) => {
+            return general_stats[key1][b] - general_stats[key1][a];
         });
 
         const gpd = Object.keys(general_stats['total_games_per_day']).sort((a, b) => {
@@ -55,16 +64,17 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#1`] = values[`#1`] || [];
             values[`#1`].push(`-`);
         }
+        const key3 = (percents) ? 'total_percents_per_day' : 'total_points_per_day';
         for (let i = 0; i < ppd.length && i <= TOP_STATS_NUMBER - 1; i++) {
             values[`#${i+1}`] = values[`#${i+1}`] || [];
-            values[`#${i+1}`].push(`${ppd[i]} - ${general_stats['total_points_per_day'][ppd[i]]}`);
+            values[`#${i+1}`].push(`${ppd[i]} - ${general_stats[key3][ppd[i]]}`);
         }
 
         general_stats_block = (
             <StatsTable
                 title={`${game_mode} Stats`}
                 description={description.join(' | ')}
-                cols={["","Days with most games", "Days with most points"]}
+                cols={cols || ["","Days with most games", "Days with most points"]}
                 stats={values}
             />
         );
@@ -182,7 +192,7 @@ export function BuildMVPStatsTable(general_stats, wrap, game_mode) {
     return general_stats_block;
 }
 
-export function buildStatsInformation(player1, player2, stats, player_stats_values, matchups_values, what){
+export function buildStatsInformation(player1, player2, stats, player_stats_values, matchups_values, what, percents){
 
     const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0, total_games:0, total_wins: 0, total_lost: 0, total_win_percents: "" };
 
@@ -287,18 +297,27 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
     player_stats_values['Total Diff Per Game'] = [stats1.total_diff_per_game, stats2.total_diff_per_game];
 
     // general stats
-    const { general_stats } = buildGeneralStats(stats);
+    const { general_stats } = buildGeneralStats(stats, percents);
 
     return {curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats};
 }
 
-export function buildGeneralStats(stats) {
-    const general_stats = {
+export function buildGeneralStats(stats, percents) {
+    let general_stats = {
         'total_games': 0,
         'total_games_per_day': {},
         'total_points': 0,
         'total_points_per_day': {},
     };
+
+    if (percents){
+        general_stats = {
+            'total_games': 0,
+            'total_games_per_day': {},
+            'total_percents': 0,
+            'total_percents_per_day': {},
+        };
+    }
 
     const mvp_stats = {
         'total_mvps': 0,
@@ -307,18 +326,42 @@ export function buildGeneralStats(stats) {
         'total_mvps_on_knockouts_per_player': {},
     };
 
+    const date_stats = {};
+    const base_stats = {
+        total_games: 0,
+        total_percents: 0,
+        total_scored: 0,
+        total_from: 0,
+    }
+
     Object.keys(stats).forEach((player) => {
 
         if (!stats[player].records) { return; }
 
         stats[player].records.forEach((record) => {
             general_stats['total_games'] += 0.5;
-            general_stats['total_points'] += ((record.score1 + record.score2)/2);
+
+            if (percents) { }
+            else { general_stats['total_points'] += ((record.score1 + record.score2)/2); }
+
             const dt = formatDate(new Date(record.addedAt));
             general_stats['total_games_per_day'][dt] = general_stats['total_games_per_day'][dt] || 0;
             general_stats['total_games_per_day'][dt] += 0.5;
-            general_stats['total_points_per_day'][dt] = general_stats['total_points_per_day'][dt] || 0;
-            general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2)/2);
+
+            if (percents) {
+
+                date_stats[dt] = date_stats[dt] || {...base_stats};
+                const values = record.scoresHistory[player] || [0];
+                const sum = values.reduce((a, b) => a + b, 0);
+                date_stats[dt].total_scored += sum;
+                date_stats[dt].total_from += (values.length * record.roundLength);
+                date_stats[dt].total_percents = ((date_stats[dt].total_scored / date_stats[dt].total_from)*100).toFixed(2);
+
+            }
+            else {
+                general_stats['total_points_per_day'][dt] = general_stats['total_points_per_day'][dt] || 0;
+                general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2) / 2);
+            }
 
             if (record.mvp_player){
                 const mvp = record.mvp_player.name;
@@ -334,6 +377,23 @@ export function buildGeneralStats(stats) {
             }
         })
     });
+
+    if (percents) {
+        const days_with_most_percents = Object.keys(date_stats).sort((a, b) => {
+            return date_stats[b].total_percents - date_stats[a].total_percents;
+        });
+
+        const arr = [];
+        days_with_most_percents.forEach((dt) => {
+            const curr_percents = date_stats[dt].total_percents
+            general_stats.total_percents_per_day[dt] = curr_percents;
+            arr.push(curr_percents);
+        });
+        debugger;
+        const sum = arr.reduce((a, b) => Number(a) + Number(b), 0);
+        const avg = sum/arr.length;
+        general_stats.total_percents = avg.toFixed(2);
+    }
 
     return { general_stats, mvp_stats };
 }

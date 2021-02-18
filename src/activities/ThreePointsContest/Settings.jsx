@@ -296,6 +296,7 @@ export default class Settings extends React.Component {
                     stats_title={"Three Points Contest"}
                     game_mode={"Three Points Contest"}
                     get_route={"/player"}
+                    percents={1} // percents, not points.
                     get_stats_route={"/records/three-points-contest/by-player"}
                     onBack={() => { this.setState({ view_stats: false }) }}
                 />

@@ -83,6 +83,7 @@ export default class OneOnOneManager extends React.Component {
         this.updateResult = this.updateResult.bind(this);
         this.replaceOne = this.replaceOne.bind(this);
         this.onSpecificReplace = this.onSpecificReplace.bind(this);
+        this.initStats = this.initStats.bind(this);
     }
 
     componentDidMount() {
@@ -187,7 +188,7 @@ export default class OneOnOneManager extends React.Component {
 
     initStats(){
 
-        const { what } = this.props;
+        const { what, percents } = this.props;
 
         const { curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats } =
             buildStatsInformation(
@@ -195,7 +196,7 @@ export default class OneOnOneManager extends React.Component {
                 this.state.player2,
                 this.state.stats,
                 this.state.player_stats_values,
-                this.state.matchups_values, what);
+                this.state.matchups_values, what, percents);
 
         this.setState({ curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats })
     }
@@ -493,7 +494,7 @@ export default class OneOnOneManager extends React.Component {
 
     render(){
 
-        let { what, game_mode, custom_details_title, styles, get_route, get_stats_route, update_result_route, stats_page, stats_title } = this.props;
+        let { what, game_mode, custom_details_title, styles, get_route, get_stats_route, update_result_route, stats_page, stats_title, percents } = this.props;
 
         let error = this.state.error;
         const is_loading = !this.state.loaded;
@@ -625,7 +626,7 @@ export default class OneOnOneManager extends React.Component {
         if (met_each_other === 0) matchups_description = `This is the first time these ${what} meet each other.`;
 
         // one on one stats
-        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode) : "";
+        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode, percents) : "";
 
         const titleStyle = {
             margin: 0,
