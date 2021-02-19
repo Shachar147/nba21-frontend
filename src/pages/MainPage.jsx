@@ -2,7 +2,6 @@ import React from "react";
 import Header from "../components/layouts/Header";
 import Logo from "../components/layouts/Logo";
 import Card from "../components/Card";
-import PropTypes from "prop-types";
 
 export default class MainPage extends React.Component {
 
@@ -97,6 +96,13 @@ export default class MainPage extends React.Component {
                                     picture={"/thumbnails/stats.png"}
                                     style={{ width: "160px" }}
                                     href={"/real-stats"}
+                                />
+
+                                <Card
+                                    name={"Sync"}
+                                    picture={"/thumbnails/sync.png"}
+                                    style={{ width: "160px" }}
+                                    href={"/sync"}
                                 />
                             </div>
                         </div>

@@ -56,6 +56,9 @@ button:not(:disabled) {
 .ui.red.label.ribbon, .ui.red.labels.ribbon .label {
   background-color: #F10B45;
 }
+.button.nbared {
+  background-color: #F10B45;
+}
 
 hr.divider {
   border: 1px solid #eaeaea;
