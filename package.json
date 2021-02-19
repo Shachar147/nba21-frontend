@@ -6,8 +6,10 @@
   "dependencies": {
     "axios": "^0.21.1",
     "faker": "^5.1.0",
+    "husky": "^5.0.9",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^3.1.2",
+    "pint": "^0.2.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -31,6 +33,18 @@
     "eject": "react-scripts eject",
     "storybook": "SET STORYBOOK_APP_MODE=development && start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "eslint --fix",
+      "git add",
+      "jest -i --testTimeout=10000 --bail --findRelatedTests --coverage --passWithNoTests"
+    ]
   },
   "author": "",
   "license": "ISC",
