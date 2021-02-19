@@ -98,12 +98,12 @@ export default class MainPage extends React.Component {
                                     href={"/real-stats"}
                                 />
 
-                                <Card
-                                    name={"Sync"}
-                                    picture={"/thumbnails/sync.png"}
-                                    style={{ width: "160px" }}
-                                    href={"/sync"}
-                                />
+                                {/*<Card*/}
+                                {/*    name={"Sync"}*/}
+                                {/*    picture={"/thumbnails/sync.png"}*/}
+                                {/*    style={{ width: "160px" }}*/}
+                                {/*    href={"/sync"}*/}
+                                {/*/>*/}
                             </div>
                         </div>
                     </div>

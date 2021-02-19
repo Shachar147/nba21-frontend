@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Logo from "../components/layouts/Logo";
 import {apiPut} from "../helpers/api";
+import Header from "../components/layouts/Header";
 
 export default class SyncPage extends React.Component {
 
@@ -156,17 +157,20 @@ export default class SyncPage extends React.Component {
         ) : null;
 
         return (
-            <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >
-                <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                    <Logo />
-                    <div className="sub cards header content" style={{ width:"100%", bottom: 0, textAlign: "center", fontSize: "20px", fontWeight: "bold" }}>
-                        <div className="sub cards header content centered" style={{ width:"100%", bottom: "0px", margin: "auto" }}>
-                            Click on 'Sync' to sync app data with real stats, update teams and players details etc.
-                            <br/><br/>
-                            {progress_bar}
-                            { (syncing) ? (<div><br/><br/></div>) : "" }
-                            { (failed.length > 0) ? (<div><br/><br/></div>) : "" }
-                            <div className="ui fluid large blue submit button" onClick={this.sync} style={buttonStyle}>Sync</div>
+            <div>
+                <Header nologo={true} />
+                <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >
+                    <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                        <Logo />
+                        <div className="sub cards header content" style={{ width:"100%", bottom: 0, textAlign: "center", fontSize: "20px", fontWeight: "bold" }}>
+                            <div className="sub cards header content centered" style={{ width:"100%", bottom: "0px", margin: "auto" }}>
+                                Click on 'Sync' to sync app data with real stats, update teams and players details etc.
+                                <br/><br/>
+                                {progress_bar}
+                                { (syncing) ? (<div><br/><br/></div>) : "" }
+                                { (failed.length > 0) ? (<div><br/><br/></div>) : "" }
+                                <div className="ui fluid large blue submit button" onClick={this.sync} style={buttonStyle}>Sync</div>
+                            </div>
                         </div>
                     </div>
                 </div>
