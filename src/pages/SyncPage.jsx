@@ -1,13 +1,7 @@
 import React from "react";
 import axios from "axios";
-import {getServerAddress} from "../config/config";
-import {setToken} from "../helpers/auth";
-import { Redirect } from 'react-router'
 import Logo from "../components/layouts/Logo";
-import {Link} from "react-router-dom";
-import {LOGIN_DELAY, UNAUTHORIZED_ERROR} from "../helpers/consts";
-import TextInput from "../components/inputs/TextInput";
-import {apiPost, apiPut} from "../helpers/api";
+import {apiPut} from "../helpers/api";
 
 export default class SyncPage extends React.Component {
 
@@ -26,16 +20,41 @@ export default class SyncPage extends React.Component {
             requests: [
                 '/team/sync',
                 '/player/sync',
-                '/playerdetails/sync',
-                '/team/sync/ratings'
+                '/team/sync/ratings',
+                '/playerdetails/sync/bulk/1',
+                '/playerdetails/sync/bulk/2',
+                '/playerdetails/sync/bulk/3',
+                '/playerdetails/sync/bulk/4',
+                '/playerdetails/sync/bulk/5',
+                '/playerdetails/sync/bulk/6',
+                '/playerdetails/sync/bulk/7',
+                '/playerdetails/sync/bulk/8',
+                '/playerdetails/sync/bulk/9',
+                '/playerdetails/sync/bulk/10',
+                '/playerdetails/sync/bulk/11',
+                '/playerdetails/sync/bulk/12',
+                '/playerdetails/sync/bulk/13',
+                '/playerdetails/sync/bulk/14',
+                '/playerdetails/sync/bulk/15',
+                '/playerdetails/sync/bulk/16',
+                '/playerdetails/sync/bulk/17',
+                '/playerdetails/sync/bulk/18',
+                '/playerdetails/sync/bulk/19',
+                '/playerdetails/sync/bulk/20',
+                '/playerdetails/sync/bulk/21',
+                '/playerdetails/sync/bulk/22',
+                '/playerdetails/sync/bulk/23',
+                '/playerdetails/sync/bulk/24',
+                '/playerdetails/sync/bulk/25',
             ],
             names: [
                 'Teams',
                 'Players',
-                'Real-Stats',
                 '2K-Ratings',
             ],
+            real_stats: 0,
             synced: [],
+            failed: [],
         };
 
         this.sync = this.sync.bind(this);
@@ -49,7 +68,7 @@ export default class SyncPage extends React.Component {
 
         this.setState({ syncing: true });
 
-        let promises = [];
+        axios.defaults.timeout = 100000;
 
         for (let i = 0; i < requests.length; i++) {
             apiPut(this,
@@ -59,20 +78,54 @@ export default class SyncPage extends React.Component {
                     // success
                     console.log(res);
 
-                    let { progress, synced, names } = this.state;
+                    let { progress, synced, names, failed, real_stats } = this.state;
 
                     progress += Math.round((1/requests.length) * 100);
-                    synced.push(names[i]);
 
-                    if (synced.length === names.length){
+                    if (i >= 3) {
+                        real_stats++;
+
+                        if (real_stats === 25){
+                            synced.push("Real-Stats");
+                        }
+
+                    } else {
+                        synced.push(names[i]);
+                    }
+
+                    if (synced.length + failed.length === names.length + 25){
+                        progress = 100;
+                    }
+                    if (progress > 100) { progress = 100; }
+
+                    this.setState({ progress, synced, real_stats });
+                },
+                (err) => {
+                    // error
+                    console.log(err);
+
+                    let { progress, synced, names, failed, real_stats } = this.state;
+
+                    progress += Math.round((1/requests.length) * 100);
+
+                    if (i >= 3) {
+                        real_stats++;
+
+                        if (failed.indexOf("Real-Stats") === -1) {
+                            failed.push("Real-Stats");
+                        }
+                    }
+                    else {
+                        failed.push(names[i]);
+                    }
+
+                    if (synced.length + failed.length === names.length + 25){
                         progress = 100;
                     }
 
-                    this.setState({ progress, synced });
-                },
-                function(err) {
-                    // error
-                    console.log(err);
+                    if (progress > 100) { progress = 100; }
+
+                    this.setState({ progress, failed, real_stats });
                 },
                 function() {
                     // finally
@@ -83,7 +136,7 @@ export default class SyncPage extends React.Component {
 
     render() {
 
-        const { syncing, progress, synced } = this.state;
+        const { syncing, progress, synced, failed } = this.state;
 
         let buttonStyle = (syncing) ? { opacity: 0.6 , cursor: "default", width: "150px", margin: "auto" } : { width: "150px", margin: "auto" };
 
@@ -94,6 +147,9 @@ export default class SyncPage extends React.Component {
                     Performing Sync... {progress}%
                     { (synced.length > 0) ?
                         (<div style={{ marginTop: "5px", fontWeight:"normal" }}>Already Synced: {synced.join(", ")}</div>) : undefined
+                    }
+                    { (failed.length > 0) ?
+                        (<div style={{ marginTop: "5px", fontWeight:"normal" }}>Failed:: {failed.join(", ")}</div>) : undefined
                     }
                 </div>
             </div>
@@ -109,6 +165,7 @@ export default class SyncPage extends React.Component {
                             <br/><br/>
                             {progress_bar}
                             { (syncing) ? (<div><br/><br/></div>) : "" }
+                            { (failed.length > 0) ? (<div><br/><br/></div>) : "" }
                             <div className="ui fluid large blue submit button" onClick={this.sync} style={buttonStyle}>Sync</div>
                         </div>
                     </div>

@@ -29,7 +29,10 @@ export function apiPost(self, url, data, onSuccess, onError, onFinish){
 }
 
 export function apiPut(self, url, data, onSuccess, onError, onFinish){
-    axios.put(getServerAddress() + url, data)
+    const httpClient = axios.create();
+    httpClient.defaults.timeout = 600000;
+
+    httpClient.put(getServerAddress() + url, data, { timeout: 600000 })
         .then(res => {
             onSuccess(res);
         }).catch(function (error) {
