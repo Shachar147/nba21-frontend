@@ -6,7 +6,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "faker": "^5.1.0",
-    "husky": "^5.0.9",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^3.1.2",
     "pint": "^0.2.1",
@@ -23,7 +22,8 @@
     "@storybook/addon-links": "^6.1.16",
     "@storybook/node-logger": "^6.1.16",
     "@storybook/preset-create-react-app": "^3.1.5",
-    "@storybook/react": "^6.1.16"
+    "@storybook/react": "^6.1.16",
+    "husky": "^4.3.8"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,14 +33,6 @@
     "eject": "react-scripts eject",
     "storybook": "SET STORYBOOK_APP_MODE=development && start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "prepush-if-changed"
-    }
-  },
-  "prepush-if-changed": {
-    "src/**/*.js?(x)": "npm run test"
   },
   "author": "",
   "license": "ISC",
