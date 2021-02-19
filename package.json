@@ -36,15 +36,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-push": "prepush-if-changed"
     }
   },
-  "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "eslint --fix",
-      "git add",
-      "jest -i --testTimeout=10000 --bail --findRelatedTests --coverage --passWithNoTests"
-    ]
+  "prepush-if-changed": {
+    "src/**/*.js?(x)": "npm run test"
   },
   "author": "",
   "license": "ISC",
