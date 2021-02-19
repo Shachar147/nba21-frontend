@@ -5,8 +5,9 @@ import {setToken} from "../helpers/auth";
 import { Redirect } from 'react-router'
 import Logo from "../components/layouts/Logo";
 import {Link} from "react-router-dom";
-import {LOGIN_DELAY} from "../helpers/consts";
+import {LOGIN_DELAY, UNAUTHORIZED_ERROR} from "../helpers/consts";
 import TextInput from "../components/inputs/TextInput";
+import {apiPost} from "../helpers/api";
 
 export default class LoginPage extends React.Component {
 
@@ -62,37 +63,49 @@ export default class LoginPage extends React.Component {
 
             this.setState({ validating: true });
 
-            axios.post(getServerAddress() + `/auth/signin`, {
-                username: this.state.username,
-                password: this.state.password,
-            })
-            .then(res => {
-                // console.log(res);
-                if (res && res.data && res.data.accessToken){
-                    token = res.data.accessToken;
-                    setToken(token);
+            apiPost(this,
+                '/auth/signin',
+                {
+                    username: this.state.username,
+                    password: this.state.password,
+                },
+                async function(res) {
 
-                    axios.defaults.headers.Authorization = `Bearer ${token}`;
+                    // console.log(res);
+                    if (res && res.data && res.data.accessToken){
+                        token = res.data.accessToken;
+                        setToken(token);
 
-                    message = "Logged in successfully!";
-                    setTimeout(function(self){
-                        self.setState({ redirect: true })
-                    }, LOGIN_DELAY, self);
-                }
-                else {
-                    error = "Oops, something went wrong";
-                }
+                        axios.defaults.headers.Authorization = `Bearer ${token}`;
 
-            }).catch(function (err) {
-                if (err.response && err.response.data && err.response.data.message) {
-                    error = "Username or Password are incorrect.";
-                } else {
-                    error = "Network Error";
+                        message = "Logged in successfully!";
+                        setTimeout(function(self){
+                            self.setState({ redirect: true })
+                        }, LOGIN_DELAY, self);
+                    }
+                    else {
+                        error = "Oops, something went wrong";
+                    }
+
+                },
+                function(err) {
+                    let req_error = err?.response?.data?.message;
+
+                    if (req_error) {
+                        error = "Username or Password are incorrect.";
+                    } else {
+                        error = "Network Error";
+                    }
+
+                    if (error) { req_error = "Username or Password are incorrect."; }
+                    else { req_error = "Network Error" }
+                    self.setState({ error: req_error });
+                },
+                function() {
+                    // finally
+                    self.setState({error, message, token, errorField, validating: false });
                 }
-            })
-            .then(function () {
-                self.setState({error, message, token, errorField, validating: false });
-            });
+            );
         }
     }
 

@@ -6,6 +6,8 @@ import Logo from "../components/layouts/Logo";
 import {Link} from "react-router-dom";
 import {LOGIN_DELAY} from "../helpers/consts";
 import TextInput from "../components/inputs/TextInput";
+import {apiPost} from "../helpers/api";
+import {setToken} from "../helpers/auth";
 
 export default class RegisterPage extends React.Component {
 
@@ -64,39 +66,47 @@ export default class RegisterPage extends React.Component {
         }
         else {
 
-            this.setState({ validating: true });
+            this.setState({validating: true});
 
-            axios.post(getServerAddress() + `/auth/signup`, {
-                username: this.state.username,
-                password: this.state.password,
-            })
-                .then(res => {
+
+            apiPost(this,
+                '/auth/signup',
+                {
+                    username: this.state.username,
+                    password: this.state.password,
+                },
+                async function (res) {
+
                     // console.log(res);
                     if (res && res.error) {
                         error = res.error
-                    }
-                    else{
+                    } else {
                         message = "Registered successfully!";
-                        setTimeout(function(self){
-                            self.setState({ redirect: true })
+                        setTimeout(function (self) {
+                            self.setState({redirect: true})
                         }, LOGIN_DELAY, self);
                     }
 
-                }).catch(function (err) {
+                },
+                function (err) {
+
                     if (err.response && err.response.data && err.response.data.message) {
                         const message = err.response.data.message;
                         error = (typeof (message) === "object") ? message.join("<br>") : message;
 
-                        if (err.response.data.statusCode && [404].indexOf(err.response.data.statusCode) !== -1){
+                        if (err.response.data.statusCode && [404].indexOf(err.response.data.statusCode) !== -1) {
                             error = "Network Error";
                         }
                     } else {
                         error = "Network Error";
                     }
-                })
-                .then(function () {
-                    self.setState({error, message, token, errorField, validating: false });
-                });
+
+                },
+                function () {
+                    // finally
+                    self.setState({error, message, token, errorField, validating: false});
+                }
+            );
         }
     }
 
