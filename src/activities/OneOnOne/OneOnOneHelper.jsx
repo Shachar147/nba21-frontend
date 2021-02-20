@@ -354,7 +354,6 @@ export function buildGeneralStats(stats, percents) {
             const dt = formatDate(new Date(record.addedAt));
             general_stats['total_games_per_day'][dt] = general_stats['total_games_per_day'][dt] || 0;
             general_stats['total_games_per_day'][dt] += 1/divide;
-            general_stats['total_games_per_day'][dt] = Math.round(general_stats['total_games_per_day'][dt]).toFixed(0);
 
             if (percents) {
 
