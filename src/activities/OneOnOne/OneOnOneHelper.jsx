@@ -388,6 +388,12 @@ export function buildGeneralStats(stats, percents) {
     general_stats['total_games'] = Math.round(general_stats['total_games']).toFixed(0);
 
     if (percents) {
+        Object.keys(general_stats.total_games_per_day).forEach((dt) => {
+            general_stats.total_games_per_day[dt] = general_stats.total_games_per_day[dt].toFixed(0);
+        })
+    }
+
+    if (percents) {
         const days_with_most_percents = Object.keys(date_stats).sort((a, b) => {
             return date_stats[b].total_percents - date_stats[a].total_percents;
         });
