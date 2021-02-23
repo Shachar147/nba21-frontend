@@ -385,6 +385,8 @@ export function buildGeneralStats(stats, percents) {
         })
     });
 
+    console.log(date_stats);
+
     general_stats['total_games'] = Math.round(general_stats['total_games']).toFixed(0);
 
     if (percents) {
