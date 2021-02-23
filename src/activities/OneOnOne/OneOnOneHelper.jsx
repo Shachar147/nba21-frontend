@@ -358,7 +358,13 @@ export function buildGeneralStats(stats, percents) {
             if (percents) {
 
                 date_stats[dt] = date_stats[dt] || {...base_stats};
-                const values = record.scoresHistory[player] || [0];
+
+                // for Randoms. (there name is "playerName (Random 123)"
+                let temp = {...record.scoresHistory};
+                let scoresHistory = {};
+                Object.keys(temp).forEach((x) => { scoresHistory[x.split(' (')[0]] = temp[x] });
+
+                const values = scoresHistory[player] || [0];
                 const sum = values.reduce((a, b) => a + b, 0);
                 date_stats[dt].total_scored += sum;
                 date_stats[dt].total_from += (values.length * record.roundLength);
