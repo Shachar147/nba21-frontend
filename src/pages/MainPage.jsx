@@ -61,8 +61,8 @@ export default class MainPage extends React.Component {
                                     name={"Stopwatch Shootout"}
                                     picture={"/thumbnails/stopwatch.png"}
                                     style={{ width: "160px" }}
-                                    href={"/"} // todo complete
-                                    disabled={true}
+                                    href={"/shootout"} // todo complete
+                                    // disabled={true}
                                     disabledAltAddition={"(not available yet)"}
                                 />
                                 <Card

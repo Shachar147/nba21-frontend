@@ -86,7 +86,7 @@ export default class PlayerCard extends React.Component {
         }
 
         const card = (
-            <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
+            <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style} key={"card-" + name}>
                 <LostImage show={(lost) ? true : false} />
                 <PlayerPicture
                     picture={picture}
@@ -134,7 +134,7 @@ export default class PlayerCard extends React.Component {
 
         if (wrapper){
             return (
-                <div className="ui link cards centered" style={{ margin: "auto" }}>
+                <div className="ui link cards centered" style={{ margin: "auto" }} key={"wrapper-" + name}>
                     {card}
                 </div>
             )

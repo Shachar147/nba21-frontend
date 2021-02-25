@@ -239,7 +239,9 @@ export function buildDetails(details, stats){
     });
     stats_arr = [...first,...stats_arr];
 
-    details_arr.push(divider);
+    if (stats_arr.length > 0) {
+        details_arr.push(divider);
+    }
 
     // if(stats_arr.length > 3){
     //     details_arr.push(divider);

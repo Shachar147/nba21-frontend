@@ -556,7 +556,7 @@ export default class OneOnOneManager extends React.Component {
                     return rate2 - rate1;
                 }).map((x) => {
                     return (
-                        `<div>
+                        `<div key="player-details-${x.name}">
                             <img class="ui avatar image" src=${x.picture} onError="this.src='${PLAYER_NO_PICTURE}';" style="width: 39px;" />
                             <span>${x.name} <span style='opacity:0.6; display:block; padding-left: 45px;top: -8px;position: relative;'>2K Rating: ${x.rate}</span></span>
                         </div>`
@@ -567,7 +567,7 @@ export default class OneOnOneManager extends React.Component {
 
             return (
                 <PlayerCard
-                        key={"player" + "-" + idx}
+                        Key={"player" + "-" + player.name + "-" + idx}
                         className={"in-game"}
                         style={{ cursor: "default", textAlign: "left" }}
                         styles={styles}

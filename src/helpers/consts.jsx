@@ -175,3 +175,6 @@ export const ICE_COLD_ICON = "/icecold.jpg";
 export const ICE_COLD_THRESHOLD = 3;
 
 export const PLAYER_STATS_SHOW_MORE_THRESHOLD = 5;
+
+export const MIN_SHOOTOUT_ROUND_LENGTH = 1;
+export const MAX_SHOOTOUT_ROUND_LENGTH = 10;
