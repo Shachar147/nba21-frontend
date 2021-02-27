@@ -67,7 +67,12 @@ export default class PlayerPicture extends React.Component {
 
         // replace / specific replace
         let replace = (onReplace) ? (
-            <a onClick={() => { this.setState({ specific_replace: true }); onReplace(); }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
+            <a onClick={() => {
+                onReplace();
+                this.setState({ specific_replace: true });
+                console.log(this.state.specific_replace);
+
+            }} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", right: "10px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>Replace</a>
         ) : "";
         let specific_replace_link =  (specific_replace && onSpecificReplace) ? (
             <a onClick={() => {

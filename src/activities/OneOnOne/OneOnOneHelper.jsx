@@ -342,11 +342,11 @@ export function buildGeneralStats(stats, percents) {
 
             const divide = (percents && record.scoresHistory) ? Object.keys(record.scoresHistory).filter(x => x.indexOf('Computer') === -1).length : 2;
 
-            console.log(player, "game #" + idx, "participants " + divide);
+            // console.log(player, "game #" + idx, "participants " + divide);
 
             general_stats['total_games'] += (1/divide);
 
-            console.log("total games: ", general_stats['total_games']);
+            // console.log("total games: ", general_stats['total_games']);
 
             if (percents) { }
             else { general_stats['total_points'] += ((record.score1 + record.score2)/2); }
@@ -391,7 +391,7 @@ export function buildGeneralStats(stats, percents) {
         })
     });
 
-    console.log(date_stats);
+    // console.log(date_stats);
 
     general_stats['total_games'] = Math.round(general_stats['total_games']).toFixed(0);
 
