@@ -87,6 +87,11 @@ export function buildDetails(details, stats){
         average_perfect_scores_in_game,
         perfect_scores_percents,
 
+        max_perfect_scores_in_game_date,
+        max_perfect_scores_in_game_percents,
+        max_no_scores_in_game_date,
+        max_no_scores_in_game_percents,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -248,8 +253,10 @@ export function buildDetails(details, stats){
     if (isDefined(perfect_scores)) stats_arr.push(`Total Perfect Scores: ${settings['Total Perfect Scores']}`);
     if (isDefined(no_scores)) stats_arr.push(`Total No Scores: ${settings['Total No Scores']}`);
     if (isDefined(total_rounds)) stats_arr.push(`Total Rounds: ${settings['Total Rounds']}`);
-    if (isDefined(max_perfect_scores_in_game)) stats_arr.push(`Max Perfect Scores in Game: ${settings['Max Perfect Scores in Game']}`);
-    if (isDefined(max_no_scores_in_game)) stats_arr.push(`Max No Scores in Game: ${settings['Max No Scores in Game']}`);
+    let when = (isDefined(max_perfect_scores_in_game) && max_perfect_scores_in_game > 0) ? `<br><span style="opacity:0.3; font-weight:normal;">(at: ${max_perfect_scores_in_game_date}, ${max_perfect_scores_in_game_percents})</span>` : "";
+    if (isDefined(max_perfect_scores_in_game)) stats_arr.push(`Max Perfect Scores in Game: ${settings['Max Perfect Scores in Game']}${when}`);
+    when = (isDefined(max_no_scores_in_game) && max_no_scores_in_game > 0) ? `<br><span style="opacity:0.3; font-weight:normal;">(at: ${max_no_scores_in_game_date}, ${max_no_scores_in_game_percents})</span></div>` : "";
+    if (isDefined(max_no_scores_in_game)) stats_arr.push(`Max No Scores in Game: ${settings['Max No Scores in Game']}${when}`);
     if (isDefined(average_perfect_scores_in_game)) stats_arr.push(`Average Perfect Scores in Game: ${settings['Average Perfect Scores in Game']}`);
     if (isDefined(perfect_scores_percents)) stats_arr.push(`Perfect Scores Percents: ${settings['Perfect Scores Percents']}`);
 

@@ -425,6 +425,11 @@ export default class OneOnOneStats extends React.Component {
                                     max_no_scores_in_game: records[player.name].max_no_scores_in_game,
                                     average_perfect_scores_in_game: records[player.name].average_perfect_scores_in_game,
                                     perfect_scores_percents: records[player.name].perfect_scores_percents,
+
+                                    max_perfect_scores_in_game_date: records[player.name].max_perfect_scores_in_game_date,
+                                    max_perfect_scores_in_game_percents: records[player.name].max_perfect_scores_in_game_percents,
+                                    max_no_scores_in_game_date: records[player.name].max_no_scores_in_game_date,
+                                    max_no_scores_in_game_percents: records[player.name].max_no_scores_in_game_percents,
                                 }}
 
                                 onClick={() => {
