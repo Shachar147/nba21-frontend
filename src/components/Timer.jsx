@@ -34,7 +34,7 @@ export default class Timer extends React.Component {
         const { time_minutes } = this.state;
 
         if (time_minutes === 0){
-            let audio = new Audio('https://soundbible.com/mp3/Buzzer-SoundBible.com-188422102.mp3');
+            let audio = new Audio('/sounds/Buzzer-SoundBible.com-188422102.mp3'); // 'https://soundbible.com/mp3/Buzzer-SoundBible.com-188422102.mp3'
             audio.play();
 
             if (this.props.onFinish) {
