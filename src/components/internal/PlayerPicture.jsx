@@ -96,7 +96,7 @@ export default class PlayerPicture extends React.Component {
                     position: "absolute",
                     width: "100%",
                     padding: "5px",
-                    bottom: "-61px",
+                    bottom: "-60px",
                     backgroundColor: "white",
                 }}
                 onChange={(player) => { onSpecificReplace(player); this.setState({ select_replacement: false, specific_replace: false }); }}
