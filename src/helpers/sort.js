@@ -5,8 +5,8 @@ export function overallSort(a,b){
     // console.log(a,b);
 
     // first sort
-    const percent1 = parseFloat(b['total_win_percents'].toString().replace('%', ''));
-    const percent2 = parseFloat(a['total_win_percents'].toString().replace('%', ''));
+    const percent1 = parseFloat(b['total_win_percents']?.toString().replace('%', ''));
+    const percent2 = parseFloat(a['total_win_percents']?.toString().replace('%', ''));
 
     // // second sort
     // const total_games1 = parseFloat(b['total_games']);

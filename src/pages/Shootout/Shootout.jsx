@@ -6,7 +6,7 @@ import LoadingPage from "../../pages/LoadingPage";
 import ErrorPage from "../../pages/ErrorPage";
 
 import Header from "../../components/layouts/Header";
-import {apiGet} from "../../helpers/api";
+import {apiGet, apiPost} from "../../helpers/api";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import OneOnOneStats from "../../activities/OneOnOne/OneOnOneStats";
 import {
@@ -41,6 +41,7 @@ export default class Shootout extends React.Component {
         this.setRoundLength = this.setRoundLength.bind(this);
         this.startGame = this.startGame.bind(this);
         this.toggleState = this.toggleState.bind(this);
+        this.saveResult = this.saveResult.bind(this);
     }
 
     componentDidMount() {
@@ -121,6 +122,37 @@ export default class Shootout extends React.Component {
         });
     }
 
+    async saveResult(){
+
+        const self = this;
+
+        const { score, round_length, selected_player } = this.state;
+
+        await apiPost(this,
+            '/records/stopwatch-shootout',
+            {
+                player: selected_player.name,
+                roundLength: round_length,
+                score: score,
+            },
+            async function(res) {
+
+                await self.setState({ saved: true });
+                // self.initStats();
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed saving this game.` }
+                self.setState({ error: req_error });
+            },
+            function() {
+                // finally
+            }
+        );
+    }
+
     render() {
         const players = this.applyFilters();
 
@@ -130,18 +162,18 @@ export default class Shootout extends React.Component {
         if (this.state.error) can_start = false;
 
         if (this.state.view_stats){
-            return "Stats";
-            // return (
-            //     <OneOnOneStats
-            //         what={"players"}
-            //         stats_title={"Three Points Contest"}
-            //         game_mode={"Three Points Contest"}
-            //         get_route={"/player"}
-            //         percents={1} // percents, not points.
-            //         get_stats_route={"/records/three-points-contest/by-player"}
-            //         onBack={() => { this.setState({ view_stats: false }) }}
-            //     />
-            // );
+            return (
+                <OneOnOneStats
+                    what={"players"}
+                    stats_title={"Stopwatch Shootout"}
+                    game_mode={"Stopwatch Shootout"}
+                    get_route={"/player"}
+                    custom_description={"Here you can see all NBA players that played on Stopwatch Shootout."}
+                    // percents={1} // percents, not points.
+                    get_stats_route={"/records/stopwatch-shootout/by-player"}
+                    onBack={() => { this.setState({ view_stats: false }) }}
+                />
+            );
         }
 
         if (this.state.game_started){
@@ -250,7 +282,7 @@ export default class Shootout extends React.Component {
                         <ButtonInput
                             text={"View Stats"}
                             style={{ marginLeft:"5px" }}
-                            disabled={true}
+                            // disabled={true}
                             onClick={() => { this.setState({ view_stats: true }) }}
                         />
                     </div>

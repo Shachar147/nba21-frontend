@@ -266,7 +266,7 @@ export default class OneOnOneStats extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        const { what, game_mode, stats_title } = this.props;
+        const { what, game_mode, stats_title, custom_description } = this.props;
 
         let error = this.state.error;
         const is_loading = !(this.state.loaded1 && this.state.loaded2 && this.state.merged);
@@ -301,6 +301,10 @@ export default class OneOnOneStats extends React.Component {
         // one on one stats
         let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats, this.props.percents);
 
+        const description = (custom_description) ? custom_description :
+            `Here you can see all NBA ${what} that played on ${game_mode}, ordered from the one with best percentages to the worst.`;
+
+
         return (
             <div style={{ paddingTop: "20px" }}>
                 <Header />
@@ -310,7 +314,7 @@ export default class OneOnOneStats extends React.Component {
                         {stats_title || game_mode} Stats
                     </h2>
                     <div style={{ color:"rgba(0,0,0,.6)" }}>
-                         Here you can see all NBA {what} that played on {game_mode}, ordered from the one with best percentages to the worst.
+                        {description}
                     </div>
                 </div>
 

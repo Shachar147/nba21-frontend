@@ -45,7 +45,7 @@ export default class Game extends React.Component {
     // computer
     randNum(){
         let percents = this.state.current_player["3pt_percents"].replace("%","");
-        if (percents === "N/A") { percents = "33.33"; }
+        if (percents === "N/A") { percents = 33.33; }
         const level = (this.state.computer_level === 'Real Life') ? (1 - (parseFloat(percents/100))) : this.state.levels[this.state.computer_level];
         let y = Math.random();
         if(y <= level){
