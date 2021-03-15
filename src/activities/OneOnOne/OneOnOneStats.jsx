@@ -70,6 +70,15 @@ export default class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ 'Total Games Played as Computer': (a,b) => specificSort('total_computers',a,b) });
             this.state.orderByOptions.push({ 'Total Shots Attempts': (a,b) => specificSort('total_from',a,b) });
             this.state.orderByOptions.push({ 'Total Shots Average': (a,b) => specificSort('total_shot_average',a,b) });
+
+            // todo complete
+            this.state.orderByOptions.push({ 'Total Perfect Scores': (a,b) => specificSort('perfect_scores',a,b) });
+            this.state.orderByOptions.push({ 'Total No Scores': (a,b) => specificSort('no_scores',a,b) });
+            this.state.orderByOptions.push({ 'Total Rounds': (a,b) => specificSort('total_rounds',a,b) });
+            this.state.orderByOptions.push({ 'Max Perfect Scores in Game': (a,b) => specificSort('max_perfect_scores_in_game',a,b) });
+            this.state.orderByOptions.push({ 'Max No Scores in Game': (a,b) => specificSort('max_no_scores_in_game',a,b) });
+            this.state.orderByOptions.push({ 'Average Perfect Scores in Game': (a,b) => specificSort('average_perfect_scores_in_game',a,b) });
+            this.state.orderByOptions.push({ 'Perfect Scores Percents': (a,b) => specificSort('perfect_scores_percents',a,b) });
         }
         else {
             // all of these are for other games modes. (not 3pt contest)
@@ -408,6 +417,14 @@ export default class OneOnOneStats extends React.Component {
                                     total_randoms: records[player.name].total_randoms,
                                     total_from: records[player.name].total_from,
                                     total_shot_average: records[player.name].total_shot_average,
+
+                                    perfect_scores: records[player.name].perfect_scores,
+                                    no_scores: records[player.name].no_scores,
+                                    total_rounds: records[player.name].total_rounds,
+                                    max_perfect_scores_in_game: records[player.name].max_perfect_scores_in_game,
+                                    max_no_scores_in_game: records[player.name].max_no_scores_in_game,
+                                    average_perfect_scores_in_game: records[player.name].average_perfect_scores_in_game,
+                                    perfect_scores_percents: records[player.name].perfect_scores_percents,
                                 }}
 
                                 onClick={() => {

@@ -78,6 +78,15 @@ export function buildDetails(details, stats){
         total_shot_average,
         total_from,
 
+        // 3pt
+        perfect_scores,
+        no_scores,
+        total_rounds,
+        max_perfect_scores_in_game,
+        max_no_scores_in_game,
+        average_perfect_scores_in_game,
+        perfect_scores_percents,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -143,6 +152,14 @@ export function buildDetails(details, stats){
         'Total Games Played as Computer': `${total_computers}`,
         'Total Shots Average': `${total_shot_average}`,
         'Total Shots Attempts': `${total_from}`,
+
+        'Total Perfect Scores': `${perfect_scores}`,
+        'Total No Scores': `${no_scores}`,
+        'Total Rounds': `${total_rounds}`,
+        'Max Perfect Scores in Game': `${max_perfect_scores_in_game}`,
+        'Max No Scores in Game': `${max_no_scores_in_game}`,
+        'Average Perfect Scores in Game': `${average_perfect_scores_in_game}`,
+        'Perfect Scores Percents': `${perfect_scores_percents}`,
     };
 
     // on fire / ice cold
@@ -227,6 +244,14 @@ export function buildDetails(details, stats){
 
     if (isDefined(total_from)) stats_arr.push(`Total Shots Attempts: ${settings['Total Shots Attempts']}`);
     if (isDefined(total_shot_average)) stats_arr.push(`Total Shots Average: ${settings['Total Shots Average']}`);
+
+    if (isDefined(perfect_scores)) stats_arr.push(`Total Perfect Scores: ${settings['Total Perfect Scores']}`);
+    if (isDefined(no_scores)) stats_arr.push(`Total No Scores: ${settings['Total No Scores']}`);
+    if (isDefined(total_rounds)) stats_arr.push(`Total Rounds: ${settings['Total Rounds']}`);
+    if (isDefined(max_perfect_scores_in_game)) stats_arr.push(`Max Perfect Scores in Game: ${settings['Max Perfect Scores in Game']}`);
+    if (isDefined(max_no_scores_in_game)) stats_arr.push(`Max No Scores in Game: ${settings['Max No Scores in Game']}`);
+    if (isDefined(average_perfect_scores_in_game)) stats_arr.push(`Average Perfect Scores in Game: ${settings['Average Perfect Scores in Game']}`);
+    if (isDefined(perfect_scores_percents)) stats_arr.push(`Perfect Scores Percents: ${settings['Perfect Scores Percents']}`);
 
     // highlighted items first
     let first = [];
