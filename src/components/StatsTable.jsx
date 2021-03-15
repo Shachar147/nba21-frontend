@@ -18,11 +18,19 @@ export default class StatsTable extends React.Component {
         const { title, description, hidden, cols, stats, marginTop } = this.props;
         const description_bullets = (typeof(description) === "object") ? description : [description];
 
-        const show_more_switch = (show_more_opened) ? (
+        let show_more_switch = (show_more_opened) ? (
             <a style={{ cursor: "pointer" }} onClick={() => { this.setState({ show_more_opened: 0 }) }}>Show Less</a>
         ) : (
             <a style={{ cursor: "pointer" }} onClick={() => { this.setState({ show_more_opened: 1 }) }}>Show More</a>
         );
+
+        let have_values = 0;
+
+        Object.keys(stats).map((stat,idx) => {
+            const values = stats[stat];
+            if (values.length > 0) { have_values++; }
+        });
+        if (!have_values) show_more_switch = "";
 
         return (
             <div style={{ width:"100%", textAlign: "center" }}>
