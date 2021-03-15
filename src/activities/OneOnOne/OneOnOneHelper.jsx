@@ -1,5 +1,5 @@
 import StatsTable from "../../components/StatsTable";
-import {TOP_STATS_NUMBER} from "../../helpers/consts";
+import {TOP_STATS_MAX_VIEW_MORE, TOP_STATS_NUMBER} from "../../helpers/consts";
 import {formatDate, getRandomElement, isDefined} from "../../helpers/utils";
 import React from "react";
 
@@ -55,7 +55,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values['#1'] = values['#1'] || [];
             values[`#1`].push(`-`);
         }
-        for (let i = 0; i < gpd.length && i <= TOP_STATS_NUMBER - 1; i++) {
+        for (let i = 0; i < gpd.length && i <= TOP_STATS_MAX_VIEW_MORE - 1; i++) {
             values[`#${i+1}`] = values[`#${i+1}`] || [];
             values[`#${i+1}`].push(`${gpd[i]} - ${general_stats['total_games_per_day'][gpd[i]]}`);
         }
@@ -65,7 +65,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#1`].push(`-`);
         }
         const key3 = (percents) ? 'total_percents_per_day' : 'total_points_per_day';
-        for (let i = 0; i < ppd.length && i <= TOP_STATS_NUMBER - 1; i++) {
+        for (let i = 0; i < ppd.length && i <= TOP_STATS_MAX_VIEW_MORE - 1; i++) {
             values[`#${i+1}`] = values[`#${i+1}`] || [];
             values[`#${i+1}`].push(`${ppd[i]} - ${general_stats[key3][ppd[i]]}`);
         }
@@ -157,7 +157,7 @@ export function BuildMVPStatsTable(general_stats, wrap, game_mode) {
             values['#1'] = values['#1'] || [];
             values[`#1`].push(`-`);
         }
-        for (let i = 0; i < gpd.length && i <= TOP_STATS_NUMBER - 1; i++) {
+        for (let i = 0; i < gpd.length && i <= TOP_STATS_MAX_VIEW_MORE - 1; i++) {
             values[`#${i+1}`] = values[`#${i+1}`] || [];
             values[`#${i+1}`].push(`${gpd[i]} - ${general_stats['total_games_per_day'][gpd[i]]}`);
         }
@@ -166,7 +166,7 @@ export function BuildMVPStatsTable(general_stats, wrap, game_mode) {
             values[`#1`] = values[`#1`] || [];
             values[`#1`].push(`-`);
         }
-        for (let i = 0; i < ppd.length && i <= TOP_STATS_NUMBER - 1; i++) {
+        for (let i = 0; i < ppd.length && i <= TOP_STATS_MAX_VIEW_MORE - 1; i++) {
             values[`#${i+1}`] = values[`#${i+1}`] || [];
             values[`#${i+1}`].push(`${ppd[i]} - ${general_stats['total_points_per_day'][ppd[i]]}`);
         }

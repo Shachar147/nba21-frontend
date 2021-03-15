@@ -1,18 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {TOP_STATS_NUMBER} from "../helpers/consts";
 
 export default class StatsTable extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            show_more_opened: 0,
+        };
     }
 
     render() {
 
+        const { show_more_opened } = this.state;
         const { title, description, hidden, cols, stats, marginTop } = this.props;
         const description_bullets = (typeof(description) === "object") ? description : [description];
+
+        const show_more_switch = (show_more_opened) ? (
+            <a style={{ cursor: "pointer" }} onClick={() => { this.setState({ show_more_opened: 0 }) }}>Show Less</a>
+        ) : (
+            <a style={{ cursor: "pointer" }} onClick={() => { this.setState({ show_more_opened: 1 }) }}>Show More</a>
+        );
 
         return (
             <div style={{ width:"100%", textAlign: "center" }}>
@@ -33,19 +43,22 @@ export default class StatsTable extends React.Component {
                                 </thead>
                                 <tbody>
                                 {Object.keys(stats).map((stat,idx) => {
-                                    const values = stats[stat];
-                                    const value1 = (values.length > 0) ? values[0] : "N/A";
-                                    const value2 = (values.length > 1) ? values[1] : "N/A";
-                                    if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
-                                        return (<tr key={`stat-${idx}`}>
-                                            <td style={{ fontWeight: "bold" }}>{stat}</td>
-                                            <td>{value1}</td>
-                                            <td>{value2}</td>
-                                        </tr>)
+
+                                    if (idx < TOP_STATS_NUMBER || show_more_opened) {
+                                        const values = stats[stat];
+                                        const value1 = (values.length > 0) ? values[0] : "N/A";
+                                        const value2 = (values.length > 1) ? values[1] : "N/A";
+                                        if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
+                                            return (<tr key={`stat-${idx}`}>
+                                                <td style={{fontWeight: "bold"}}>{stat}</td>
+                                                <td>{value1}</td>
+                                                <td>{value2}</td>
+                                            </tr>)
+                                    }
                                 })}
                                 </tbody>
                             </table>)}
-
+                            {show_more_switch}
                     </ul>
                 </div>
             </div>
