@@ -430,7 +430,7 @@ export default class Game extends React.Component {
         }
 
         totals_arr.push(`<div style="width:100%; text-align:center; display:block;"><b>Game Total: ${game_total_made}/${game_total_attempts} - ${game_total_percents}%</b></div>`);
-        if (game_total_attempts_no_c !== 0){
+        if (game_total_attempts_no_c !== game_total_attempts){
             totals_arr.push(`<div style="width:100%; text-align:center; display:block;"><b>Non-Computer Game Total: ${game_total_made_no_c}/${game_total_attempts_no_c} - ${game_total_percents_no_c}%</b></div>`);
         }
 
