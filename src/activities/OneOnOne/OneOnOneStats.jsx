@@ -441,11 +441,15 @@ export default class OneOnOneStats extends React.Component {
                                     best_percentage_in_game_date: records[player.name].best_percentage_in_game_date,
                                     best_percentage_in_game_percents: records[player.name].best_percentage_in_game_percents,
                                     best_percentage_in_game_place: records[player.name].best_percentage_in_game_place,
+                                    best_percentage_in_game_shots: records[player.name].best_percentage_in_game_shots,
+                                    best_percentage_in_game_attempts: records[player.name].best_percentage_in_game_attempts,
+
                                     worst_percentage_in_game: records[player.name].worst_percentage_in_game,
                                     worst_percentage_in_game_date: records[player.name].worst_percentage_in_game_date,
                                     worst_percentage_in_game_percents: records[player.name].worst_percentage_in_game_percents,
                                     worst_percentage_in_game_place: records[player.name].worst_percentage_in_game_place,
-
+                                    worst_percentage_in_game_shots: records[player.name].worst_percentage_in_game_shots,
+                                    worst_percentage_in_game_attempts: records[player.name].worst_percentage_in_game_attempts,
                                 }}
 
                                 onClick={() => {

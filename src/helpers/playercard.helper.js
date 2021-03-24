@@ -96,11 +96,13 @@ export function buildDetails(details, stats){
 
         best_percentage_in_game,
         best_percentage_in_game_date,
-        best_percentage_in_game_percents,
+        best_percentage_in_game_shots,
+        best_percentage_in_game_attempts,
         best_percentage_in_game_place,
         worst_percentage_in_game,
         worst_percentage_in_game_date,
-        worst_percentage_in_game_percents,
+        worst_percentage_in_game_shots,
+        worst_percentage_in_game_attempts,
         worst_percentage_in_game_place,
 
     } = stats;
@@ -274,9 +276,10 @@ export function buildDetails(details, stats){
     if (isDefined(average_perfect_scores_in_game)) stats_arr.push(`Average Perfect Scores in Game: ${settings['Average Perfect Scores in Game']}`);
     if (isDefined(perfect_scores_percents)) stats_arr.push(`Perfect Scores Percents: ${settings['Perfect Scores Percents']}`);
 
-    when = (isDefined(best_percentage_in_game) && best_percentage_in_game > 0) ? `<br><span style="opacity:0.3; font-weight:normal;">(at: ${best_percentage_in_game_date}, ${best_percentage_in_game_place})</span></div>` : "";
+    when = (isDefined(best_percentage_in_game) && best_percentage_in_game > 0) ? `<br><span style="opacity:0.3; font-weight:normal;">(at: ${best_percentage_in_game_date}, ${best_percentage_in_game_shots}/${best_percentage_in_game_attempts}, ${best_percentage_in_game_place})</span></div>` : "";
     if (isDefined(best_percentage_in_game)) stats_arr.push(`Best Percentage in Game: ${settings['Best Percentage in Game']}${when}`);
-    when = (isDefined(worst_percentage_in_game) && worst_percentage_in_game < 999) ? `<br><span style="opacity:0.3; font-weight:normal;">(at: ${worst_percentage_in_game_date}, ${worst_percentage_in_game_place})</span></div>` : "";
+
+    when = (isDefined(worst_percentage_in_game) && worst_percentage_in_game < 999) ? `<br><span style="opacity:0.3; font-weight:normal;">(at: ${worst_percentage_in_game_date}, ${worst_percentage_in_game_shots}/${worst_percentage_in_game_attempts}, ${worst_percentage_in_game_place})</span></div>` : "";
     if (isDefined(worst_percentage_in_game)) stats_arr.push(`Worst Percentage in Game: ${settings['Worst Percentage in Game']}${when}`);
 
     // highlighted items first
