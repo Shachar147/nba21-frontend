@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Timer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Timer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +97,8 @@
       <workItem from="1614844516332" duration="1809000" />
       <workItem from="1615549116233" duration="1806000" />
       <workItem from="1615822089831" duration="24000" />
-      <workItem from="1615846461904" duration="7108000" />
+      <workItem from="1615846461904" duration="7767000" />
+      <workItem from="1616614515195" duration="2025000" />
     </task>
     <servers />
   </component>

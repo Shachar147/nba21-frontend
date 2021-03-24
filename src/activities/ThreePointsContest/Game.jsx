@@ -305,6 +305,8 @@ export default class Game extends React.Component {
             );
         }
 
+        let totals_arr = [];
+
         if (this.state.view_stats){
             return (
                 <OneOnOneStats
@@ -329,7 +331,7 @@ export default class Game extends React.Component {
         const percents = [];
         const teams_players = [];
         this.state.teams.forEach((arr,idx) => teams_players.push(arr.map(iter => iter.name)));
-        this.state.teams.forEach((arr,idx) => percents.push({ made: 0, attempt: 0, percents: 0 }));
+        this.state.teams.forEach((arr,idx) => percents.push({ made: 0, attempt: 0, percents: 0, made_no_c: 0, attempt_no_c: 0 }));
         const scores = this.state.scores;
         Object.keys(scores).forEach(function(name){
 
@@ -342,14 +344,34 @@ export default class Game extends React.Component {
                     percents[idx]["attempt"] += total_attempt;
                     percents[idx]["made"] += total_made;
                     percents[idx]["percents"] = ((percents[idx]["made"]/percents[idx]["attempt"])*100).toFixed(2);
+
+                    if (name.indexOf("Computer") === -1){
+                        percents[idx]["attempt_no_c"] += total_attempt;
+                        percents[idx]["made_no_c"] += total_made;
+                    }
                 }
             });
         });
+
+        let game_total_made = 0;
+        let game_total_attempts = 0;
+        let game_total_percents = 0;
+        let game_total_made_no_c = 0;
+        let game_total_attempts_no_c = 0;
+        let game_total_percents_no_c = 0;
 
         // build teams blocks
         const teams_blocks = [];
         for (let team_idx=0; team_idx < percents.length; team_idx++) {
             const team = percents[team_idx];
+
+            game_total_made += team.made;
+            game_total_attempts += team.attempt;
+            game_total_percents = (game_total_attempts === 0) ? 0 : ((game_total_made/game_total_attempts)*100).toFixed(2);
+
+            game_total_made_no_c += team.made_no_c;
+            game_total_attempts_no_c += team.attempt_no_c;
+            game_total_percents_no_c = (game_total_attempts_no_c === 0) ? 0 : ((game_total_made_no_c/game_total_attempts_no_c)*100).toFixed(2);
 
             teams_blocks.push(
                 <div key={"team_block_" + team_idx}>
@@ -407,6 +429,11 @@ export default class Game extends React.Component {
             );
         }
 
+        totals_arr.push(`<div style="width:100%; text-align:center; display:block;"><b>Game Total: ${game_total_made}/${game_total_attempts} - ${game_total_percents}%</b></div>`);
+        if (game_total_attempts_no_c !== 0){
+            totals_arr.push(`<div style="width:100%; text-align:center; display:block;"><b>Non-Computer Game Total: ${game_total_made_no_c}/${game_total_attempts_no_c} - ${game_total_percents_no_c}%</b></div>`);
+        }
+
         // computer level
         const computers_block = (this.props.have_computers) ?
             (
@@ -424,6 +451,14 @@ export default class Game extends React.Component {
                 description={"This game was saved. you can take a look at stats page to see details about past games."}
             />
         ) : "";
+
+        const totals = (
+            <div
+                className={"ui link cards centered"}
+                style={{ marginTop: "0px", marginBottom: "25px" }}
+                dangerouslySetInnerHTML={{ __html: totals_arr.join("<br/>") }}
+            />
+        );
 
         return (
 
@@ -447,6 +482,7 @@ export default class Game extends React.Component {
                     />
                 </div>
                 {computers_block}
+                {totals}
                 {teams_blocks[0]}
                 <div className={"ui link cards centered"} style={{ marginTop: "5px", marginBottom: "5px" }}>
                     <div className="ui header" style={{lineHeight: "38px"}}>
