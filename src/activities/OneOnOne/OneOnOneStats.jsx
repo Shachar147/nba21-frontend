@@ -79,6 +79,9 @@ export default class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ 'Max No Scores in Game': (a,b) => specificSort('max_no_scores_in_game',a,b) });
             this.state.orderByOptions.push({ 'Average Perfect Scores in Game': (a,b) => specificSort('average_perfect_scores_in_game',a,b) });
             this.state.orderByOptions.push({ 'Perfect Scores Percents': (a,b) => specificSort('perfect_scores_percents',a,b) });
+
+            this.state.orderByOptions.push({ 'Best Percentage in Game': (a,b) => specificSort('best_percentage_in_game',a,b) });
+            this.state.orderByOptions.push({ 'Worst Percentage in Game': (a,b) => specificSort('worst_percentage_in_game',a,b) });
         }
         else {
             // all of these are for other games modes. (not 3pt contest)
@@ -433,6 +436,16 @@ export default class OneOnOneStats extends React.Component {
 
                                     max_no_scores_in_game_place: records[player.name].max_no_scores_in_game_place,
                                     max_perfect_scores_in_game_place: records[player.name].max_perfect_scores_in_game_place,
+
+                                    best_percentage_in_game: records[player.name].best_percentage_in_game,
+                                    best_percentage_in_game_date: records[player.name].best_percentage_in_game_date,
+                                    best_percentage_in_game_percents: records[player.name].best_percentage_in_game_percents,
+                                    best_percentage_in_game_place: records[player.name].best_percentage_in_game_place,
+                                    worst_percentage_in_game: records[player.name].worst_percentage_in_game,
+                                    worst_percentage_in_game_date: records[player.name].worst_percentage_in_game_date,
+                                    worst_percentage_in_game_percents: records[player.name].worst_percentage_in_game_percents,
+                                    worst_percentage_in_game_place: records[player.name].worst_percentage_in_game_place,
+
                                 }}
 
                                 onClick={() => {
