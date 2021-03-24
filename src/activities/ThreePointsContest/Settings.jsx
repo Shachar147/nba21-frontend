@@ -60,7 +60,8 @@ export default class Settings extends React.Component {
 
             loaded: false,
             error: undefined,
-            loaderDetails: LOADER_DETAILS()
+            loaderDetails: LOADER_DETAILS(),
+            view_stats: this.props.view_stats || false,
         };
 
         this.toggleState = this.toggleState.bind(this);

@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +96,7 @@
       <workItem from="1615549116233" duration="1806000" />
       <workItem from="1615822089831" duration="24000" />
       <workItem from="1615846461904" duration="7767000" />
-      <workItem from="1616614515195" duration="5216000" />
+      <workItem from="1616614515195" duration="5537000" />
     </task>
     <servers />
   </component>
