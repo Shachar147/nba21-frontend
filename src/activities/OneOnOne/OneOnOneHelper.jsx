@@ -62,7 +62,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
 
             let row = `${date} - ${value}`;
             if (date === dtToday){
-                row = `<b>${row}</b>`;
+                row = `<span style="font-weight:bold">${row}</span>`;
             }
 
             values[`#${i+1}`].push(row);
@@ -78,12 +78,17 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#${i+1}`] = values[`#${i+1}`] || [];
 
             const date = ppd[i];
-            const value = general_stats[key3][ppd[i]];
+            let value = general_stats[key3][ppd[i]];
+
+            let details = (percents) ? `${general_stats['total_percents_per_day_details'][ppd[i]]}` : '';
 
             let row = `${date} - ${value}${suffix}`;
             if (date === dtToday){
-                row = `<b>${row}</b>`;
+                details = details.replace('gray','black').replace('normal','bold');
+                row = `<span style="font-weight:bold">${row}</span>`;
             }
+
+            row += details;
 
             values[`#${i+1}`].push(row);
         }
@@ -334,6 +339,7 @@ export function buildGeneralStats(stats, percents) {
             'total_games_per_day': {},
             'total_percents': 0,
             'total_percents_per_day': {},
+            'total_percents_per_day_details': {},
         };
     }
 
@@ -428,6 +434,9 @@ export function buildGeneralStats(stats, percents) {
         days_with_most_percents.forEach((dt) => {
             const curr_percents = date_stats[dt].total_percents
             general_stats.total_percents_per_day[dt] = curr_percents;
+
+            general_stats.total_percents_per_day_details[dt] = ` <span style="color:gray; font-weight:normal;">(${date_stats[dt].total_scored}/${date_stats[dt].total_from})</span>`;
+
             arr.push(curr_percents);
         });
         const sum = arr.reduce((a, b) => Number(a) + Number(b), 0);

@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneHelper.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneHelper.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/StatsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StatsTable.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +100,7 @@
       <workItem from="1615846461904" duration="7767000" />
       <workItem from="1616614515195" duration="6029000" />
       <workItem from="1616658085833" duration="594000" />
-      <workItem from="1616705311468" duration="1064000" />
+      <workItem from="1616705311468" duration="3049000" />
     </task>
     <servers />
   </component>
