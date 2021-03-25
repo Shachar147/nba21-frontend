@@ -57,7 +57,15 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
         }
         for (let i = 0; i < gpd.length && i <= TOP_STATS_MAX_VIEW_MORE - 1; i++) {
             values[`#${i+1}`] = values[`#${i+1}`] || [];
-            values[`#${i+1}`].push(`${gpd[i]} - ${general_stats['total_games_per_day'][gpd[i]]}`);
+            const date = gpd[i];
+            const value = general_stats['total_games_per_day'][gpd[i]];
+
+            let row = `${date} - ${value}`;
+            if (date === dtToday){
+                row = `<b>${row}</b>`;
+            }
+
+            values[`#${i+1}`].push(row);
         }
 
         if (ppd.length === 0) {
@@ -65,9 +73,19 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#1`].push(`-`);
         }
         const key3 = (percents) ? 'total_percents_per_day' : 'total_points_per_day';
+        const suffix = (percents) ? '%' : '';
         for (let i = 0; i < ppd.length && i <= TOP_STATS_MAX_VIEW_MORE - 1; i++) {
             values[`#${i+1}`] = values[`#${i+1}`] || [];
-            values[`#${i+1}`].push(`${ppd[i]} - ${general_stats[key3][ppd[i]]}`);
+
+            const date = ppd[i];
+            const value = general_stats[key3][ppd[i]];
+
+            let row = `${date} - ${value}${suffix}`;
+            if (date === dtToday){
+                row = `<b>${row}</b>`;
+            }
+
+            values[`#${i+1}`].push(row);
         }
 
         general_stats_block = (
