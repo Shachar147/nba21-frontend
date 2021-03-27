@@ -7,7 +7,8 @@ export default class Timer extends React.Component {
         super(props);
 
         this.state = {
-            time_minutes: this.props.time_minutes * 60 + 5
+            time_minutes: this.props.time_minutes * 1 + 5,
+            audio: new Audio('/sounds/Buzzer-SoundBible.com-188422102.mp3'), // 'https://soundbible.com/mp3/Buzzer-SoundBible.com-188422102.mp3'
         };
 
     }
@@ -29,13 +30,27 @@ export default class Timer extends React.Component {
         }
     }
 
+    playAudio() {
+        const audioPromise = this.state.audio.play();
+        if (audioPromise !== undefined) {
+            audioPromise
+                .then(_ => {
+                    // autoplay started
+                })
+                .catch(err => {
+                    // catch dom exception
+                    console.info(err)
+                })
+        }
+    }
+
     render() {
 
-        const { time_minutes } = this.state;
+        const { time_minutes, audio } = this.state;
 
         if (time_minutes === 0){
-            let audio = new Audio('/sounds/Buzzer-SoundBible.com-188422102.mp3'); // 'https://soundbible.com/mp3/Buzzer-SoundBible.com-188422102.mp3'
-            audio.play();
+            audio.load();
+            this.playAudio();
 
             if (this.props.onFinish) {
                 this.props.onFinish();
