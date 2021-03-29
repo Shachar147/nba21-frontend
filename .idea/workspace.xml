@@ -10,11 +10,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneHelper.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneHelper.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneStats.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Timer.jsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/TimerView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TimerView.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/playercard.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/playercard.helper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Shootout/Shootout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Shootout/Shootout.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +111,7 @@
       <workItem from="1616658085833" duration="594000" />
       <workItem from="1616705311468" duration="3049000" />
       <workItem from="1616855842699" duration="2137000" />
-      <workItem from="1617035909270" duration="6944000" />
+      <workItem from="1617035909270" duration="8126000" />
     </task>
     <servers />
   </component>

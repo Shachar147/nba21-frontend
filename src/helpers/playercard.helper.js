@@ -105,6 +105,11 @@ export function buildDetails(details, stats){
         worst_percentage_in_game_attempts,
         worst_percentage_in_game_place,
 
+        // stopwatch shootout
+        average_points_per_minute,
+        average_round_length,
+        total_minutes,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -181,6 +186,11 @@ export function buildDetails(details, stats){
 
         'Best Percentage in Game': `${best_percentage_in_game}%`,
         'Worst Percentage in Game': `${worst_percentage_in_game}%`,
+
+        // stopwatch shootout
+        'Average Points Per Minute': `${average_points_per_minute}`,
+        'Average Round Length': `${average_round_length}`,
+        'Total Minutes': `${total_minutes}`,
     };
 
     // on fire / ice cold
@@ -281,6 +291,13 @@ export function buildDetails(details, stats){
 
     when = (isDefined(worst_percentage_in_game) && worst_percentage_in_game < 999) ? `<br><span style="opacity:0.3; font-weight:normal;">(at: ${worst_percentage_in_game_date}, ${worst_percentage_in_game_shots}/${worst_percentage_in_game_attempts}, ${worst_percentage_in_game_place})</span></div>` : "";
     if (isDefined(worst_percentage_in_game)) stats_arr.push(`Worst Percentage in Game: ${settings['Worst Percentage in Game']}${when}`);
+
+
+    // stopwatch shootout
+    if (isDefined(average_points_per_minute)) stats_arr.push(`Average Points Per Minute: ${settings['Average Points Per Minute']}`);
+    if (isDefined(average_round_length)) stats_arr.push(`Average Round Length: ${settings['Average Round Length']}`);
+    if (isDefined(total_minutes)) stats_arr.push(`Total Minutes: ${settings['Total Minutes']}`);
+
 
     // highlighted items first
     let first = [];

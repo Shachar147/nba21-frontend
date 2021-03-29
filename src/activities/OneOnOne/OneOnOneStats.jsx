@@ -7,7 +7,13 @@ import ErrorPage from "../../pages/ErrorPage";
 
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
-import {DEFAULT_STATS_ORDER, LOADER_DETAILS, LOADING_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import {
+    DEFAULT_STATS_ORDER,
+    DEFAULT_STOPWATCH_STATS_ORDER,
+    LOADER_DETAILS,
+    LOADING_DELAY,
+    UNAUTHORIZED_ERROR
+} from "../../helpers/consts";
 import {
     _2kRatingSort, average2kRatingSort,
     currentLoseStreakSort,
@@ -25,6 +31,8 @@ export default class OneOnOneStats extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const orderBy = (props.game_mode === 'Stopwatch Shootout') ? DEFAULT_STOPWATCH_STATS_ORDER : DEFAULT_STATS_ORDER;
 
         this.state = {
             "players": [],
@@ -47,7 +55,7 @@ export default class OneOnOneStats extends React.Component {
                 { "Total Wins": totalWinsSort },
                 { "Total Lost": totalLostSort },
             ],
-            "orderBy": DEFAULT_STATS_ORDER,
+            "orderBy": orderBy,
             loaderDetails: LOADER_DETAILS(),
 
             general_stats: {
@@ -71,7 +79,6 @@ export default class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ 'Total Shots Attempts': (a,b) => specificSort('total_from',a,b) });
             this.state.orderByOptions.push({ 'Total Shots Average': (a,b) => specificSort('total_shot_average',a,b) });
 
-            // todo complete
             this.state.orderByOptions.push({ 'Total Perfect Scores': (a,b) => specificSort('perfect_scores',a,b) });
             this.state.orderByOptions.push({ 'Total No Scores': (a,b) => specificSort('no_scores',a,b) });
             this.state.orderByOptions.push({ 'Total Rounds': (a,b) => specificSort('total_rounds',a,b) });
@@ -82,6 +89,15 @@ export default class OneOnOneStats extends React.Component {
 
             this.state.orderByOptions.push({ 'Best Percentage in Game': (a,b) => specificSort('best_percentage_in_game',a,b) });
             this.state.orderByOptions.push({ 'Worst Percentage in Game': (a,b) => specificSort('worst_percentage_in_game',b, a) });
+        }
+        else if (this.props.game_mode === "Stopwatch Shootout") {
+            this.state.orderByOptions = [
+                { "Total Games": totalGamesSort },
+                { "Total Scored": totalScored },
+            ];
+            this.state.orderByOptions.push({ 'Total Minutes': (a,b) => specificSort('total_minutes',a,b) });
+            this.state.orderByOptions.push({ 'Average Points Per Minute': (a,b) => specificSort('average_points_per_minute',a,b) });
+            this.state.orderByOptions.push({ 'Average Round Length': (a,b) => specificSort('average_round_length',a,b) });
         }
         else {
             // all of these are for other games modes. (not 3pt contest)
@@ -97,7 +113,7 @@ export default class OneOnOneStats extends React.Component {
         if (this.props.what === "players"){
             this.state.orderByOptions.push({ "2K Rating": _2kRatingSort });
 
-            if (this.props.game_mode !== "Three Points Contest") {
+            if (["Three Points Contest","Stopwatch Shootout"].indexOf(this.props.game_mode) === -1) {
                 this.state.orderByOptions.push({"Average Opponent 2K Rating": average2kRatingSort});
             }
         }
@@ -112,7 +128,7 @@ export default class OneOnOneStats extends React.Component {
         const { orderByOptions, orderBy } = this.state;
 
         let func = null;
-        let defFunc = null;
+        let defFunc = null; // (a,b) => { return a-b; };
         orderByOptions.map((iter) => {
             const name = Object.keys(iter)[0];
             if (name === orderBy){
@@ -450,6 +466,11 @@ export default class OneOnOneStats extends React.Component {
                                     worst_percentage_in_game_place: records[player.name].worst_percentage_in_game_place,
                                     worst_percentage_in_game_shots: records[player.name].worst_percentage_in_game_shots,
                                     worst_percentage_in_game_attempts: records[player.name].worst_percentage_in_game_attempts,
+
+                                    // stopwatch shootout
+                                    average_points_per_minute: records[player.name].average_points_per_minute,
+                                    average_round_length: records[player.name].average_round_length,
+                                    total_minutes: records[player.name].total_minutes,
                                 }}
 
                                 onClick={() => {

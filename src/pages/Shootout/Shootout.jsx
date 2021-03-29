@@ -37,6 +37,7 @@ export default class Shootout extends React.Component {
             score: 0,
 
             saved_game_id: 0,
+            view_stats: this.props.view_stats,
         };
 
         this.searchPlayers = this.searchPlayers.bind(this);
