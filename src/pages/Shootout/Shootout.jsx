@@ -14,7 +14,7 @@ import {
     MAX_SHOOTOUT_ROUND_LENGTH,
     MIN_SHOOTOUT_ROUND_LENGTH, TEAM1_COLOR, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
-import Timer from "../../components/Timer";
+import TimerView from "../../components/TimerView";
 
 export default class Shootout extends React.Component {
 
@@ -184,7 +184,7 @@ export default class Shootout extends React.Component {
                     <Header />
 
                     {(!show_save_form) ?
-                        <Timer
+                        <TimerView
                             time_minutes={round_length}
                             onFinish={() => {
                                 this.setState({show_save_form: true})
