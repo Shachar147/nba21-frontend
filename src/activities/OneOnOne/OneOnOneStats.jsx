@@ -236,7 +236,7 @@ export default class OneOnOneStats extends React.Component {
         });
 
         // general stats
-        const { general_stats, mvp_stats } = buildGeneralStats(records, this.props.percents);
+        const { general_stats, mvp_stats } = buildGeneralStats(records, this.props.percents, this.props.stopwatch);
 
         this.setState({ players, merged, general_stats, mvp_stats })
     }

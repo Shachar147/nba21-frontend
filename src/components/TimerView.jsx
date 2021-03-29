@@ -7,8 +7,11 @@ export default class TimerView extends React.Component {
     constructor(props) {
         super(props);
 
+        const originalTime = this.props.time_minutes * 1 + 5;
+
         this.state = {
-            time_minutes: this.props.time_minutes * 60 + 2,
+            remainingTime: originalTime,
+            originalTime: originalTime,
             audio: new Audio('/sounds/Buzzer-SoundBible.com-188422102.mp3'), // 'https://soundbible.com/mp3/Buzzer-SoundBible.com-188422102.mp3'
         };
 
@@ -19,14 +22,14 @@ export default class TimerView extends React.Component {
     }
 
     setTime = () => {
-        let { time_minutes } = this.state;
+        let { remainingTime } = this.state;
 
-        if (time_minutes > 0){
-            time_minutes--;
-            this.setState({ time_minutes });
+        if (remainingTime > 0){
+            remainingTime--;
+            this.setState({ remainingTime });
         }
 
-        if (time_minutes > 0){
+        if (remainingTime > 0){
             setTimeout(this.setTime,1000)
         }
     }
@@ -48,9 +51,9 @@ export default class TimerView extends React.Component {
 
     render() {
 
-        const { time_minutes, audio } = this.state;
+        const { remainingTime, audio, originalTime } = this.state;
 
-        if (time_minutes === 0){
+        if (remainingTime === 0){
             audio.load();
             this.playAudio();
 
@@ -59,12 +62,12 @@ export default class TimerView extends React.Component {
             }
         }
 
-        const minuteSeconds = 60;
+        const minuteSeconds = originalTime;
 
         const timerProps = {
             isPlaying: true,
-            size: 300,
-            strokeWidth: 15
+            size: 600,
+            strokeWidth: 70
         };
 
         const renderTime = (dimension, time) => {
@@ -78,13 +81,28 @@ export default class TimerView extends React.Component {
 
         const getTimeSeconds = (time) => (minuteSeconds - time) | 0;
 
-        const remainingTime = time_minutes;
-
         return (
-            <div className="ui link cards centered" style={{ margin: "30px 0px", textAlign: "center", fontWeight:"bold", fontSize:"40px", lineHeight:"40px" }}>
+            <div style={{
+                margin: "auto",
+                textAlign: "center",
+                fontWeight:"bold",
+                fontSize:"70px",
+                lineHeight:"70px",
+                position: "fixed",
+                top:36,
+                width: "100%",
+                height: "100%",
+                zIndex:99999,
+                backgroundColor: "#efefef",
+                display: "flex",
+                justifyContent: "space-around",
+                verticalAlign: "middle",
+                paddingTop:"100px",
+            }}>
                 <CountdownCircleTimer
                     {...timerProps}
-                    colors={[["#218380"]]}
+                    colors={[['#0068BB', 0.8],
+                        ['#F10B45', 0.2],]}
                     duration={minuteSeconds}
                     initialRemainingTime={remainingTime}
                     onComplete={(totalElapsedTime) => [
@@ -97,14 +115,6 @@ export default class TimerView extends React.Component {
                 </CountdownCircleTimer>
             </div>
         );
-
-        // return (
-        //     <div className="ui link cards centered" style={{ margin: "auto" }}>
-        //         <h1>
-        //             {time_minutes}
-        //         </h1>
-        //     </div>
-        // );
     }
 }
 

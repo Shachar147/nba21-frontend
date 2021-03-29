@@ -325,7 +325,7 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
     return {curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats};
 }
 
-export function buildGeneralStats(stats, percents) {
+export function buildGeneralStats(stats, percents, stopwatch) {
     let general_stats = {
         'total_games': 0,
         'total_games_per_day': {},
@@ -364,7 +364,8 @@ export function buildGeneralStats(stats, percents) {
 
         stats[player].records.forEach((record,idx) => {
 
-            const divide = (percents && record.scoresHistory) ? Object.keys(record.scoresHistory).filter(x => x.indexOf('Computer') === -1).length : 2;
+            let divide = (percents && record.scoresHistory) ? Object.keys(record.scoresHistory).filter(x => x.indexOf('Computer') === -1).length : 2;
+            if (stopwatch) { divide = 1; } // stopwatch shootout
 
             // console.log(player, "game #" + idx, "participants " + divide);
 
@@ -373,6 +374,7 @@ export function buildGeneralStats(stats, percents) {
             // console.log("total games: ", general_stats['total_games']);
 
             if (percents) { }
+            else if (stopwatch) { general_stats['total_points'] += record.score; }
             else { general_stats['total_points'] += ((record.score1 + record.score2)/2); }
 
             const dt = formatDate(new Date(record.addedAt));
@@ -397,7 +399,13 @@ export function buildGeneralStats(stats, percents) {
             }
             else {
                 general_stats['total_points_per_day'][dt] = general_stats['total_points_per_day'][dt] || 0;
-                general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2) / 2);
+
+                if (stopwatch) {
+                    general_stats['total_points_per_day'][dt] += record.score;
+                }
+                else {
+                    general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2) / 2);
+                }
             }
 
             if (record.mvp_player){

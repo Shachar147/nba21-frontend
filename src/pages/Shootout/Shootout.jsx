@@ -6,7 +6,7 @@ import LoadingPage from "../../pages/LoadingPage";
 import ErrorPage from "../../pages/ErrorPage";
 
 import Header from "../../components/layouts/Header";
-import {apiGet, apiPost} from "../../helpers/api";
+import {apiGet, apiPost, apiPut} from "../../helpers/api";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import OneOnOneStats from "../../activities/OneOnOne/OneOnOneStats";
 import {
@@ -15,6 +15,7 @@ import {
     MIN_SHOOTOUT_ROUND_LENGTH, TEAM1_COLOR, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
 import TimerView from "../../components/TimerView";
+import ShootoutGame from "./ShootoutGame";
 
 export default class Shootout extends React.Component {
 
@@ -34,6 +35,8 @@ export default class Shootout extends React.Component {
 
             show_save_form: false,
             score: 0,
+
+            saved_game_id: 0,
         };
 
         this.searchPlayers = this.searchPlayers.bind(this);
@@ -42,6 +45,7 @@ export default class Shootout extends React.Component {
         this.startGame = this.startGame.bind(this);
         this.toggleState = this.toggleState.bind(this);
         this.saveResult = this.saveResult.bind(this);
+        this.updateResult = this.updateResult.bind(this);
     }
 
     componentDidMount() {
@@ -137,7 +141,10 @@ export default class Shootout extends React.Component {
             },
             async function(res) {
 
-                await self.setState({ saved: true });
+                const response = res.data;
+                const saved_game_id = response[Object.keys(response)[0]].records.slice(-1)[0].id;
+
+                await self.setState({ saved: true, saved_game_id: saved_game_id });
                 // self.initStats();
             },
             function(error) {
@@ -149,6 +156,42 @@ export default class Shootout extends React.Component {
             },
             function() {
                 // finally
+                self.setState({
+                    saving: false,
+                })
+            }
+        );
+    }
+
+    async updateResult(){
+
+        const _this = this;
+
+        const { score, saved_game_id } = this.state;
+
+        this.setState({ saving: true });
+        await apiPut(this,
+            `/records/stopwatch-shootout/${saved_game_id}`,
+            {
+                score: score,
+            },
+            async function(res) {
+
+                await _this.setState({ saved: true });
+                // _this.initStats();
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed updating this game.` }
+                _this.setState({ error: req_error });
+            },
+            function() {
+                // finally
+                _this.setState({
+                    saving: false,
+                })
             }
         );
     }
@@ -172,76 +215,57 @@ export default class Shootout extends React.Component {
                     // percents={1} // percents, not points.
                     get_stats_route={"/records/stopwatch-shootout/by-player"}
                     onBack={() => { this.setState({ view_stats: false }) }}
+                    stopwatch={true}
                 />
             );
         }
 
         if (this.state.game_started){
 
-            const _2k_rating = selected_player['_2k_rating'] || 'N/A';
+            const { saved, saving, saved_game_id } = this.state;
+
             return (
-                <div style={{ paddingTop: "20px" }}>
-                    <Header />
-
-                    {(!show_save_form) ?
-                        <TimerView
-                            time_minutes={round_length}
-                            onFinish={() => {
-                                this.setState({show_save_form: true})
-                            }}
-                        /> : ""
-                    }
-
-                    <div className="ui link cards centered" style={{ margin: "auto" }}>
-                        <PlayerCard
-                            name={selected_player.name}
-                            picture={selected_player.picture}
-                            details={{
-                                _2k_rating: _2k_rating,
-                                percents: selected_player['3pt_percents'], // 3pt percents
-                                height_meters:selected_player.height_meters,
-                                weight_kgs:selected_player.weight_kgs,
-                                team:selected_player.team.name,
-                            }}
-                            position={selected_player.position}
-                            debut_year={selected_player.debut_year}
-                            style={{"border": "1px solid " + TEAM1_COLOR, opacity: 1}}
-                            onChange={(e) => {
-                                let score = Number(Math.max(0,e.target.value));
-                                this.setState({ score });
-                            }}
-                            singleShot={score}
-                        />
-                    </div>
-
-                    {
-                        (show_save_form) ?
-                            <div className="ui link cards centered" style={{ margin: "auto", marginTop:"20px" }}>
-                                <ButtonInput
-                                    text={"Save Result"}
-                                    style={{ position: "absolute" }}
-                                    onClick={this.saveResult}
-                                    disabled={this.state.saved || this.state.saving}
-                                />
-                            </div>
-                            : undefined
-                    }
-
-                </div>
+                <ShootoutGame
+                    selected_player={selected_player}
+                    show_save_form={show_save_form}
+                    round_length={round_length}
+                    score={score}
+                    onFinish={() => { this.setState({show_save_form: true}) }}
+                    onChange={(e) => {
+                        let score = Number(Math.max(0,e.target.value));
+                        this.setState({ score });
+                    }}
+                    onSave={this.saveResult}
+                    isSaveDisabled={saved || saving}
+                    onRematch={() => {
+                        this.setState({
+                            show_save_form: false,
+                            score: 0,
+                            game_started:true,
+                            saving: false,
+                            saved: false,
+                            saved_game_id: 0,
+                        });
+                    }}
+                    saved_game_id={saved_game_id}
+                    onUpdate={this.updateResult}
+                    onEndGame={() => {
+                        this.setState({
+                            show_save_form: false,
+                            score: 0,
+                            game_started:false,
+                            saving: false,
+                            saved: false,
+                            saved_game_id: 0,
+                        })
+                    }}
+                    onViewStats={() => {
+                        this.setState({
+                            view_stats: true,
+                        })
+                    }}
+                />
             )
-
-
-            // return (
-            //     <Game
-            //         all_players={deepClone(this.state.players)}
-            //         teams={deepClone(game_teams)}
-            //         round_length={this.state.round_length}
-            //         computer_level={this.state.computer_level}
-            //         have_computers={(this.state.computers[0].length + this.state.computers[1].length > 0)}
-            //         computer_levels={this.state.computer_levels}
-            //         goHome={this.restart}
-            //     />
-            // );
         }
 
         let error = this.state.error;
