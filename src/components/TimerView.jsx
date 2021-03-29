@@ -7,7 +7,7 @@ export default class TimerView extends React.Component {
     constructor(props) {
         super(props);
 
-        const originalTime = this.props.time_minutes * 1 + 5;
+        const originalTime = this.props.time_minutes * 60 + 5;
 
         this.state = {
             remainingTime: originalTime,
