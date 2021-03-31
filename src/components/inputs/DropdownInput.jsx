@@ -55,7 +55,18 @@ export default class DropdownInput extends React.Component {
                 [this.props.valueKey]: placeholder
             }]
         }
-        options = options.concat(...propsOptions.sort((a,b) => {  if (a[this.props.nameKey] > b[this.props.nameKey]) return 1; else return -1; }));
+
+        const sortKey = this.props.sortKey || this.props.nameKey;
+        const sort = this.props.sort || "asc";
+
+        options = options.concat(...propsOptions);
+
+        if (sort === "asc"){
+            options = options.sort((a,b) => {  if (a[sortKey] > b[sortKey]) return 1; else return -1; });
+        } else {
+            options = options.sort((a,b) => {  if (b[sortKey] > a[sortKey]) return 1; else return -1; });
+        }
+
         const width = this.props.width || "100%";
 
         let label = null;

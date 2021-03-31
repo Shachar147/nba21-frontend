@@ -644,6 +644,8 @@ export default class OneOnOneManager extends React.Component {
 
             const options = (scores[player1.name] > scores[player2.name]) ? player1.players : (scores[player2.name] > scores[player1.name]) ? player2.players : [];
 
+            console.log(options);
+
             mvp_block = (
                 <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", paddingBottom: "20px" }}>
                     <DropdownInput
@@ -651,6 +653,8 @@ export default class OneOnOneManager extends React.Component {
                         name={"select_mvp"}
                         placeholder={"Select MVP..."}
                         nameKey={"name"}
+                        sortKey={"rate"}
+                        sort={"desc"}
                         valueKey={"name"}
                         idKey={"id"}
                         style={{ width: "650px", paddingBottom: "30px" }}
