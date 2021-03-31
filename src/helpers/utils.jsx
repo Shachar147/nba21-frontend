@@ -50,6 +50,45 @@ export function getRandomElement(arr) {
     return shuffled[0];
 }
 
+export function getPlayerShortenPosition(position){
+    switch (position)
+    {
+        case 'Center':
+            return 'C';
+            break;
+        case 'Point Guard':
+            return 'PG';
+            break;
+        case 'Forward':
+            return 'F';
+            break;
+        case 'Guard':
+            return 'G';
+            break;
+        case 'Power Forward':
+            return 'PF';
+            break;
+        case 'Shooting Guard':
+            return 'SG';
+            break;
+        case 'Center/Forward':
+            return 'C/F';
+            break;
+        case 'Forward/Center':
+            return 'C/F';
+            break;
+        case 'Guard/Forward':
+            return 'F/G';
+            break;
+        case 'Forward/Guard':
+            return 'F/G';
+            break;
+        default:
+            return position;
+            break;
+    }
+}
+
 export function toPascalCase(string) {
     return `${string}`
         .replace(new RegExp(/[-_]+/, 'g'), ' ')

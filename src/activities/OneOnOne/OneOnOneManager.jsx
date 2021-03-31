@@ -1,5 +1,12 @@
 import React from 'react';
-import {formatDate, getRandomElement, isDefined, swap, toPascalCase} from "../../helpers/utils";
+import {
+    formatDate,
+    getPlayerShortenPosition,
+    getRandomElement,
+    isDefined,
+    swap,
+    toPascalCase
+} from "../../helpers/utils";
 import Header from "../../components/layouts/Header";
 import {apiGet, apiPost, apiPut} from "../../helpers/api";
 import PlayerCard from "../../components/PlayerCard";
@@ -558,7 +565,7 @@ export default class OneOnOneManager extends React.Component {
                     return (
                         `<div>
                             <img class="ui avatar image" src=${x.picture} onError="this.src='${PLAYER_NO_PICTURE}';" style="width: 39px;" />
-                            <span>${x.name} <span style='opacity:0.6; display:block; padding-left: 45px;top: -8px;position: relative;'>2K Rating: ${x.rate}</span></span>
+                            <span>${x.name} <span style='opacity:0.6;'>(${getPlayerShortenPosition(x.position)})</span> <span style='opacity:0.6; display:block; padding-left: 45px;top: -8px;position: relative;'>2K Rating: ${x.rate}</span></span>
                         </div>`
                     )
                 });
@@ -643,8 +650,6 @@ export default class OneOnOneManager extends React.Component {
             const { player1, player2 } = this.state;
 
             const options = (scores[player1.name] > scores[player2.name]) ? player1.players : (scores[player2.name] > scores[player1.name]) ? player2.players : [];
-
-            console.log(options);
 
             mvp_block = (
                 <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", paddingBottom: "20px" }}>
