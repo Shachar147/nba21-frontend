@@ -34,7 +34,7 @@ export const LOADERS = {
         backgroundColor: "#F0F0F0",
         top: '-100px',
     },
-    'Curry.gif': {
+    'curry.gif': {
         backgroundColor: 'white',
         top: '0px',
     },
