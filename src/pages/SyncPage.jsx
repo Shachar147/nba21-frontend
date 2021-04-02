@@ -150,7 +150,7 @@ export default class SyncPage extends React.Component {
                         (<div style={{ marginTop: "5px", fontWeight:"normal" }}>Already Synced: {synced.join(", ")}</div>) : undefined
                     }
                     { (failed.length > 0) ?
-                        (<div style={{ marginTop: "5px", fontWeight:"normal" }}>Failed:: {failed.join(", ")}</div>) : undefined
+                        (<div style={{ marginTop: "5px", fontWeight:"normal" }}>Failed: {failed.join(", ")}</div>) : undefined
                     }
                 </div>
             </div>
