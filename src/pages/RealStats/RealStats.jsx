@@ -8,6 +8,7 @@ import ErrorPage from "../ErrorPage";
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import {
+    DEFAULT_REAL_STATS_MIN_GAMES,
     DEFAULT_REAL_STATS_ORDER,
     LOADER_DETAILS,
     LOADING_DELAY,
@@ -20,6 +21,7 @@ import {
 } from "../../helpers/sort";
 import DropdownInput from "../../components/inputs/DropdownInput";
 import ButtonInput from "../../components/inputs/ButtonInput";
+import TextInput from "../../components/inputs/TextInput";
 
 export default class RealStats extends React.Component {
 
@@ -36,7 +38,7 @@ export default class RealStats extends React.Component {
             "merged": false,
 
             "orderByOptions":[
-                { "Career Win%, 300 Games or more": WPSort },
+                // { "Career Win%, 300 Games or more": WPSort },
                 { "Career Win%": WPSort },
                 { "Career Games Played": GPSort },
 
@@ -72,6 +74,7 @@ export default class RealStats extends React.Component {
             ],
             "orderBy": DEFAULT_REAL_STATS_ORDER,
             loaderDetails: LOADER_DETAILS(),
+            min_games: DEFAULT_REAL_STATS_MIN_GAMES,
         };
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -200,7 +203,7 @@ export default class RealStats extends React.Component {
 
     applyFilters(){
 
-        const { keyword, records, leaderboard } = this.state;
+        const { keyword, records, leaderboard, min_games } = this.state;
 
         const players = [...this.state.players];
 
@@ -210,8 +213,13 @@ export default class RealStats extends React.Component {
 
             if (!records[iter.name]) { return false; }
 
-            if (this.state.orderBy === 'Career Win%, 300 Games or more'){
-                if (!iter.GP || iter.GP < 300){
+            // if (this.state.orderBy === 'Career Win%, 300 Games or more'){
+            //     if (!iter.GP || iter.GP < 300){
+            //         return false;
+            //     }
+            // }
+            if (min_games && min_games !== ""){
+                if (!iter.GP || iter.GP < min_games){
                     return false;
                 }
             }
@@ -259,7 +267,7 @@ export default class RealStats extends React.Component {
 
         const self = this;
 
-        const { records } = this.state;
+        const { records, min_games } = this.state;
 
         let selectedOption = null;
         const orderByOptions = this.state.orderByOptions.map((x,idx) => {
@@ -310,6 +318,19 @@ export default class RealStats extends React.Component {
                             const leaderboard = self.buildLeaderBoard(self.state.records, option);
                             this.setState({ leaderboard });
                         }}
+                    />
+                    <TextInput
+                        name={"minPlayedGames"}
+                        label={"Minimum Played Games:"}
+                        containerStyle={{
+                            marginLeft: "10px",
+                        }}
+                        type={"number"}
+                        inputStyle={{
+                            width: "90px",
+                        }}
+                        value={min_games}
+                        onChange={(e) => { this.setState({ min_games: e.target.value}); }}
                     />
                 </div>
 

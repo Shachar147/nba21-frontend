@@ -18,7 +18,8 @@ export const LOGO_IMAGE = '/logo-new.png';
 export const COMPUTER_PLAYER_PICTURE = '/computer.png';
 export const DEFAULT_COMPUTER_LEVEL = 'Real Life'; // 'Normal';
 export const DEFAULT_STATS_ORDER = 'Overall';
-export const DEFAULT_REAL_STATS_ORDER = 'Career Win%, 300 Games or more';
+export const DEFAULT_REAL_STATS_ORDER = 'Career Win%';
+export const DEFAULT_REAL_STATS_MIN_GAMES = 300;
 export const DEFAULT_STOPWATCH_STATS_ORDER = 'Total Games';
 
 // 3pt contest

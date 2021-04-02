@@ -4,18 +4,32 @@ import PropTypes from "prop-types";
 
 export default function TextInput(props) {
 
-    let { disabled, type, name, placeholder, error, value, onChange, onKeyDown, icon} = props;
+    let { disabled, type, name, placeholder, error, value, onChange, onKeyDown, icon, containerStyle, label, inputStyle, labelStyle, onKeyUp} = props;
 
     if(!isDefined(type)) type = "text";
 
     const icon_block = (icon) ? (<i className={`${icon} icon`} />) : null;
-    const style = (error) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
+    let style = (error) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
+    if (inputStyle) { style = {...style, ...inputStyle }; }
     let className = "ui left";
     if (icon) className += " icon";
     className += " input"; // must be last, otherwise icon will be right
+
+    labelStyle = labelStyle || {};
+    labelStyle = {...{ marginRight: "5px", lineHeight: "38px" }, ...labelStyle};
+
+    if(label){
+        label = (
+            <label style={labelStyle}>
+                {label}
+            </label>
+        );
+    }
+
     return (
-        <div className="field">
+        <div className="field" style={containerStyle}>
             <div className={className} style={{ width: "100%", marginBottom: "10px" }}>
+                {label}
                 {icon_block}
                 <input
                     disabled={disabled}
@@ -26,6 +40,7 @@ export default function TextInput(props) {
                     value={value}
                     onChange={onChange}
                     onKeyDown={onKeyDown}
+                    onKeyUp={onKeyUp}
                 />
             </div>
         </div>
