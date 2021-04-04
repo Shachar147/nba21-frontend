@@ -17,7 +17,10 @@ export function apiGet(self, url, onSuccess, onError, onFinish){
 }
 
 export function apiPost(self, url, data, onSuccess, onError, onFinish){
-    axios.post(getServerAddress() + url, data)
+    axios.post(getServerAddress() + url, data,{
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+        }})
         .then(res => {
             onSuccess(res);
         }).catch(function (error) {
@@ -32,7 +35,9 @@ export function apiPut(self, url, data, onSuccess, onError, onFinish){
     const httpClient = axios.create();
     httpClient.defaults.timeout = 600000;
 
-    httpClient.put(getServerAddress() + url, data, { timeout: 600000 })
+    httpClient.put(getServerAddress() + url, data, { timeout: 600000, headers: {
+            'Access-Control-Allow-Origin': '*',
+        }})
         .then(res => {
             onSuccess(res);
         }).catch(function (error) {
