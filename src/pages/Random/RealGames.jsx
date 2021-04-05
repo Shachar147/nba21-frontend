@@ -7,6 +7,7 @@ import {apiGet} from "../../helpers/api";
 import ErrorPage from "../ErrorPage";
 import LoadingPage from "../LoadingPage";
 import PlayerPicture from "../../components/internal/PlayerPicture";
+import {formatDate} from "../../helpers/utils";
 
 export default class RealGames extends React.Component {
 
@@ -28,8 +29,14 @@ export default class RealGames extends React.Component {
     loadRecords(){
         const self = this;
 
+        const parts = new Date().toLocaleDateString().split('/').reverse();
+        if (parts[1].length === 1) parts[1] = "0" + parts[1];
+        if (parts[2].length === 1) parts[2] = "0" + parts[2];
+
+        const dtToday = parts[0] + '-' + parts[2] + '-' + parts[1];
+
         apiGet(this,
-            '/realdata/today-games',
+            '/realdata/' + dtToday,
             function(res) {
                 let records = res.data;
                 self.setState({ records });
@@ -105,9 +112,6 @@ export default class RealGames extends React.Component {
              const team2 = record.visitor_team;
              const logo1 = teams[team1];
              const logo2 = teams[team2];
-
-             record.home_score = 132;
-             record.visitor_score = 115;
 
              const score1 = (record.home_score && record.home_score !== "") ? `(${record.home_score})` : "";
              const score2 = (record.visitor_score && record.visitor_score !== "") ? `(${record.visitor_score})` : "";
