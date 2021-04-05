@@ -24,6 +24,7 @@ import ButtonInput from "../../components/inputs/ButtonInput";
 import {buildStatsInformation, BuildStatsTable, statsStyle} from "./OneOnOneHelper";
 import PropTypes from "prop-types";
 import DropdownInput from "../../components/inputs/DropdownInput";
+import RealGames from "../../pages/Random/RealGames";
 
 export default class OneOnOneManager extends React.Component {
 
@@ -82,6 +83,8 @@ export default class OneOnOneManager extends React.Component {
             },
 
             saved_game_id: undefined,
+
+            view_real_games: this.props.view_real_games || false,
         };
 
         this.restart = this.restart.bind(this);
@@ -530,6 +533,28 @@ export default class OneOnOneManager extends React.Component {
             );
         }
 
+        if (this.state.view_real_games){
+            const self = this;
+            return (
+                <RealGames
+                    onBack={() => { this.setState({ view_real_games: false }) }}
+                    onSelect={(player1, player2) => {
+
+                        self.state.players.forEach((player) => {
+                           if (player1 === player.name){
+                               player1 = player;
+                           }
+                           else if (player2 === player.name){
+                               player2 = player;
+                           }
+                        });
+
+                        this.setState({ player1, player2, view_real_games: false });
+                    }}
+                />
+            );
+        }
+
         if (custom_details_title){
             custom_details_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>${custom_details_title}</div>`;
         }
@@ -712,6 +737,12 @@ export default class OneOnOneManager extends React.Component {
                         style={{ marginLeft:"5px" }}
                         onClick={() => { this.setState({ view_stats: true }) }}
                     /> : ""}
+                    {(this.props.real_games_button) ?
+                        <ButtonInput
+                            text={"View (Real) Games"}
+                            style={{ marginLeft:"5px" }}
+                            onClick={() => { this.setState({ view_real_games: true }) }}
+                        /> : ""}
                 </div>
 
 
@@ -853,6 +884,12 @@ OneOnOneManager.propTypes = {
      *
      */
     mvp_block: PropTypes.bool,
+
+    /**
+     * display Real Games button
+     *
+     */
+    real_games_button: PropTypes.bool,
 };
 
 OneOnOneManager.defaultProps = {
