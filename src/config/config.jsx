@@ -3,6 +3,6 @@ export function getServerAddress() {
     if (mode && mode.trim() === 'development'){
         return 'http://localhost:3000';
     } else {
-        return 'https://nba21-server.herokuapp.com';
+        return 'http://10.0.12.40:3000/' // 'https://nba21-server.herokuapp.com';
     }
 }
