@@ -35,7 +35,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.linters.configure.manually.selectedeslint" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../nba21-server" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../monitor-cloud" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -105,7 +105,7 @@
       <workItem from="1617035909270" duration="8126000" />
       <workItem from="1617273167143" duration="9225000" />
       <workItem from="1617526664187" duration="644000" />
-      <workItem from="1617551243144" duration="3402000" />
+      <workItem from="1617551243144" duration="5874000" />
     </task>
     <servers />
   </component>
