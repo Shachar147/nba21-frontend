@@ -106,8 +106,11 @@ export default class RealGames extends React.Component {
              const logo1 = teams[team1];
              const logo2 = teams[team2];
 
-             const score1 = record.home_score;
-             const score2 = record.visitor_score;
+             record.home_score = 132;
+             record.visitor_score = 115;
+
+             const score1 = (record.home_score && record.home_score !== "") ? `(${record.home_score})` : "";
+             const score2 = (record.visitor_score && record.visitor_score !== "") ? `(${record.visitor_score})` : "";
 
             game_blocks.push(
                 <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }}>
@@ -125,12 +128,10 @@ export default class RealGames extends React.Component {
                                         }}
                                     />
                                 </div>
-                                <div className="field">
+                                <div className="field" style={{ maxWidth: "unset" }}>
                                     <div className="ui search">
-                                        <div className="ui icon input" style={{ fontSize: "22px" }}>
-                                            <b>{team1}</b>
-                                            <br/>
-                                            {score1}
+                                        <div className="ui icon input" style={{ fontSize: "18px" }}>
+                                            <b>{team1} {score1}</b>
                                         </div>
                                         <div className="results" />
                                     </div>
@@ -147,12 +148,10 @@ export default class RealGames extends React.Component {
                                         }}
                                     />
                                 </div>
-                                <div className="field">
+                                <div className="field" style={{ maxWidth: "unset" }}>
                                     <div className="ui search">
                                         <div className="ui icon input" style={{ fontSize: "18px" }}>
-                                            <b>{team2}</b>
-                                            <br/>
-                                            {score2}
+                                            <b>{team2} {score2}</b>
                                         </div>
                                         <div className="results" />
                                     </div>
