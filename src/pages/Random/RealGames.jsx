@@ -31,11 +31,13 @@ export default class RealGames extends React.Component {
 
         const dt = new Date();
         const parts = dt.toLocaleDateString().split('/');
-        alert(parts);
-        if (parts[0].length === 1) parts[0] = '0' + parts[0];
-        if (parts[1].length === 1) parts[1] = '0' + parts[1];
 
-        const dtToday = parts[2] + '-' + parts[0] + '-' + parts[1];
+        if (parts.length === 3) {
+            if (parts[0].length === 1) parts[0] = '0' + parts[0];
+            if (parts[1].length === 1) parts[1] = '0' + parts[1];
+        }
+
+        const dtToday = (parts.length === 3) ? parts[2] + '-' + parts[0] + '-' + parts[1] : parts[0];
 
         apiGet(this,
             '/realdata/' + dtToday,
