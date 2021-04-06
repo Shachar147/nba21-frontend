@@ -117,30 +117,10 @@ export default class RealGames extends React.Component {
              const score2 = (record.visitor_score && record.visitor_score !== "") ? `(${record.visitor_score})` : "";
 
             game_blocks.push(
-                <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }}>
+                <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
                     <div className="ui two column stackable center aligned grid">
                         <div className="ui vertical divider">VS</div>
                         <div className="middle aligned row">
-                            <div className="column">
-                                <div className="ui icon header">
-                                    <PlayerPicture
-                                        picture={logo1}
-                                        name={team1}
-                                        styles={{
-                                            container: { width: 200, height: 200 },
-                                            image: { width: 200, margin: "auto", padding: "20px" },
-                                        }}
-                                    />
-                                </div>
-                                <div className="field" style={{ maxWidth: "unset" }}>
-                                    <div className="ui search">
-                                        <div className="ui icon input" style={{ fontSize: "18px" }}>
-                                            <b>{team1} {score1}</b>
-                                        </div>
-                                        <div className="results" />
-                                    </div>
-                                </div>
-                            </div>
                             <div className="column">
                                 <div className="ui icon header">
                                     <PlayerPicture
@@ -148,7 +128,7 @@ export default class RealGames extends React.Component {
                                         name={team2}
                                         styles={{
                                             container: { width: 200, height: 200 },
-                                            image: { width: 200, margin: "auto", padding: "18px" },
+                                            image: { width: 200, margin: "auto", padding: "20px" },
                                         }}
                                     />
                                 </div>
@@ -161,8 +141,28 @@ export default class RealGames extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            <div className="column">
+                                <div className="ui icon header">
+                                    <PlayerPicture
+                                        picture={logo1}
+                                        name={team1}
+                                        styles={{
+                                            container: { width: 200, height: 200 },
+                                            image: { width: 200, margin: "auto", padding: "18px" },
+                                        }}
+                                    />
+                                </div>
+                                <div className="field" style={{ maxWidth: "unset" }}>
+                                    <div className="ui search">
+                                        <div className="ui icon input" style={{ fontSize: "18px" }}>
+                                            <b>{team1} {score1}</b>
+                                        </div>
+                                        <div className="results" />
+                                    </div>
+                                </div>
+                            </div>
                             <div className="ui primary button" style={{ zIndex:9999 }} onClick={() => {
-                                this.props.onSelect(team1, team2);
+                                this.props.onSelect(team2, team1);
                             }}>
                                 Play this Game!
                             </div>
