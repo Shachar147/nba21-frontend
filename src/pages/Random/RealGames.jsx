@@ -29,7 +29,9 @@ export default class RealGames extends React.Component {
     loadRecords(){
         const self = this;
 
-        const parts = new Date().toLocaleDateString().split('/');
+        const dt = new Date();
+        const parts = dt.toLocaleDateString().split('/');
+        alert(parts);
         if (parts[0].length === 1) parts[0] = '0' + parts[0];
         if (parts[1].length === 1) parts[1] = '0' + parts[1];
 
