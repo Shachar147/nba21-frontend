@@ -211,11 +211,11 @@ export default class OneOnOneManager extends React.Component {
         this.setState({ curr_stats, player_stats, player_stats_values, matchups_values, met_each_other, general_stats })
     }
 
-    async init(){
+    async init(player1, player2){
         let scores = {};
         let scores_history = {};
-        const player1 = getRandomElement(this.state.players);
-        let player2 = getRandomElement(this.state.players);
+        player1 = player1 || getRandomElement(this.state.players);
+        player2 = player2 || getRandomElement(this.state.players);
 
         // prevent same player
         if (this.state.players.length >= 2) {
@@ -549,7 +549,8 @@ export default class OneOnOneManager extends React.Component {
                            }
                         });
 
-                        this.setState({ player1, player2, view_real_games: false });
+                        this.setState({ view_real_games: false });
+                        self.init(player1, player2);
                     }}
                 />
             );
@@ -562,6 +563,7 @@ export default class OneOnOneManager extends React.Component {
         const { stats, scores, scores_history } = this.state;
 
         if (what === 'teams'){
+            console.log(this.state.player1, this.state.player2);
             const maxPlayers = Math.max(this.state.player1.players.length, this.state.player2.players.length);
             const minHeight = maxPlayers * 51;
             styles['descriptionStyle'] = { minHeight: minHeight };
@@ -729,7 +731,7 @@ export default class OneOnOneManager extends React.Component {
                     <ButtonInput
                         text={"New Game"}
                         style={{ marginLeft:"5px" }}
-                        onClick={this.init}
+                        onClick={() => { this.init()}}
                     />
                     {(stats_page) ?
                     <ButtonInput
