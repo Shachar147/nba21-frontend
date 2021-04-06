@@ -120,3 +120,7 @@ export function swap(json){
     }
     return ret;
 }
+
+export async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

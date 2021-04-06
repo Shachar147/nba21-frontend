@@ -3,7 +3,7 @@ import {
     formatDate,
     getPlayerShortenPosition,
     getRandomElement,
-    isDefined,
+    isDefined, sleep,
     swap,
     toPascalCase
 } from "../../helpers/utils";
@@ -385,7 +385,8 @@ export default class OneOnOneManager extends React.Component {
 
     async saveResult(){
 
-        this.setState({ saving: true });
+        await this.setState({ saving: true });
+        // await sleep(5000);
 
         const {
             save_result_route,
