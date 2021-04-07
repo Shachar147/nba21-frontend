@@ -124,7 +124,7 @@ export default class RealGames extends React.Component {
                 <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
                     <div className="ui two column stackable center aligned grid">
                         <div className="ui vertical divider">VS</div>
-                        <div className="middle aligned row">
+                        <div className="middle aligned row" style={{ paddingBottom: "40px" }}>
                             <div className="column">
                                 <div className="ui icon header">
                                     <PlayerPicture
@@ -165,7 +165,7 @@ export default class RealGames extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="ui primary button" style={{ zIndex:9999 }} onClick={() => {
+                            <div className="ui primary button" style={{ zIndex:9999, position: "absolute", bottom: "-18px" }} onClick={() => {
                                 this.props.onSelect(team2, team1);
                             }}>
                                 Play this Game!
