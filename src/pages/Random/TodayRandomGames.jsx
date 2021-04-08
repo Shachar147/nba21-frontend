@@ -7,9 +7,8 @@ import {apiGet} from "../../helpers/api";
 import ErrorPage from "../ErrorPage";
 import LoadingPage from "../LoadingPage";
 import PlayerPicture from "../../components/internal/PlayerPicture";
-import {formatDate} from "../../helpers/utils";
 
-export default class RealGames extends React.Component {
+export default class TodayRandomGames extends React.Component {
 
     constructor(props) {
         super(props);
@@ -40,9 +39,9 @@ export default class RealGames extends React.Component {
         const dtToday = (parts.length === 3) ? parts[2] + '-' + parts[0] + '-' + parts[1] : parts[0];
 
         apiGet(this,
-            '/realdata/' + dtToday,
+            '/records/random/date/today', // + dtToday,
             function(res) {
-                let records = res.data;
+                let records = res.data.data;
                 self.setState({ records });
             },
             function(error) {
@@ -64,7 +63,7 @@ export default class RealGames extends React.Component {
 
                 const teams = {};
                 data.forEach((iter) => {
-                   teams[iter.name] = iter.logo;
+                    teams[iter.name] = iter.logo;
                 });
 
                 self.setState({ teams });
@@ -91,8 +90,7 @@ export default class RealGames extends React.Component {
         let { error, loaded, loaded2, records, loaderDetails, teams } = this.state;
 
         const is_loading = !(loaded && loaded2);
-        if (error || (!is_loading && records.length === 0)) {
-            error = error || `Oops, it seems like no games loaded :(<Br>It's probably related to a server error`;
+        if (error) {
             return (
                 <ErrorPage message={error} />
             );
@@ -105,20 +103,20 @@ export default class RealGames extends React.Component {
 
         const arr = [];
         (records).forEach((game) => {
-            arr.push(`${game['home_team']} vs ${game['visitor_team']}`);
+            arr.push(`${game['team2_name']} vs ${game['team1_name']}`);
         });
         const block = arr.join('<br>');
 
         const game_blocks = [];
-         records.forEach((record) => {
+        records.forEach((record) => {
 
-             const team1 = record.home_team;
-             const team2 = record.visitor_team;
-             const logo1 = teams[team1];
-             const logo2 = teams[team2];
+            const team1 = record.team2_name;
+            const team2 = record.team1_name;
+            const logo1 = teams[team1];
+            const logo2 = teams[team2];
 
-             const score1 = (record.home_score && record.home_score !== "") ? `(${record.home_score})` : "";
-             const score2 = (record.visitor_score && record.visitor_score !== "") ? `(${record.visitor_score})` : "";
+            const score1 = (record.score2 != undefined && record.score2 !== "") ? `(${record.score2})` : "";
+            const score2 = (record.score1 != undefined && record.score1 !== "") ? `(${record.score1})` : "";
 
             game_blocks.push(
                 <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
@@ -168,7 +166,7 @@ export default class RealGames extends React.Component {
                             <div className="ui primary button" style={{ zIndex:9999, position: "absolute", bottom: "-18px" }} onClick={() => {
                                 this.props.onSelect(team2, team1);
                             }}>
-                                Play this Game!
+                                Play Again!
                             </div>
                         </div>
                     </div>
@@ -197,12 +195,15 @@ export default class RealGames extends React.Component {
                     <b>Today Games</b>
                 </div>
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginTop: "5px", marginBottom: "20px" }}>
-                    See list of today's real NBA games. You can choose any of these games and play it by yourself!
+                    See list of your today's played NBA games. You can choose any of these games and play it again!
                 </div>
 
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
+                    Total: {game_blocks.length}
+                </div>
+                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
 
-                    {game_blocks}
+                {game_blocks}
 
                 </div>
             </div>
@@ -210,10 +211,10 @@ export default class RealGames extends React.Component {
     }
 }
 
-RealGames.propTypes = {
+TodayRandomGames.propTypes = {
 
 };
 
-RealGames.defaultProps = {
+TodayRandomGames.defaultProps = {
 
 };

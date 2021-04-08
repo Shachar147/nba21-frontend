@@ -35,6 +35,7 @@ export default class Random extends React.Component {
                     player2_name: 'team2_name',
                 }}
                 real_games_button={true}
+                today_games_button={true}
                 stats_page={true}
                 mvp_block={true}
                 view_stats={this.props.view_stats||false}
