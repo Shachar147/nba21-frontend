@@ -516,7 +516,7 @@ export default class OneOnOneManager extends React.Component {
             return (
                 <ErrorPage message={error} />
             );
-        } else if (is_loading || 1) {
+        } else if (is_loading) {
             return (
                 <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
             );
