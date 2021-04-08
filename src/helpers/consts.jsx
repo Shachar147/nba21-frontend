@@ -155,6 +155,88 @@ export const LOADERS = {
         backgroundColor: 'white',
         top: '0px',
     },
+    'cant.touch.this.gif': {
+        backgroundColor: "#72AE71",
+        top: '0px',
+    },
+    'cp3.fun.size.gif': {
+        backgroundColor: "#FF6B4A",
+        top: '0px',
+    },
+    'curry.lebron.gif': {
+        backgroundColor: "#283D93",
+        top: '10px',
+        textColor: 'white',
+    },
+    'dunk.gif': {
+        backgroundColor: "#101F33",
+        top: '0px',
+        textColor: 'white',
+    },
+    'harden-orange.gif': {
+        backgroundColor: "#FBB24F",
+        top: '0px',
+    },
+    'injured.gif': {
+        backgroundColor: "white",
+        top: '10px',
+    },
+    'jordan.gif': {
+        backgroundColor: "#FF003C",
+        top: '10px',
+    },
+    'knowhow.gif': {
+        backgroundColor: "#FFAD4A",
+        top: '10px',
+    },
+    'kobe.gif': {
+        backgroundColor: "#FFD61B",
+        top: '10px',
+    },
+    'legendary.gif': {
+        backgroundColor: "#5E97DB",
+        top: '30px',
+        textColor: 'white',
+    },
+    'motion.gif': {
+        backgroundColor: "#FFCE31",
+        top: '10px',
+    },
+    'nba51.gif': {
+        backgroundColor: "#64BAE9",
+        top: '10px',
+    },
+    'pg-unlimited.gif': {
+        backgroundColor: "#F8F7F8",
+        top: '10px',
+    },
+    'say.it.to.my.face.gif': {
+        backgroundColor: "#7BBD73",
+        top: '0px',
+    },
+    'shaq.gif': {
+        backgroundColor: "#FFFFFF",
+        top: '0px',
+    },
+    'spin.gif': {
+        backgroundColor: "#E7524A",
+        top: '0px',
+        textColor: "white",
+    },
+    'undersized.gif': {
+        backgroundColor: "#FFB247",
+        top: '10px',
+    },
+    'wilt.gif': {
+        backgroundColor: "#102031",
+        top: '20px',
+        textColor: 'white',
+    },
+    'winner.gif': {
+        backgroundColor: "#FF6342",
+        top: '20px',
+        textColor: 'white',
+    },
 }
 export const LOADER_DETAILS = () => {
     const options = shuffle(Object.keys(LOADERS));

@@ -16,6 +16,11 @@ export default class LoadingPage extends React.Component {
         let { title, message, loaderDetails } = this.props;
         loaderDetails = loaderDetails || LOADER_DETAILS();
 
+        const textStyle = { fontWeight: "normal" }
+        if (loaderDetails.textColor){
+            textStyle.color = loaderDetails.textColor;
+        }
+
         return (
             <div>
                 <Header nologo={true} />
@@ -24,10 +29,10 @@ export default class LoadingPage extends React.Component {
                         <div>
                             <img src={loaderDetails.loader} style={{ width: "80%", maxWidth: "800px" }} />
                             <div className="sub header content" style={{ width:"100%", textAlign: "center", top: loaderDetails.top, fontSize: "20px", fontWeight: "bold", position: "relative"}}>
-                                <div className="header">
+                                <div className="header" style={textStyle}>
                                     {title}
                                 </div>
-                                <p style={{ fontWeight: "normal" }} dangerouslySetInnerHTML={{ __html: message }} />
+                                <p style={textStyle} dangerouslySetInnerHTML={{ __html: message }} />
                             </div>
                         </div>
                     </div>
