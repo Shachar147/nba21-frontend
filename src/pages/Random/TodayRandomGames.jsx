@@ -118,6 +118,13 @@ export default class TodayRandomGames extends React.Component {
             const score1 = (record.score2 != undefined && record.score2 !== "") ? `(${record.score2})` : "";
             const score2 = (record.score1 != undefined && record.score1 !== "") ? `(${record.score1})` : "";
 
+            const arr = [];
+            if (record.mvp_player_name) arr.push("MVP: " + record.mvp_player_name);
+            else arr.push("MVP: N/A");
+            if (record.total_overtimes) arr.push("Total Overtimes: " + record.total_overtimes);
+            if (record.is_comeback) arr.push("Comeback!");
+            const summary = arr.join(", ");
+
             game_blocks.push(
                 <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
                     <div className="ui two column stackable center aligned grid">
@@ -168,6 +175,16 @@ export default class TodayRandomGames extends React.Component {
                             }}>
                                 Play Again!
                             </div>
+                            <div className="ui link cards centered" style={{
+                                zIndex:9999, position: "absolute", bottom: "105px",
+                                backgroundColor: "white",
+                                padding: "5px 30px",
+                                border: "1px solid #efefef",
+                                borderRadius: "8px",
+                                display: (summary === "") ? 'none' : 'block',
+                            }}>
+                                {summary}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -175,7 +192,7 @@ export default class TodayRandomGames extends React.Component {
         });
 
         return (
-            <div style={{ paddingTop: "20px" }}>
+            <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
                 <Header />
 
                 <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px" }}>

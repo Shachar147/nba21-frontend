@@ -26,6 +26,7 @@ import PropTypes from "prop-types";
 import DropdownInput from "../../components/inputs/DropdownInput";
 import RealGames from "../../pages/Random/RealGames";
 import TodayRandomGames from "../../pages/Random/TodayRandomGames";
+import TextInput from "../../components/inputs/TextInput";
 
 export default class OneOnOneManager extends React.Component {
 
@@ -87,6 +88,9 @@ export default class OneOnOneManager extends React.Component {
 
             view_real_games: this.props.view_real_games || false,
             view_today_games: this.props.view_today_games || false,
+
+            is_comeback: false,
+            total_overtimes: 0,
         };
 
         this.restart = this.restart.bind(this);
@@ -230,8 +234,12 @@ export default class OneOnOneManager extends React.Component {
         scores[player2.name] = 0;
         scores_history[player1.name] = [];
         scores_history[player2.name] = [];
+
+        let is_comeback = false;
+        let total_overtimes = 0;
+
         await this.setState({
-            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, mvp_player: undefined,
+            player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, mvp_player: undefined, is_comeback: is_comeback, total_overtimes: total_overtimes
         });
 
         if (this.state.loaded && this.state.loadedStats){
@@ -248,6 +256,9 @@ export default class OneOnOneManager extends React.Component {
         let scores_history = {};
         let player1 = this.state.player1;
         let player2 = this.state.player2;
+
+        let is_comeback = false;
+        let total_overtimes = 0;
 
         if (idx === 0){
             player1 = getRandomElement(this.state.players);
@@ -276,6 +287,8 @@ export default class OneOnOneManager extends React.Component {
         scores_history[player2.name] = [];
         await this.setState({
             player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, mvp_player: undefined,
+            is_comeback: is_comeback,
+            total_overtimes: total_overtimes
         });
         this.initStats();
     }
@@ -287,7 +300,9 @@ export default class OneOnOneManager extends React.Component {
             scores[key] = 0;
             scores_history[key] = [];
         });
-        this.setState({ scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, mvp_player: undefined, });
+        let is_comeback = false;
+        let total_overtimes = 0;
+        this.setState({ scores, saved: false, winner: "", loser: "", scores_history, saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes });
     }
 
     async updateResult(){
@@ -324,12 +339,17 @@ export default class OneOnOneManager extends React.Component {
             await self.setState({ saved: true, winner, loser, scores_history });
         }
         else {
+
+            const {is_comeback, total_overtimes } = this.state;
+
             await apiPut(this,
                 update_result_route + this.state.saved_game_id,
                 {
                     score1: score1,
                     score2: score2,
                     mvp_player: mvp_player,
+                    is_comeback,
+                    total_overtimes
                 },
                 async function(res) {
 
@@ -402,6 +422,8 @@ export default class OneOnOneManager extends React.Component {
         const score2 = this.state.scores[this.state.player2.name];
         const mvp_player = this.state.mvp_player;
 
+        const { is_comeback, total_overtimes } = this.state;
+
         // no save route
         if (!save_result_route || save_result_route === "") {
             let winner = "";
@@ -431,7 +453,9 @@ export default class OneOnOneManager extends React.Component {
                     [key2]: player2,
                     score1: score1,
                     score2: score2,
-                    mvp_player: mvp_player
+                    mvp_player: mvp_player,
+                    is_comeback,
+                    total_overtimes,
                 },
                 async function(res) {
 
@@ -499,8 +523,14 @@ export default class OneOnOneManager extends React.Component {
         scores[player2.name] = 0;
         scores_history[player1.name] = [];
         scores_history[player2.name] = [];
+
+        let is_comeback = false;
+        let total_overtimes = 0;
+
         await this.setState({
             player1, player2, scores, saved: false, winner: "", loser: "", scores_history, saved_game_id:undefined, mvp_player: undefined,
+            is_comeback: is_comeback,
+            total_overtimes: total_overtimes
         });
         this.initStats();
     }
@@ -725,6 +755,8 @@ export default class OneOnOneManager extends React.Component {
                 );
         }
 
+        const { is_comeback, total_overtimes } = this.state;
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
@@ -790,6 +822,34 @@ export default class OneOnOneManager extends React.Component {
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
+
+                        <div
+                            className="ui checkbox"
+                             style={{ position: "absolute", bottom: bottom + 110 }}
+                             onClick={() => { this.setState({ is_comeback: !is_comeback }) }}
+                        >
+                            <input type="checkbox" checked={is_comeback} />
+                            <label>Comeback?</label>
+                        </div>
+
+                        <div
+                            className="ui"
+                            style={{ position: "absolute", bottom: bottom + 45 }}
+                        >
+                            <label style={{ display: "inline-block", fontWeight:"bold", marginRight: "7px" }}>OTs:</label>
+                            <div style={{ width :"65px", display: "inline-block" }}>
+                            <TextInput
+                                name={'total_overtimes'}
+                                type={'number'}
+                                value={total_overtimes}
+                                placeholder={"0"}
+                                onChange={(e) => {
+                                    this.setState({ total_overtimes: Math.min(20,Math.max(0,Number(e.target.value)) || 0) });
+                                }}
+                            />
+                            </div>
+                        </div>
+
                         {(this.state.saved_game_id && update_result_route && update_result_route !== "") ?
                             (
                                 <ButtonInput

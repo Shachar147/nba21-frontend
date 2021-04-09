@@ -168,7 +168,7 @@ export default class RealGames extends React.Component {
                      isPlayedSummary = `${t2} won ${s2}-${s1}`;
                  }
                  if (mvp){
-                     isPlayedSummary += `, mvp: ${mvp}`;
+                     isPlayedSummary += `, MVP: ${mvp}`;
                  }
              }
 
@@ -252,7 +252,7 @@ export default class RealGames extends React.Component {
         });
 
         return (
-            <div style={{ paddingTop: "20px" }}>
+            <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
                 <Header />
 
                 <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px" }}>
