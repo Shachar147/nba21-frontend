@@ -44,3 +44,20 @@ export function apiPut(self, url, data, onSuccess, onError, onFinish){
             onFinish();
         });
 }
+
+export function apiDelete(self, url, onSuccess, onError, onFinish){
+    const httpClient = axios.create();
+    httpClient.defaults.timeout = 600000;
+
+    httpClient.delete(getServerAddress() + url, {}, { timeout: 600000, headers: {
+            'Access-Control-Allow-Origin': '*',
+        }})
+        .then(res => {
+            onSuccess(res);
+        }).catch(function (error) {
+        onError(error);
+    })
+        .then(function () {
+            onFinish();
+        });
+}
