@@ -110,6 +110,11 @@ export function buildDetails(details, stats){
         average_round_length,
         total_minutes,
 
+        // comebacks and overtimes
+        total_overtimes,
+        total_won_comebacks,
+        total_lost_comebacks,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -191,6 +196,11 @@ export function buildDetails(details, stats){
         'Average Points Per Minute': `${average_points_per_minute}`,
         'Average Round Length': `${average_round_length}`,
         'Total Minutes': `${total_minutes}`,
+
+        // stopwatch shootout
+        'Total Overtimes': `${total_overtimes}`,
+        'Total Comebacks Made': `${total_won_comebacks}`,
+        'Total Comebacks Suffered': `${total_lost_comebacks}`,
     };
 
     // on fire / ice cold
@@ -297,6 +307,12 @@ export function buildDetails(details, stats){
     if (isDefined(average_points_per_minute)) stats_arr.push(`Average Points Per Minute: ${settings['Average Points Per Minute']}`);
     if (isDefined(average_round_length)) stats_arr.push(`Average Round Length: ${settings['Average Round Length']}`);
     if (isDefined(total_minutes)) stats_arr.push(`Total Minutes: ${settings['Total Minutes']}`);
+
+    if (isDefined(total_overtimes)) stats_arr.push(`Total Overtimes: ${settings['Total Overtimes']}`);
+    if (isDefined(total_won_comebacks)) stats_arr.push(`Total Comebacks Made: ${settings['Total Comebacks Made']}`);
+    if (isDefined(total_lost_comebacks)) stats_arr.push(`Total Comebacks Suffered: ${settings['Total Comebacks Suffered']}`);
+
+
 
 
     // highlighted items first

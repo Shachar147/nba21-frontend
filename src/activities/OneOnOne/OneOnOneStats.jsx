@@ -100,7 +100,7 @@ export default class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ 'Average Round Length': (a,b) => specificSort('average_round_length',a,b) });
         }
         else {
-            // all of these are for other games modes. (not 3pt contest)
+            // all of these are for other games modes. (not 3pt contest or stopwatch)
             this.state.orderByOptions.push({ "Total Diff": totalDiffSort });
             this.state.orderByOptions.push({ "Total Diff Per Game": totalDiffPerGameSort });
             this.state.orderByOptions.push({ "Total Home Games": totalHomeGames });
@@ -108,6 +108,10 @@ export default class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ "Total Suffered": totalSuffered });
             this.state.orderByOptions.push({ "Total Knockouts": totalKnockoutsSort });
             this.state.orderByOptions.push({ "Total Suffered Knockouts": totalSufferedKnockoutsSort });
+
+            this.state.orderByOptions.push({ "Total Overtimes": (a,b) => specificSort('total_overtimes',a, b) });
+            this.state.orderByOptions.push({ "Total Comebacks Made": (a,b) => specificSort('total_won_comebacks',a, b) });
+            this.state.orderByOptions.push({ "Total Comebacks Suffered": (a,b) => specificSort('total_lost_comebacks',a, b) });
         }
 
         if (this.props.what === "players"){
@@ -429,7 +433,6 @@ export default class OneOnOneStats extends React.Component {
                                     max_lose_streak: records[player.name].max_lose_streak,
                                     highlights: (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
 
-
                                     // 3pt
                                     average_place: records[player.name].average_place,
                                     total_computers: records[player.name].total_computers,
@@ -471,6 +474,11 @@ export default class OneOnOneStats extends React.Component {
                                     average_points_per_minute: records[player.name].average_points_per_minute,
                                     average_round_length: records[player.name].average_round_length,
                                     total_minutes: records[player.name].total_minutes,
+
+                                    // comebacks and overtime
+                                    total_overtimes: records[player.name].total_overtimes,
+                                    total_won_comebacks: records[player.name].total_won_comebacks,
+                                    total_lost_comebacks: records[player.name].total_lost_comebacks,
                                 }}
 
                                 onClick={() => {
