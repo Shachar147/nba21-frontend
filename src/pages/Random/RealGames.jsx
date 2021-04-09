@@ -180,6 +180,8 @@ export default class RealGames extends React.Component {
                  score2 = '';
              }
 
+             const mvpText = (record.mvp_player) ? 'MVP/s: ' + record.mvp_player + ' (' + record.mvp_player_points + 'pts)' : 'MVP: N/A';
+
             game_blocks.push(
                 <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
                     <div className="ui two column stackable center aligned grid">
@@ -224,6 +226,16 @@ export default class RealGames extends React.Component {
                                         <div className="results" />
                                     </div>
                                 </div>
+                            </div>
+                            <div className="ui link cards centered" style={{
+                                zIndex:9999, position: "absolute", bottom: "105px",
+                                backgroundColor: "white",
+                                padding: "5px 30px",
+                                border: "1px solid #efefef",
+                                borderRadius: "8px",
+                                display: (show_results) ? "block" : "none",
+                            }}>
+                                {mvpText}
                             </div>
                             <div className={"ui button " + isPlayedColor} style={{ zIndex:9999, position: "absolute", bottom: "-18px" }} onClick={() => {
                                 this.props.onSelect(team2, team1);
