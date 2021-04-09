@@ -589,7 +589,7 @@ export default class OneOnOneManager extends React.Component {
         const { stats, scores, scores_history } = this.state;
 
         if (what === 'teams'){
-            console.log(this.state.player1, this.state.player2);
+            // console.log(this.state.player1, this.state.player2);
             const maxPlayers = Math.max(this.state.player1.players.length, this.state.player2.players.length);
             const minHeight = maxPlayers * 51;
             styles['descriptionStyle'] = { minHeight: minHeight };

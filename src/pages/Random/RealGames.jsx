@@ -17,11 +17,13 @@ export default class RealGames extends React.Component {
         this.state = {
             loaded: false,
             loaded2: false,
+            loaded3: false,
             records: [],
             teams: [],
             error: false,
             loaderDetails: LOADER_DETAILS(),
             show_results: false,
+            today_played_games: [],
         };
 
         this.loadRecords = this.loadRecords.bind(this);
@@ -81,6 +83,24 @@ export default class RealGames extends React.Component {
                 self.setState({ loaded2: true });
             }
         );
+
+        apiGet(this,
+            '/records/random/date/today', // + dtToday,
+            function(res) {
+                let today_played_games = res.data.data;
+                self.setState({ today_played_games });
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like there was an error loading today played games :(<Br>It's probably related to a server error` }
+                self.setState({ error: req_error });
+            },
+            function() {
+                self.setState({ loaded3: true });
+            }
+        );
     }
 
     componentDidMount() {
@@ -89,9 +109,16 @@ export default class RealGames extends React.Component {
 
     render() {
 
-        let { error, loaded, loaded2, records, loaderDetails, teams, show_results } = this.state;
+        let { error, loaded, loaded2, loaded3, records, loaderDetails, teams, show_results, today_played_games } = this.state;
 
-        const is_loading = !(loaded && loaded2);
+        const played_game_hash = {};
+        today_played_games.forEach((game) => {
+           const key = game.team2_name + "-vs-" + game.team1_name;
+           played_game_hash[key] = game;
+        });
+
+
+        const is_loading = !(loaded && loaded2 && loaded3);
         if (error || (!is_loading && records.length === 0)) {
             error = error || `Oops, it seems like no games loaded :(<Br>It's probably related to a server error`;
             return (
@@ -117,6 +144,33 @@ export default class RealGames extends React.Component {
              const team2 = record.visitor_team;
              const logo1 = teams[team1];
              const logo2 = teams[team2];
+
+             // is played
+             const isPlayed = played_game_hash[team1 + '-vs-' + team2];
+             // console.log(played_game_hash);
+             // console.log(team1 + '-vs-' + team2);
+             // console.log(isPlayed);
+             const isPlayedColor = (isPlayed) ? 'teal' : 'primary';
+             const isPlayedText = (isPlayed) ? 'Play Again!' : 'Play this Game!';
+
+             // build played game summary
+             let isPlayedSummary = '';
+             if (isPlayed){
+                 const t1 = isPlayed.team1_name;
+                 const t2 = isPlayed.team2_name;
+                 const s1 = isPlayed.score1;
+                 const s2 = isPlayed.score2;
+                 const mvp = isPlayed.mvp_player_name;
+
+                 if (s1 > s2){
+                     isPlayedSummary = `${t1} won ${s1}-${s2}`;
+                 } else {
+                     isPlayedSummary = `${t2} won ${s2}-${s1}`;
+                 }
+                 if (mvp){
+                     isPlayedSummary += `, mvp: ${mvp}`;
+                 }
+             }
 
              let score1 = (record.home_score && record.home_score !== "") ? `(${record.home_score})` : "(N/A)";
              let score2 = (record.visitor_score && record.visitor_score !== "") ? `(${record.visitor_score})` : "(N/A)";
@@ -171,10 +225,13 @@ export default class RealGames extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="ui primary button" style={{ zIndex:9999, position: "absolute", bottom: "-18px" }} onClick={() => {
+                            <div className={"ui button " + isPlayedColor} style={{ zIndex:9999, position: "absolute", bottom: "-18px" }} onClick={() => {
                                 this.props.onSelect(team2, team1);
                             }}>
-                                Play this Game!
+                                {isPlayedText}
+                            </div>
+                            <div className="ui link cards centered" style={{ zIndex:9999, position: "absolute", bottom: "-32px" }}>
+                                {isPlayedSummary}
                             </div>
                         </div>
                     </div>
