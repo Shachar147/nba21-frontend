@@ -270,6 +270,9 @@ export default class RealGames extends React.Component {
                     </div>
                 </div>
 
+                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "10px" }}>
+                    Total: {game_blocks.length}
+                </div>
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
 
                     {game_blocks}
