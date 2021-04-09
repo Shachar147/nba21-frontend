@@ -21,6 +21,7 @@ export default class RealGames extends React.Component {
             teams: [],
             error: false,
             loaderDetails: LOADER_DETAILS(),
+            show_results: false,
         };
 
         this.loadRecords = this.loadRecords.bind(this);
@@ -88,7 +89,7 @@ export default class RealGames extends React.Component {
 
     render() {
 
-        let { error, loaded, loaded2, records, loaderDetails, teams } = this.state;
+        let { error, loaded, loaded2, records, loaderDetails, teams, show_results } = this.state;
 
         const is_loading = !(loaded && loaded2);
         if (error || (!is_loading && records.length === 0)) {
@@ -117,8 +118,13 @@ export default class RealGames extends React.Component {
              const logo1 = teams[team1];
              const logo2 = teams[team2];
 
-             const score1 = (record.home_score && record.home_score !== "") ? `(${record.home_score})` : "";
-             const score2 = (record.visitor_score && record.visitor_score !== "") ? `(${record.visitor_score})` : "";
+             let score1 = (record.home_score && record.home_score !== "") ? `(${record.home_score})` : "(N/A)";
+             let score2 = (record.visitor_score && record.visitor_score !== "") ? `(${record.visitor_score})` : "(N/A)";
+
+             if (!show_results){
+                 score1 = '';
+                 score2 = '';
+             }
 
             game_blocks.push(
                 <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
@@ -198,6 +204,13 @@ export default class RealGames extends React.Component {
                 </div>
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginTop: "5px", marginBottom: "20px" }}>
                     See list of today's real NBA games. You can choose any of these games and play it by yourself!
+                </div>
+
+                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginTop: "20px", marginBottom: "25px" }}>
+                    <div className="ui toggle checkbox" onClick={() => { this.setState({ show_results: !show_results }) }} >
+                        <input type="checkbox" name="show_results" />
+                        <label>Show Games Results</label>
+                    </div>
                 </div>
 
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
