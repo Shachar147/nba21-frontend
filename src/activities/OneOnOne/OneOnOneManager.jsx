@@ -759,7 +759,7 @@ export default class OneOnOneManager extends React.Component {
 
         // comeback
         const comeback_block = (
-            <div style={{ display:"inline-block", paddingBottom: "15px", }}>
+            <div style={{ paddingBottom: "20px" }}>
                 <div
                     className="ui checkbox"
                     onClick={() => { this.setState({ is_comeback: !is_comeback }) }}
@@ -773,7 +773,7 @@ export default class OneOnOneManager extends React.Component {
         // overtime
         const overtime_block = (
             <div style={{ width: "100%", display:"flex", paddingBottom: "10px", }}>
-                <label style={{ display: "inline-block", fontWeight:"bold", marginRight: "7px", lineHeight: "33px" }}>Number of Overtimes:</label>
+                <label style={{ display: "inline-block", fontWeight:"bold", marginRight: "7px", lineHeight: "38px" }}>Number of Overtimes:</label>
                 <div style={{ flexGrow: "100", display: "inline-block" }}>
                     <TextInput
                         name={'total_overtimes'}
@@ -850,7 +850,7 @@ export default class OneOnOneManager extends React.Component {
                     <div className={"card in-game"} style={titleStyle}>Home</div>
                 </div>
 
-                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
+                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "10px" }}>
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
 
@@ -876,6 +876,13 @@ export default class OneOnOneManager extends React.Component {
                     {blocks[1]}
                 </div>
 
+                <div className="ui link cards centered" style={{
+                    position:"relative", display: "flex", textAlign: "center",
+                    width: "710px", alignItems: "strech", margin: "auto"
+                }}>
+                    {comeback_block}
+                </div>
+
                 {mvp_block}
 
                 <div className="ui link cards centered" style={{
@@ -883,17 +890,6 @@ export default class OneOnOneManager extends React.Component {
                     width: "710px",
                 }}>
                     {overtime_block}
-
-                    <div style={{ width: "710px" }}>
-
-                        {comeback_block}
-
-                        <div style={{ display: "inline-block", marginLeft: "15px" }}>
-
-                           {/*save button*/}
-
-                        </div>
-                    </div>
                 </div>
 
             </div>
