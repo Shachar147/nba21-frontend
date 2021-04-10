@@ -8,10 +8,10 @@ import ErrorPage from "../../pages/ErrorPage";
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import {
-    DEFAULT_REAL_STATS_ORDER,
+    DEFAULT_REAL_INACTIVE_ORDER,
     LOADING_DELAY, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
-import {specificSort, specificSortDate, TeamSort, textSort} from "../../helpers/sort";
+import {specificSort, TeamSort, textSort} from "../../helpers/sort";
 import DropdownInput from "../../components/inputs/DropdownInput";
 import {Link} from "react-router-dom";
 import ButtonInput from "../../components/inputs/ButtonInput";
@@ -36,7 +36,7 @@ export default class RealInactive extends React.Component {
                 { 'Joined In': (a,b) => specificSort('debut_year', b, a) },
                 { 'Name': (a,b) => textSort('name', b, a) },
             ],
-            orderBy: 'Team Name',
+            orderBy: DEFAULT_REAL_INACTIVE_ORDER,
         };
 
         this.searchPlayers = this.searchPlayers.bind(this);
@@ -95,7 +95,7 @@ export default class RealInactive extends React.Component {
             if (name === orderBy){
                 func = iter[name];
             }
-            if (name === DEFAULT_REAL_STATS_ORDER){
+            if (name === DEFAULT_REAL_INACTIVE_ORDER){
                 defFunc = iter[name];
             }
         })

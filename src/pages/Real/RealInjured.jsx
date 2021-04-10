@@ -8,9 +8,10 @@ import ErrorPage from "../../pages/ErrorPage";
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import {
+    DEFAULT_REAL_INJURED_ORDER,
     LOADING_DELAY, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
-import {specificSort, specificSortDate} from "../../helpers/sort";
+import {specificSort, specificSortDate, textSort} from "../../helpers/sort";
 import DropdownInput from "../../components/inputs/DropdownInput";
 import {Link} from "react-router-dom";
 import ButtonInput from "../../components/inputs/ButtonInput";
@@ -31,11 +32,11 @@ export default class RealInjured extends React.Component {
 
             "leaderboard": [],
             "orderByOptions":[
-                { 'Team Name': (a,b) => specificSort('team_name', a, b) },
+                { 'Team Name': (a,b) => textSort('team_name', a, b) },
                 { 'Injury Last Update': (a,b) => specificSortDate('lastUpdate', a, b) },
                 { 'Injury Status': (a,b) => specificSort('injury_status_severity', b, a) },
             ],
-            orderBy: 'Team Name',
+            orderBy: DEFAULT_REAL_INJURED_ORDER,
         };
 
         this.searchPlayers = this.searchPlayers.bind(this);

@@ -22,6 +22,9 @@ export const DEFAULT_REAL_STATS_ORDER = 'Career Win%';
 export const DEFAULT_REAL_STATS_MIN_GAMES = 300;
 export const DEFAULT_STOPWATCH_STATS_ORDER = 'Total Games';
 
+export const DEFAULT_REAL_INJURED_ORDER = 'Injury Last Update';
+export const DEFAULT_REAL_INACTIVE_ORDER = 'Joined In';
+
 // 3pt contest
 export const TEAM1_COLOR = 'lightseagreen';
 export const TEAM2_COLOR = 'lightcoral';
