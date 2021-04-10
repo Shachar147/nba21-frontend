@@ -151,12 +151,12 @@ export default class TodayRandomGames extends React.Component {
             const arr = [];
             if (record.mvp_player_name) arr.push("MVP: " + record.mvp_player_name);
             else arr.push("MVP: N/A");
-            if (record.total_overtimes) arr.push("Total Overtimes: " + record.total_overtimes);
+            if (record.total_overtimes) arr.push("OTs: " + record.total_overtimes);
             if (record.is_comeback) arr.push("Comeback!");
             const summary = arr.join(", ");
 
             game_blocks.push(
-                <div className="ui placeholder segment" style={{ width: "40%", margin: "20px 20px" }} key={record.date + "_" + team1 + "_" + team2}>
+                <div className="ui placeholder segment" style={{ width: "45%", margin: "20px 20px" }} key={record.date + "_" + team1 + "_" + team2}>
                     <div className="ui two column stackable center aligned grid">
                         <div className="ui vertical divider">VS</div>
                         <div className="middle aligned row" style={{ paddingBottom: "40px" }}>
@@ -215,8 +215,8 @@ export default class TodayRandomGames extends React.Component {
                                     display:"inline-block",
                                     color: "black",
                                     position: "absolute",
-                                    top: "5px",
-                                    right: "5px",
+                                    top: "15px",
+                                    right: "15px",
                                     fontSize: "11px",
                                     textTransform: "uppercase",
                                     cursor: "pointer",
