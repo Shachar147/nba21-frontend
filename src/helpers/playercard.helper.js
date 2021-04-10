@@ -5,7 +5,7 @@ import {
     ON_FIRE_COLOR,
     ON_FIRE_ICON,
     ON_FIRE_STYLE,
-    ON_FIRE_THRESHOLD, PLAYER_STATS_SHOW_MORE_THRESHOLD
+    ON_FIRE_THRESHOLD
 } from "./consts";
 
 export function buildDetails(details, stats){
@@ -115,6 +115,10 @@ export function buildDetails(details, stats){
         total_won_comebacks,
         total_lost_comebacks,
 
+        injury_last_update,
+        injury_status,
+        injury_details,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -201,6 +205,10 @@ export function buildDetails(details, stats){
         'Total Overtimes': `${total_overtimes}`,
         'Total Comebacks Made': `${total_won_comebacks}`,
         'Total Comebacks Suffered': `${total_lost_comebacks}`,
+
+        'Injury Last Update': `${injury_last_update}`,
+        'Injury Status': `${injury_status}`,
+        'Injury Details': `${injury_details}`,
     };
 
     // on fire / ice cold
@@ -312,7 +320,9 @@ export function buildDetails(details, stats){
     if (isDefined(total_won_comebacks)) stats_arr.push(`Total Comebacks Made: ${settings['Total Comebacks Made']}`);
     if (isDefined(total_lost_comebacks)) stats_arr.push(`Total Comebacks Suffered: ${settings['Total Comebacks Suffered']}`);
 
-
+    if (isDefined(injury_last_update)) stats_arr.push(`Injury Last Update: ${settings['Injury Last Update']}`);
+    if (isDefined(injury_status)) stats_arr.push(`Injury Status: ${settings['Injury Status']}`);
+    if (isDefined(injury_details)) stats_arr.push(`Injury Details: ${settings['Injury Details']}`);
 
 
     // highlighted items first

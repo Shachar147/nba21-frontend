@@ -9,7 +9,7 @@ export default function PlayerContent(props) {
           custom_details_title, custom_details, details, stats,
           shoot, singleShot, winner, lost, round_length, onScore, onChange,
           place, rounds, singleRounds,
-          styles, wrapper } = props;
+          styles, wrapper, show_more_threshold } = props;
 
     // rounds
     const place_block = (place) ? "Place: " + place + nth(place) : "";
@@ -65,6 +65,7 @@ export default function PlayerContent(props) {
                 custom_details={custom_details}
                 custom_details_title={custom_details_title}
                 styles={styles}
+                show_more_threshold={show_more_threshold}
             />
             {rounds_block}
             <ShootingBox

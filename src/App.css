@@ -59,6 +59,9 @@ button:not(:disabled) {
 .button.nbared {
   background-color: #F10B45;
 }
+.nbaredColor {
+  color: #F10B45;
+}
 
 hr.divider {
   border: 1px solid #eaeaea;

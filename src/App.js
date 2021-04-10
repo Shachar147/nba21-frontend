@@ -11,10 +11,12 @@ import MainPage from "./pages/MainPage";
 import LogoutPage from "./pages/Logout";
 import RegisterPage from "./pages/RegisterPage";
 import OneOnOne from "./pages/OneOnOne/OneOnOne";
-import RealStats from "./pages/RealStats/RealStats";
+import RealStats from "./pages/Real/RealStats";
 import Random from "./pages/Random/Random";
 import SyncPage from "./pages/SyncPage";
 import Shootout from "./pages/Shootout/Shootout";
+import Real from "./pages/Real/Real";
+import RealInjured from "./pages/Real/RealInjured";
 
 function App() {
 
@@ -31,7 +33,9 @@ function App() {
                     <PrivateRoute path="/three-points/stats" component={Settings} data={{view_stats:true}} />
                     <PrivateRoute exact path="/1on1/" component={OneOnOne} />
                     <PrivateRoute path="/1on1/stats" component={OneOnOne} data={{view_stats:true}} />
-                    <PrivateRoute path="/real-stats/" component={RealStats} />
+                    <PrivateRoute path="/real/injured/" component={RealInjured} />
+                    <PrivateRoute path="/real/stats/" component={RealStats} />
+                    <PrivateRoute exact path="/real/" component={Real} />
                     <PrivateRoute exact path="/random" component={Random} />
                     <PrivateRoute path="/random/stats" component={Random} data={{view_stats:true}} />
                     <PrivateRoute exact path="/sync" component={SyncPage} />

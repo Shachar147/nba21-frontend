@@ -54,6 +54,8 @@ export default class PlayerCard extends React.Component {
 
             disabled,
 
+            show_more_threshold,
+
         } = this.props;
 
         const {
@@ -118,6 +120,7 @@ export default class PlayerCard extends React.Component {
                     place={place}
                     rounds={rounds}
                     singleRounds={singleRounds}
+                    show_more_threshold={show_more_threshold}
                     styles={{
                         description: descriptionStyle,
                     }}

@@ -92,10 +92,10 @@ export default class MainPage extends React.Component {
                                 />
 
                                 <Card
-                                    name={"View Real Stats"}
-                                    picture={"/thumbnails/stats.png"}
+                                    name={"View Real Data"}
+                                    picture={"/thumbnails/real.png"}
                                     style={{ width: "160px" }}
-                                    href={"/real-stats"}
+                                    href={"/real"}
                                 />
 
                                 {/*<Card*/}

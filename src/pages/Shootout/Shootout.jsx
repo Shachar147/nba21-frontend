@@ -14,7 +14,6 @@ import {
     MAX_SHOOTOUT_ROUND_LENGTH,
     MIN_SHOOTOUT_ROUND_LENGTH, TEAM1_COLOR, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
-import TimerView from "../../components/TimerView";
 import ShootoutGame from "./ShootoutGame";
 
 export default class Shootout extends React.Component {

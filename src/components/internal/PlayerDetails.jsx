@@ -22,7 +22,7 @@ export default class PlayerDetails extends React.Component {
     }
 
     init() {
-        const { details, stats, custom_details } = this.props;
+        const { details, stats, custom_details, show_more_threshold } = this.props;
 
         let show_more = false;
         let details_arr = [];
@@ -36,7 +36,9 @@ export default class PlayerDetails extends React.Component {
             stats_arr = hash.stats_arr;
         }
 
-        if (stats_arr.length > PLAYER_STATS_SHOW_MORE_THRESHOLD){
+        const threshold = show_more_threshold || PLAYER_STATS_SHOW_MORE_THRESHOLD;
+
+        if (stats_arr.length > threshold){
             show_more = true;
         }
 
@@ -50,10 +52,12 @@ export default class PlayerDetails extends React.Component {
 
     render() {
 
-        const { custom_details_title, styles } = this.props;
+        const { custom_details_title, styles, show_more_threshold } = this.props;
         const { show_more, show_more_opened } = this.state;
 
         const { details_arr, stats_arr } = this.init();
+
+        const threshold = show_more_threshold || PLAYER_STATS_SHOW_MORE_THRESHOLD;
 
         return (
             <div
@@ -68,7 +72,7 @@ export default class PlayerDetails extends React.Component {
                 }
                 {
                     [...stats_arr].map((x,idx) => {
-                        if (idx <= PLAYER_STATS_SHOW_MORE_THRESHOLD || show_more_opened) {
+                        if (idx <= threshold || show_more_opened) {
                             return (<div key={`stats-${idx}`} dangerouslySetInnerHTML={{__html: x}}/>);
                         }
                     })

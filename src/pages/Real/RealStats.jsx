@@ -22,6 +22,7 @@ import {
 import DropdownInput from "../../components/inputs/DropdownInput";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import TextInput from "../../components/inputs/TextInput";
+import {Link} from "react-router-dom";
 
 export default class RealStats extends React.Component {
 
@@ -295,8 +296,15 @@ export default class RealStats extends React.Component {
                 </div>
 
                 <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px" }}>
+                    <Link to={'/real'}>
+                        <ButtonInput
+                            text={"Go Back"}
+                        />
+                    </Link>
+
                     <ButtonInput
                         text={"Reload Stats"}
+                        style={{ marginLeft: "5px" }}
                         onClick={(e) => { self.setState({ loaded2: false, merged: false }); this.loadPlayerDetails(); }}
                     />
                 </div>
