@@ -20,7 +20,7 @@ export default class Real extends React.Component {
                     <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
                         <Logo />
                         <div className="sub cards header content" style={{ width:"100%", bottom: "0px" }}>
-                            Hello! Choose the activity you want to use:
+                            Hello! Choose the option you want to see:
                             <br/><br/>
                             <div className="ui link cards centered" style={{ margin: "auto" }}>
 
