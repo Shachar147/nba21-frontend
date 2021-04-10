@@ -50,6 +50,18 @@ export function overallSort(a,b){
 
 export const OVERALL_HIGHLIGHTS = ['Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts', 'Total Shots Average', 'Average Place'];
 
+export function textSort(key, a, b){
+    const value1 = b[key];
+    const value2 = a[key];
+
+    // console.log(value1,value2);
+
+    if (value1 > value2) return 1;
+    else if (value1 < value2) return -1;
+
+    return 0;
+}
+
 export function specificSort(key, a, b){
     const value1 = parseFloat(b[key]);
     const value2 = parseFloat(a[key]);
@@ -64,7 +76,7 @@ export function specificSort(key, a, b){
 
 export function specificSortDate(key, a, b){
     const value1 = (b[key]) ? new Date(reFormatDate(b[key])) : -1;
-    const value2 = (b[key]) ? new Date(reFormatDate(a[key])) : -1;
+    const value2 = (a[key]) ? new Date(reFormatDate(a[key])) : -1;
 
     // console.log(a,b,key,value1,value2);
 
@@ -74,6 +86,15 @@ export function specificSortDate(key, a, b){
     // else if (value1 < value2) return -1;
     //
     // return 0;
+}
+
+export function TeamSort(a,b) {
+    const value1 = b?.team?.name;
+    const value2 = a?.team?.name;
+
+    if(value1 < value2) { return 1; }
+    if(value1 > value2) { return -1; }
+    return 0;
 }
 
 export function totalGamesSort(a,b){

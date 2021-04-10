@@ -17,6 +17,7 @@ import SyncPage from "./pages/SyncPage";
 import Shootout from "./pages/Shootout/Shootout";
 import Real from "./pages/Real/Real";
 import RealInjured from "./pages/Real/RealInjured";
+import RealInactive from "./pages/Real/RealInactive";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
                     <PrivateRoute exact path="/1on1/" component={OneOnOne} />
                     <PrivateRoute path="/1on1/stats" component={OneOnOne} data={{view_stats:true}} />
                     <PrivateRoute path="/real/injured/" component={RealInjured} />
+                    <PrivateRoute path="/real/inactive/" component={RealInactive} />
                     <PrivateRoute path="/real/stats/" component={RealStats} />
                     <PrivateRoute exact path="/real/" component={Real} />
                     <PrivateRoute exact path="/random" component={Random} />

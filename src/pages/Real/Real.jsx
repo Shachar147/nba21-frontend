@@ -34,11 +34,17 @@ export default class Real extends React.Component {
                                 />
 
                                 <Card
+                                    name={"Inactive Players"}
+                                    picture={"/thumbnails/inactive2.png"}
+                                    style={{ width: "160px" }}
+                                    href={"/real/inactive"}
+                                />
+
+                                <Card
                                     name={"Injured Players"}
                                     picture={"/thumbnails/injured.png"}
                                     style={{ width: "160px" }}
                                     href={"/real/injured"}
-                                    disabledAltAddition={"(not available yet)"}
                                 />
 
                                 <Card

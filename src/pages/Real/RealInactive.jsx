@@ -8,14 +8,15 @@ import ErrorPage from "../../pages/ErrorPage";
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import {
+    DEFAULT_REAL_STATS_ORDER,
     LOADING_DELAY, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
-import {specificSort, specificSortDate} from "../../helpers/sort";
+import {specificSort, specificSortDate, TeamSort, textSort} from "../../helpers/sort";
 import DropdownInput from "../../components/inputs/DropdownInput";
 import {Link} from "react-router-dom";
 import ButtonInput from "../../components/inputs/ButtonInput";
 
-export default class RealInjured extends React.Component {
+export default class RealInactive extends React.Component {
 
     constructor(props) {
         super(props);
@@ -31,9 +32,9 @@ export default class RealInjured extends React.Component {
 
             "leaderboard": [],
             "orderByOptions":[
-                { 'Team Name': (a,b) => specificSort('team_name', a, b) },
-                { 'Injury Last Update': (a,b) => specificSortDate('lastUpdate', a, b) },
-                { 'Injury Status': (a,b) => specificSort('injury_status_severity', b, a) },
+                { 'Team Name': (a,b) =>  TeamSort(a, b) },
+                { 'Joined In': (a,b) => specificSort('debut_year', b, a) },
+                { 'Name': (a,b) => textSort('name', b, a) },
             ],
             orderBy: 'Team Name',
         };
@@ -51,7 +52,7 @@ export default class RealInjured extends React.Component {
     loadPlayers(){
         let self = this;
         apiGet(this,
-            `/realdata/injured`,
+            `/player?isActive=false&include_inactive=true`,
             function(res) {
                 let players = res.data.data;
 
@@ -88,18 +89,20 @@ export default class RealInjured extends React.Component {
         const { orderByOptions, orderBy } = this.state;
 
         let func = null;
+        let defFunc = null;
         orderByOptions.map((iter) => {
             const name = Object.keys(iter)[0];
             if (name === orderBy){
                 func = iter[name];
             }
+            if (name === DEFAULT_REAL_STATS_ORDER){
+                defFunc = iter[name];
+            }
         })
 
-        let leaderboard = Object.keys(records);
-
-        if (func)
-            leaderboard = leaderboard.sort((a,b) => {
-                return func(records[a],records[b]);
+        const leaderboard =
+            Object.keys(records).sort((a,b) => {
+                return (func) ? func(records[a],records[b]) : defFunc(records[a],records[b]);
             });
         return leaderboard;
     }
@@ -159,10 +162,10 @@ export default class RealInjured extends React.Component {
 
                 <div className="ui link input cards centered" style={{ margin: "auto", marginTop: "5px", marginBottom: "5px" }}>
                     <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
-                        Injured Players
+                        Inactive Players
                     </h2>
                     <div style={{ color:"rgba(0,0,0,.6)" }}>
-                        Here you can see real info about all injured NBA players.
+                        Here you can see real info about inactive NBA players.
                     </div>
                 </div>
 
@@ -206,17 +209,9 @@ export default class RealInjured extends React.Component {
                 </div>
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
-                    { players.map((obj,idx) => {
-
-                        const player = obj.player;
+                    { players.map((player,idx) => {
 
                         const _2k_rating = player['_2k_rating'] || 'N/A';
-                        const injury_details = obj.details !== "" ? `<br>${obj.details}</br>` : undefined;
-
-                        const injury_status =
-                            (obj.status.toLowerCase() === 'out') ? `<div class="nbaredColor">${obj.status}</div>` :
-                                (obj.status.toLowerCase() === 'day-to-day') ? `<div style="color: orange">${obj.status}</div>` :
-                                    `<div>${obj.status}</div>`;
 
                         return (<PlayerCard
                                 key={idx}
@@ -229,9 +224,7 @@ export default class RealInjured extends React.Component {
                                     team:player.team.name,
                                 }}
                                 stats={{
-                                    injury_last_update: obj.lastUpdate,
-                                    injury_status: injury_status,
-                                    injury_details: injury_details,
+
                                 }}
                                 show_more_threshold={1}
                                 position={player.position}
