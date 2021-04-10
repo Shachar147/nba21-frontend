@@ -20,6 +20,8 @@ export default class TodayRandomGames extends React.Component {
             teams: [],
             error: false,
             loaderDetails: LOADER_DETAILS(),
+
+            delete_id: '',
         };
 
         this.loadRecords = this.loadRecords.bind(this);
@@ -81,8 +83,9 @@ export default class TodayRandomGames extends React.Component {
         );
     }
 
-    Delete(id){
+    Delete(){
         const self = this;
+        const id = this.state.delete_id;
 
         if (id !== '') {
             apiDelete(this,
@@ -101,7 +104,7 @@ export default class TodayRandomGames extends React.Component {
                     self.setState({error: req_error});
                 },
                 function () {
-                    self.setState({ loaded: false });
+                    self.setState({ delete_id: '' });
                     self.loadRecords();
                 }
             );
@@ -197,7 +200,7 @@ export default class TodayRandomGames extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"buttons"} style={{ zIndex:9999, position: "absolute", bottom: "-18px" }}>
+                            <div className={"buttons"} style={{ zIndex:2, position: "absolute", bottom: "-18px" }}>
                                 <div
                                     className="ui primary button"
                                     style={{ display:"inline-block", margin:"0px 5px" }}
@@ -218,9 +221,9 @@ export default class TodayRandomGames extends React.Component {
                                     textTransform: "uppercase",
                                     cursor: "pointer",
                                 }}
-                                onClick={() => {
-                                    const id = record.id;
-                                    this.Delete(id);
+                                onClick={async () => {
+                                    const delete_id = record.id;
+                                    await this.setState({ delete_id });
                                 }}>
                                 <img
                                     // className="ui nbared button"
@@ -232,7 +235,7 @@ export default class TodayRandomGames extends React.Component {
                                 />
                             </div>
                             <div className="ui link cards centered" style={{
-                                zIndex:9999, position: "absolute", top: "-3px",
+                                zIndex:2, position: "absolute", top: "-3px",
                                 backgroundColor: "white",
                                 padding: "5px 30px",
                                 border: "1px solid #ccc",
@@ -246,6 +249,32 @@ export default class TodayRandomGames extends React.Component {
                 </div>
             );
         });
+
+        const self = this;
+
+        const delete_modal = (this.state.delete_id) ?
+            (
+                <div className="ui dimmer modals page transition visible active" style={{display: "flex"}}>
+                    <div className="ui modal transition visible active" style={{
+                        position: "absolute",
+                        width: "900px",
+                        height: "190px",
+                        zIndex: "15",
+                        top: "50%",
+                        left: "50%",
+                        margin: "-95px 0 0 -450px",
+                    }}>
+                        <div className="header">Delete Game</div>
+                        <div className="content">
+                            <p>Are you sure you want to delete this game? Once you do it, you won't be able to undo.</p>
+                        </div>
+                        <div className="actions">
+                            <div className="ui nbared button" style={{ color: "white" }} onClick={() => self.Delete()}>Delete</div>
+                            <div className="ui cancel button" onClick={() => self.setState({ delete_id: '' })}>Cancel</div>
+                        </div>
+                    </div>
+                </div>
+            ) : "";
 
         return (
             <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
@@ -279,6 +308,8 @@ export default class TodayRandomGames extends React.Component {
                 {game_blocks}
 
                 </div>
+
+                {delete_modal}
             </div>
         );
     }
