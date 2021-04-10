@@ -735,7 +735,7 @@ export default class OneOnOneManager extends React.Component {
             const options = (scores[player1.name] > scores[player2.name]) ? player1.players : (scores[player2.name] > scores[player1.name]) ? player2.players : [];
 
             mvp_block = (
-                <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", paddingBottom: "20px" }}>
+                <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto" }}>
                     <DropdownInput
                         options={(options)}
                         name={"select_mvp"}
@@ -745,7 +745,7 @@ export default class OneOnOneManager extends React.Component {
                         sort={"desc"}
                         valueKey={"name"}
                         idKey={"id"}
-                        style={{ width: "650px", paddingBottom: "30px" }}
+                        style={{ width: "710px", paddingBottom: "15px" }}
                         disabled={options.length === 0}
                         onChange={(player) => {
                             this.setState({ mvp_player: player.name });
@@ -756,6 +756,37 @@ export default class OneOnOneManager extends React.Component {
         }
 
         const { is_comeback, total_overtimes } = this.state;
+
+        // comeback
+        const comeback_block = (
+            <div style={{ display:"inline-block", paddingBottom: "15px", }}>
+                <div
+                    className="ui checkbox"
+                    onClick={() => { this.setState({ is_comeback: !is_comeback }) }}
+                >
+                    <input type="checkbox" checked={is_comeback} />
+                    <label>Comeback?</label>
+                </div>
+            </div>
+        );
+
+        // overtime
+        const overtime_block = (
+            <div style={{ width: "100%", display:"flex", paddingBottom: "10px", }}>
+                <label style={{ display: "inline-block", fontWeight:"bold", marginRight: "7px", lineHeight: "33px" }}>Number of Overtimes:</label>
+                <div style={{ flexGrow: "100", display: "inline-block" }}>
+                    <TextInput
+                        name={'total_overtimes'}
+                        type={'number'}
+                        value={total_overtimes}
+                        placeholder={"0"}
+                        onChange={(e) => {
+                            this.setState({ total_overtimes: Math.min(20,Math.max(0,Number(e.target.value)) || 0) });
+                        }}
+                    />
+                </div>
+            </div>
+        );
 
         return (
 
@@ -823,53 +854,48 @@ export default class OneOnOneManager extends React.Component {
                     {blocks[0]}
                     <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
 
-                        <div
-                            className="ui checkbox"
-                             style={{ position: "absolute", bottom: bottom + 110 }}
-                             onClick={() => { this.setState({ is_comeback: !is_comeback }) }}
-                        >
-                            <input type="checkbox" checked={is_comeback} />
-                            <label>Comeback?</label>
+                        <div style={{ position: "absolute", bottom: bottom, width:"100%" }}>
+                            {(this.state.saved_game_id && update_result_route && update_result_route !== "") ?
+                                (
+                                    <ButtonInput
+                                        text={"Update"}
+                                        style={{ width: "100%" }}
+                                        onClick={this.updateResult}
+                                    />
+                                ): (
+                                    <ButtonInput
+                                        text={"Save"}
+                                        style={{ width: "100%" }}
+                                        onClick={this.saveResult}
+                                        disabled={this.state.saved || this.state.saving}
+                                    />
+                                )}
                         </div>
 
-                        <div
-                            className="ui"
-                            style={{ position: "absolute", bottom: bottom + 45 }}
-                        >
-                            <label style={{ display: "inline-block", fontWeight:"bold", marginRight: "7px" }}>OTs:</label>
-                            <div style={{ width :"65px", display: "inline-block" }}>
-                            <TextInput
-                                name={'total_overtimes'}
-                                type={'number'}
-                                value={total_overtimes}
-                                placeholder={"0"}
-                                onChange={(e) => {
-                                    this.setState({ total_overtimes: Math.min(20,Math.max(0,Number(e.target.value)) || 0) });
-                                }}
-                            />
-                            </div>
-                        </div>
-
-                        {(this.state.saved_game_id && update_result_route && update_result_route !== "") ?
-                            (
-                                <ButtonInput
-                                    text={"Update"}
-                                    style={{ position: "absolute", bottom: bottom }}
-                                    onClick={this.updateResult}
-                                />
-                            ): (
-                                <ButtonInput
-                                    text={"Save"}
-                                    style={{ position: "absolute", bottom: bottom }}
-                                    onClick={this.saveResult}
-                                    disabled={this.state.saved || this.state.saving}
-                                />
-                            )}
                     </div>
                     {blocks[1]}
                 </div>
 
                 {mvp_block}
+
+                <div className="ui link cards centered" style={{
+                    position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", paddingBottom: "20px",
+                    width: "710px",
+                }}>
+                    {overtime_block}
+
+                    <div style={{ width: "710px" }}>
+
+                        {comeback_block}
+
+                        <div style={{ display: "inline-block", marginLeft: "15px" }}>
+
+                           {/*save button*/}
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
         );
     }

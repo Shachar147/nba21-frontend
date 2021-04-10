@@ -81,6 +81,33 @@ export default class TodayRandomGames extends React.Component {
         );
     }
 
+    Delete(id){
+        const self = this;
+
+        if (id !== '') {
+            apiDelete(this,
+                '/records/random/' + id, // + dtToday,
+                function (res) {
+                },
+                function (error) {
+                    console.log(error);
+                    let req_error = error.message;
+                    if (error.message.indexOf("401") !== -1) {
+                        req_error = UNAUTHORIZED_ERROR;
+                    }
+                    if (error.message.indexOf("400") !== -1) {
+                        req_error = `Oops, it seems like delete game operation failed.(<Br>It's probably related to a server error`
+                    }
+                    self.setState({error: req_error});
+                },
+                function () {
+                    self.setState({ loaded: false });
+                    self.loadRecords();
+                }
+            );
+        }
+    }
+
     componentDidMount() {
         this.loadRecords();
     }
@@ -124,8 +151,6 @@ export default class TodayRandomGames extends React.Component {
             if (record.total_overtimes) arr.push("Total Overtimes: " + record.total_overtimes);
             if (record.is_comeback) arr.push("Comeback!");
             const summary = arr.join(", ");
-
-            const self = this;
 
             game_blocks.push(
                 <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
@@ -172,43 +197,45 @@ export default class TodayRandomGames extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="ui primary button" style={{ zIndex:9999, position: "absolute", bottom: "-18px" }} onClick={() => {
-                                this.props.onSelect(team2, team1);
-                            }}>
-                                Play Again!
+                            <div className={"buttons"} style={{ zIndex:9999, position: "absolute", bottom: "-18px" }}>
+                                <div
+                                    className="ui primary button"
+                                    style={{ display:"inline-block", margin:"0px 5px" }}
+                                    onClick={() => {
+                                    this.props.onSelect(team2, team1);
+                                }}>
+                                    Play Again!
+                                </div>
                             </div>
-                            <div className="ui nbared button" style={{ zIndex:9999, color: "white", bottom: "-18px" }} onClick={() => {
-                                const id = record.id;
-                                if (id !== '') {
-                                    apiDelete(this,
-                                        '/records/random/' + id, // + dtToday,
-                                        function (res) {
-                                        },
-                                        function (error) {
-                                            console.log(error);
-                                            let req_error = error.message;
-                                            if (error.message.indexOf("401") !== -1) {
-                                                req_error = UNAUTHORIZED_ERROR;
-                                            }
-                                            if (error.message.indexOf("400") !== -1) {
-                                                req_error = `Oops, it seems like delete game operation failed.(<Br>It's probably related to a server error`
-                                            }
-                                            self.setState({error: req_error});
-                                        },
-                                        function () {
-                                            self.setState({ loaded: false });
-                                            self.loadRecords();
-                                        }
-                                    );
-                                }
-                            }}>
-                                Delete
+                            <div
+                                style={{
+                                    display:"inline-block",
+                                    color: "black",
+                                    position: "absolute",
+                                    top: "5px",
+                                    right: "5px",
+                                    fontSize: "11px",
+                                    textTransform: "uppercase",
+                                    cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                    const id = record.id;
+                                    this.Delete(id);
+                                }}>
+                                <img
+                                    // className="ui nbared button"
+                                    src={"/delete.png"}
+                                    width={30}
+                                    height={30}
+                                    alt={"Delete"}
+                                    title={"Delete"}
+                                />
                             </div>
                             <div className="ui link cards centered" style={{
-                                zIndex:9999, position: "absolute", bottom: "120px",
+                                zIndex:9999, position: "absolute", top: "-3px",
                                 backgroundColor: "white",
                                 padding: "5px 30px",
-                                border: "1px solid #efefef",
+                                border: "1px solid #ccc",
                                 borderRadius: "8px",
                                 display: (summary === "") ? 'none' : 'block',
                             }}>

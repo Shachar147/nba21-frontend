@@ -183,7 +183,7 @@ export default class RealGames extends React.Component {
              const mvpText = (record.mvp_player) ? 'MVP/s: ' + record.mvp_player + ' (' + record.mvp_player_points + 'pts)' : 'MVP: N/A';
 
             game_blocks.push(
-                <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
+                <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px", marginTop: "45px" }} key={record.date + "_" + team1 + "_" + team2}>
                     <div className="ui two column stackable center aligned grid">
                         <div className="ui vertical divider">VS</div>
                         <div className="middle aligned row" style={{ paddingBottom: "40px" }}>
@@ -228,10 +228,10 @@ export default class RealGames extends React.Component {
                                 </div>
                             </div>
                             <div className="ui link cards centered" style={{
-                                zIndex:9999, position: "absolute", bottom: "105px",
+                                zIndex:9999, position: "absolute", top: "-3px",
                                 backgroundColor: "white",
                                 padding: "5px 30px",
-                                border: "1px solid #efefef",
+                                border: "1px solid #ccc",
                                 borderRadius: "8px",
                                 display: (show_results) ? "block" : "none",
                             }}>
@@ -282,7 +282,7 @@ export default class RealGames extends React.Component {
                     </div>
                 </div>
 
-                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "10px" }}>
+                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto" }}>
                     Total: {game_blocks.length}
                 </div>
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
