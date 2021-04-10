@@ -153,7 +153,7 @@ export default class TodayRandomGames extends React.Component {
             const summary = arr.join(", ");
 
             game_blocks.push(
-                <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px" }} key={record.date + "_" + team1 + "_" + team2}>
+                <div className="ui placeholder segment" style={{ width: "40%", margin: "20px 20px" }} key={record.date + "_" + team1 + "_" + team2}>
                     <div className="ui two column stackable center aligned grid">
                         <div className="ui vertical divider">VS</div>
                         <div className="middle aligned row" style={{ paddingBottom: "40px" }}>
@@ -271,7 +271,7 @@ export default class TodayRandomGames extends React.Component {
                     See list of your today's played NBA games. You can choose any of these games and play it again!
                 </div>
 
-                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>
+                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "10px" }}>
                     Total: {game_blocks.length}
                 </div>
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "20px" }}>

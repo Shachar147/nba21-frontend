@@ -183,7 +183,7 @@ export default class RealGames extends React.Component {
              const mvpText = (record.mvp_player) ? 'MVP/s: ' + record.mvp_player + ' (' + record.mvp_player_points + 'pts)' : 'MVP: N/A';
 
             game_blocks.push(
-                <div className="ui placeholder segment" style={{ width: "51%", marginBottom: "30px", marginTop: "45px" }} key={record.date + "_" + team1 + "_" + team2}>
+                <div className="ui placeholder segment" style={{ width: "40%", margin: "35px 20px" }} key={record.date + "_" + team1 + "_" + team2}>
                     <div className="ui two column stackable center aligned grid">
                         <div className="ui vertical divider">VS</div>
                         <div className="middle aligned row" style={{ paddingBottom: "40px" }}>
