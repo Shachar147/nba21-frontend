@@ -20,6 +20,8 @@ export default function Header(props) {
                 <span style={{ margin: "0px 10px" }}>/</span>
                 <Link to={"/logout"}>Logout</Link>
                 <span style={{ margin: "0px 10px" }}>/</span>
+                <Link to={"/user/settings"}>Settings</Link>
+                <span style={{ margin: "0px 10px" }}>/</span>
                 <Link to={"/sync"} style={{ opacity: 0.4, color: "black" }}>Sync</Link>
                 <span style={{ float: "right" , opacity: "0.6"}}>
                     {(user) ? `Connected as: ${user}` : ""}

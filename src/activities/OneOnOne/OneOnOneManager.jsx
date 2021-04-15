@@ -91,6 +91,11 @@ export default class OneOnOneManager extends React.Component {
 
             is_comeback: false,
             total_overtimes: 0,
+
+            loadedSettings: false,
+            settings: {
+                auto_calc_ot: 0,
+            }
         };
 
         this.restart = this.restart.bind(this);
@@ -100,6 +105,8 @@ export default class OneOnOneManager extends React.Component {
         this.replaceOne = this.replaceOne.bind(this);
         this.onSpecificReplace = this.onSpecificReplace.bind(this);
         this.initStats = this.initStats.bind(this);
+        this.loadUserSettings = this.loadUserSettings.bind(this);
+        this.calcOT = this.calcOT.bind(this);
     }
 
     componentDidMount() {
@@ -180,6 +187,34 @@ export default class OneOnOneManager extends React.Component {
         } else {
             self.setState({ loadedstats: true })
         }
+
+        this.loadUserSettings();
+    }
+
+    loadUserSettings(){
+        const self = this;
+        apiGet(this,
+            '/user/settings',
+            function(res) {
+                let data = res.data.data;
+                let settings = {};
+                data.forEach((setting) => {
+                   settings[setting.name.toLowerCase()] = setting.value;
+                });
+                // console.log(settings);
+                self.setState({ settings });
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no Settings loaded :(<Br>It's probably related to a server error` }
+                self.setState({ error: req_error });
+            },
+            async function() {
+                await self.setState({ loadedSettings: true });
+            }
+        );
     }
 
     customKeysStats(self, stats){
@@ -509,6 +544,25 @@ export default class OneOnOneManager extends React.Component {
         this.setState({ saving: false });
     }
 
+    calcOT(){
+        const { auto_calc_ot_game_length } = this.state.settings;
+        const { player1, player2, scores } = this.state;
+
+        let val = Math.max(scores[player1.name], scores[player2.name]);
+        let total_overtimes = 0;
+        // console.log("val: ", val);
+        // console.log("auto calc", auto_calc_ot_game_length);
+        while (val >= Number(auto_calc_ot_game_length) + 2) {
+            val -= 2;
+            total_overtimes++;
+            // console.log("val2:", val);
+        }
+
+        // console.log("total overtimes: ",total_overtimes);
+
+        this.setState({ total_overtimes });
+    }
+
     async onSpecificReplace(player, new_player){
         let { scores, scores_history, player1, player2} = this.state;
 
@@ -540,7 +594,7 @@ export default class OneOnOneManager extends React.Component {
         let { what, game_mode, custom_details_title, styles, get_route, get_stats_route, update_result_route, stats_page, stats_title, percents } = this.props;
 
         let error = this.state.error;
-        const is_loading = !this.state.loaded;
+        const is_loading = !this.state.loaded || !this.state.loadedSettings;
         if (error || (!is_loading && this.state.players.length === 0)) {
             error = error || `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error`;
             return (
@@ -682,10 +736,14 @@ export default class OneOnOneManager extends React.Component {
                             max_lose_streak: stats[player.name]?.max_lose_streak || "0",
                         }}
 
-                        onChange={(e) => {
+                        onChange={async (e) => {
                             let scores = this.state.scores;
                             scores[player.name] = Number(Math.max(0,e.target.value));
-                            this.setState({ scores });
+                            await this.setState({ scores });
+
+                            if (Number(this.state.settings.auto_calc_ot)) {
+                                this.calcOT();
+                            }
                         }}
                         singleShot={scores[player.name]}
                         singleRounds={scores_history[player.name]}
@@ -762,9 +820,8 @@ export default class OneOnOneManager extends React.Component {
             <div style={{ paddingBottom: "20px" }}>
                 <div
                     className="ui checkbox"
-                    onClick={() => { this.setState({ is_comeback: !is_comeback }) }}
                 >
-                    <input type="checkbox" checked={is_comeback} />
+                    <input type="checkbox" checked={is_comeback} onChange={() => { this.setState({ is_comeback: !is_comeback }) }}  />
                     <label>Comeback?</label>
                 </div>
             </div>

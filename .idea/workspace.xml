@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/UserSettings.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneManager.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layouts/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layouts/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Real/RealStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Real/RealStats.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +39,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.linters.configure.manually.selectedeslint" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../monitor-cloud" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -106,7 +110,8 @@
       <workItem from="1617273167143" duration="9225000" />
       <workItem from="1617526664187" duration="644000" />
       <workItem from="1617551243144" duration="8519000" />
-      <workItem from="1617648679959" duration="54233000" />
+      <workItem from="1617648679959" duration="59641000" />
+      <workItem from="1618482631452" duration="4755000" />
     </task>
     <servers />
   </component>

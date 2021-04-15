@@ -18,6 +18,7 @@ import Shootout from "./pages/Shootout/Shootout";
 import Real from "./pages/Real/Real";
 import RealInjured from "./pages/Real/RealInjured";
 import RealInactive from "./pages/Real/RealInactive";
+import UserSettings from "./pages/UserSettings";
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
                     <PrivateRoute exact path="/sync" component={SyncPage} />
                     <PrivateRoute exact path="/shootout" component={Shootout} />
                     <PrivateRoute path="/shootout/stats" component={Shootout} data={{view_stats:true}} />
+                    <PrivateRoute exact path="/user/settings" component={UserSettings} />
                     <PrivateRoute path="/" component={MainPage} />
                 </Switch>
             </BrowserRouter>

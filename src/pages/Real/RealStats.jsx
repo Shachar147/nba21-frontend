@@ -1,7 +1,7 @@
 import React from 'react';
 import PlayerCard from '../../components/PlayerCard';
 import SearchInput from '../../components/inputs/SearchInput';
-import {formatDate, isDefined} from "../../helpers/utils";
+import {isDefined} from "../../helpers/utils";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
 
@@ -16,7 +16,7 @@ import {
 } from "../../helpers/consts";
 import {
     GPSort,
-    OVERALL_HIGHLIGHTS, specificSort, specificSortDate,
+    specificSort, specificSortDate,
     WPSort
 } from "../../helpers/sort";
 import DropdownInput from "../../components/inputs/DropdownInput";
@@ -39,7 +39,6 @@ export default class RealStats extends React.Component {
             "merged": false,
 
             "orderByOptions":[
-                // { "Career Win%, 300 Games or more": WPSort },
                 { "Career Win%": WPSort },
                 { "Career Games Played": GPSort },
 
@@ -182,12 +181,6 @@ export default class RealStats extends React.Component {
                         else {
                             player[recordDetail] = records[player.name][recordDetail];
                         }
-                        // if (!isDefined(player[recordDetail])) {
-                        //     player[recordDetail] = records[player.name][recordDetail];
-                        // }
-                        // else if (recordDetail === 'lastSyncAt'){
-                        //     player['lastStatsSyncAt'] = records[player.name][recordDetail];
-                        // }
                     }
                 })
 
@@ -208,17 +201,10 @@ export default class RealStats extends React.Component {
 
         const players = [...this.state.players];
 
-        // console.log(leaderboard);
-
         return players.filter((iter) => {
 
             if (!records[iter.name]) { return false; }
 
-            // if (this.state.orderBy === 'Career Win%, 300 Games or more'){
-            //     if (!iter.GP || iter.GP < 300){
-            //         return false;
-            //     }
-            // }
             if (min_games && min_games !== ""){
                 if (!iter.GP || iter.GP < min_games){
                     return false;
