@@ -593,6 +593,8 @@ export default class OneOnOneManager extends React.Component {
 
         let { what, game_mode, custom_details_title, styles, get_route, get_stats_route, update_result_route, stats_page, stats_title, percents } = this.props;
 
+        let original_custom_title = custom_details_title;
+
         let error = this.state.error;
         const is_loading = !this.state.loaded || !this.state.loadedSettings;
         if (error || (!is_loading && this.state.players.length === 0)) {
@@ -667,7 +669,7 @@ export default class OneOnOneManager extends React.Component {
         }
 
         if (custom_details_title){
-            custom_details_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>${custom_details_title}</div>`;
+            original_custom_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>${custom_details_title}</div>`;
         }
 
         const { stats, scores, scores_history } = this.state;
@@ -686,6 +688,8 @@ export default class OneOnOneManager extends React.Component {
             let custom_details = undefined;
             if (what === 'teams'){
                 custom_details = [];
+
+                custom_details_title = `2K Rating: ${_2k_rating}` + original_custom_title;
 
                 player.players.forEach(function(player){
                     let rate = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
