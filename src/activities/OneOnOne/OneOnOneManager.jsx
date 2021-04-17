@@ -347,6 +347,7 @@ export default class OneOnOneManager extends React.Component {
         } = this.props;
 
         this.setState({ saving: true });
+        await sleep(100);
 
         const score1 = this.state.scores[this.state.player1.name];
         const score2 = this.state.scores[this.state.player2.name];
@@ -443,7 +444,7 @@ export default class OneOnOneManager extends React.Component {
     async saveResult(){
 
         await this.setState({ saving: true });
-        // await sleep(5000);
+        await sleep(100);
 
         const {
             save_result_route,
@@ -922,6 +923,7 @@ export default class OneOnOneManager extends React.Component {
                                         text={"Update"}
                                         style={{ width: "100%" }}
                                         onClick={this.updateResult}
+                                        disabled={this.state.saving}
                                     />
                                 ): (
                                     <ButtonInput
