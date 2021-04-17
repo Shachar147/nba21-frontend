@@ -114,8 +114,9 @@ export default class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ "Total Comebacks Suffered": (a,b) => specificSort('total_lost_comebacks',a, b) });
         }
 
+        this.state.orderByOptions.push({ "2K Rating": _2kRatingSort });
+
         if (this.props.what === "players"){
-            this.state.orderByOptions.push({ "2K Rating": _2kRatingSort });
 
             if (["Three Points Contest","Stopwatch Shootout"].indexOf(this.props.game_mode) === -1) {
                 this.state.orderByOptions.push({"Average Opponent 2K Rating": average2kRatingSort});
@@ -391,9 +392,10 @@ export default class OneOnOneStats extends React.Component {
                     { players.map((player,idx) => {
                         let _2k_rating = player['_2k_rating'] || 'N/A';
 
-                        if (what === 'teams'){
-                            _2k_rating = undefined;
-                        }
+                        // NBA21-12 - implemented 2k rating
+                        // if (what === 'teams'){
+                        //     _2k_rating = undefined;
+                        // }
 
                         return (<PlayerCard
                                 key={idx}
