@@ -37,6 +37,7 @@ export default class Shootout extends React.Component {
 
             saved_game_id: 0,
             view_stats: this.props.view_stats,
+            error_retry: false,
         };
 
         this.searchPlayers = this.searchPlayers.bind(this);
@@ -58,12 +59,12 @@ export default class Shootout extends React.Component {
                 let players = res.data.data;
                 self.setState({ players });
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry });
             },
             function() {
                 setTimeout(() => {
@@ -147,12 +148,12 @@ export default class Shootout extends React.Component {
                 await self.setState({ saved: true, saved_game_id: saved_game_id });
                 // self.initStats();
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed saving this game.` }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry });
             },
             function() {
                 // finally
@@ -180,12 +181,12 @@ export default class Shootout extends React.Component {
                 await _this.setState({ saved: true });
                 // _this.initStats();
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed updating this game.` }
-                _this.setState({ error: req_error });
+                _this.setState({ error: req_error, error_retry });
             },
             function() {
                 // finally
@@ -269,11 +270,12 @@ export default class Shootout extends React.Component {
         }
 
         let error = this.state.error;
+        let error_retry = this.state.error_retry;
         const is_loading = !this.state.loaded;
         if (error || (!is_loading && this.state.players.length === 0)) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         } else if (is_loading) {
             return (

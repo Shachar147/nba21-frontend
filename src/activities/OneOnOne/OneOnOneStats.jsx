@@ -176,12 +176,12 @@ export default class OneOnOneStats extends React.Component {
                     const leaderboard = self.buildLeaderBoard(records);
                     self.setState({ records, leaderboard });
                 },
-                function(error) {
+                function(error, retry) {
                     console.log(error);
                     let req_error = error.message;
                     if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                     if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
-                    self.setState({ error: req_error });
+                    self.setState({ error: req_error, error_retry: retry });
                 },
                 function() {
                     self.setState({ loaded2: true });
@@ -301,17 +301,18 @@ export default class OneOnOneStats extends React.Component {
 
         const { what, game_mode, stats_title, custom_description } = this.props;
 
-        let error = this.state.error;
-        const is_loading = !(this.state.loaded1 && this.state.loaded2 && this.state.merged);
+        let { error_retry, error, loaded1, loaded2, merged, loaderDetails } = this.state;
+
+        const is_loading = !(loaded1 && loaded2 && merged);
         if (error || (!is_loading && this.state.players.length === 0)) {
             error = error || `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error`;
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         }
         else if (is_loading) {
             return (
-                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
+                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={loaderDetails} />
             );
         }
 

@@ -30,6 +30,22 @@ CustomMessage.args = {
     message: 'This is a custom message'
 };
 
+export const RetryButton = Template.bind({});
+CustomMessage.args = {
+    message: 'This is a custom message',
+    retry: () => {
+        alert("Retry!");
+    }
+};
+
+export const RetryButtonRefresh = Template.bind({});
+CustomMessage.args = {
+    message: 'This is a custom message',
+    retry: () => {
+        window.location.reload(false)
+    }
+};
+
 // export const UnauthorizedMessage = Template.bind({});
 // UnauthorizedMessage.args = {
 //     message: UNAUTHORIZED_ERROR

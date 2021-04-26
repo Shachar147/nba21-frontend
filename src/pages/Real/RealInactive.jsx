@@ -37,6 +37,7 @@ export default class RealInactive extends React.Component {
                 { 'Name': (a,b) => textSort('name', b, a) },
             ],
             orderBy: DEFAULT_REAL_INACTIVE_ORDER,
+            error_retry: false,
         };
 
         this.searchPlayers = this.searchPlayers.bind(this);
@@ -64,12 +65,12 @@ export default class RealInactive extends React.Component {
                 const leaderboard = self.buildLeaderBoard(records);
                 self.setState({ players, records, leaderboard });
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry });
             },
             function() {
                 setTimeout(() => {
@@ -129,21 +130,22 @@ export default class RealInactive extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        let error = this.state.error;
-        const is_loading = !this.state.loaded;
+        let { error, error_retry, loaded, loaderDetails, orderByOptions } = this.state;
+
+        const is_loading = !loaded;
         if (error || (!is_loading && this.state.players.length === 0)) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         } else if (is_loading) {
             return (
-                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
+                <LoadingPage message={"Please wait while loading players..."} loaderDetails={loaderDetails} />
             );
         }
 
         let selectedOption = null;
-        const orderByOptions = this.state.orderByOptions.map((x,idx) => {
+        orderByOptions = orderByOptions.map((x,idx) => {
 
             const name = Object.keys(x)[0];
 

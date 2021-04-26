@@ -24,6 +24,7 @@ export default class RealGames extends React.Component {
             loaderDetails: LOADER_DETAILS(),
             show_results: false,
             today_played_games: [],
+            error_retry: false,
         };
 
         this.loadRecords = this.loadRecords.bind(this);
@@ -48,12 +49,12 @@ export default class RealGames extends React.Component {
                 let records = res.data;
                 self.setState({ records });
             },
-            function(error) {
+            function(error, retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no games loaded :(<Br>It's probably related to a server error` }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry: retry });
             },
             function() {
                 self.setState({ loaded: true });
@@ -72,12 +73,12 @@ export default class RealGames extends React.Component {
 
                 self.setState({ teams });
             },
-            function(error) {
+            function(error, retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no games loaded :(<Br>It's probably related to a server error` }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry: retry });
             },
             function() {
                 self.setState({ loaded2: true });
@@ -90,12 +91,12 @@ export default class RealGames extends React.Component {
                 let today_played_games = res.data.data;
                 self.setState({ today_played_games });
             },
-            function(error) {
+            function(error, retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like there was an error loading today played games :(<Br>It's probably related to a server error` }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry: retry });
             },
             function() {
                 self.setState({ loaded3: true });
@@ -109,7 +110,7 @@ export default class RealGames extends React.Component {
 
     render() {
 
-        let { error, loaded, loaded2, loaded3, records, loaderDetails, teams, show_results, today_played_games } = this.state;
+        let { error, loaded, loaded2, loaded3, records, loaderDetails, teams, show_results, today_played_games, error_retry } = this.state;
 
         const played_game_hash = {};
         today_played_games.forEach((game) => {
@@ -122,7 +123,7 @@ export default class RealGames extends React.Component {
         if (error || (!is_loading && records.length === 0)) {
             error = error || `Oops, it seems like no games loaded :(<Br>It's probably related to a server error`;
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         }
         else if (is_loading) {

@@ -75,6 +75,7 @@ export default class RealStats extends React.Component {
             "orderBy": DEFAULT_REAL_STATS_ORDER,
             loaderDetails: LOADER_DETAILS(),
             min_games: DEFAULT_REAL_STATS_MIN_GAMES,
+            error_retry: false,
         };
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -121,12 +122,12 @@ export default class RealStats extends React.Component {
                 const leaderboard = self.buildLeaderBoard(records);
                 self.setState({ records, leaderboard });
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry });
             },
             function() {
                 self.setState({ loaded2: true });
@@ -143,12 +144,12 @@ export default class RealStats extends React.Component {
                 let players = res.data.data;
                 self.setState({ players });
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry });
             },
             function() {
 
@@ -235,20 +236,21 @@ export default class RealStats extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        if (this.state.loaded1 && this.state.loaded2 && !this.state.merged){
+        const { error_retry, loaded1, loaded2, merged, error, loaderDetails } = this.state;
+
+        if (loaded1 && loaded2 && !merged){
             this.merge();
         }
 
-        let error = this.state.error;
-        const is_loading = !(this.state.loaded1 && this.state.loaded2 && this.state.merged);
+        const is_loading = !(loaded1 && loaded2 && merged);
         if (is_loading) {
             return (
-                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
+                <LoadingPage message={"Please wait while loading players..."} loaderDetails={loaderDetails} />
             );
         } else if (error || this.state.players.length === 0) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         }
 

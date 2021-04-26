@@ -3,6 +3,7 @@ import Header from "../components/layouts/Header";
 import {Redirect} from "react-router-dom";
 import {UNAUTHORIZED_ERROR} from "../helpers/consts";
 import PropTypes from "prop-types";
+import ButtonInput from "../components/inputs/ButtonInput";
 
 export default class ErrorPage extends React.Component {
 
@@ -14,7 +15,7 @@ export default class ErrorPage extends React.Component {
 
     render() {
 
-        const { title, message } = this.props;
+        const { title, message, retry } = this.props;
         // const title = this.props.title || "Error";
         // const message = this.props.message || "Oops something went wrong";
 
@@ -35,6 +36,24 @@ export default class ErrorPage extends React.Component {
                             </div>
                             <p style={{ fontWeight: "normal" }} dangerouslySetInnerHTML={{ __html: message }} />
                         </div>
+
+                        {(!retry) ? "" :
+                            <div className="sub header content" style={{
+                                width: "100%",
+                                bottom: "-60px",
+                                textAlign: "center",
+                                position: "absolute",
+                                fontSize: "20px",
+                                fontWeight: "bold"
+                            }}>
+                                <div className="ui link cards centered" style={{margin: "auto"}}>
+                                    <ButtonInput
+                                        text={"Retry"}
+                                        onClick={retry}
+                                    />
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -51,7 +70,10 @@ ErrorPage.propTypes = {
      * Descriptive message that will appear under the title.
      */
     message: PropTypes.string,
-
+    /**
+     * If passed, "retry" button will appear suggesting to retry failed action.
+     */
+    retry: PropTypes.func,
 };
 
 ErrorPage.defaultProps = {

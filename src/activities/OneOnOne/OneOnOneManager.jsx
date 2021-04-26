@@ -95,7 +95,9 @@ export default class OneOnOneManager extends React.Component {
             loadedSettings: false,
             settings: {
                 auto_calc_ot: 0,
-            }
+            },
+
+            error_retry: false,
         };
 
         this.restart = this.restart.bind(this);
@@ -135,19 +137,11 @@ export default class OneOnOneManager extends React.Component {
         let self = this;
         apiGet(this,
             get_route,
-            function(res) {
+            async function(res) {
                 let players = res.data.data || res.data;
                 self.setState({ players });
-                self.init();
-            },
-            function(error) {
-                console.log(error);
-                let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR }
-                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
-                self.setState({ error: req_error });
-            },
-            function() {
+                await self.init();
+
                 setTimeout(async () => {
                     await self.setState({ loaded: true })
 
@@ -157,31 +151,42 @@ export default class OneOnOneManager extends React.Component {
                     }
                 },
                 LOADING_DELAY);
+            },
+            function(error, error_retry) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
+                self.setState({ error: req_error, error_retry });
+            },
+            function() {
+
             }
         );
 
         if (get_stats_route && get_stats_route !== "") {
             apiGet(this,
                 get_stats_route,
-                function(res) {
+                async function(res) {
                     let stats = res.data.data;
                     stats = self.customKeysStats(self, stats);
-                    self.setState({ stats });
-                },
-                function(error) {
-                    console.log(error);
-                    let req_error = error.message;
-                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
-                    if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
-                    self.setState({ error: req_error });
-                },
-                async function() {
-                    await self.setState({ loadedStats: true });
+
+                    await self.setState({ stats, loadedStats: true });
 
                     // initialize stats
                     if (self.canInitStats()){
                         self.initStats();
                     }
+                },
+                function(error, error_retry) {
+                    console.log(error);
+                    let req_error = error.message;
+                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                    if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
+                    self.setState({ error: req_error, error_retry });
+                },
+                async function() {
+
                 }
             );
         } else {
@@ -202,17 +207,17 @@ export default class OneOnOneManager extends React.Component {
                    settings[setting.name.toLowerCase()] = setting.value;
                 });
                 // console.log(settings);
-                self.setState({ settings });
+                self.setState({ settings, loadedSettings: true });
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no Settings loaded :(<Br>It's probably related to a server error` }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry });
             },
             async function() {
-                await self.setState({ loadedSettings: true });
+
             }
         );
     }
@@ -425,12 +430,12 @@ export default class OneOnOneManager extends React.Component {
                     await self.setState({ saved: true, winner, loser, scores_history, scores, stats, });
                     self.initStats();
                 },
-                function(error) {
+                function(error, error_retry) {
                     console.log(error);
                     let req_error = error.message;
                     if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                     if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
-                    self.setState({ error: req_error });
+                    self.setState({ error: req_error, error_retry });
                 },
                 function() {
                     // finally
@@ -529,12 +534,12 @@ export default class OneOnOneManager extends React.Component {
                     await self.setState({ saved: true, winner, loser, scores_history, scores, stats, saved_game_id });
                     self.initStats();
                 },
-                function(error) {
+                function(error, error_retry) {
                     console.log(error);
                     let req_error = error.message;
                     if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                     if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${self.props.what} loaded :(<Br>It's probably related to a server error` }
-                    self.setState({ error: req_error });
+                    self.setState({ error: req_error, error_retry });
                 },
                 function() {
                     // finally
@@ -596,16 +601,17 @@ export default class OneOnOneManager extends React.Component {
 
         let original_custom_title = custom_details_title;
 
-        let error = this.state.error;
-        const is_loading = !this.state.loaded || !this.state.loadedSettings;
-        if (error || (!is_loading && this.state.players.length === 0)) {
+        let { error, error_retry, loaded, loadedSettings, players, loaderDetails } = this.state;
+
+        const is_loading = !loaded || !loadedSettings;
+        if (error || (!is_loading && players.length === 0)) {
             error = error || `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error`;
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         } else if (is_loading) {
             return (
-                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
+                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={loaderDetails} />
             );
         }
 

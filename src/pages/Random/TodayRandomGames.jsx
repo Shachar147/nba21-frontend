@@ -22,6 +22,7 @@ export default class TodayRandomGames extends React.Component {
             loaderDetails: LOADER_DETAILS(),
 
             delete_id: '',
+            error_retry: false,
         };
 
         this.loadRecords = this.loadRecords.bind(this);
@@ -46,12 +47,12 @@ export default class TodayRandomGames extends React.Component {
                 let records = res.data.data;
                 self.setState({ records });
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no games loaded :(<Br>It's probably related to a server error` }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry });
             },
             function() {
                 self.setState({ loaded: true });
@@ -70,12 +71,12 @@ export default class TodayRandomGames extends React.Component {
 
                 self.setState({ teams });
             },
-            function(error) {
+            function(error, error_retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no games loaded :(<Br>It's probably related to a server error` }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry });
             },
             function() {
                 self.setState({ loaded2: true });
@@ -92,7 +93,7 @@ export default class TodayRandomGames extends React.Component {
                 '/records/random/' + id, // + dtToday,
                 function (res) {
                 },
-                function (error) {
+                function (error, error_retry) {
                     console.log(error);
                     let req_error = error.message;
                     if (error.message.indexOf("401") !== -1) {
@@ -101,7 +102,7 @@ export default class TodayRandomGames extends React.Component {
                     if (error.message.indexOf("400") !== -1) {
                         req_error = `Oops, it seems like delete game operation failed.(<Br>It's probably related to a server error`
                     }
-                    self.setState({error: req_error});
+                    self.setState({error: req_error, error_retry});
                 },
                 function () {
                     self.setState({ delete_id: '' });
@@ -117,12 +118,12 @@ export default class TodayRandomGames extends React.Component {
 
     render() {
 
-        let { error, loaded, loaded2, records, loaderDetails, teams } = this.state;
+        let { error, loaded, loaded2, records, loaderDetails, teams, error_retry } = this.state;
 
         const is_loading = !(loaded && loaded2);
         if (error) {
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         }
         else if (is_loading) {

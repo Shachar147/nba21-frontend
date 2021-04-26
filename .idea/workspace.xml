@@ -7,8 +7,18 @@
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneManager.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneStats.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ErrorPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ErrorPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Random/RealGames.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Random/RealGames.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Random/TodayRandomGames.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Random/TodayRandomGames.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Real/RealInactive.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Real/RealInactive.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Real/RealStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Real/RealStats.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Shootout/Shootout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Shootout/Shootout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/pages/ErrorPage.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/pages/ErrorPage.stories.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,6 +119,7 @@
       <workItem from="1617551243144" duration="8519000" />
       <workItem from="1617648679959" duration="59641000" />
       <workItem from="1618482631452" duration="9073000" />
+      <workItem from="1619387318300" duration="4286000" />
     </task>
     <servers />
   </component>

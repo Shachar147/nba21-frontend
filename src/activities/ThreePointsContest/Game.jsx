@@ -30,6 +30,8 @@ export default class Game extends React.Component {
             game_started: true,
             error:"",
 
+            error_retry: false,
+
             saved: false,
         };
 
@@ -283,12 +285,12 @@ export default class Game extends React.Component {
                 await self.setState({ saved: true });
                 // self.initStats();
             },
-            function(error) {
+            function(error, retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed saving this game.` }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry: retry });
             },
             function() {
                 // finally
@@ -298,10 +300,10 @@ export default class Game extends React.Component {
 
     render(){
 
-        const { error } = this.state;
+        const { error, error_retry } = this.state;
         if (error) {
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         }
 

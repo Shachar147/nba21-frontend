@@ -62,6 +62,7 @@ export default class Settings extends React.Component {
             error: undefined,
             loaderDetails: LOADER_DETAILS(),
             view_stats: this.props.view_stats || false,
+            error_retry: false,
         };
 
         this.toggleState = this.toggleState.bind(this);
@@ -81,12 +82,12 @@ export default class Settings extends React.Component {
                 players = players.sort(function(a,b) { return parseFloat(b['3pt_percents'].replace('%','')) - parseFloat(a['3pt_percents'].replace('%','')); })
                 self.setState({ players });
             },
-            function(error) {
+            function(error, retry) {
                 console.log(error);
                 let req_error = error.message;
                 if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
                 if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no players loaded :(<Br>It's probably related to a server error" }
-                self.setState({ error: req_error });
+                self.setState({ error: req_error, error_retry: retry });
             },
             function() {
                 setTimeout(() => {
@@ -321,12 +322,13 @@ export default class Settings extends React.Component {
 
         const computer_level = this.state.computer_level;
 
-        let error = this.state.error;
-        const is_loading = !this.state.loaded;
+        let { error, error_retry, loaded } = this.state;
+
+        const is_loading = !loaded;
         if (error || (!is_loading && this.state.players.length === 0)) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
             return (
-                <ErrorPage message={error} />
+                <ErrorPage message={error} retry={error_retry} />
             );
         } else if (is_loading) {
             return (
