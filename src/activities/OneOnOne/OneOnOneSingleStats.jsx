@@ -151,6 +151,9 @@ export default class OneOnOneSingleStats extends React.Component {
         let lose_block = undefined;
         let win_knockout_block = undefined;
         let lose_knockout_block = undefined;
+        let mvps_block = undefined;
+        let mvp_options = [];
+        const mvps = {};
 
         records.records.reverse().forEach((game) => {
 
@@ -180,6 +183,11 @@ export default class OneOnOneSingleStats extends React.Component {
                 const comeback = is_comeback ? "Comeback.<br/>" : "";
                 const mvp = mvp_player ? `MVP: ${mvp_player.name}.<br/>` : "";
                 const overtimes = total_overtimes ? `Overtimes: ${total_overtimes}.<br/>` : "";
+
+                if (lost_or_won.toLowerCase() === "won" && mvp_player && mvp_player.name) {
+                    mvps[mvp_player.name] = mvps[mvp_player.name] || 0;
+                    mvps[mvp_player.name]++;
+                }
 
                 const opponent_image = players_hash[opponent].picture || players_hash[opponent].logo;
                 myscore = (player1_name === selected_player) ? score1 : score2;
@@ -303,6 +311,35 @@ export default class OneOnOneSingleStats extends React.Component {
             }
         }
 
+        if (what === 'teams'){
+
+            console.log(mvps);
+            console.log(players_hash);
+
+            Object.keys(mvps).sort(function(a,b) { return mvps[b] - mvps[a] } ).forEach((player_name) => {
+                let player_image = players_hash[selected_player].players.filter((iter) => { return iter.name === player_name})[0].picture;
+                mvp_options.push(
+                    `<div class="item">
+                            <img class="ui avatar image" style="height:30px; width:40px;" src="${player_image}">
+                            <div class="content">
+                                <a class="header">${player_name}</a>
+                                <div class="description">won MVP ${mvps[player_name]} times</div>
+                            </div>
+                        </div>`
+                );
+            })
+
+            mvps_block = (
+                <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
+                    <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
+                        MVPs
+                    </h2>
+                    <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
+                    <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: mvp_options.join("") }} />
+                </div>
+            );
+        }
+
         const { player } = this.state;
         const _2k_rating = player['_2k_rating'] || 'N/A';
         let player_block = (
@@ -419,6 +456,7 @@ export default class OneOnOneSingleStats extends React.Component {
                     {player_block}
                 </div>
 
+                {mvps_block}
                 {games_history_block}
                 {win_block}
                 {lose_block}
