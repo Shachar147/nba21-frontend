@@ -147,6 +147,9 @@ export default class OneOnOneSingleStats extends React.Component {
         const won_knockout_options = [];
         const lose_knockout_options = [];
 
+        let win_knockout_block = undefined;
+        let lose_knockout_block = undefined;
+
         records.records.reverse().forEach((game) => {
 
             let { team1_name, team2_name, player1_name, player2_name } = game;
@@ -154,8 +157,6 @@ export default class OneOnOneSingleStats extends React.Component {
 
             player1_name = player1_name || team1_name;
             player2_name = player2_name || team2_name;
-
-            // no oponnent - stopwatch / threepoint contest - todo complete
 
             const opponent = (player1_name === selected_player) ? player2_name : player1_name;
 
@@ -192,7 +193,7 @@ export default class OneOnOneSingleStats extends React.Component {
             }
 
             // 3pt contest
-            if (game.leaderboard){
+            if (game_mode === 'Three Points Contest'){
 
                 const { winner_name, scoresHistory } = game;
                 lost_or_won = (winner_name === selected_player) ? "Won" : "Lost";
@@ -255,29 +256,32 @@ export default class OneOnOneSingleStats extends React.Component {
             </div>
         );
 
-        total = won_knockout_options.length;
-        if (won_knockout_options.length === 0) { won_knockout_options.push("-") }
-        const win_knockout_block = (
-            <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
-                <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
-                    Won Games in Knockout
-                </h2>
-                <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
-                <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: won_knockout_options.join("") }} />
-            </div>
-        );
+        if (['Three Points Contest'].indexOf(game_mode) === -1){
 
-        total = lose_knockout_options.length;
-        if (lose_knockout_options.length === 0) { lose_knockout_options.push("-") }
-        const lose_knockout_block = (
-            <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
-                <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
-                    Lost Games in Knockout
-                </h2>
-                <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
-                <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: lose_knockout_options.join("") }} />
-            </div>
-        );
+            total = won_knockout_options.length;
+            if (won_knockout_options.length === 0) { won_knockout_options.push("-") }
+            win_knockout_block = (
+                <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
+                    <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
+                        Won Games in Knockout
+                    </h2>
+                    <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
+                    <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: won_knockout_options.join("") }} />
+                </div>
+            );
+
+            total = lose_knockout_options.length;
+            if (lose_knockout_options.length === 0) { lose_knockout_options.push("-") }
+            lose_knockout_block = (
+                <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
+                    <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
+                        Lost Games in Knockout
+                    </h2>
+                    <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
+                    <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: lose_knockout_options.join("") }} />
+                </div>
+            );
+        }
 
         const { player } = this.state;
         const _2k_rating = player['_2k_rating'] || 'N/A';
