@@ -8,6 +8,7 @@ import ErrorPage from "../../pages/ErrorPage";
 import Notification from "../../components/internal/Notification";
 import {apiPost} from "../../helpers/api";
 import OneOnOneStats from "../OneOnOne/OneOnOneStats";
+import OneOnOneSingleStats from "../OneOnOne/OneOnOneSingleStats";
 
 export default class Game extends React.Component {
 
@@ -33,6 +34,8 @@ export default class Game extends React.Component {
             error_retry: false,
 
             saved: false,
+
+            selected_player: undefined,
         };
 
         this.onScore = this.onScore.bind(this);
@@ -323,6 +326,27 @@ export default class Game extends React.Component {
                 />
             );
         }
+        const { selected_player } = this.state;
+        if (selected_player){
+
+            const { what, game_mode, stats_title, get_stats_specific_route } = this.props;
+
+            const get_specific_route = (what === "players") ? "/player" : "/team";
+            const this_stats_title = stats_title || game_mode;
+
+            return (
+                <OneOnOneSingleStats
+                    selected_player={selected_player}
+                    what={what}
+                    stats_title={`${this_stats_title} - ${selected_player}`}
+                    game_mode={game_mode}
+                    get_route={get_specific_route}
+                    get_stats_route={get_stats_specific_route}
+                    onBack={() => { this.setState({ selected_player: undefined }) }}
+                />
+            );
+        }
+
 
         // variables
         const lost = this.state.lost;
@@ -362,6 +386,8 @@ export default class Game extends React.Component {
         let game_total_made_no_c = 0;
         let game_total_attempts_no_c = 0;
         let game_total_percents_no_c = 0;
+
+        const { get_stats_specific_route } = this.props;
 
         // build teams blocks
         const teams_blocks = [];
@@ -424,6 +450,16 @@ export default class Game extends React.Component {
                                     }}
 
                                     onScore={this.onScore}
+
+                                    onClick={() => {
+
+                                        if (get_stats_specific_route) {
+                                            this.setState({
+                                                selected_player: player.name,
+                                            })
+                                        }
+
+                                    }}
                                 />
                             );
                         })}

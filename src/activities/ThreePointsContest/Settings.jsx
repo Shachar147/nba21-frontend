@@ -312,11 +312,15 @@ export default class Settings extends React.Component {
               <Game
                 all_players={deepClone(this.state.players)}
                 teams={deepClone(game_teams)}
+                stats_title={"Three Points Contest"}
+                game_mode={"Three Points Contest"}
+                what={"players"}
                 round_length={this.state.round_length}
                 computer_level={this.state.computer_level}
                 have_computers={(this.state.computers[0].length + this.state.computers[1].length > 0)}
                 computer_levels={this.state.computer_levels}
                 goHome={this.restart}
+                get_stats_specific_route={"/records/three-points-contest/by-player/:name"}
               />
             );
         }
