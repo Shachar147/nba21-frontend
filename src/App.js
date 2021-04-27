@@ -40,7 +40,7 @@ function App() {
                     <PrivateRoute path="/real/stats/" component={RealStats} />
                     <PrivateRoute exact path="/real/" component={Real} />
                     <PrivateRoute exact path="/random" component={Random} />
-                    <PrivateRoute path="/random/stats" component={Random} data={{view_stats:true}} />
+                    <PrivateRoute exact path="/random/stats" component={Random} data={{view_stats:true}} />
                     <PrivateRoute exact path="/sync" component={SyncPage} />
                     <PrivateRoute exact path="/shootout" component={Shootout} />
                     <PrivateRoute path="/shootout/stats" component={Shootout} data={{view_stats:true}} />

@@ -26,6 +26,8 @@ import {
 import DropdownInput from "../../components/inputs/DropdownInput";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
+import OneOnOneSingleStats from "../OneOnOne/OneOnOneSingleStats";
+import { useParams } from "react-router-dom";
 
 export default class OneOnOneStats extends React.Component {
 
@@ -69,7 +71,8 @@ export default class OneOnOneStats extends React.Component {
                 'total_mvps_per_player': {},
                 'total_mvps_on_knockouts': 0,
                 'total_mvps_on_knockouts_per_player': {},
-            }
+            },
+            selected_player: undefined,
         };
 
         if (this.props.game_mode === "Three Points Contest") {
@@ -299,9 +302,9 @@ export default class OneOnOneStats extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        const { what, game_mode, stats_title, custom_description } = this.props;
+        const { what, game_mode, stats_title, custom_description, get_stats_specific_route, get_specific_route } = this.props;
 
-        let { error_retry, error, loaded1, loaded2, merged, loaderDetails } = this.state;
+        let { error_retry, error, loaded1, loaded2, merged, loaderDetails, selected_player } = this.state;
 
         const is_loading = !(loaded1 && loaded2 && merged);
         if (error || (!is_loading && this.state.players.length === 0)) {
@@ -316,6 +319,25 @@ export default class OneOnOneStats extends React.Component {
             );
         }
 
+        if (selected_player){
+
+            const get_specific_route = (what === "players") ? "/player" : "/team";
+
+            const this_stats_title = stats_title || game_mode;
+
+            return (
+              <OneOnOneSingleStats
+                selected_player={selected_player}
+                what={what}
+                stats_title={`${this_stats_title} - ${selected_player}`}
+                game_mode={game_mode}
+                get_route={get_specific_route}
+                get_stats_route={get_stats_specific_route}
+                onBack={() => { this.setState({ selected_player: undefined }) }}
+              />
+            );
+        }
+        
         const self = this;
 
         const { records } = this.state;
@@ -485,7 +507,13 @@ export default class OneOnOneStats extends React.Component {
                                 }}
 
                                 onClick={() => {
-                                    // todo complete - show complete statistics
+
+                                    if (get_stats_specific_route) {
+                                        this.setState({
+                                            selected_player: player.name,
+                                        })
+                                    }
+
                                 }}
                             />
                         );

@@ -17,6 +17,7 @@ export default class OneOnOne extends React.Component {
                 game_mode={"One on One"}
                 get_route={"/player/popular"}
                 get_stats_route={"/records/one-on-one/by-player"}
+                get_stats_specific_route={"/records/one-on-one/by-player/:name"}
                 what={"players"}
                 save_result_route={"/records/one-on-one/"}
                 update_result_route={"/records/one-on-one/"}

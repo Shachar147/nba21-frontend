@@ -17,6 +17,7 @@ export default class Random extends React.Component {
                 game_mode={"Random Games"}
                 get_route={"/team"}
                 get_stats_route={"/records/random/by-team"}
+                get_stats_specific_route={"/records/random/by-team/:name"}
                 what={"teams"}
                 custom_details_title={"Players:"}
                 styles={{
@@ -39,6 +40,7 @@ export default class Random extends React.Component {
                 stats_page={true}
                 mvp_block={true}
                 view_stats={this.props.view_stats||false}
+                selected_player={this.props.selected_player||undefined}
             />
         );
     }

@@ -213,6 +213,7 @@ export default class Shootout extends React.Component {
                     game_mode={"Stopwatch Shootout"}
                     get_route={"/player"}
                     custom_description={"Here you can see all NBA players that played on Stopwatch Shootout."}
+                    get_stats_specific_route={"/records/stopwatch-shootout/by-player/:name"}
                     // percents={1} // percents, not points.
                     get_stats_route={"/records/stopwatch-shootout/by-player"}
                     onBack={() => { this.setState({ view_stats: false }) }}

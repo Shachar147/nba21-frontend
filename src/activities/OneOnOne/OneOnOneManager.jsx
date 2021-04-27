@@ -76,6 +76,7 @@ export default class OneOnOneManager extends React.Component {
             met_each_other: 0,
 
             view_stats: this.props.view_stats || false,
+
             loaderDetails: LOADER_DETAILS(),
             general_stats: {
                 'total_games': 0,
@@ -597,7 +598,7 @@ export default class OneOnOneManager extends React.Component {
 
     render(){
 
-        let { what, game_mode, custom_details_title, styles, get_route, get_stats_route, update_result_route, stats_page, stats_title, percents } = this.props;
+        let { what, game_mode, custom_details_title, styles, get_route, get_stats_route, update_result_route, stats_page, stats_title, percents, get_stats_specific_route } = this.props;
 
         let original_custom_title = custom_details_title;
 
@@ -623,6 +624,7 @@ export default class OneOnOneManager extends React.Component {
                     game_mode={game_mode}
                     get_route={get_route}
                     get_stats_route={get_stats_route}
+                    get_stats_specific_route={get_stats_specific_route}
                     mvp_block={this.props.mvp_block}
                     onBack={() => { this.setState({ view_stats: false }) }}
                 />
@@ -1076,6 +1078,15 @@ OneOnOneManager.propTypes = {
      *
      */
     real_games_button: PropTypes.bool,
+
+    /**
+     * The route to get players/teams stats from.
+     *
+     * GET method will be used
+     *
+     * for example /records/one-on-one/player
+     */
+    get_stats_specific_route: PropTypes.string,
 };
 
 OneOnOneManager.defaultProps = {

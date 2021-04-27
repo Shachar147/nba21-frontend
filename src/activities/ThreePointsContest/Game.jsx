@@ -318,6 +318,7 @@ export default class Game extends React.Component {
                     get_route={"/player"}
                     percents={1} // percents, not points.
                     get_stats_route={"/records/three-points-contest/by-player"}
+                    get_stats_specific_route={"/records/three-points-contest/by-player/:name"}
                     onBack={() => { this.setState({ view_stats: false }) }}
                 />
             );
