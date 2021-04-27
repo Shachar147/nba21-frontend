@@ -147,6 +147,8 @@ export default class OneOnOneSingleStats extends React.Component {
         const won_knockout_options = [];
         const lose_knockout_options = [];
 
+        let win_block = undefined;
+        let lose_block = undefined;
         let win_knockout_block = undefined;
         let lose_knockout_block = undefined;
 
@@ -210,14 +212,30 @@ export default class OneOnOneSingleStats extends React.Component {
                 </div>`;
             }
 
-            games_options.push(option);
-            if (lost_or_won.toLowerCase() === "won") {
-                won_options.push(option);
-                if (opponent_score && opponent_score === 0) won_knockout_options.push(option);
+            // stopwatch shootout
+            if (game_mode === 'Stopwatch Shootout'){
+                const { roundLength, score } = game;
+                const player_image = players_hash[selected_player].picture;
+
+                option = `<div class="item">
+                    <img class="ui avatar image" style="${style}" src="${player_image}">
+                    <div class="content">
+                        <a class="header">Scored ${score} baskets in ${roundLength} ${(roundLength > 1) ? "minutes" : "minute"}</a>
+                        <div class="description">Played at ${dt}</div>
+                    </div>
+                </div>`;
             }
-            else {
-                lose_options.push(option);
-                if (myscore && myscore === 0) lose_knockout_options.push(option);
+
+            games_options.push(option);
+
+            if (game_mode !== 'Stopwatch Shootout') {
+                if (lost_or_won.toLowerCase() === "won") {
+                    won_options.push(option);
+                    if (opponent_score && opponent_score === 0) won_knockout_options.push(option);
+                } else {
+                    lose_options.push(option);
+                    if (myscore && myscore === 0) lose_knockout_options.push(option);
+                }
             }
         });
 
@@ -232,55 +250,57 @@ export default class OneOnOneSingleStats extends React.Component {
             </div>
         );
 
-        total = won_options.length;
-        if (won_options.length === 0) { won_options.push("-") }
-        const win_block = (
-            <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
-                <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
-                    Won Games
-                </h2>
-                <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
-                <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: won_options.join("") }} />
-            </div>
-        );
-
-        total = lose_options.length;
-        if (lose_options.length === 0) { lose_options.push("-") }
-        const lose_block = (
-            <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
-                <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
-                    Lost Games
-                </h2>
-                <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
-                <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: lose_options.join("") }} />
-            </div>
-        );
-
-        if (['Three Points Contest'].indexOf(game_mode) === -1){
-
-            total = won_knockout_options.length;
-            if (won_knockout_options.length === 0) { won_knockout_options.push("-") }
-            win_knockout_block = (
+        if (['Stopwatch Shootout'].indexOf(game_mode) === -1) {
+            total = won_options.length;
+            if (won_options.length === 0) { won_options.push("-") }
+            win_block = (
                 <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
                     <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
-                        Won Games in Knockout
+                        Won Games
                     </h2>
                     <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
-                    <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: won_knockout_options.join("") }} />
+                    <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: won_options.join("") }} />
                 </div>
             );
 
-            total = lose_knockout_options.length;
-            if (lose_knockout_options.length === 0) { lose_knockout_options.push("-") }
-            lose_knockout_block = (
+            total = lose_options.length;
+            if (lose_options.length === 0) { lose_options.push("-") }
+            lose_block = (
                 <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
                     <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
-                        Lost Games in Knockout
+                        Lost Games
                     </h2>
                     <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
-                    <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: lose_knockout_options.join("") }} />
+                    <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: lose_options.join("") }} />
                 </div>
             );
+
+            if (['Three Points Contest'].indexOf(game_mode) === -1){
+
+                total = won_knockout_options.length;
+                if (won_knockout_options.length === 0) { won_knockout_options.push("-") }
+                win_knockout_block = (
+                    <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
+                        <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
+                            Won Games in Knockout
+                        </h2>
+                        <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
+                        <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: won_knockout_options.join("") }} />
+                    </div>
+                );
+
+                total = lose_knockout_options.length;
+                if (lose_knockout_options.length === 0) { lose_knockout_options.push("-") }
+                lose_knockout_block = (
+                    <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
+                        <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
+                            Lost Games in Knockout
+                        </h2>
+                        <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
+                        <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: lose_knockout_options.join("") }} />
+                    </div>
+                );
+            }
         }
 
         const { player } = this.state;
