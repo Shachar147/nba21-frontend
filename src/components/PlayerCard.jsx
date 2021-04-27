@@ -56,6 +56,8 @@ export default class PlayerCard extends React.Component {
 
             show_more_threshold,
 
+            onImageClick,
+
         } = this.props;
 
         const {
@@ -102,6 +104,7 @@ export default class PlayerCard extends React.Component {
                         image: imageStyle,
                         placeRibbon: placeRibbon,
                     }}
+                    onClick={onImageClick}
                 />
                 <PlayerContent
                     name={name}

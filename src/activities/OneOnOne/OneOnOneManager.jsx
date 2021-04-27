@@ -27,6 +27,7 @@ import DropdownInput from "../../components/inputs/DropdownInput";
 import RealGames from "../../pages/Random/RealGames";
 import TodayRandomGames from "../../pages/Random/TodayRandomGames";
 import TextInput from "../../components/inputs/TextInput";
+import OneOnOneSingleStats from "./OneOnOneSingleStats";
 
 export default class OneOnOneManager extends React.Component {
 
@@ -99,6 +100,8 @@ export default class OneOnOneManager extends React.Component {
             },
 
             error_retry: false,
+
+            selected_player: undefined,
         };
 
         this.restart = this.restart.bind(this);
@@ -631,6 +634,24 @@ export default class OneOnOneManager extends React.Component {
             );
         }
 
+        const { selected_player } = this.state;
+        if (selected_player){
+            const get_specific_route = (what === "players") ? "/player" : "/team";
+            const this_stats_title = stats_title || game_mode;
+
+            return (
+                <OneOnOneSingleStats
+                    selected_player={selected_player}
+                    what={what}
+                    stats_title={`${this_stats_title} - ${selected_player}`}
+                    game_mode={game_mode}
+                    get_route={get_specific_route}
+                    get_stats_route={get_stats_specific_route}
+                    onBack={() => { this.setState({ selected_player: undefined }) }}
+                />
+            );
+        }
+
         if (this.state.view_real_games){
             const self = this;
             return (
@@ -767,6 +788,22 @@ export default class OneOnOneManager extends React.Component {
                         curr_players={[this.state.player1.name, this.state.player2.name]}
                         onReplace={(e) => { this.replaceOne(idx); }}
                         onSpecificReplace={(new_player) => { this.onSpecificReplace(player, new_player) }}
+
+                        onImageClick={(e) => {
+
+                            const target = e.target;
+                            const html = $(e.target).wrap("<p>").parent().html();
+
+                            // console.log(html);
+
+                            // to avoid clicking on 'replace' or 'specific rpelace' from openning stats page.
+                            if (html.indexOf('<img') !== -1 && get_stats_specific_route) {
+                                this.setState({
+                                    selected_player: player.name,
+                                })
+                            }
+
+                        }}
                     />
             );
         })

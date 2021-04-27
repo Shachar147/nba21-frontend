@@ -52,7 +52,7 @@ export default class PlayerPicture extends React.Component {
 
     render() {
 
-        const { styles, place, name, onReplace, onSpecificReplace, replace_options, wrapper } = this.props;
+        const { styles, place, name, onReplace, onSpecificReplace, replace_options, wrapper, onClick } = this.props;
         const { picture, specific_replace, select_replacement } = this.state;
         const { container, image, placeRibbon } = styles;
 
@@ -105,7 +105,7 @@ export default class PlayerPicture extends React.Component {
        const playerPicture = (
            <div className="image" style={container}>
                {place_tag}
-               <img src={picture} onError={this.onError} alt={name} style={image} />
+               <img src={picture} onError={this.onError} alt={name} style={image} onClick={onClick} />
                {replace}
                {specific_replace_link}
                {specific_replace_block}
