@@ -506,7 +506,7 @@ export default class OneOnOneStats extends React.Component {
                                     total_lost_comebacks: records[player.name].total_lost_comebacks,
                                 }}
 
-                                onClick={() => {
+                                onImageClick={() => {
 
                                     if (get_stats_specific_route) {
                                         this.setState({

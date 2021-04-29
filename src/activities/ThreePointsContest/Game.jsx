@@ -451,7 +451,7 @@ export default class Game extends React.Component {
 
                                     onScore={this.onScore}
 
-                                    onClick={() => {
+                                    onImageClick={() => {
 
                                         if (get_stats_specific_route) {
                                             this.setState({
