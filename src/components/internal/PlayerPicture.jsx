@@ -52,7 +52,7 @@ export default class PlayerPicture extends React.Component {
 
     render() {
 
-        const { styles, place, name, onReplace, onSpecificReplace, replace_options, wrapper, onClick } = this.props;
+        const { styles, place, name, onReplace, onSpecificReplace, replace_options, wrapper, onImageClick } = this.props;
         const { picture, specific_replace, select_replacement } = this.state;
         const { container, image, placeRibbon } = styles;
 
@@ -102,13 +102,18 @@ export default class PlayerPicture extends React.Component {
                 onChange={(player) => { onSpecificReplace(player); this.setState({ select_replacement: false, specific_replace: false }); }}
             /> : "";
 
+        let view_stats = (onImageClick) ? (
+            <a onClick={onImageClick} style={{ position: "absolute", bottom: "5px", zIndex:"9999999", backgroundColor: "rgba(255,255,255,1)", padding: "5px 8px", borderRadius: "10px", left: "5px", textDecoration: "underline", textTransform: "uppercase", fontSize:"11px" }}>View Stats</a>
+        ) : "";
+
        const playerPicture = (
            <div className="image" style={container}>
                {place_tag}
-               <img src={picture} onError={this.onError} alt={name} style={image} onClick={onClick} />
+               <img src={picture} onError={this.onError} alt={name} style={image} />
                {replace}
                {specific_replace_link}
                {specific_replace_block}
+               {view_stats}
            </div>
        );
 

@@ -104,7 +104,7 @@ export default class PlayerCard extends React.Component {
                         image: imageStyle,
                         placeRibbon: placeRibbon,
                     }}
-                    onClick={onImageClick}
+                    onImageClick={onImageClick}
                 />
                 <PlayerContent
                     name={name}
