@@ -209,6 +209,14 @@ export default class OneOnOneSingleStats extends React.Component {
                 lost_or_won = (winner_name === selected_player) ? "Won" : "Lost";
                 const game_record = `Scored ${scoresHistory[selected_player]}`;
 
+                if (lost_or_won.toLowerCase() === "lost" && game.leaderboard){
+                    Object.keys(game.leaderboard).forEach((place) => {
+                        if (game.leaderboard[place] === selected_player) {
+                            lost_or_won += ' ' + place + nth(place);
+                        }
+                    })
+                }
+
                 const winner_image = players_hash[winner_name].picture;
 
                 option = `<div class="item">
