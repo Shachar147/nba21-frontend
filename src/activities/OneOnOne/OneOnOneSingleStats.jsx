@@ -212,7 +212,7 @@ export default class OneOnOneSingleStats extends React.Component {
                 if (lost_or_won.toLowerCase() === "lost" && game.leaderboard){
                     Object.keys(game.leaderboard).forEach((place) => {
                         if (game.leaderboard[place] === selected_player) {
-                            lost_or_won += ' ' + place + nth(place);
+                            lost_or_won += ' (' + place + nth(place) + ')';
                         }
                     })
                 }
