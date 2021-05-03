@@ -41,6 +41,7 @@ export default class Random extends React.Component {
                 mvp_block={true}
                 view_stats={this.props.view_stats||false}
                 selected_player={this.props.selected_player||undefined}
+                player_from_url={ this.props.player_from_url }
             />
         );
     }

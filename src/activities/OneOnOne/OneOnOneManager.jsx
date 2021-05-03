@@ -630,11 +630,13 @@ export default class OneOnOneManager extends React.Component {
                     get_stats_specific_route={get_stats_specific_route}
                     mvp_block={this.props.mvp_block}
                     onBack={() => { this.setState({ view_stats: false }) }}
+                    player_from_url={this.props.player_from_url}
                 />
             );
         }
 
         const { selected_player } = this.state;
+
         if (selected_player){
             const get_specific_route = (what === "players") ? "/player" : "/team";
             const this_stats_title = stats_title || game_mode;

@@ -134,6 +134,11 @@ export default class OneOnOneSingleStats extends React.Component {
                 <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={loaderDetails} />
             );
         }
+        else if (!records.records){
+            return (
+                <ErrorPage message={'Oops, seems like player does not exist, or does not have any history information.'} retry={() => { window.location.reload(); }} />
+            );
+        }
 
         // one on one stats
         // let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats, this.props.percents);
@@ -212,7 +217,11 @@ export default class OneOnOneSingleStats extends React.Component {
                 if (lost_or_won.toLowerCase() === "lost" && game.leaderboard){
                     Object.keys(game.leaderboard).forEach((place) => {
                         if (game.leaderboard[place] === selected_player) {
-                            lost_or_won += ' (' + place + nth(place) + ')';
+                            if (place == Object.keys(game.leaderboard).length){
+                                lost_or_won += ' (last)';
+                            } else {
+                                lost_or_won += ' (' + place + nth(place) + ')';
+                            }
                         }
                     })
                 }

@@ -218,6 +218,7 @@ export default class Shootout extends React.Component {
                     get_stats_route={"/records/stopwatch-shootout/by-player"}
                     onBack={() => { this.setState({ view_stats: false }) }}
                     stopwatch={true}
+                    player_from_url={ this.props.player_from_url }
                 />
             );
         }

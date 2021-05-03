@@ -302,6 +302,7 @@ export default class Settings extends React.Component {
                     get_stats_route={"/records/three-points-contest/by-player"}
                     get_stats_specific_route={"/records/three-points-contest/by-player/:name"}
                     onBack={() => { this.setState({ view_stats: false }) }}
+                    player_from_url={ this.props.player_from_url }
                 />
             );
         }

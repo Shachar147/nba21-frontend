@@ -27,9 +27,10 @@ import DropdownInput from "../../components/inputs/DropdownInput";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 import OneOnOneSingleStats from "../OneOnOne/OneOnOneSingleStats";
-import { useParams } from "react-router-dom";
 
-export default class OneOnOneStats extends React.Component {
+import { withRouter } from "react-router";
+
+class OneOnOneStats extends React.Component {
 
     constructor(props) {
         super(props);
@@ -262,7 +263,13 @@ export default class OneOnOneStats extends React.Component {
         // general stats
         const { general_stats, mvp_stats } = buildGeneralStats(records, this.props.percents, this.props.stopwatch);
 
-        this.setState({ players, merged, general_stats, mvp_stats })
+        let { selected_player } = this.state;
+        const { player_from_url } = this.props;
+        if (player_from_url){
+            selected_player = this.props.match.params.player;
+        }
+
+        this.setState({ players, merged, general_stats, mvp_stats, selected_player, player_from_url: false })
     }
 
     searchPlayers(event){
@@ -302,7 +309,7 @@ export default class OneOnOneStats extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        const { what, game_mode, stats_title, custom_description, get_stats_specific_route, get_specific_route } = this.props;
+        const { what, game_mode, stats_title, custom_description, get_stats_specific_route, get_specific_route, player_from_url } = this.props;
 
         let { error_retry, error, loaded1, loaded2, merged, loaderDetails, selected_player } = this.state;
 
@@ -529,3 +536,5 @@ export default class OneOnOneStats extends React.Component {
         )
     }
 }
+
+export default withRouter(OneOnOneStats);
