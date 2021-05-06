@@ -799,7 +799,7 @@ export default class OneOnOneManager extends React.Component {
                             // console.log(html);
 
                             // to avoid clicking on 'replace' or 'specific rpelace' from openning stats page.
-                            if (html.indexOf('<img') !== -1 && get_stats_specific_route) {
+                            if (html.indexOf('View Stats') !== -1 && get_stats_specific_route) {
                                 this.setState({
                                     selected_player: player.name,
                                 })

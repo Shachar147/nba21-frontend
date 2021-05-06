@@ -119,6 +119,11 @@ export function buildDetails(details, stats){
         injury_status,
         injury_details,
 
+        total_home_wins,
+        total_home_lost,
+        total_road_wins,
+        total_road_lost,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -209,6 +214,11 @@ export function buildDetails(details, stats){
         'Injury Last Update': `${injury_last_update}`,
         'Injury Status': `${injury_status}`,
         'Injury Details': `${injury_details}`,
+
+        'Total Home Wins': `${total_home_wins}`,
+        'Total Home Lost': `${total_home_lost}`,
+        'Total Road Wins': `${total_road_wins}`,
+        'Total Road Lost': `${total_road_lost}`,
     };
 
     // on fire / ice cold
@@ -324,6 +334,8 @@ export function buildDetails(details, stats){
     if (isDefined(injury_status)) stats_arr.push(`Injury Status: ${settings['Injury Status']}`);
     if (isDefined(injury_details)) stats_arr.push(`Injury Details: ${settings['Injury Details']}`);
 
+    if (isDefined(total_home_lost) || isDefined(total_home_wins)) stats_arr.push(`Total Home Wins/Lost: ${settings['Total Home Wins']}-${settings['Total Home Lost']}`);
+    if (isDefined(total_road_wins) || isDefined(total_road_lost)) stats_arr.push(`Total Road Wins/Lost: ${settings['Total Road Wins']}-${settings['Total Road Lost']}`);
 
     // highlighted items first
     let first = [];

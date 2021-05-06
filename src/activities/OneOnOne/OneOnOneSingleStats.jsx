@@ -436,6 +436,11 @@ export default class OneOnOneSingleStats extends React.Component {
                     total_overtimes: records.total_overtimes,
                     total_won_comebacks: records.total_won_comebacks,
                     total_lost_comebacks: records.total_lost_comebacks,
+
+                    total_home_wins: records.total_home_wins,
+                    total_home_lost: records.total_home_lost,
+                    total_road_wins: records.total_road_wins,
+                    total_road_lost: records.total_road_lost,
                 }}
             />
         );

@@ -116,6 +116,11 @@ class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ "Total Overtimes": (a,b) => specificSort('total_overtimes',a, b) });
             this.state.orderByOptions.push({ "Total Comebacks Made": (a,b) => specificSort('total_won_comebacks',a, b) });
             this.state.orderByOptions.push({ "Total Comebacks Suffered": (a,b) => specificSort('total_lost_comebacks',a, b) });
+
+            this.state.orderByOptions.push({ "Total Home Wins": (a,b) => specificSort('total_home_wins',a, b) });
+            this.state.orderByOptions.push({ "Total Home Lost": (a,b) => specificSort('total_home_lost',a, b) });
+            this.state.orderByOptions.push({ "Total Road Wins": (a,b) => specificSort('total_road_wins',a, b) });
+            this.state.orderByOptions.push({ "Total Road Lost": (a,b) => specificSort('total_road_lost',a, b) });
         }
 
         this.state.orderByOptions.push({ "2K Rating": _2kRatingSort });
@@ -511,6 +516,11 @@ class OneOnOneStats extends React.Component {
                                     total_overtimes: records[player.name].total_overtimes,
                                     total_won_comebacks: records[player.name].total_won_comebacks,
                                     total_lost_comebacks: records[player.name].total_lost_comebacks,
+
+                                    total_home_wins: records[player.name].total_home_wins,
+                                    total_home_lost: records[player.name].total_home_lost,
+                                    total_road_wins: records[player.name].total_road_wins,
+                                    total_road_lost: records[player.name].total_road_lost,
                                 }}
 
                                 onImageClick={() => {
