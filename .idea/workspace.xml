@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneManager.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneSingleStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneSingleStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Random/Random.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Random/Random.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Shootout/Shootout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Shootout/Shootout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Random/RealGames.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Random/RealGames.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +110,9 @@
       <workItem from="1619387318300" duration="5036000" />
       <workItem from="1619452117858" duration="18747000" />
       <workItem from="1619522171685" duration="13177000" />
-      <workItem from="1620071971316" duration="2333000" />
+      <workItem from="1620071971316" duration="3182000" />
+      <workItem from="1620236861797" duration="592000" />
+      <workItem from="1620301691778" duration="724000" />
     </task>
     <servers />
   </component>

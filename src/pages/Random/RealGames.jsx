@@ -278,7 +278,7 @@ export default class RealGames extends React.Component {
 
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginTop: "20px", marginBottom: "25px" }}>
                     <div className="ui toggle checkbox" onClick={() => { this.setState({ show_results: !show_results }) }} >
-                        <input type="checkbox" name="show_results" />
+                        <input type="checkbox" name="show_results" checked={show_results} />
                         <label>Show Games Results</label>
                     </div>
                 </div>
