@@ -32,7 +32,7 @@ export default class RealInjured extends React.Component {
 
             "leaderboard": [],
             "orderByOptions":[
-                { 'Team Name': (a,b) => textSort('team_name', a, b) },
+                { 'Team Name': (a,b) => textSort('team_name', b, a) },
                 { 'Injury Last Update': (a,b) => specificSortDate('lastUpdate', a, b) },
                 { 'Injury Status': (a,b) => specificSort('injury_status_severity', b, a) },
             ],
