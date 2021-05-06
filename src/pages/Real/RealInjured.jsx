@@ -11,7 +11,7 @@ import {
     DEFAULT_REAL_INJURED_ORDER,
     LOADING_DELAY, UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
-import {specificSort, specificSortDate, textSort} from "../../helpers/sort";
+import {_2kRatingSort, OVERALL_HIGHLIGHTS, specificSort, specificSortDate, textSort} from "../../helpers/sort";
 import DropdownInput from "../../components/inputs/DropdownInput";
 import {Link} from "react-router-dom";
 import ButtonInput from "../../components/inputs/ButtonInput";
@@ -35,6 +35,7 @@ export default class RealInjured extends React.Component {
                 { 'Team Name': (a,b) => textSort('team_name', b, a) },
                 { 'Injury Last Update': (a,b) => specificSortDate('lastUpdate', a, b) },
                 { 'Injury Status': (a,b) => specificSort('injury_status_severity', b, a) },
+                { '2K Rating': (a,b) => specificSort('_2k_rating', a, b) },
             ],
             orderBy: DEFAULT_REAL_INJURED_ORDER,
         };
@@ -59,6 +60,7 @@ export default class RealInjured extends React.Component {
                 const records = {};
                 players.forEach((record) => {
                     records[record.name] = record;
+                    record['_2k_rating'] = record.player['_2k_rating'];
                 })
 
                 const leaderboard = self.buildLeaderBoard(records);
@@ -233,6 +235,7 @@ export default class RealInjured extends React.Component {
                                     injury_last_update: obj.lastUpdate,
                                     injury_status: injury_status,
                                     injury_details: injury_details,
+                                    highlights: [this.state.orderBy],
                                 }}
                                 show_more_threshold={1}
                                 position={player.position}
