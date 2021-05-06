@@ -26,7 +26,12 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
         const total_games_today = general_stats['total_games_per_day'][dtToday] || 0;
 
         const key1 = (percents) ? 'total_percents_per_day' : 'total_points_per_day';
-        const total_points_today = general_stats[key1][dtToday] || 0
+        let total_points_today = general_stats[key1][dtToday] || 0
+        if (percents){
+            let details = general_stats['total_percents_per_day_details'][dtToday] || "";
+            details = details.replace(/(<([^>]+)>)/gi, "");
+            total_points_today += `%${details}`
+        }
 
         const what_stat = (percents) ? "Percents" : "Points";
 
@@ -340,6 +345,8 @@ export function buildGeneralStats(stats, percents, stopwatch) {
             'total_percents': 0,
             'total_percents_per_day': {},
             'total_percents_per_day_details': {},
+            'total_scored': 0,
+            'total_attempts': 0,
         };
     }
 
@@ -394,6 +401,10 @@ export function buildGeneralStats(stats, percents, stopwatch) {
                 const sum = values.reduce((a, b) => a + b, 0);
                 date_stats[dt].total_scored += sum;
                 date_stats[dt].total_from += (values.length * record.roundLength);
+
+                general_stats.total_scored += sum;
+                general_stats.total_attempts += (values.length * record.roundLength);
+
                 date_stats[dt].total_percents = ((date_stats[dt].total_scored / date_stats[dt].total_from)*100).toFixed(2);
 
             }
@@ -447,9 +458,14 @@ export function buildGeneralStats(stats, percents, stopwatch) {
 
             arr.push(curr_percents);
         });
-        const sum = arr.reduce((a, b) => Number(a) + Number(b), 0);
-        const avg = sum/arr.length;
-        general_stats.total_percents = avg.toFixed(2);
+
+        // console.log(general_stats);
+
+        // const sum = arr.reduce((a, b) => Number(a) + Number(b), 0);
+        // const avg = sum/arr.length;
+        const { total_scored, total_attempts } = general_stats;
+        const avg = (total_scored/total_attempts) * 100;
+        general_stats.total_percents = `${avg.toFixed(2)}% (${total_scored}/${total_attempts})`;
     }
 
     return { general_stats, mvp_stats };
