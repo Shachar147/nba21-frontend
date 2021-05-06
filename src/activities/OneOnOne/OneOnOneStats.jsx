@@ -100,7 +100,7 @@ class OneOnOneStats extends React.Component {
                 { "Total Scored": totalScored },
             ];
             this.state.orderByOptions.push({ 'Total Minutes': (a,b) => specificSort('total_minutes',a,b) });
-            this.state.orderByOptions.push({ 'Average Points Per Minute': (a,b) => specificSort('average_points_per_minute',a,b) });
+            this.state.orderByOptions.push({ 'Average Scores Per Minute': (a,b) => specificSort('average_points_per_minute',a,b) });
             this.state.orderByOptions.push({ 'Average Round Length': (a,b) => specificSort('average_round_length',a,b) });
         }
         else {
