@@ -24,8 +24,8 @@ import ButtonInput from "../../components/inputs/ButtonInput";
 import {buildStatsInformation, BuildStatsTable, statsStyle} from "./OneOnOneHelper";
 import PropTypes from "prop-types";
 import DropdownInput from "../../components/inputs/DropdownInput";
-import RealGames from "../../pages/Random/RealGames";
-import TodayRandomGames from "../../pages/Random/TodayRandomGames";
+import RealGames from "../Random/RealGames";
+import TodayRandomGames from "../Random/TodayRandomGames";
 import TextInput from "../../components/inputs/TextInput";
 import OneOnOneSingleStats from "./OneOnOneSingleStats";
 

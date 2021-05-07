@@ -26,7 +26,7 @@ import {
 import DropdownInput from "../../components/inputs/DropdownInput";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
-import OneOnOneSingleStats from "../OneOnOne/OneOnOneSingleStats";
+import OneOnOneSingleStats from ".//OneOnOneSingleStats";
 
 import { withRouter } from "react-router";
 

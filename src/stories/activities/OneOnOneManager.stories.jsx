@@ -1,6 +1,6 @@
 import React from 'react';
 
-import OneOnOneManager from "../../activities/OneOnOne/OneOnOneManager";
+import OneOnOneManager from "../../activities/shared/OneOnOneManager";
 
 export default {
     title: 'Storybook/activities/OneOnOneManager',

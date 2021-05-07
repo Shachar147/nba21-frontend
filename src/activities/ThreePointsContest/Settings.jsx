@@ -19,7 +19,7 @@ import ErrorPage from "../../pages/ErrorPage";
 import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import ButtonInput from "../../components/inputs/ButtonInput";
-import OneOnOneStats from "../OneOnOne/OneOnOneStats";
+import OneOnOneStats from "../shared/OneOnOneStats";
 
 export default class Settings extends React.Component {
 

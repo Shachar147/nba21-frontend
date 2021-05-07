@@ -8,7 +8,7 @@ import ErrorPage from "../../pages/ErrorPage";
 import Header from "../../components/layouts/Header";
 import {apiGet, apiPost, apiPut} from "../../helpers/api";
 import ButtonInput from "../../components/inputs/ButtonInput";
-import OneOnOneStats from "../../activities/OneOnOne/OneOnOneStats";
+import OneOnOneStats from "../shared/OneOnOneStats";
 import {
     LOADING_DELAY,
     MAX_SHOOTOUT_ROUND_LENGTH,
