@@ -20,6 +20,13 @@ import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import OneOnOneStats from "../shared/OneOnOneStats";
+import {buildGeneralStats, BuildStatsTable, statsStyle} from "../shared/OneOnOneHelper";
+
+const game_mode = "Three Points Contest";
+const stats_title = "Three Points Contest";
+const what = "players";
+const get_stats_route = "/records/three-points-contest/by-player";
+const percents = 1;
 
 export default class Settings extends React.Component {
 
@@ -59,6 +66,11 @@ export default class Settings extends React.Component {
             game_started: false,
 
             loaded: false,
+
+            loadedStats: false,
+            stats: {},
+            general_stats: {},
+
             error: undefined,
             loaderDetails: LOADER_DETAILS(),
             view_stats: this.props.view_stats || false,
@@ -93,6 +105,27 @@ export default class Settings extends React.Component {
                 setTimeout(() => {
                     self.setState({ loaded: true })},
                 LOADING_DELAY);
+            }
+        );
+
+        apiGet(this,
+            get_stats_route,
+            async function(res) {
+                let stats = res.data.data;
+
+                const { general_stats } = buildGeneralStats(stats, percents);
+
+                await self.setState({ stats, general_stats, loadedStats: true });
+            },
+            function(error, error_retry) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like stats weren't loaded :(<Br>It's probably related to a server error` }
+                self.setState({ error: req_error, error_retry });
+            },
+            async function() {
+
             }
         );
     }
@@ -294,12 +327,12 @@ export default class Settings extends React.Component {
         if (this.state.view_stats){
             return (
                 <OneOnOneStats
-                    what={"players"}
-                    stats_title={"Three Points Contest"}
-                    game_mode={"Three Points Contest"}
+                    what={what}
+                    stats_title={stats_title}
+                    game_mode={game_mode}
                     get_route={"/player"}
                     percents={1} // percents, not points.
-                    get_stats_route={"/records/three-points-contest/by-player"}
+                    get_stats_route={get_stats_route}
                     get_stats_specific_route={"/records/three-points-contest/by-player/:name"}
                     onBack={() => { this.setState({ view_stats: false }) }}
                     player_from_url={ this.props.player_from_url }
@@ -313,9 +346,9 @@ export default class Settings extends React.Component {
               <Game
                 all_players={deepClone(this.state.players)}
                 teams={deepClone(game_teams)}
-                stats_title={"Three Points Contest"}
-                game_mode={"Three Points Contest"}
-                what={"players"}
+                stats_title={stats_title}
+                game_mode={game_mode}
+                what={what}
                 round_length={this.state.round_length}
                 computer_level={this.state.computer_level}
                 have_computers={(this.state.computers[0].length + this.state.computers[1].length > 0)}
@@ -328,9 +361,9 @@ export default class Settings extends React.Component {
 
         const computer_level = this.state.computer_level;
 
-        let { error, error_retry, loaded } = this.state;
+        let { error, error_retry, loaded, loadedStats } = this.state;
 
-        const is_loading = !loaded;
+        const is_loading = !loaded || !loadedStats;
         if (error || (!is_loading && this.state.players.length === 0)) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
             return (
@@ -347,9 +380,17 @@ export default class Settings extends React.Component {
         // avoid selecting more players then we have
         const total_selected_players = game_teams[0].length + game_teams[1].length;
 
+        // one on one stats
+        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode, 0, undefined, percents) : "";
+        const records = this.state.stats;
+
         return (
             <div style={{ paddingTop: "20px" }}>
                 <Header />
+
+                <div className="ui link cards centered" style={statsStyle}>
+                    {general_stats_block}
+                </div>
 
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"}
