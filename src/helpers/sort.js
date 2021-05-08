@@ -63,10 +63,15 @@ export function textSort(key, a, b){
 }
 
 export function specificSort(key, a, b){
-    const value1 = parseFloat(b[key]);
-    const value2 = parseFloat(a[key]);
+    let value1 = parseFloat(b[key]);
+    let value2 = parseFloat(a[key]);
 
     // console.log(value1,value2);
+
+    if (key === 'average_place'){
+        if (value1 == 0) { value1 = 999999; }
+        if (value2 == 0) { value2 = 999999; }
+    }
 
     if (value1 > value2) return 1;
     else if (value1 < value2) return -1;
