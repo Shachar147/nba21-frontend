@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOneSingleStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/playercard.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/playercard.helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/sort.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/sort.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/OneOnOne/OneOnOne.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOne.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Random/Random.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Random/Random.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Random/RealGames.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Random/RealGames.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Random/TodayRandomGames.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Random/TodayRandomGames.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Real/RealInjured.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Real/RealInjured.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Shootout/Shootout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Shootout/Shootout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Shootout/ShootoutGame.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Shootout/ShootoutGame.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/activities/OneOnOneManager.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/activities/OneOnOneManager.stories.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/StatsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StatsTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +39,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.linters.configure.manually.selectedeslint" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/activities" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -63,6 +55,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -125,7 +118,7 @@
       <workItem from="1619522171685" duration="13177000" />
       <workItem from="1620071971316" duration="3182000" />
       <workItem from="1620236861797" duration="592000" />
-      <workItem from="1620301691778" duration="17593000" />
+      <workItem from="1620301691778" duration="41425000" />
     </task>
     <servers />
   </component>

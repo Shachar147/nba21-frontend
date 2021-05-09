@@ -19,6 +19,7 @@ import Real from "./pages/Real/Real";
 import RealInjured from "./pages/Real/RealInjured";
 import RealInactive from "./pages/Real/RealInactive";
 import UserSettings from "./pages/UserSettings";
+import Tournament from "./activities/Tournament/Tournament";
 
 function App() {
 
@@ -52,6 +53,8 @@ function App() {
                     <PrivateRoute exact path="/shootout" component={Shootout} />
                     <PrivateRoute exact path="/shootout/stats" component={Shootout} data={{view_stats:true}} />
                     <PrivateRoute path="/shootout/stats/:player" component={Shootout} data={{view_stats:true,player_from_url:true }} />
+
+                    <PrivateRoute exact path="/tournament" component={Tournament} />
 
                     <PrivateRoute exact path="/sync" component={SyncPage} />
                     <PrivateRoute exact path="/user/settings" component={UserSettings} />

@@ -32,6 +32,9 @@ export const TEAM2_COLOR = 'lightcoral';
 // error messages
 export const UNAUTHORIZED_ERROR = 'Oops, seems like you are unauthorized to view this content.';
 
+// Tournament
+export const MAX_TEAMS_IN_TOURNAMENT = 10;
+
 // loaders
 export const LOADERS = {
     'loading.gif': {

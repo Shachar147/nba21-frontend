@@ -16,13 +16,20 @@ export default class StatsTable extends React.Component {
 
         const { show_more_opened } = this.state;
         const { title, description, hidden, cols, stats, marginTop } = this.props;
+        let { showMoreSwitch, switchMaxNumber } = this.props;
         const description_bullets = (typeof(description) === "object") ? description : [description];
+
+        if (showMoreSwitch == undefined) { showMoreSwitch = true; }
 
         let show_more_switch = (show_more_opened) ? (
             <a style={{ cursor: "pointer" }} onClick={() => { this.setState({ show_more_opened: 0 }) }}>Show Less</a>
         ) : (
             <a style={{ cursor: "pointer" }} onClick={() => { this.setState({ show_more_opened: 1 }) }}>Show More</a>
         );
+
+        if (!showMoreSwitch) {
+            show_more_switch = "";
+        }
 
         let have_values = 0;
 
@@ -31,6 +38,12 @@ export default class StatsTable extends React.Component {
             if (values.length > 0) { have_values++; }
         });
         if (!have_values) show_more_switch = "";
+
+        switchMaxNumber = switchMaxNumber || TOP_STATS_NUMBER;
+
+        if (Object.keys(stats).length <= switchMaxNumber){
+            show_more_switch = "";
+        }
 
         return (
             <div style={{ width:"100%", textAlign: "center" }}>
@@ -52,7 +65,7 @@ export default class StatsTable extends React.Component {
                                 <tbody>
                                 {Object.keys(stats).map((stat,idx) => {
 
-                                    if (idx < TOP_STATS_NUMBER || show_more_opened) {
+                                    if (idx < switchMaxNumber || show_more_opened || !showMoreSwitch) {
                                         const values = stats[stat];
                                         const value1 = (values.length > 0) ? values[0] : "N/A";
                                         const value2 = (values.length > 1) ? values[1] : "N/A";
@@ -124,8 +137,12 @@ StatsTable.propTypes = {
     marginTop: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string,
-    ])
+    ]),
 
+    /**
+     * do we want to have show more/show less switch?
+     */
+    showMoreSwitch: PropTypes.bool,
 };
 
 StatsTable.defaultProps = {
@@ -135,4 +152,5 @@ StatsTable.defaultProps = {
     cols: ["","",""],
     stats: {},
     marginTop: undefined,
+    showMoreSwitch:true,
 };
