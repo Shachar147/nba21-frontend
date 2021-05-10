@@ -212,17 +212,17 @@ export default class Tournament extends React.Component {
                     "Miami Heat",
                     "Boston Celtics",
                     "Denver Nuggets",
-                    "Utah Jazz",
-                    "LA Clippers",
-                    "Phoenix Suns",
-                    // "New York Knicks", //
-                    // "Charlotte Hornets", //
-
-                    "Philadelphia 76ers", //
-                    // "Toronto Raptors", //
-                    // "Milwaukee Bucks", //
-                    "Washington Wizards", //
-                    "Dallas Mavericks",
+                    // "Utah Jazz",
+                    // "LA Clippers",
+                    // "Phoenix Suns",
+                    // // "New York Knicks", //
+                    // // "Charlotte Hornets", //
+                    //
+                    // "Philadelphia 76ers", //
+                    // // "Toronto Raptors", //
+                    // // "Milwaukee Bucks", //
+                    // "Washington Wizards", //
+                    // "Dallas Mavericks",
                 ];
 
                 players = players.filter(iter => tournament_teams.indexOf(iter.name) !== -1);
@@ -230,7 +230,7 @@ export default class Tournament extends React.Component {
                 let curr_players = players;
                 curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
                 curr_players = players.slice(0,MAX_TEAMS_IN_TOURNAMENT); // slice
-                console.log(curr_players);
+                // console.log(curr_players);
 
                 self.setState({ players, curr_players });
                 await self.init();
@@ -974,7 +974,11 @@ export default class Tournament extends React.Component {
                 const row = [];
                 const hash = this.state.players.filter((iter) => iter.name === team)[0];
                 const isOut = (lost_teams[team]) ? ' (Out)' : '';
-                row[0] = `<div class="box" style="display: flex;align-items:center;"><img src="${hash.logo || hash.picture}" style="height:30px;" /> <span style="margin-left:1px;"> ${team}${isOut}</span></div>`;
+                let text = `${team}${isOut}`;
+                if (isOut !== ''){
+                    text = `<s>${text}</s>`
+                }
+                row[0] = `<div class="box" style="display: flex;align-items:center;"><img src="${hash.logo || hash.picture}" style="height:30px;" /> <span style="margin-left:1px;"> ${text}</span></div>`;
 
                 let percents = ((standings[team]['wins'] / standings[team]['total_games']) * 100).toFixed(2);
                 row[1] = `${standings[team]['wins']}W-${standings[team]['lose']}L DIFF:${standings[team]['total_diff']} ${percents}% ${leader_mvp}`;
