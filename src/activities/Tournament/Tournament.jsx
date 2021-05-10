@@ -138,6 +138,7 @@ export default class Tournament extends React.Component {
             finished: false,
             lost_teams: {},
             step: '',
+            tournament_players: [],
         };
 
         this.nextGame = this.nextGame.bind(this);
@@ -226,7 +227,7 @@ export default class Tournament extends React.Component {
                 // if (debug) console.log('curr players', curr_players);
                 console.log(curr_players);
 
-                self.setState({ players, curr_players });
+                self.setState({ players, curr_players, tournament_players: curr_players });
                 await self.init();
 
                 setTimeout(async () => {
@@ -387,6 +388,9 @@ export default class Tournament extends React.Component {
         // curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
         // if (debug) console.log('curr players', curr_players);
 
+        const { tournament_players } = this.state;
+        let curr_players = tournament_players;
+
         await this.setState({
             player1,
             player2,
@@ -405,7 +409,7 @@ export default class Tournament extends React.Component {
             finished: false,
             lost_teams: {},
 
-            // curr_players,
+            curr_players,
         });
 
         if (this.state.loaded && this.state.loadedStats){
@@ -442,12 +446,20 @@ export default class Tournament extends React.Component {
             const max = Math.ceil(curr_players.length/2);
             step = (max === 4 || max === 3) ? 'Semi-Finals' : (max === 2) ? 'Finals' : 'Top ' + max;
 
-            games_history = {};
-            //console.log(games_history);
+            // games_history = {};
             const remaining_player_names = leaderboard.slice(0,max);
             leaderboard.slice(max,leaderboard.length).forEach((lost_team) => {
                 lost_teams[lost_team] = true;
             });
+            // remaining_players.forEach((iter) => { remaining_players.push(iter.name) });
+
+            if (remaining_players.length === 0 && Object.keys(lost_teams).length < curr_players.length) {
+                // remaining_players = curr_players.filter(iter => lost_teams[iter.name] == undefined);
+                console.log(lost_teams);
+                console.log(max);
+                console.log(remaining_player_names);
+            }
+
             if (debug) console.log('remaing player names', remaining_player_names);
             remaining_players = curr_players.filter(iter => remaining_player_names.indexOf(iter.name) !== -1);
             curr_players = remaining_players;
@@ -689,18 +701,32 @@ export default class Tournament extends React.Component {
                     <Header />
 
                     <div className="ui link cards centered" style={{...statsStyle,textAlign: "center"}}>
-                        Hello!<br/>
+                        <div className="ui header" style={{ width: "100%", textAlign: "center", marginBottom: 10}}>
+                            Tournament Settings
+                        </div>
                         Please choose how many teams you want to participate in this tournament.<br/>
                         <div style={{ width: "100%" }}>
-                            <span style={{ opacity: "0.6" }}>min: {MIN_TEAMS_IN_TOURNAMENT}. max: {MAX_TEAMS_IN_TOURNAMENT}</span>
+                            <span style={{ opacity: "0.6" }}>min: {MIN_TEAMS_IN_TOURNAMENT}. max: {MAX_TEAMS_IN_TOURNAMENT}. number must be even.</span>
                         </div>
-                        <div style={{ width: "100%", marginTop:"10px" }}>
+                        <div style={{ width: "100%", marginTop:"20px" }}>
                             <input
                                 type={"number"}
                                 value={this.state.max_teams || 8}
                                 min={MIN_TEAMS_IN_TOURNAMENT}
                                 max={MAX_TEAMS_IN_TOURNAMENT}
-                                onChange={(e) => this.setState({ max_teams: Math.max(MIN_TEAMS_IN_TOURNAMENT,Math.min(MAX_TEAMS_IN_TOURNAMENT,e.target.value)) })}
+                                onChange={(e) => {
+                                    let number = e.target.value;
+
+                                    // only even
+                                    if (number %2 !== 0){
+                                        number++;
+                                    }
+
+                                    // apply min/max restrictions
+                                    number = Math.max(MIN_TEAMS_IN_TOURNAMENT,Math.min(MAX_TEAMS_IN_TOURNAMENT,number));
+
+                                    this.setState({ max_teams: number })
+                                }}
                                 style={{ height: "38px", border: "1px solid #eaeaea", padding:"0px 5px", width: "50px" }}/>
                             <ButtonInput
                                 text={"Start!"}
@@ -1091,6 +1117,14 @@ export default class Tournament extends React.Component {
                                 loaded: false,
                             })
                             }
+                        }
+                    />
+                    <ButtonInput
+                        text={"Restart Tournament"}
+                        style={{ marginLeft:"5px" }}
+                        onClick={() => {
+                            this.init();
+                        }
                         }
                     />
                     {(stats_page) ?
