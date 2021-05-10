@@ -430,7 +430,7 @@ export default class Tournament extends React.Component {
             const max = Math.ceil(curr_players.length/2);
             step = (max === 4 || max === 3) ? 'Semi-Finals' : (max === 2) ? 'Finals' : 'Top ' + max;
 
-            games_history = {};
+            // games_history = {};
             const remaining_player_names = leaderboard.slice(0,max);
             leaderboard.slice(max,leaderboard.length).forEach((lost_team) => {
                 lost_teams[lost_team] = true;
