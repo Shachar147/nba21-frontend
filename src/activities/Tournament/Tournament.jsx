@@ -14,7 +14,10 @@ import ErrorPage from "../../pages/ErrorPage";
 import {
     APP_BACKGROUND_COLOR,
     LOADER_DETAILS,
-    LOADING_DELAY, MAX_TEAMS_IN_TOURNAMENT, PLAYER_NO_PICTURE,
+    LOADING_DELAY,
+    MAX_TEAMS_IN_TOURNAMENT,
+    MIN_TEAMS_IN_TOURNAMENT,
+    PLAYER_NO_PICTURE,
     UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
 import OneOnOneStats from "../shared/OneOnOneStats";
@@ -53,7 +56,7 @@ const view_stats = undefined;
 const stats_page = false; // todo complete
 const stats_title = undefined;
 const player_from_url = undefined;
-const debug = 1;
+const debug = 0;
 
 export default class Tournament extends React.Component {
 
@@ -82,6 +85,9 @@ export default class Tournament extends React.Component {
             stats: [], // all players stats
             curr_stats: ["Loading Stats..."],
             player_stats: ["Loading Stats..."],
+
+            max_teams: undefined,
+            is_started: false,
 
             matchups_values: {
                 'Total Previous Matchups': [],
@@ -142,6 +148,7 @@ export default class Tournament extends React.Component {
         this.loadUserSettings = this.loadUserSettings.bind(this);
         this.calcOT = this.calcOT.bind(this);
         this.buildLeaderBoard = this.buildLeaderBoard.bind(this);
+        this.loadTeams = this.loadTeams.bind(this);
     }
 
     buildLeaderBoard() {
@@ -183,23 +190,9 @@ export default class Tournament extends React.Component {
         this.setState({ leaderboard });
     }
 
-    componentDidMount() {
-        if (!what || what === ""){
-            this.setState({ loaded:true, error: "Internal Server Error<br/>Opponents Type not specified." });
-            return;
-        }
-
-        if (!game_mode || game_mode === ""){
-            this.setState({ loaded:true, error: "Internal Server Error<br/>Game Mode not specified." });
-            return;
-        }
-
-        if (!get_route || get_route === ""){
-            this.setState({ loaded:true, error: "Internal Server Error<br/>Missing GET route." });
-            return;
-        }
-
+    loadTeams() {
         let self = this;
+
         apiGet(this,
             get_route,
             async function(res) {
@@ -212,25 +205,26 @@ export default class Tournament extends React.Component {
                     "Miami Heat",
                     "Boston Celtics",
                     "Denver Nuggets",
-                    // "Utah Jazz",
-                    // "LA Clippers",
-                    // "Phoenix Suns",
-                    // // "New York Knicks", //
-                    // // "Charlotte Hornets", //
-                    //
-                    // "Philadelphia 76ers", //
-                    // // "Toronto Raptors", //
-                    // // "Milwaukee Bucks", //
-                    // "Washington Wizards", //
-                    // "Dallas Mavericks",
+                    "Utah Jazz",
+                    "LA Clippers",
+                    "Phoenix Suns",
+                    // "New York Knicks", //
+                    // "Charlotte Hornets", //
+
+                    "Philadelphia 76ers", //
+                    // "Toronto Raptors", //
+                    // "Milwaukee Bucks", //
+                    "Washington Wizards", //
+                    "Dallas Mavericks",
                 ];
 
                 players = players.filter(iter => tournament_teams.indexOf(iter.name) !== -1);
 
                 let curr_players = players;
                 curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
-                curr_players = players.slice(0,MAX_TEAMS_IN_TOURNAMENT); // slice
-                // console.log(curr_players);
+                curr_players = players.slice(0,self.state.max_teams); // slice
+                // if (debug) console.log('curr players', curr_players);
+                console.log(curr_players);
 
                 self.setState({ players, curr_players });
                 await self.init();
@@ -256,6 +250,25 @@ export default class Tournament extends React.Component {
 
             }
         );
+    }
+
+    componentDidMount() {
+        if (!what || what === ""){
+            this.setState({ loaded:true, error: "Internal Server Error<br/>Opponents Type not specified." });
+            return;
+        }
+
+        if (!game_mode || game_mode === ""){
+            this.setState({ loaded:true, error: "Internal Server Error<br/>Game Mode not specified." });
+            return;
+        }
+
+        if (!get_route || get_route === ""){
+            this.setState({ loaded:true, error: "Internal Server Error<br/>Missing GET route." });
+            return;
+        }
+
+        let self = this;
 
         if (get_stats_route && get_stats_route !== "") {
             apiGet(this,
@@ -351,13 +364,13 @@ export default class Tournament extends React.Component {
     async init(player1, player2){
         let scores = {};
         let games_history = {};
-        player1 = player1 || getRandomElement(this.state.players);
-        player2 = player2 || getRandomElement(this.state.players);
+        player1 = player1 || getRandomElement(this.state.curr_players);
+        player2 = player2 || getRandomElement(this.state.curr_players);
 
         // prevent same player
         if (this.state.players.length >= 2) {
             while (player1.name === player2.name) {
-                player2 = getRandomElement(this.state.players);
+                player2 = getRandomElement(this.state.curr_players);
             }
         }
 
@@ -369,11 +382,10 @@ export default class Tournament extends React.Component {
         let is_comeback = false;
         let total_overtimes = 0;
 
-        const { players } = this.state;
-        let curr_players = players;
-        curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
-        curr_players = players.slice(0,MAX_TEAMS_IN_TOURNAMENT); // slice
-        console.log(curr_players);
+        // const { players, max_teams } = this.state;
+        // let curr_players = players;
+        // curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
+        // if (debug) console.log('curr players', curr_players);
 
         await this.setState({
             player1,
@@ -393,7 +405,7 @@ export default class Tournament extends React.Component {
             finished: false,
             lost_teams: {},
 
-            curr_players,
+            // curr_players,
         });
 
         if (this.state.loaded && this.state.loadedStats){
@@ -407,8 +419,8 @@ export default class Tournament extends React.Component {
 
     nextGame(){
         let { scores, games_history, curr_players, lost_teams, step } = this.state;
-        console.log('players', this.state.players);
-        console.log('curr players', curr_players);
+        if (debug) console.log('players', this.state.players);
+        if (debug) console.log('curr players', curr_players);
         Object.keys(scores).forEach(function(key, idx){
             scores[key] = 0;
         });
@@ -419,28 +431,29 @@ export default class Tournament extends React.Component {
         let player1 = getRandomElement(remaining_players);
         let player2 = getRandomElement(remaining_players);
 
-        console.log('remaining', remaining_players);
-        console.log('curr', curr_players);
+        if (debug) console.log('remaining', remaining_players);
+        if (debug) console.log('curr', curr_players);
 
         if (remaining_players.length < 2){
 
-            console.log('here');
+            if (debug) console.log('remaining players < 2');
 
             const { leaderboard } = this.state;
             const max = Math.ceil(curr_players.length/2);
             step = (max === 4 || max === 3) ? 'Semi-Finals' : (max === 2) ? 'Finals' : 'Top ' + max;
 
-            // games_history = {};
+            games_history = {};
+            //console.log(games_history);
             const remaining_player_names = leaderboard.slice(0,max);
             leaderboard.slice(max,leaderboard.length).forEach((lost_team) => {
                 lost_teams[lost_team] = true;
             });
-            console.log(remaining_player_names);
+            if (debug) console.log('remaing player names', remaining_player_names);
             remaining_players = curr_players.filter(iter => remaining_player_names.indexOf(iter.name) !== -1);
             curr_players = remaining_players;
 
-            console.log('new remaining players', remaining_players);
-            console.log('new curr players', curr_players);
+            if (debug) console.log('new remaining players', remaining_players);
+            if (debug) console.log('new curr players', curr_players);
 
             if (remaining_players.length >= 2) {
                 player1 = getRandomElement(remaining_players);
@@ -467,7 +480,7 @@ export default class Tournament extends React.Component {
         games_history[player1.name] = games_history[player1.name] || [];
         games_history[player2.name] = games_history[player2.name] || [];
 
-        console.log("lost teams", lost_teams);
+        if (debug) console.log("lost teams", lost_teams);
 
         this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step });
     }
@@ -668,7 +681,40 @@ export default class Tournament extends React.Component {
 
         let original_custom_title = custom_details_title;
 
-        let { error, error_retry, loaded, loadedSettings, players, loaderDetails } = this.state;
+        let { error, error_retry, loaded, loadedSettings, players, loaderDetails, max_teams, is_started } = this.state;
+
+        if (!max_teams || !is_started){
+            return (
+                <div style={{ paddingTop: "20px" }}>
+                    <Header />
+
+                    <div className="ui link cards centered" style={{...statsStyle,textAlign: "center"}}>
+                        Hello!<br/>
+                        Please choose how many teams you want to participate in this tournament.<br/>
+                        <div style={{ width: "100%" }}>
+                            <span style={{ opacity: "0.6" }}>min: {MIN_TEAMS_IN_TOURNAMENT}. max: {MAX_TEAMS_IN_TOURNAMENT}</span>
+                        </div>
+                        <div style={{ width: "100%", marginTop:"10px" }}>
+                            <input
+                                type={"number"}
+                                value={this.state.max_teams || 8}
+                                min={MIN_TEAMS_IN_TOURNAMENT}
+                                max={MAX_TEAMS_IN_TOURNAMENT}
+                                onChange={(e) => this.setState({ max_teams: Math.max(MIN_TEAMS_IN_TOURNAMENT,Math.min(MAX_TEAMS_IN_TOURNAMENT,e.target.value)) })}
+                                style={{ height: "38px", border: "1px solid #eaeaea", padding:"0px 5px", width: "50px" }}/>
+                            <ButtonInput
+                                text={"Start!"}
+                                style={{ marginLeft:"5px" }}
+                                onClick={() => {
+                                    this.loadTeams();
+                                    this.setState({ is_started: true });
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )
+        }
 
         const is_loading = !loaded || !loadedSettings;
         if (error || (!is_loading && players.length === 0)) {
@@ -1038,7 +1084,14 @@ export default class Tournament extends React.Component {
                     <ButtonInput
                         text={"New Tournament"}
                         style={{ marginLeft:"5px" }}
-                        onClick={() => { this.init()}}
+                        onClick={() => {
+                            // this.init()
+                            this.setState({
+                                is_started: false,
+                                loaded: false,
+                            })
+                            }
+                        }
                     />
                     {(stats_page) ?
                         <ButtonInput
