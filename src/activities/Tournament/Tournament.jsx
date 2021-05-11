@@ -27,6 +27,7 @@ import {buildStatsInformation, BuildStatsTable, statsStyle} from "../shared/OneO
 import DropdownInput from "../../components/inputs/DropdownInput";
 import TextInput from "../../components/inputs/TextInput";
 import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
+import Notification from "../../components/internal/Notification";
 
 const game_mode = "Tournament";
 const what = "teams";
@@ -51,12 +52,15 @@ const mvp_block = true;
 const get_stats_route = undefined;
 const get_stats_specific_route = undefined;
 const save_result_route = undefined;
+const save_final_result_route = '/records/tournament'
 const update_result_route = undefined;
 const view_stats = undefined;
 const stats_page = false; // todo complete
 const stats_title = undefined;
 const player_from_url = undefined;
 const debug = 0;
+
+let mvp;
 
 export default class Tournament extends React.Component {
 
@@ -79,6 +83,7 @@ export default class Tournament extends React.Component {
             loser: "",
             mvp_player: undefined,
             saved: false,
+            saved_api: false,
             saving: false,
 
             loadedStats: false,
@@ -139,6 +144,7 @@ export default class Tournament extends React.Component {
             lost_teams: {},
             step: '',
             tournament_players: [],
+            played_games: [],
         };
 
         this.nextGame = this.nextGame.bind(this);
@@ -150,6 +156,7 @@ export default class Tournament extends React.Component {
         this.calcOT = this.calcOT.bind(this);
         this.buildLeaderBoard = this.buildLeaderBoard.bind(this);
         this.loadTeams = this.loadTeams.bind(this);
+        this.saveFinalResult = this.saveFinalResult.bind(this);
     }
 
     buildLeaderBoard() {
@@ -365,6 +372,7 @@ export default class Tournament extends React.Component {
     async init(player1, player2){
         let scores = {};
         let games_history = {};
+        let played_games = [];
         player1 = player1 || getRandomElement(this.state.curr_players);
         player2 = player2 || getRandomElement(this.state.curr_players);
 
@@ -396,6 +404,7 @@ export default class Tournament extends React.Component {
             player2,
             scores,
             saved: false,
+            saved_api: false,
             winner: "",
             loser: "",
             games_history,
@@ -410,6 +419,7 @@ export default class Tournament extends React.Component {
             lost_teams: {},
 
             curr_players,
+            played_games,
         });
 
         if (this.state.loaded && this.state.loadedStats){
@@ -422,7 +432,7 @@ export default class Tournament extends React.Component {
     }
 
     nextGame(){
-        let { scores, games_history, curr_players, lost_teams, step } = this.state;
+        let { scores, games_history, curr_players, lost_teams, step, played_games, leader_mvp } = this.state;
         if (debug) console.log('players', this.state.players);
         if (debug) console.log('curr players', curr_players);
         Object.keys(scores).forEach(function(key, idx){
@@ -472,10 +482,29 @@ export default class Tournament extends React.Component {
                 player2 = getRandomElement(remaining_players);
             }
             else {
+
                 alert('finished! ' + remaining_players[0].name + ' is the winner!');
+                if (mvp === 'N/A') mvp = undefined;
+
+                let winner = remaining_players[0].name;
+                let teams = Object.keys(games_history);
+                let gamesHistory = played_games;
+                let mvpPlayer = mvp;
+
+                console.log({
+                    winner: winner,
+                    teams: teams,
+                    // history: games_history,
+                    gamesHistory: gamesHistory,
+                    mvpPlayer: mvpPlayer,
+                });
+
                 this.setState({
                     finished: true
                 });
+
+                this.saveFinalResult(winner, teams, gamesHistory, mvpPlayer)
+
                 return;
             }
         }
@@ -494,7 +523,7 @@ export default class Tournament extends React.Component {
 
         if (debug) console.log("lost teams", lost_teams);
 
-        this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step });
+        this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, saved_api: false,winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step });
     }
 
     async updateResult(){
@@ -502,7 +531,7 @@ export default class Tournament extends React.Component {
         this.setState({ saving: true });
         await sleep(100);
 
-        const { scores, standings } = this.state;
+        const { scores, standings, played_games } = this.state;
 
         const score1 = scores[this.state.player1.name];
         const score2 = scores[this.state.player2.name];
@@ -543,6 +572,13 @@ export default class Tournament extends React.Component {
         lastRecord1['is_comeback'] = is_comeback;
         lastRecord1['mvp_player'] = mvp_player;
 
+        const game = {...lastRecord1};
+        delete game.won_or_lost;
+        delete game.score;
+        game.diff = Math.abs(game.diff);
+        game.winner = winner;
+        played_games[played_games.length-1] = game;
+
         const lastRecord2 = games_history[player2][games_history[player2].length-1];
         lastRecord2['score'] = score2;
         lastRecord2['score1'] = score1;
@@ -576,7 +612,7 @@ export default class Tournament extends React.Component {
 
         if (debug) console.log('standings', standings);
 
-        await this.setState({ saved: true, winner, loser, games_history, standings, scores, saving: false });
+        await this.setState({ saved: true, winner, loser, games_history, standings, scores, saving: false, played_games });
         this.buildLeaderBoard();
     }
 
@@ -585,7 +621,7 @@ export default class Tournament extends React.Component {
         await this.setState({ saving: true });
         await sleep(100);
 
-        const { scores, standings } = this.state;
+        const { scores, standings, played_games } = this.state;
 
         const player1 = this.state.player1.name;
         const player2 = this.state.player2.name;
@@ -621,6 +657,13 @@ export default class Tournament extends React.Component {
         row['total_overtimes'] = total_overtimes;
         row['diff'] = score1 - score2;
         games_history[player1].push(row);
+
+        const game = {...row};
+        delete game.won_or_lost;
+        delete game.score;
+        game.diff = Math.abs(game.diff);
+        game.winner = winner;
+        played_games.push(game);
 
         const row2 = [];
         row2['player1'] = player1;
@@ -666,7 +709,7 @@ export default class Tournament extends React.Component {
 
         if (debug) console.log('standings', standings);
 
-        await this.setState({saved: true, winner, loser, games_history, standings, saving: false});
+        await this.setState({saved: true, winner, loser, games_history, standings, saving: false, played_games});
         this.buildLeaderBoard();
     }
 
@@ -687,6 +730,38 @@ export default class Tournament extends React.Component {
         // console.log("total overtimes: ",total_overtimes);
 
         this.setState({ total_overtimes });
+    }
+
+    async saveFinalResult(winner, teams, gamesHistory, mvpPlayer){
+
+        const self = this;
+
+        await apiPost(this,
+            save_final_result_route,
+            {
+                winner,
+                teams,
+                gamesHistory,
+                mvpPlayer
+            },
+            async function(res) {
+
+                await self.setState({ saved: true });
+                // self.initStats();
+            },
+            function(error, retry) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed saving this game.` }
+                self.setState({ error: req_error, error_retry: retry });
+            },
+            function() {
+                // finally
+            }
+        );
+
+        this.setState({ saved_api:true });
     }
 
     render(){
@@ -1016,7 +1091,7 @@ export default class Tournament extends React.Component {
             });
 
             let max = 0;
-            let mvp = "N/A";
+            mvp = "N/A";
             // Object.keys(mvps).forEach((player) => {
             //     if(mvps[player] > max){
             //         max = mvps[player];
@@ -1080,6 +1155,13 @@ export default class Tournament extends React.Component {
             );
         }
 
+        const game_saved = (this.state.finished && this.state.saved_api) ? (
+            <Notification
+                title={"Game was saved!"}
+                description={"This game was saved. you can take a look at stats page to see details about past games."}
+            />
+        ) : "";
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
@@ -1124,7 +1206,7 @@ export default class Tournament extends React.Component {
                         style={{ marginLeft:"5px" }}
                         onClick={() => {
                             this.init();
-                        }
+                            }
                         }
                     />
                     {(stats_page) ?
@@ -1197,6 +1279,7 @@ export default class Tournament extends React.Component {
                     {overtime_block}
                 </div>
 
+                {game_saved}
             </div>
         );
     }
