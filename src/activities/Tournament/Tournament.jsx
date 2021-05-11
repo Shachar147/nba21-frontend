@@ -37,7 +37,7 @@ const styles = {
     imageStyle: { width: 200, margin: "auto", padding: "20px" },
     // extraContentStyle: { display: "none" },
 };
-const custom_keys = {
+let custom_keys = {
     player1: 'team1',
     player2: 'team2',
     player1Id: 'team1Id',
@@ -47,25 +47,28 @@ const custom_keys = {
 };
 let custom_details_title = "Players:";
 const percents = false;
-const mvp_block = true;
+const mvp_block = false;
 
-const get_stats_route = undefined;
-const get_stats_specific_route = undefined;
-const save_result_route = undefined;
+const get_stats_route = '/records/tournament/stats';
 const save_final_result_route = '/records/tournament'
-const update_result_route = undefined;
-const view_stats = undefined;
-const stats_page = false; // todo complete
+const stats_page = true;
 const stats_title = undefined;
-const player_from_url = undefined;
+const get_stats_specific_route = undefined; // todo complete
+const save_result_route = undefined; // todo complete (?) <- save at the middle of tournament
+const update_result_route = undefined; // todo complete (?) <- save at the middle of tournament
 const debug = 0;
 
+let view_stats = undefined; // if true it'll open stats page by default
+let player_from_url = undefined; // todo complete
 let mvp;
 
 export default class Tournament extends React.Component {
 
     constructor (props){
         super(props);
+
+        player_from_url = this.props.player_from_url;
+        view_stats = this.props.view_stats;
 
         this.state = {
             players: [],
@@ -770,6 +773,41 @@ export default class Tournament extends React.Component {
 
         let { error, error_retry, loaded, loadedSettings, players, loaderDetails, max_teams, is_started } = this.state;
 
+        if (this.state.view_stats && stats_page){
+            return (
+                <OneOnOneStats
+                    what={what}
+                    stats_title={stats_title}
+                    game_mode={game_mode}
+                    get_route={get_route}
+                    get_stats_route={get_stats_route}
+                    get_stats_specific_route={get_stats_specific_route}
+                    mvp_block={mvp_block}
+                    onBack={() => { this.setState({ view_stats: false }) }}
+                    player_from_url={player_from_url}
+                />
+            );
+        }
+
+        // const { selected_player } = this.state;
+        //
+        // if (selected_player){
+        //     const get_specific_route = (what === "players") ? "/player" : "/team";
+        //     const this_stats_title = stats_title || game_mode;
+        //
+        //     return (
+        //         <OneOnOneSingleStats
+        //             selected_player={selected_player}
+        //             what={what}
+        //             stats_title={`${this_stats_title} - ${selected_player}`}
+        //             game_mode={game_mode}
+        //             get_route={get_specific_route}
+        //             get_stats_route={get_stats_specific_route}
+        //             onBack={() => { this.setState({ selected_player: undefined }) }}
+        //         />
+        //     );
+        // }
+
         if (!max_teams || !is_started){
             return (
                 <div style={{ paddingTop: "20px" }}>
@@ -828,41 +866,6 @@ export default class Tournament extends React.Component {
                 <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={loaderDetails} />
             );
         }
-
-        // if (this.state.view_stats && stats_page){
-        //     return (
-        //         <OneOnOneStats
-        //             what={what}
-        //             stats_title={stats_title}
-        //             game_mode={game_mode}
-        //             get_route={get_route}
-        //             get_stats_route={get_stats_route}
-        //             get_stats_specific_route={get_stats_specific_route}
-        //             mvp_block={mvp_block}
-        //             onBack={() => { this.setState({ view_stats: false }) }}
-        //             player_from_url={player_from_url}
-        //         />
-        //     );
-        // }
-
-        // const { selected_player } = this.state;
-        //
-        // if (selected_player){
-        //     const get_specific_route = (what === "players") ? "/player" : "/team";
-        //     const this_stats_title = stats_title || game_mode;
-        //
-        //     return (
-        //         <OneOnOneSingleStats
-        //             selected_player={selected_player}
-        //             what={what}
-        //             stats_title={`${this_stats_title} - ${selected_player}`}
-        //             game_mode={game_mode}
-        //             get_route={get_specific_route}
-        //             get_stats_route={get_stats_specific_route}
-        //             onBack={() => { this.setState({ selected_player: undefined }) }}
-        //         />
-        //     );
-        // }
 
         if (custom_details_title){
             original_custom_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>${custom_details_title}</div>`;
