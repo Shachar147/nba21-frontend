@@ -47,7 +47,7 @@ let custom_keys = {
 };
 let custom_details_title = "Players:";
 const percents = false;
-const mvp_block = false;
+const mvp_block = true;
 
 const get_stats_route = '/records/tournament/stats';
 const save_final_result_route = '/records/tournament'
@@ -782,7 +782,8 @@ export default class Tournament extends React.Component {
                     get_route={get_route}
                     get_stats_route={get_stats_route}
                     get_stats_specific_route={get_stats_specific_route}
-                    mvp_block={mvp_block}
+                    // mvp_block={mvp_block}
+                    mvp_block={false}
                     onBack={() => { this.setState({ view_stats: false }) }}
                     player_from_url={player_from_url}
                 />
@@ -812,6 +813,15 @@ export default class Tournament extends React.Component {
             return (
                 <div style={{ paddingTop: "20px" }}>
                     <Header />
+
+                    <div className="ui link cards centered" style={{margin: "auto", marginTop: "20px"}}>
+                    {(stats_page) ?
+                        <ButtonInput
+                            text={"View Stats"}
+                            style={{ marginLeft:"5px" }}
+                            onClick={() => { this.setState({ view_stats: true }) }}
+                        /> : ""}
+                    </div>
 
                     <div className="ui link cards centered" style={{...statsStyle,textAlign: "center"}}>
                         <div className="ui header" style={{ width: "100%", textAlign: "center", marginBottom: 10}}>

@@ -9,7 +9,7 @@ import Header from "../../components/layouts/Header";
 import {apiGet} from "../../helpers/api";
 import {
     DEFAULT_STATS_ORDER,
-    DEFAULT_STOPWATCH_STATS_ORDER,
+    DEFAULT_STOPWATCH_STATS_ORDER, DEFAULT_TOURNAMENT_STATS_ORDER,
     LOADER_DETAILS,
     LOADING_DELAY,
     UNAUTHORIZED_ERROR
@@ -18,7 +18,7 @@ import {
     _2kRatingSort, average2kRatingSort,
     currentLoseStreakSort,
     currentWinStreakSort, maxLoseStreakSort, maxWinStreakSort, OVERALL_HIGHLIGHTS,
-    overallSort, specificSort, totalAwayGames, totalDiffPerGameSort, totalDiffSort,
+    overallSort, overallTournamentSort, specificSort, totalAwayGames, totalDiffPerGameSort, totalDiffSort,
     totalGamesSort, totalHomeGames,
     totalKnockoutsSort, totalLostSort, totalScored, totalSuffered, totalSufferedKnockoutsSort,
     totalWinsPercentsSort, totalWinsSort,
@@ -35,7 +35,9 @@ class OneOnOneStats extends React.Component {
     constructor(props) {
         super(props);
 
-        const orderBy = (props.game_mode === 'Stopwatch Shootout') ? DEFAULT_STOPWATCH_STATS_ORDER : DEFAULT_STATS_ORDER;
+        const orderBy = (props.game_mode === 'Stopwatch Shootout') ? DEFAULT_STOPWATCH_STATS_ORDER :
+                        (props.game_mode === 'Tournament') ? DEFAULT_TOURNAMENT_STATS_ORDER :
+                        DEFAULT_STATS_ORDER;
 
         this.state = {
             "players": [],
@@ -130,6 +132,13 @@ class OneOnOneStats extends React.Component {
             if (["Three Points Contest","Stopwatch Shootout"].indexOf(this.props.game_mode) === -1) {
                 this.state.orderByOptions.push({"Average Opponent 2K Rating": average2kRatingSort});
             }
+        }
+
+        if (this.props.game_mode === "Tournament") {
+            this.state.orderByOptions[0] = { "Overall": overallTournamentSort },
+            this.state.orderByOptions.push({ 'Total Tournaments': (a,b) => specificSort('total_tournaments',a,b) });
+            this.state.orderByOptions.push({ 'Total Championships': (a,b) => specificSort('total_tournament_wins',a,b) });
+            this.state.orderByOptions.push({ 'Total Matchups': (a,b) => specificSort('total_matchups',a,b) });
         }
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -521,6 +530,11 @@ class OneOnOneStats extends React.Component {
                                     total_home_lost: records[player.name].total_home_lost,
                                     total_road_wins: records[player.name].total_road_wins,
                                     total_road_lost: records[player.name].total_road_lost,
+
+                                    // tournament
+                                    total_tournaments: records[player.name].total_tournaments,
+                                    total_tournament_wins: records[player.name].total_tournament_wins,
+                                    total_matchups: Object.keys(records[player.name]['matchups']).length,
                                 }}
 
                                 onImageClick={() => {

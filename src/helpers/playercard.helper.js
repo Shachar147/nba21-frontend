@@ -124,6 +124,11 @@ export function buildDetails(details, stats){
         total_road_wins,
         total_road_lost,
 
+        // tournaments
+        total_tournaments,
+        total_tournament_wins,
+        total_matchups,
+
     } = stats;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
@@ -219,6 +224,10 @@ export function buildDetails(details, stats){
         'Total Home Lost': `${total_home_lost}`,
         'Total Road Wins': `${total_road_wins}`,
         'Total Road Lost': `${total_road_lost}`,
+
+        'Total Tournaments': `${total_tournaments}`,
+        'Total Championships': `${total_tournament_wins}`,
+        'Total Matchups': `${total_matchups}`,
     };
 
     // on fire / ice cold
@@ -255,7 +264,9 @@ export function buildDetails(details, stats){
 
     // stats
     let stats_arr = [];
+    if (isDefined(total_tournament_wins)) stats_arr.push(`Total Championships: ${settings['Total Championships']}`);
     if (total_win_percents) stats_arr.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
+    if (isDefined(total_tournaments)) stats_arr.push(`Total Tournaments: ${settings['Total Tournaments']}`);
     if (total_games) stats_arr.push(`Total Games: ${settings['Total Games']}`);
     if (isDefined(win_streak)) { stats_arr.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
     if (isDefined(lose_streak)) { stats_arr.push(`Lose Streak: ${settings['Current Lose Streak']} ${settings['Max Lose Streak']}` + icecold); }
@@ -336,6 +347,8 @@ export function buildDetails(details, stats){
 
     if (isDefined(total_home_lost) || isDefined(total_home_wins)) stats_arr.push(`Total Home Wins/Lost: ${settings['Total Home Wins']}-${settings['Total Home Lost']}`);
     if (isDefined(total_road_wins) || isDefined(total_road_lost)) stats_arr.push(`Total Road Wins/Lost: ${settings['Total Road Wins']}-${settings['Total Road Lost']}`);
+
+    if (isDefined(total_matchups)) stats_arr.push(`Total Matchups: ${settings['Total Matchups']}`);
 
     // highlighted items first
     let first = [];

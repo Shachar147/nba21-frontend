@@ -441,6 +441,11 @@ export default class OneOnOneSingleStats extends React.Component {
                     total_home_lost: records.total_home_lost,
                     total_road_wins: records.total_road_wins,
                     total_road_lost: records.total_road_lost,
+
+                    // tournament
+                    total_tournaments: records.total_tournaments,
+                    total_tournament_wins: records.total_tournament_wins,
+                    total_matchups: Object.keys(records['matchups']).length,
                 }}
             />
         );
