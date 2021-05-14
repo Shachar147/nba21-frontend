@@ -749,7 +749,7 @@ export default class Tournament extends React.Component {
             },
             async function(res) {
 
-                await self.setState({ saved: true });
+                await self.setState({ saved: true, saved_api:true });
                 // self.initStats();
             },
             function(error, retry) {
@@ -763,8 +763,6 @@ export default class Tournament extends React.Component {
                 // finally
             }
         );
-
-        this.setState({ saved_api:true });
     }
 
     render(){
