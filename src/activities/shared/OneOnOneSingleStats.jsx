@@ -445,7 +445,7 @@ export default class OneOnOneSingleStats extends React.Component {
                     // tournament
                     total_tournaments: records.total_tournaments,
                     total_tournament_wins: records.total_tournament_wins,
-                    total_matchups: Object.keys(records['matchups']).length,
+                    total_matchups: (records['matchups']) ? Object.keys(records['matchups']).length : undefined,
                 }}
             />
         );
