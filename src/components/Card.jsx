@@ -25,16 +25,28 @@ export default function Card(props) {
 
     }
 
+    const picture = (props.href) ? (
+        <Link to={props.href} title={alt}  className={"image"} style={linkStyle} disabled={props.disabled}>
+            <img src={props.picture} alt={alt} style={{ width: "60%" }} />
+        </Link>
+    ) : (<div onClick={props.onClick} title={alt}  className={"image"} style={linkStyle} disabled={props.disabled}>
+            <img src={props.picture} alt={alt} style={{ width: "60%" }} />
+        </div>);
+
+    const content = (props.href) ? (
+        <Link to={props.href} disabled={props.disabled}><div className="description" dangerouslySetInnerHTML={{__html: props.name}} /></Link>
+    ) : (
+        <div onClick={props.onClick} disabled={props.disabled}><div className="description" dangerouslySetInnerHTML={{__html: props.name}} /></div>
+    )
+
     const card = (
         <div className={className}
              style={style}>
             <div className="image">
-                <Link to={props.href} title={alt}  className={"image"} style={linkStyle} disabled={props.disabled}>
-                    <img src={props.picture} alt={alt} style={{ width: "60%" }} />
-                </Link>
+                {picture}
             </div>
             <div className="content" style={{ wordBreak: "break-word" }}>
-                <Link to={props.href} disabled={props.disabled}><div className="description" dangerouslySetInnerHTML={{__html: props.name}} /></Link>
+                {content}
             </div>
         </div>
     );
@@ -85,6 +97,10 @@ Card.propTypes = {
      * link to redirect to, when clicking on the image of this card.
      */
     href: PropTypes.string,
+    /**
+     * onClick function. optional.
+     */
+    onClick: PropTypes.func,
     /**
      * should we wrap this card with cards wrapper?
      *

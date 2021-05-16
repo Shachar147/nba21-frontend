@@ -15,6 +15,7 @@
       <change beforePath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Card.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/internal/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/Notification.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
     </list>
@@ -126,7 +127,7 @@
       <workItem from="1620301691778" duration="43215000" />
       <workItem from="1620671646094" duration="16130000" />
       <workItem from="1620801693922" duration="782000" />
-      <workItem from="1620977276828" duration="14290000" />
+      <workItem from="1620977276828" duration="16947000" />
     </task>
     <servers />
   </component>

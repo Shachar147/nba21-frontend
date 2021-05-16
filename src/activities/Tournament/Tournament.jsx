@@ -29,6 +29,7 @@ import TextInput from "../../components/inputs/TextInput";
 import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
 import Notification from "../../components/internal/Notification";
 import Confirmation from "../../components/internal/Confirmation";
+import Card from "../../components/Card";
 
 const game_mode = "Tournament";
 const what = "teams";
@@ -154,6 +155,26 @@ export default class Tournament extends React.Component {
             button_clicked_action_text: undefined,
             button_clicked_func: undefined,
             current_game_num: 1,
+
+            tournament_teams: [
+                "Los Angeles Lakers",
+                "Golden State Warriors",
+                "Brooklyn Nets",
+                "Miami Heat",
+                "Boston Celtics",
+                "Denver Nuggets",
+                "Utah Jazz",
+                "LA Clippers",
+                "Phoenix Suns",
+                // "New York Knicks", //
+                // "Charlotte Hornets", //
+
+                "Philadelphia 76ers", //
+                // "Toronto Raptors", //
+                // "Milwaukee Bucks", //
+                "Washington Wizards", //
+                "Dallas Mavericks",
+            ]
         };
 
         this.nextGame = this.nextGame.bind(this);
@@ -207,66 +228,73 @@ export default class Tournament extends React.Component {
         this.setState({ leaderboard });
     }
 
-    loadTeams() {
+    async loadTeams() {
         let self = this;
 
-        apiGet(this,
-            get_route,
-            async function(res) {
-                let players = res.data.data || res.data;
+        let players = this.state.teams;
 
-                const tournament_teams = [
-                    "Los Angeles Lakers",
-                    "Golden State Warriors",
-                    "Brooklyn Nets",
-                    "Miami Heat",
-                    "Boston Celtics",
-                    "Denver Nuggets",
-                    "Utah Jazz",
-                    "LA Clippers",
-                    "Phoenix Suns",
-                    // "New York Knicks", //
-                    // "Charlotte Hornets", //
+        const tournament_teams = this.state.tournament_teams;
 
-                    "Philadelphia 76ers", //
-                    // "Toronto Raptors", //
-                    // "Milwaukee Bucks", //
-                    "Washington Wizards", //
-                    "Dallas Mavericks",
-                ];
+        players = players.filter(iter => tournament_teams.indexOf(iter.name) !== -1);
 
-                players = players.filter(iter => tournament_teams.indexOf(iter.name) !== -1);
+        let curr_players = players;
+        curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
+        curr_players = players.slice(0,self.state.max_teams); // slice
+        // if (debug) console.log('curr players', curr_players);
+        console.log(curr_players);
 
-                let curr_players = players;
-                curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
-                curr_players = players.slice(0,self.state.max_teams); // slice
-                // if (debug) console.log('curr players', curr_players);
-                console.log(curr_players);
+        await self.setState({ players, curr_players, tournament_players: curr_players });
+        await self.init();
 
-                self.setState({ players, curr_players, tournament_players: curr_players });
-                await self.init();
+        setTimeout(async () => {
+                await self.setState({ loaded: true })
 
-                setTimeout(async () => {
-                        await self.setState({ loaded: true })
-
-                        // initialize stats
-                        if (self.canInitStats()){
-                            self.initStats();
-                        }
-                    },
-                    LOADING_DELAY);
+                // initialize stats
+                if (self.canInitStats()){
+                    self.initStats();
+                }
             },
-            function(error, error_retry) {
-                console.error(error);
-                let req_error = error.message;
-                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR }
-                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
-                self.setState({ error: req_error, error_retry });
-            },
-            function() {
+            LOADING_DELAY);
 
-            }
-        );
+        // apiGet(this,
+        //     get_route,
+        //     async function(res) {
+        //         let players = res.data.data || res.data;
+        //
+        //         const tournament_teams = this.state.tournament_teams;
+        //
+        //         players = players.filter(iter => tournament_teams.indexOf(iter.name) !== -1);
+        //
+        //         let curr_players = players;
+        //         curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
+        //         curr_players = players.slice(0,self.state.max_teams); // slice
+        //         // if (debug) console.log('curr players', curr_players);
+        //         console.log(curr_players);
+        //
+        //         self.setState({ players, curr_players, tournament_players: curr_players });
+        //         await self.init();
+        //
+        //         setTimeout(async () => {
+        //                 await self.setState({ loaded: true })
+        //
+        //                 // initialize stats
+        //                 if (self.canInitStats()){
+        //                     self.initStats();
+        //                 }
+        //             },
+        //             LOADING_DELAY);
+        //     },
+        //     function(error, error_retry) {
+        //         console.error(error);
+        //         let req_error = error.message;
+        //         if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR }
+        //         if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
+        //         self.setState({ error: req_error, error_retry });
+        //     },
+        //     function() {
+        //
+        //     }
+        // );
     }
 
     componentDidMount() {
@@ -315,6 +343,23 @@ export default class Tournament extends React.Component {
         } else {
             self.setState({ loadedstats: true })
         }
+
+        apiGet(this,
+            get_route,
+            async function(res) {
+                await self.setState({ teams:res.data.data, loadedTeams: true, });
+            },
+            function(error, error_retry) {
+                console.error(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
+                self.setState({ error: req_error, error_retry });
+            },
+            async function() {
+
+            }
+        );
 
         this.loadUserSettings();
     }
@@ -780,6 +825,12 @@ export default class Tournament extends React.Component {
 
         let { error, error_retry, loaded, loadedSettings, players, loaderDetails, max_teams, is_started } = this.state;
 
+        if (!this.state.teams){
+            return (
+                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={loaderDetails} />
+            );
+        }
+
         if (this.state.view_stats && stats_page){
             return (
                 <OneOnOneStats
@@ -816,6 +867,10 @@ export default class Tournament extends React.Component {
         //     );
         // }
 
+        const self = this;
+
+        let { tournament_teams } = self.state;
+
         if (!max_teams || !is_started){
             return (
                 <div style={{ paddingTop: "20px" }}>
@@ -834,7 +889,41 @@ export default class Tournament extends React.Component {
                         <div className="ui header" style={{ width: "100%", textAlign: "center", marginBottom: 10}}>
                             Tournament Settings
                         </div>
-                        Please choose how many teams you want to participate in this tournament.<br/>
+                        Choose which teams do you want to participate in this tournament.<br/>
+                        Total Selected: { tournament_teams.length } <br/>
+                        <div className="ui link cards centered" style={{ margin: "auto" }}>
+                            {
+                                this.state.teams.sort((a,b) => {
+                                    let idx1 = tournament_teams.indexOf(a.name);
+                                    let idx2 = tournament_teams.indexOf(b.name);
+                                    if (idx1 === -1) idx1 = 9999;
+                                    if (idx2 === -1) idx2 = 9999;
+                                    return idx1 - idx2;
+                                }).map((team) => {
+                                    let opacity = (tournament_teams.indexOf(team.name) !== -1) ? 1 : 0.4;
+
+                                    return (
+                                        <Card
+                                            name={team.name}
+                                            picture={team.logo}
+                                            style={{ opacity: opacity, width: '100px' }}
+                                            onClick={() => {
+
+                                                const idx = tournament_teams.indexOf(team.name);
+                                                if (idx !== -1) {
+                                                    tournament_teams.splice(idx,1)
+                                                } else {
+                                                    tournament_teams.push(team.name);
+                                                }
+                                                self.setState({ tournament_teams });
+                                            }}
+                                        />
+                                    );
+                                })
+                            }
+                        </div>
+                        <br/>
+                        Choose how many teams you want to participate in this tournament.<br/>
                         <div style={{ width: "100%" }}>
                             <span style={{ opacity: "0.6" }}>min: {MIN_TEAMS_IN_TOURNAMENT}. max: {MAX_TEAMS_IN_TOURNAMENT}. number must be even.</span>
                         </div>
@@ -861,6 +950,7 @@ export default class Tournament extends React.Component {
                             <ButtonInput
                                 text={"Start!"}
                                 style={{ marginLeft:"5px" }}
+                                disabled={tournament_teams.length < this.state.max_teams}
                                 onClick={() => {
                                     this.setState({ is_started: true });
                                     this.loadTeams();
