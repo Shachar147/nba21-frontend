@@ -153,6 +153,7 @@ export default class Tournament extends React.Component {
             button_clicked:undefined,
             button_clicked_action_text: undefined,
             button_clicked_func: undefined,
+            current_game_num: 1,
         };
 
         this.nextGame = this.nextGame.bind(this);
@@ -428,6 +429,7 @@ export default class Tournament extends React.Component {
 
             curr_players,
             played_games,
+            current_game_num: 1,
         });
 
         if (this.state.loaded && this.state.loadedStats){
@@ -440,7 +442,7 @@ export default class Tournament extends React.Component {
     }
 
     nextGame(){
-        let { scores, games_history, curr_players, lost_teams, step, played_games, leader_mvp } = this.state;
+        let { scores, games_history, curr_players, lost_teams, step, played_games, leader_mvp, current_game_num } = this.state;
         if (debug) console.log('players', this.state.players);
         if (debug) console.log('curr players', curr_players);
         Object.keys(scores).forEach(function(key, idx){
@@ -455,6 +457,8 @@ export default class Tournament extends React.Component {
 
         if (debug) console.log('remaining', remaining_players);
         if (debug) console.log('curr', curr_players);
+
+        current_game_num++;
 
         if (remaining_players.length < 2){
 
@@ -531,7 +535,7 @@ export default class Tournament extends React.Component {
 
         if (debug) console.log("lost teams", lost_teams);
 
-        this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, saved_api: false,winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step });
+        this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, saved_api: false,winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step, current_game_num });
     }
 
     async updateResult(){
@@ -1104,8 +1108,17 @@ export default class Tournament extends React.Component {
             </div>
         );
 
+        // current game
+        const { current_game_num } = this.state;
+        let currGameTitle = (
+            <div style={{ textAlign: "center", marginBottom: "20px" }}>
+                <div className="ui header" style={{ width: "100%", textAlign:"center", marginBottom:"10px"}}>Current Game</div>
+                This is Game #{current_game_num}/{max_teams-1}
+            </div>
+        );
+
         // tournament standings
-        let standings_block = undefined;
+        let standings_table = undefined;
         const { standings, leaderboard } = this.state;
         if (Object.keys(standings).length > 0){
 
@@ -1180,7 +1193,7 @@ export default class Tournament extends React.Component {
 
             let step = (this.state.step) ? ` - ${this.state.step}` : '';
 
-            let standings_table = (
+            standings_table = (
                 <StatsTable
                     title={`${game_mode} Standings${step}`}
                     description={[
@@ -1193,13 +1206,14 @@ export default class Tournament extends React.Component {
                     switchMaxNumber={10}
                 />
             );
-
-            standings_block = (
-                <div className="ui link cards centered" style={statsStyle}>
-                    {standings_table}
-                </div>
-            );
         }
+
+        const standings_block = (
+            <div className="ui link cards centered" style={statsStyle}>
+                {currGameTitle}
+                {standings_table}
+            </div>
+        );
 
         const game_saved = (this.state.finished && this.state.saved_api) ? (
             <Notification
