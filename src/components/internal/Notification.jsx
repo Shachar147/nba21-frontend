@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {PLAYER_NO_PICTURE} from "../../helpers/consts";
-import DropdownInput from "../inputs/DropdownInput";
 
 export default class Notification extends React.Component {
 
