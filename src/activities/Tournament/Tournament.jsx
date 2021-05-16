@@ -834,7 +834,7 @@ export default class Tournament extends React.Component {
                         <div style={{ width: "100%" }}>
                             <span style={{ opacity: "0.6" }}>min: {MIN_TEAMS_IN_TOURNAMENT}. max: {MAX_TEAMS_IN_TOURNAMENT}. number must be even.</span>
                         </div>
-                        <div style={{ width: "100%", marginTop:"20px" }}>
+                        <div style={{ width: "100%", marginTop:"20px", zIndex:99999 }}>
                             <input
                                 type={"number"}
                                 value={this.state.max_teams || 8}
@@ -858,8 +858,8 @@ export default class Tournament extends React.Component {
                                 text={"Start!"}
                                 style={{ marginLeft:"5px" }}
                                 onClick={() => {
-                                    this.loadTeams();
                                     this.setState({ is_started: true });
+                                    this.loadTeams();
                                 }}
                             />
                         </div>
