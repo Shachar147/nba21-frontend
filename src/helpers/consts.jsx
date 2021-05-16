@@ -245,6 +245,91 @@ export const LOADERS = {
         top: '20px',
         textColor: 'white',
     },
+    'magic.gif': {
+        backgroundColor: "#31121A",
+        top: '20px',
+        textColor: 'white',
+    },
+    'Kareem.gif': {
+        backgroundColor: "#102031",
+        top: '20px',
+        textColor: 'white',
+    },
+    'moon.gif': {
+        backgroundColor: "#102031",
+        top: '20px',
+        textColor: 'white',
+    },
+    'lebron-king.gif': {
+        backgroundColor: "#FEA521",
+        top: '20px',
+        textColor: 'white',
+    },
+    'kd-dude.gif': {
+        backgroundColor: "#FFB247",
+        top: '20px',
+        textColor: 'white',
+    },
+    'rocket.gif': {
+        backgroundColor: "#60BBFF",
+        top: '20px',
+        textColor: 'white',
+    },
+    'rain.gif': {
+        backgroundColor: "#4A5A7B",
+        top: '20px',
+        textColor: 'white',
+    },
+    'nba-colors.gif': {
+        backgroundColor: "#D2C7D8",
+        top: '-30px',
+        textColor: 'black',
+    },
+    'cheff-curry.gif': {
+        backgroundColor: "#E6F7F5",
+        top: '20px',
+        textColor: 'black',
+    },
+    'cheff-curry-2.gif': {
+        backgroundColor: "#A9D5E2",
+        top: '-20px',
+        textColor: 'white',
+    },
+    'burger.gif': {
+        backgroundColor: "#5E97DB",
+        top: '20px',
+        textColor: 'white',
+    },
+    'between-the-legs.gif': {
+        backgroundColor: "#1A75CF",
+        top: '20px',
+        textColor: 'white',
+    },
+    'coach.gif': {
+        backgroundColor: "#B4C8D3",
+        top: '-20px',
+        textColor: 'white',
+    },
+    'derozen.gif': {
+        backgroundColor: "#B9444C",
+        top: '20px',
+        textColor: 'white',
+    },
+    'girl.gif': {
+        backgroundColor: "#B9444C",
+        top: '20px',
+        textColor: 'white',
+    },
+    'lebron-pixel.gif': {
+        backgroundColor: "#B61936",
+        top: '20px',
+        textColor: 'white',
+    },
+    'girl2.gif': {
+        backgroundColor: "#FC5F60",
+        top: '20px',
+        textColor: 'white',
+    },
 }
 export const LOADER_DETAILS = () => {
     const options = shuffle(Object.keys(LOADERS));
