@@ -36,6 +36,7 @@ export const UNAUTHORIZED_ERROR = 'Oops, seems like you are unauthorized to view
 // Tournament
 export const MAX_TEAMS_IN_TOURNAMENT = 10;
 export const MIN_TEAMS_IN_TOURNAMENT = 4;
+export const DEFAULT_MAX_TEAMS_IN_TOURNAMENT = 6;
 
 // loaders
 export const LOADERS = {

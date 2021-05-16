@@ -12,7 +12,7 @@ import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../../pages/LoadingPage";
 import ErrorPage from "../../pages/ErrorPage";
 import {
-    APP_BACKGROUND_COLOR,
+    APP_BACKGROUND_COLOR, DEFAULT_MAX_TEAMS_IN_TOURNAMENT,
     LOADER_DETAILS,
     LOADING_DELAY,
     MAX_TEAMS_IN_TOURNAMENT,
@@ -95,7 +95,7 @@ export default class Tournament extends React.Component {
             curr_stats: ["Loading Stats..."],
             player_stats: ["Loading Stats..."],
 
-            max_teams: undefined,
+            max_teams: DEFAULT_MAX_TEAMS_IN_TOURNAMENT,
             is_started: false,
 
             matchups_values: {
@@ -837,7 +837,7 @@ export default class Tournament extends React.Component {
                         <div style={{ width: "100%", marginTop:"20px", zIndex:99999 }}>
                             <input
                                 type={"number"}
-                                value={this.state.max_teams || 8}
+                                value={this.state.max_teams || DEFAULT_MAX_TEAMS_IN_TOURNAMENT}
                                 min={MIN_TEAMS_IN_TOURNAMENT}
                                 max={MAX_TEAMS_IN_TOURNAMENT}
                                 onChange={(e) => {
@@ -1208,6 +1208,9 @@ export default class Tournament extends React.Component {
             />
         ) : "";
 
+        const score1 = scores[this.state.player1.name];
+        const score2 = scores[this.state.player2.name];
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
@@ -1303,14 +1306,14 @@ export default class Tournament extends React.Component {
                                         text={"Update"}
                                         style={{ width: "100%" }}
                                         onClick={this.updateResult}
-                                        disabled={this.state.saving || this.state.finished}
+                                        disabled={this.state.saving || this.state.finished || (score1 === score2)}
                                     />
                                 ): (
                                     <ButtonInput
                                         text={"Save"}
                                         style={{ width: "100%" }}
                                         onClick={this.saveResult}
-                                        disabled={this.state.saved || this.state.saving || this.state.finished}
+                                        disabled={this.state.saved || this.state.saving || this.state.finished || (score1 === score2)}
                                     />
                                 )}
                         </div>
