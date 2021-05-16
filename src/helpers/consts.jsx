@@ -37,6 +37,25 @@ export const UNAUTHORIZED_ERROR = 'Oops, seems like you are unauthorized to view
 export const MAX_TEAMS_IN_TOURNAMENT = 10;
 export const MIN_TEAMS_IN_TOURNAMENT = 4;
 export const DEFAULT_MAX_TEAMS_IN_TOURNAMENT = 6;
+export const DEFAULT_TOURNAMENT_TEAMS = [
+    "Los Angeles Lakers",
+    "Golden State Warriors",
+    "Brooklyn Nets",
+    "Miami Heat",
+    "Boston Celtics",
+    "Denver Nuggets",
+    "Utah Jazz",
+    "LA Clippers",
+    "Phoenix Suns",
+    // "New York Knicks", //
+    // "Charlotte Hornets", //
+
+    "Philadelphia 76ers", //
+    // "Toronto Raptors", //
+    // "Milwaukee Bucks", //
+    "Washington Wizards", //
+    "Dallas Mavericks",
+];
 
 // loaders
 export const LOADERS = {

@@ -12,7 +12,7 @@ import PlayerCard from "../../components/PlayerCard";
 import LoadingPage from "../../pages/LoadingPage";
 import ErrorPage from "../../pages/ErrorPage";
 import {
-    APP_BACKGROUND_COLOR, DEFAULT_MAX_TEAMS_IN_TOURNAMENT,
+    APP_BACKGROUND_COLOR, DEFAULT_MAX_TEAMS_IN_TOURNAMENT, DEFAULT_TOURNAMENT_TEAMS,
     LOADER_DETAILS,
     LOADING_DELAY,
     MAX_TEAMS_IN_TOURNAMENT,
@@ -156,25 +156,7 @@ export default class Tournament extends React.Component {
             button_clicked_func: undefined,
             current_game_num: 1,
 
-            tournament_teams: [
-                "Los Angeles Lakers",
-                "Golden State Warriors",
-                "Brooklyn Nets",
-                "Miami Heat",
-                "Boston Celtics",
-                "Denver Nuggets",
-                "Utah Jazz",
-                "LA Clippers",
-                "Phoenix Suns",
-                // "New York Knicks", //
-                // "Charlotte Hornets", //
-
-                "Philadelphia 76ers", //
-                // "Toronto Raptors", //
-                // "Milwaukee Bucks", //
-                "Washington Wizards", //
-                "Dallas Mavericks",
-            ]
+            tournament_teams: DEFAULT_TOURNAMENT_TEAMS,
         };
 
         this.nextGame = this.nextGame.bind(this);
