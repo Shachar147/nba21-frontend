@@ -156,6 +156,8 @@ export default class Tournament extends React.Component {
             button_clicked_func: undefined,
             current_game_num: 1,
 
+            curr_games_history: {},
+
             tournament_teams: DEFAULT_TOURNAMENT_TEAMS,
         };
 
@@ -409,6 +411,7 @@ export default class Tournament extends React.Component {
         let scores = {};
         let games_history = {};
         let played_games = [];
+        let curr_games_history = {};
         player1 = player1 || getRandomElement(this.state.curr_players);
         player2 = player2 || getRandomElement(this.state.curr_players);
 
@@ -423,6 +426,9 @@ export default class Tournament extends React.Component {
         scores[player2.name] = 0;
         games_history[player1.name] = [];
         games_history[player2.name] = [];
+
+        curr_games_history[player1.name] = 1;
+        curr_games_history[player2.name] = 1;
 
         let is_comeback = false;
         let total_overtimes = 0;
@@ -457,6 +463,7 @@ export default class Tournament extends React.Component {
             curr_players,
             played_games,
             current_game_num: 1,
+            curr_games_history,
         });
 
         if (this.state.loaded && this.state.loadedStats){
@@ -469,7 +476,7 @@ export default class Tournament extends React.Component {
     }
 
     nextGame(){
-        let { scores, games_history, curr_players, lost_teams, step, played_games, leader_mvp, current_game_num } = this.state;
+        let { scores, games_history, curr_players, lost_teams, step, played_games, leader_mvp, current_game_num, curr_games_history } = this.state;
         if (debug) console.log('players', this.state.players);
         if (debug) console.log('curr players', curr_players);
         Object.keys(scores).forEach(function(key, idx){
@@ -478,7 +485,7 @@ export default class Tournament extends React.Component {
         let is_comeback = false;
         let total_overtimes = 0;
 
-        let remaining_players = curr_players.filter(iter => games_history[iter.name] == undefined);
+        let remaining_players = curr_players.filter(iter => curr_games_history[iter.name] == undefined);
         let player1 = getRandomElement(remaining_players);
         let player2 = getRandomElement(remaining_players);
 
@@ -496,6 +503,7 @@ export default class Tournament extends React.Component {
             step = (max === 4 || max === 3) ? 'Semi-Finals' : (max === 2) ? 'Finals' : 'Top ' + max;
 
             // games_history = {};
+            curr_games_history = {};
             const remaining_player_names = leaderboard.slice(0,max);
             leaderboard.slice(max,leaderboard.length).forEach((lost_team) => {
                 lost_teams[lost_team] = true;
@@ -560,9 +568,12 @@ export default class Tournament extends React.Component {
         games_history[player1.name] = games_history[player1.name] || [];
         games_history[player2.name] = games_history[player2.name] || [];
 
+        curr_games_history[player1.name] = 1; // only indication
+        curr_games_history[player2.name] = 1; // only indication
+
         if (debug) console.log("lost teams", lost_teams);
 
-        this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, saved_api: false,winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step, current_game_num });
+        this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, saved_api: false,winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step, current_game_num, curr_games_history });
     }
 
     async updateResult(){
@@ -886,6 +897,7 @@ export default class Tournament extends React.Component {
 
                                     return (
                                         <Card
+                                            key={`${team.name.replace(/\s/i,'_')}_card`}
                                             name={team.name}
                                             picture={team.logo}
                                             style={{ opacity: opacity, width: '100px' }}
