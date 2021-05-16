@@ -138,7 +138,15 @@ class OneOnOneStats extends React.Component {
             this.state.orderByOptions[0] = { "Overall": overallTournamentSort },
             this.state.orderByOptions.push({ 'Total Tournaments': (a,b) => specificSort('total_tournaments',a,b) });
             this.state.orderByOptions.push({ 'Total Championships': (a,b) => specificSort('total_tournament_wins',a,b) });
-            this.state.orderByOptions.push({ 'Total Matchups': (a,b) => specificSort('total_matchups',a,b) });
+            this.state.orderByOptions.push({ 'Total Matchups': (b,a) => {
+                const val1 = Object.keys(a['matchups']).length;
+                const val2 = Object.keys(b['matchups']).length;
+
+                if (val1 > val2) return 1;
+                else if (val1 < val2) return -1;
+                else return 0;
+                // specificSort('total_matchups',b,a)
+            } });
         }
 
         this.applyFilters = this.applyFilters.bind(this);

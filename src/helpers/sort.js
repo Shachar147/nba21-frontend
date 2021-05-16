@@ -123,6 +123,8 @@ export function specificSort(key, a, b){
     let value1 = parseFloat(b[key]);
     let value2 = parseFloat(a[key]);
 
+    // console.log(key);
+    // console.log(a,b);
     // console.log(value1,value2);
 
     if (key === 'average_place'){
