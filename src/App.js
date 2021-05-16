@@ -49,6 +49,7 @@ function App() {
                     <PrivateRoute exact path="/random" component={Random} />
                     <PrivateRoute exact path="/random/stats" component={Random} data={{view_stats:true}} />
                     <PrivateRoute path="/random/stats/:player" component={Random} data={{view_stats:true, player_from_url:true}} />
+                    <PrivateRoute exact path="/random/today_history" component={Random} data={{ view_today_games: true }} />
 
                     <PrivateRoute exact path="/shootout" component={Shootout} />
                     <PrivateRoute exact path="/shootout/stats" component={Shootout} data={{view_stats:true}} />

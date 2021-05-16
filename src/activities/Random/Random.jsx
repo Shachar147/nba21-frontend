@@ -37,6 +37,7 @@ export default class Random extends React.Component {
                 }}
                 real_games_button={true}
                 today_games_button={true}
+                view_today_games={this.props.view_today_games||false}
                 stats_page={true}
                 mvp_block={true}
                 view_stats={this.props.view_stats||false}
