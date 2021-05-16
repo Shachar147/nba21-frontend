@@ -1341,7 +1341,7 @@ export default class Tournament extends React.Component {
                         style={{ marginLeft:"5px" }}
                         onClick={() => {
 
-                            if (this.state.played_games.length === 0){
+                            if (this.state.played_games.length === 0 || this.state.finished){
                                 this.setState({
                                     is_started: false,
                                     loaded: false,
@@ -1366,7 +1366,7 @@ export default class Tournament extends React.Component {
                         style={{ marginLeft:"5px" }}
                         onClick={() => {
 
-                            if (this.state.played_games.length === 0){
+                            if (this.state.played_games.length === 0 || this.state.finished){
                                 this.init();
 
                             } else {
