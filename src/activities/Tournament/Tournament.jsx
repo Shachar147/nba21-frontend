@@ -28,6 +28,7 @@ import DropdownInput from "../../components/inputs/DropdownInput";
 import TextInput from "../../components/inputs/TextInput";
 import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
 import Notification from "../../components/internal/Notification";
+import Confirmation from "../../components/internal/Confirmation";
 
 const game_mode = "Tournament";
 const what = "teams";
@@ -148,6 +149,10 @@ export default class Tournament extends React.Component {
             step: '',
             tournament_players: [],
             played_games: [],
+
+            button_clicked:undefined,
+            button_clicked_action_text: undefined,
+            button_clicked_func: undefined,
         };
 
         this.nextGame = this.nextGame.bind(this);
@@ -875,6 +880,36 @@ export default class Tournament extends React.Component {
             );
         }
 
+        let confirmation_modal = "";
+        if (this.state.button_clicked){
+
+            confirmation_modal = (
+                <Confirmation
+                    title={"Are you sure?"}
+                    description={`Are you sure you want to ${this.state.button_clicked_action_text}?<br>Doing that will erase all the games you did so far.`}
+                    okText={"Continue"}
+                    // okColor={"nbared"}
+                    okFunc={async () => {
+                        await this.state.button_clicked_func();
+
+                        this.setState({
+                            button_clicked: undefined,
+                            button_clicked_action_text: undefined,
+                            button_clicked_func: undefined,
+                        });
+                    }}
+                    cancelText={"Cancel"}
+                    cancelFunc={() => {
+                        this.setState({
+                            button_clicked: undefined,
+                            button_clicked_action_text: undefined,
+                            button_clicked_func: undefined,
+                        });
+                    }}
+                />
+            );
+        }
+
         if (custom_details_title){
             original_custom_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>${custom_details_title}</div>`;
         }
@@ -1204,21 +1239,43 @@ export default class Tournament extends React.Component {
                         text={"New Tournament"}
                         style={{ marginLeft:"5px" }}
                         onClick={() => {
-                            // this.init()
-                            this.setState({
-                                is_started: false,
-                                loaded: false,
-                            })
+
+                            if (this.state.played_games.length === 0){
+                                this.setState({
+                                    is_started: false,
+                                    loaded: false,
+                                });
                             }
-                        }
+                            else {
+                                this.setState({
+                                    button_clicked: "new_tournament",
+                                    button_clicked_action_text: 'Start a New Tournament',
+                                    button_clicked_func: () => {
+                                        this.setState({
+                                            is_started: false,
+                                            loaded: false,
+                                        });
+                                    }
+                                });
+                            }
+                        }}
                     />
                     <ButtonInput
                         text={"Restart Tournament"}
                         style={{ marginLeft:"5px" }}
                         onClick={() => {
-                            this.init();
+
+                            if (this.state.played_games.length === 0){
+                                this.init();
+
+                            } else {
+                                this.setState({
+                                    button_clicked: "restart_tournament",
+                                    button_clicked_action_text: 'Restart Tournament',
+                                    button_clicked_func: this.init,
+                                });
                             }
-                        }
+                        }}
                     />
                     {(stats_page) ?
                         <ButtonInput
@@ -1290,6 +1347,7 @@ export default class Tournament extends React.Component {
                     {overtime_block}
                 </div>
 
+                {confirmation_modal}
                 {game_saved}
             </div>
         );

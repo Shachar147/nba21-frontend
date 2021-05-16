@@ -7,6 +7,7 @@ import {apiDelete, apiGet} from "../../helpers/api";
 import ErrorPage from "../../pages/ErrorPage";
 import LoadingPage from "../../pages/LoadingPage";
 import PlayerPicture from "../../components/internal/PlayerPicture";
+import Confirmation from "../../components/internal/Confirmation";
 
 export default class TodayRandomGames extends React.Component {
 
@@ -255,26 +256,15 @@ export default class TodayRandomGames extends React.Component {
 
         const delete_modal = (this.state.delete_id) ?
             (
-                <div className="ui dimmer modals page transition visible active" style={{display: "flex"}}>
-                    <div className="ui modal transition visible active" style={{
-                        position: "absolute",
-                        width: "900px",
-                        height: "190px",
-                        zIndex: "15",
-                        top: "50%",
-                        left: "50%",
-                        margin: "-95px 0 0 -450px",
-                    }}>
-                        <div className="header">Delete Game</div>
-                        <div className="content">
-                            <p>Are you sure you want to delete this game? Once you do it, you won't be able to undo.</p>
-                        </div>
-                        <div className="actions">
-                            <div className="ui nbared button" style={{ color: "white" }} onClick={() => self.Delete()}>Delete</div>
-                            <div className="ui cancel button" onClick={() => self.setState({ delete_id: '' })}>Cancel</div>
-                        </div>
-                    </div>
-                </div>
+                <Confirmation
+                    title={"Delete Game"}
+                    description={"Are you sure you want to delete this game? Once you do it, you won't be able to undo."}
+                    okText={"Delete"}
+                    okColor={"nbared"}
+                    okFunc={() => self.Delete()}
+                    cancelText={"Cancel"}
+                    cancelFunc={() => self.setState({ delete_id: '' })}
+                />
             ) : "";
 
         return (
