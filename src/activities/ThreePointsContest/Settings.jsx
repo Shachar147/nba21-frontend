@@ -516,9 +516,28 @@ export default class Settings extends React.Component {
 
                 <div className="ui link cards centered" style={statsStyle}>
                     {general_stats_block}
+
+                    <div style={{ display: "block", textAlign:"center", marginTop:"5px", width: "100%" }}>
+                        <div className={"ui basic buttons"} style={{ margin: "auto", border: "0px" }}>
+
+                            <ButtonInput
+                                text={"Reload Stats"}
+                                onClick={async () => {
+                                    await self.setState({ loadedStats: false })
+                                    self.initStats(self);
+                                }}
+                            />
+
+                            <ButtonInput
+                                text={"View Stats"}
+                                style={{ marginLeft:"5px" }}
+                                onClick={() => { this.setState({ view_stats: true }) }}
+                            />
+                        </div>
+                    </div>
                 </div>
 
-                <div style={{...statsStyle, marginBottom: "20px" }}>
+                <div style={{...statsStyle, marginBottom: "20px", paddingBottom: "10px" }}>
                     <div className="ui link input cards centered" style={{ margin: "auto", width: "550px" }}>
                         <div style={{ display: "block", width: "100%" }}>
 
@@ -546,20 +565,6 @@ export default class Settings extends React.Component {
                                     onClick={this.startGame}
                                 />
 
-                                <ButtonInput
-                                    text={"Reload Stats"}
-                                    style={{ marginLeft:"5px" }}
-                                    onClick={async () => {
-                                        await self.setState({ loadedStats: false })
-                                        self.initStats(self);
-                                    }}
-                                />
-
-                                <ButtonInput
-                                    text={"View Stats"}
-                                    style={{ marginLeft:"5px" }}
-                                    onClick={() => { this.setState({ view_stats: true }) }}
-                                />
                             </div>
                         </div>
                     </div>
