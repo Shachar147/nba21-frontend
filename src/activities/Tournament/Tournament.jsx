@@ -536,7 +536,16 @@ export default class Tournament extends React.Component {
                 let winner = remaining_players[0].name;
                 let teams = Object.keys(games_history);
                 let gamesHistory = played_games;
-                let mvpPlayer = mvp;
+                let mvpPlayer = this.state.mvp_player; // mvp;
+
+                const { mvp_per_team } = this.buildTournamentInfo();
+                let maxMvps = 0;
+                mvp_per_team[winner].forEach((player) => {
+                    if (mvp_per_team[winner][player] > maxMvps){
+                        maxMvps = mvp_per_team[winner][player];
+                        mvpPlayer = player;
+                    }
+                });
 
                 console.log({
                     winner: winner,
@@ -810,6 +819,40 @@ export default class Tournament extends React.Component {
                 // finally
             }
         );
+    }
+
+    buildTournamentInfo(){
+
+        let { games_history } = this.state;
+
+        let total_games = 0;
+        let total_comebacks = 0;
+        let total_overtimes = 0;
+        let total_knockouts = 0;
+        let mvps = {};
+        let mvp_per_team = {};
+        Object.keys(games_history).forEach((team) => {
+            games_history[team].forEach((game) => {
+                total_games += 1/2;
+
+                if (game.score1 === 0 || game.score2 === 0) { total_knockouts += 1/2; }
+
+                if (game.is_comeback) total_comebacks += 1/2;
+                if (game.total_overtimes) total_overtimes += (game.total_overtimes/2);
+                if (game.mvp_player) {
+                    if (game.won_or_lost === 'won') {
+                        mvps[game.mvp_player] = mvps[game.mvp_player] || 0;
+                        mvps[game.mvp_player] ++;
+
+                        mvp_per_team[team] = mvp_per_team[team] || {};
+                        mvp_per_team[team][game.mvp_player] = mvp_per_team[team][game.mvp_player] || 0;
+                        mvp_per_team[team][game.mvp_player] ++;
+                    }
+                }
+            });
+        });
+
+        return { total_games, total_comebacks, total_overtimes, total_knockouts, mvps, mvp_per_team };
     }
 
     render(){
@@ -1206,32 +1249,7 @@ export default class Tournament extends React.Component {
         const { standings, leaderboard } = this.state;
         if (Object.keys(standings).length > 0){
 
-            let total_games = 0;
-            let total_comebacks = 0;
-            let total_overtimes = 0;
-            let total_knockouts = 0;
-            let mvps = {};
-            let mvp_per_team = {};
-            Object.keys(games_history).forEach((team) => {
-                games_history[team].forEach((game) => {
-                    total_games += 1/2;
-
-                    if (game.score1 === 0 || game.score2 === 0) { total_knockouts += 1/2; }
-
-                    if (game.is_comeback) total_comebacks += 1/2;
-                    if (game.total_overtimes) total_overtimes += (game.total_overtimes/2);
-                    if (game.mvp_player) {
-                        if (game.won_or_lost === 'won') {
-                            mvps[game.mvp_player] = mvps[game.mvp_player] || 0;
-                            mvps[game.mvp_player] ++;
-
-                            mvp_per_team[team] = mvp_per_team[team] || {};
-                            mvp_per_team[team][game.mvp_player] = mvp_per_team[team][game.mvp_player] || 0;
-                            mvp_per_team[team][game.mvp_player] ++;
-                        }
-                    }
-                });
-            });
+            let { total_games, total_comebacks, total_overtimes, total_knockouts, mvps, mvp_per_team } = this.buildTournamentInfo();
 
             let max = 0;
             mvp = "N/A";
@@ -1247,7 +1265,7 @@ export default class Tournament extends React.Component {
 
                 mvp_per_team[team] = mvp_per_team[team] || {};
                 let leader_mvp = Object.keys(mvp_per_team[team]).sort((a,b) => {
-                    return mvp_per_team[team][b] - mvp_per_team[team][a]
+                    return mvp_per_team[team][b] - mvp_per_team[team][a];
                 });
                 if (leader_mvp.length > 0){
 
