@@ -860,6 +860,30 @@ export default class Tournament extends React.Component {
         return { total_games, total_comebacks, total_overtimes, total_knockouts, mvps, mvp_per_team };
     }
 
+    buildGamesHistory(){
+
+        const { played_games } = this.state;
+
+        const values = [];
+
+        played_games.forEach((iter, idx) => {
+            values[`#${idx+1}`] = [];
+            values[`#${idx+1}`].push(`1`);
+            values[`#${idx+1}`].push(`2`);
+            values[`#${idx+1}`].push(`3`);
+        });
+
+        return (
+            <StatsTable
+                title={`${game_mode} Played Games`}
+                description={""}
+                cols={["","Game", "Score", "Winner"]}
+                stats={values}
+            />
+        )
+
+    }
+
     render(){
 
         let original_custom_title = custom_details_title;
@@ -1329,6 +1353,8 @@ export default class Tournament extends React.Component {
             />
         ) : "";
 
+        let played_games_block = this.buildGamesHistory();
+
         const score1 = scores[this.state.player1.name];
         const score2 = scores[this.state.player2.name];
 
@@ -1357,6 +1383,8 @@ export default class Tournament extends React.Component {
                 {/*    </div> : ""}*/}
 
                 {standings_block}
+
+                {played_games_block}
 
                 <div className="ui link cards centered" style={{margin: "auto", marginBottom:"5px"}}>
                     <ButtonInput
