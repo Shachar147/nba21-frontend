@@ -57,9 +57,13 @@ export default class StatsTable extends React.Component {
                             (<table className="ui celled table">
                                 <thead>
                                 <tr>
-                                    <th>{ cols[0] }</th>
-                                    <th>{ cols[1] }</th>
-                                    <th>{ cols[2] }</th>
+                                    {
+                                        (cols.forEach((iter, idx) => {
+                                            return (
+                                                <th key={`col-${idx}`}>{iter}</th>
+                                            )
+                                        }))
+                                    }
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -69,11 +73,15 @@ export default class StatsTable extends React.Component {
                                         const values = stats[stat];
                                         const value1 = (values.length > 0) ? values[0] : "N/A";
                                         const value2 = (values.length > 1) ? values[1] : "N/A";
+
+                                        const value3 = (values.length > 2) ? values[2] : "N/A";
+
                                         if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
                                             return (<tr key={`stat-${idx}`}>
                                                 <td style={{fontWeight: "bold"}}>{stat}</td>
                                                 <td dangerouslySetInnerHTML={{__html: value1}} />
                                                 <td dangerouslySetInnerHTML={{__html: value2}} />
+                                                { (value3) ? (<td dangerouslySetInnerHTML={{__html: value3}} />) : "" }
                                             </tr>)
                                     }
                                 })}

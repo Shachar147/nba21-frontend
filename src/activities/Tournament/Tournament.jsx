@@ -1343,10 +1343,13 @@ export default class Tournament extends React.Component {
             );
         }
 
+        const played_games_block = this.buildGamesHistory();
+
         const standings_block = (
             <div className="ui link cards centered" style={statsStyle}>
                 {currGameTitle}
                 {standings_table}
+                {played_games_block}
             </div>
         );
 
@@ -1356,8 +1359,6 @@ export default class Tournament extends React.Component {
                 description={"This game was saved. you can take a look at stats page to see details about past games."}
             />
         ) : "";
-
-        let played_games_block = this.buildGamesHistory();
 
         const score1 = scores[this.state.player1.name];
         const score2 = scores[this.state.player2.name];
