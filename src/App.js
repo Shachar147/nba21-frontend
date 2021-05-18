@@ -57,6 +57,7 @@ function App() {
 
                     <PrivateRoute exact path="/tournament" component={Tournament} />
                     <PrivateRoute exact path="/tournament/stats" component={Tournament} data={{view_stats:true}} />
+                    <PrivateRoute exact path="/tournament/stats/:player" component={Tournament} data={{view_stats:true, player_from_url:true}} />
 
                     <PrivateRoute exact path="/sync" component={SyncPage} />
                     <PrivateRoute exact path="/user/settings" component={UserSettings} />

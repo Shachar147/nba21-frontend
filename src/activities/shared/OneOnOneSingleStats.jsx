@@ -182,11 +182,12 @@ export default class OneOnOneSingleStats extends React.Component {
             // 1on1, random
             if (player1_name && player2_name) {
 
+
                 const home_or_road = (player2_name === selected_player) ? "home game" : "road game";
                 lost_or_won = ((player1_name === selected_player && score1 > score2) || (player2_name === selected_player && score2 > score1)) ? "Won" : "Lost";
                 const game_record = (score1 > score2) ? `${score1}-${score2}` : `${score2}-${score1}`;
                 const comeback = is_comeback ? "Comeback.<br/>" : "";
-                const mvp = mvp_player ? `MVP: ${mvp_player.name}.<br/>` : "";
+                const mvp = mvp_player && mvp_player.name ? `MVP: ${mvp_player.name}.<br/>` : "";
                 const overtimes = total_overtimes ? `Overtimes: ${total_overtimes}.<br/>` : "";
 
                 if (lost_or_won.toLowerCase() === "won" && mvp_player && mvp_player.name) {
