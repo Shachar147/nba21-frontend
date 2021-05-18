@@ -74,7 +74,7 @@ export default class StatsTable extends React.Component {
                                         const value1 = (values.length > 0) ? values[0] : "N/A";
                                         const value2 = (values.length > 1) ? values[1] : "N/A";
 
-                                        const value3 = (values.length > 2) ? values[2] : "N/A";
+                                        const value3 = (values.length > 2) ? values[2] : undefined;
 
                                         if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
                                             return (<tr key={`stat-${idx}`}>

@@ -225,7 +225,7 @@ export default class Tournament extends React.Component {
         curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
         curr_players = players.slice(0,self.state.max_teams); // slice
         // if (debug) console.log('curr players', curr_players);
-        console.log(curr_players);
+        // console.log(curr_players);
 
         await self.setState({ players, curr_players, tournament_players: curr_players });
         await self.init();
@@ -540,17 +540,19 @@ export default class Tournament extends React.Component {
 
                 const { mvp_per_team } = this.buildTournamentInfo();
                 let maxMvps = 0;
-                Object.keys(mvp_per_team[winner]).forEach((player) => {
-                    if (mvp_per_team[winner][player] > maxMvps){
-                        maxMvps = mvp_per_team[winner][player];
-                        mvpPlayer = player;
-                    }
-                    // if final mvp, prefer it.
-                    else if (mvp_per_team[winner][player] === maxMvps && player === this.state.mvp_player){
-                        maxMvps = mvp_per_team[winner][player];
-                        mvpPlayer = player;
-                    }
-                });
+                if (mvp_per_team && mvp_per_team[winner]) {
+                    Object.keys(mvp_per_team[winner]).forEach((player) => {
+                        if (mvp_per_team[winner][player] > maxMvps) {
+                            maxMvps = mvp_per_team[winner][player];
+                            mvpPlayer = player;
+                        }
+                        // if final mvp, prefer it.
+                        else if (mvp_per_team[winner][player] === maxMvps && player === this.state.mvp_player) {
+                            maxMvps = mvp_per_team[winner][player];
+                            mvpPlayer = player;
+                        }
+                    });
+                }
 
                 console.log({
                     winner: winner,
@@ -872,12 +874,33 @@ export default class Tournament extends React.Component {
 
         played_games.forEach((iter, idx) => {
             values[`#${idx+1}`] = [];
-            values[`#${idx+1}`].push(`1`);
-            values[`#${idx+1}`].push(`2`);
-            values[`#${idx+1}`].push(`3`);
+
+            let team1 = this.state.players.filter((i) => i.name === iter.player1)[0];
+            let team2 = this.state.players.filter((i) => i.name === iter.player2)[0];
+            const border = 'padding-right: 20px; margin-right:10px; border-right:1px solid rgba(34,36,38,.15);';
+
+            team1 = `<div class="box" style="display: flex;align-items:center; width: 150px; ${border}">` +
+                        `<img src="${team1.logo || team1.picture}" style="height:30px;" /> <span style="margin-left:1px;"> ${iter.player1}</span>` +
+                    '</div>';
+
+            team2 = `<div class="box" style="display: flex;align-items:center;">` +
+                        `<img src="${team2.logo || team2.picture}" style="height:30px;" /> <span style="margin-left:1px;"> ${iter.player2}</span>` +
+                    '</div>';
+
+            let winner = (iter.winner === iter.player1) ? team1 : team2;
+            winner = winner.replace(border, '');
+
+            let game = `<div class="box" style="display: flex;align-items:center;">` +
+                            team1 +
+                            team2 +
+                       `</div>`
+
+            values[`#${idx+1}`].push(game);
+            values[`#${idx+1}`].push(`${iter.score1} - ${iter.score2}`);
+            values[`#${idx+1}`].push(winner);
         });
 
-        console.log(played_games);
+        // console.log(played_games);
 
         return (
             <StatsTable
