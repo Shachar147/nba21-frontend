@@ -540,7 +540,7 @@ export default class Tournament extends React.Component {
 
                 const { mvp_per_team } = this.buildTournamentInfo();
                 let maxMvps = 0;
-                mvp_per_team[winner].forEach((player) => {
+                Object.keys(mvp_per_team[winner]).forEach((player) => {
                     if (mvp_per_team[winner][player] > maxMvps){
                         maxMvps = mvp_per_team[winner][player];
                         mvpPlayer = player;
