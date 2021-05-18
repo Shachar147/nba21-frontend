@@ -236,7 +236,7 @@ export default class RealStats extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        const { error_retry, loaded1, loaded2, merged, error, loaderDetails } = this.state;
+        let { error_retry, loaded1, loaded2, merged, error, loaderDetails } = this.state;
 
         if (loaded1 && loaded2 && !merged){
             this.merge();
