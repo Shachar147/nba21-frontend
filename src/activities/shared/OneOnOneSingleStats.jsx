@@ -182,17 +182,19 @@ export default class OneOnOneSingleStats extends React.Component {
             // 1on1, random
             if (player1_name && player2_name) {
 
-
                 const home_or_road = (player2_name === selected_player) ? "home game" : "road game";
                 lost_or_won = ((player1_name === selected_player && score1 > score2) || (player2_name === selected_player && score2 > score1)) ? "Won" : "Lost";
                 const game_record = (score1 > score2) ? `${score1}-${score2}` : `${score2}-${score1}`;
                 const comeback = is_comeback ? "Comeback.<br/>" : "";
-                const mvp = mvp_player && mvp_player.name ? `MVP: ${mvp_player.name}.<br/>` : "";
+
+                const mvp_name = (mvp_player && typeof(mvp_player) === 'object' && mvp_player.name) ? mvp_player.name : mvp_player;
+
+                const mvp = mvp_name ? `MVP: ${mvp_name}.<br/>` : "";
                 const overtimes = total_overtimes ? `Overtimes: ${total_overtimes}.<br/>` : "";
 
-                if (lost_or_won.toLowerCase() === "won" && mvp_player && mvp_player.name) {
-                    mvps[mvp_player.name] = mvps[mvp_player.name] || 0;
-                    mvps[mvp_player.name]++;
+                if (lost_or_won.toLowerCase() === "won" && mvp_name) {
+                    mvps[mvp_name] = mvps[mvp_name] || 0;
+                    mvps[mvp_name]++;
                 }
 
                 const opponent_image = players_hash[opponent].picture || players_hash[opponent].logo;
@@ -349,7 +351,7 @@ export default class OneOnOneSingleStats extends React.Component {
                     <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
                         MVPs
                     </h2>
-                    <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {total}</span>
+                    <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {mvp_options.length}</span>
                     <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: mvp_options.join("") }} />
                 </div>
             );
