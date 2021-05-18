@@ -545,6 +545,11 @@ export default class Tournament extends React.Component {
                         maxMvps = mvp_per_team[winner][player];
                         mvpPlayer = player;
                     }
+                    // if final mvp, prefer it.
+                    else if (mvp_per_team[winner][player] === maxMvps && player === this.state.mvp_player){
+                        maxMvps = mvp_per_team[winner][player];
+                        mvpPlayer = player;
+                    }
                 });
 
                 console.log({
