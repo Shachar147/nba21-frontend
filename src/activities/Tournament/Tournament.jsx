@@ -866,6 +866,10 @@ export default class Tournament extends React.Component {
 
         const values = [];
 
+        if (played_games.length === 0) {
+            return "";
+        }
+
         played_games.forEach((iter, idx) => {
             values[`#${idx+1}`] = [];
             values[`#${idx+1}`].push(`1`);
