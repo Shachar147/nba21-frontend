@@ -877,6 +877,8 @@ export default class Tournament extends React.Component {
             values[`#${idx+1}`].push(`3`);
         });
 
+        console.log(played_games);
+
         return (
             <StatsTable
                 title={`${game_mode} Played Games`}
@@ -1388,8 +1390,6 @@ export default class Tournament extends React.Component {
                 {/*    </div> : ""}*/}
 
                 {standings_block}
-
-                {played_games_block}
 
                 <div className="ui link cards centered" style={{margin: "auto", marginBottom:"5px"}}>
                     <ButtonInput

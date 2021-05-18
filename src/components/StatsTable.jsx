@@ -58,11 +58,11 @@ export default class StatsTable extends React.Component {
                                 <thead>
                                 <tr>
                                     {
-                                        (cols.forEach((iter, idx) => {
+                                        cols.map((iter, idx) => {
                                             return (
                                                 <th key={`col-${idx}`}>{iter}</th>
                                             )
-                                        }))
+                                        })
                                     }
                                 </tr>
                                 </thead>
