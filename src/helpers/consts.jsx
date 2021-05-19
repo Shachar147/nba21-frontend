@@ -36,7 +36,7 @@ export const UNAUTHORIZED_ERROR = 'Oops, seems like you are unauthorized to view
 // Tournament
 export const MAX_TEAMS_IN_TOURNAMENT = 12;
 export const MIN_TEAMS_IN_TOURNAMENT = 4;
-export const DEFAULT_MAX_TEAMS_IN_TOURNAMENT = 6;
+export const DEFAULT_MAX_TEAMS_IN_TOURNAMENT = 4;
 export const DEFAULT_TOURNAMENT_TEAMS = [
     "Los Angeles Lakers",
     "Golden State Warriors",
@@ -356,7 +356,28 @@ export const LOADER_DETAILS = () => {
     let option = LOADERS[options[0]];
     option.loader = `/loaders/${options[0]}`;
     return option;
+}
 
+// trophies
+export const TROPHIES = {
+    'trophy.gif': {
+        backgroundColor:'white',
+    },
+    'trophy2.gif': {
+        backgroundColor:'#F7F7F7',
+    },
+    'trophy3.gif': {
+        backgroundColor:'white',
+    },
+    'trophy4.gif': {
+        backgroundColor:'white',
+    },
+};
+export const TROPHY_DETAILS = () => {
+    const options = shuffle(Object.keys(TROPHIES));
+    let option = TROPHIES[options[0]];
+    option.backgroundImage = `/trophies/${options[0]}`;
+    return option;
 }
 
 export const TOP_STATS_NUMBER = 3;

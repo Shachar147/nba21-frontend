@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default class Confirmation extends React.Component {
+export default class ConfirmationModal extends React.Component {
 
     constructor(props) {
         super(props);
@@ -52,14 +52,17 @@ export default class Confirmation extends React.Component {
     }
 }
 
-Confirmation.propTypes = {
-    delay: PropTypes.number.isRequired,
+ConfirmationModal.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    okFunc: PropTypes.func,
+    cancelFunc: PropTypes.func,
+    okText: PropTypes.string,
+    cancelText: PropTypes.string,
+    okColor: PropTypes.string,
 };
 
-Confirmation.defaultProps = {
-    delay: 1000*2,
+ConfirmationModal.defaultProps = {
     title: "Comfirmation",
     description: "",
 };

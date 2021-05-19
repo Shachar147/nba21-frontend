@@ -7,7 +7,7 @@ import {apiDelete, apiGet} from "../../helpers/api";
 import ErrorPage from "../../pages/ErrorPage";
 import LoadingPage from "../../pages/LoadingPage";
 import PlayerPicture from "../../components/internal/PlayerPicture";
-import Confirmation from "../../components/modals/Confirmation";
+import ConfirmationModal from "../../components/modals/ConfirmationModal";
 
 export default class TodayRandomGames extends React.Component {
 
@@ -256,7 +256,7 @@ export default class TodayRandomGames extends React.Component {
 
         const delete_modal = (this.state.delete_id) ?
             (
-                <Confirmation
+                <ConfirmationModal
                     title={"Delete Game"}
                     description={"Are you sure you want to delete this game? Once you do it, you won't be able to undo."}
                     okText={"Delete"}

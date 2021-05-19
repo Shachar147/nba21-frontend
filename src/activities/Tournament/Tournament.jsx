@@ -27,9 +27,10 @@ import {buildStatsInformation, BuildStatsTable, statsStyle} from "../shared/OneO
 import DropdownInput from "../../components/inputs/DropdownInput";
 import TextInput from "../../components/inputs/TextInput";
 import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
-import Notification from "../../components/modals/Notification";
-import Confirmation from "../../components/modals/Confirmation";
+import Notification from "../../components/internal/Notification";
+import ConfirmationModal from "../../components/modals/ConfirmationModal";
 import Card from "../../components/Card";
+import WinnerModal from "../../components/modals/WinnerModal";
 
 const game_mode = "Tournament";
 const what = "teams";
@@ -768,7 +769,7 @@ export default class Tournament extends React.Component {
                 mvpPlayer
             },
             async function(res) {
-                await self.setState({ saved: true, saved_api:true });
+                await self.setState({ saved: true, saved_api:true, show_saved_modal: true, curr_stats: ["Loading Stats..."], });
             },
             function(error, retry) {
                 console.log(error);
@@ -779,9 +780,6 @@ export default class Tournament extends React.Component {
             },
             async function() {
                 // finally
-                await self.setState({
-                    curr_stats: ["Loading Stats..."],
-                })
                 self.loadStats();
             }
         );
@@ -1031,7 +1029,7 @@ export default class Tournament extends React.Component {
         if (this.state.button_clicked){
 
             confirmation_modal = (
-                <Confirmation
+                <ConfirmationModal
                     title={"Are you sure?"}
                     description={`Are you sure you want to ${this.state.button_clicked_action_text}?<br>Doing that will erase all the games you did so far.`}
                     okText={"Continue"}
@@ -1332,10 +1330,36 @@ export default class Tournament extends React.Component {
             </div>
         );
 
-        const game_saved = (this.state.finished && this.state.saved_api) ? (
-            <Notification
+        let winnerBlock;
+        if (this.state.finished) {
+
+            const { player1, player2, winner } = this.state;
+
+            const winnerObj = (player1.name === winner) ? player1 : player2;
+
+            winnerBlock = `<div class="ui cards centered">
+                            <div class="card">
+                                <div class="image" style="background-color: rgb(242, 242, 242);">
+                                    <img src="${winnerObj.logo}" alt="${winner}" style="width: 200px; margin: auto; padding: 20px;"/>
+                                </div>
+                                <div class="content">
+                                    <div class="header">${winner}</div>
+                                </div>
+                            </div>
+                        </div>`;
+        }
+
+        const game_saved = (this.state.finished && this.state.show_saved_modal && this.state.saved_api) ? (
+            // <Notification
+            <WinnerModal
                 title={"Game was saved!"}
-                description={"This game was saved. you can take a look at stats page to see details about past games."}
+                // description={"This game was saved. you can take a look at stats page to see details about past games."}
+                description={`<div style="text-align:center">And the winner is.....<br/><br/>${winnerBlock}</div>`}
+                okFunc={() => {
+                    this.setState({
+                        show_saved_modal: false,
+                    })
+                }}
             />
         ) : "";
 

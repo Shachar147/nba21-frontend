@@ -5,7 +5,7 @@ import Header from "../../components/layouts/Header";
 import ButtonInput from "../../components/inputs/ButtonInput";
 import {_3PT_COMPUTER_SCORE_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import ErrorPage from "../../pages/ErrorPage";
-import Notification from "../../components/modals/Notification";
+import Notification from "../../components/internal/Notification";
 import {apiPost} from "../../helpers/api";
 import OneOnOneStats from "../shared/OneOnOneStats";
 import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";

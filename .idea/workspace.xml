@@ -5,10 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/modals/WinnerModal.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fireworks.pyro.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Random/TodayRandomGames.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Random/TodayRandomGames.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/modals/Confirmation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/ConfirmationModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/modals/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/Notification.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,11 +66,11 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\pages\OneOnOne" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components\internal" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\stories\components" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\stories\components\inputs" />
+      <recent name="C:\repos\node-js\nba21-frontend\src\components" />
+      <recent name="C:\repos\node-js\nba21-frontend\src\modals" />
+      <recent name="C:\repos\node-js\nba21-frontend\src" />
+      <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
   <component name="RunManager">
@@ -122,7 +131,7 @@
       <workItem from="1620977276828" duration="25724000" />
       <workItem from="1621241380047" duration="4938000" />
       <workItem from="1621361693486" duration="15080000" />
-      <workItem from="1621431762663" duration="2377000" />
+      <workItem from="1621431762663" duration="8701000" />
     </task>
     <servers />
   </component>
