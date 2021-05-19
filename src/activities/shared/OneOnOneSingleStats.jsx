@@ -334,7 +334,12 @@ export default class OneOnOneSingleStats extends React.Component {
         if (what === 'teams'){
 
             Object.keys(mvps).sort(function(a,b) { return mvps[b] - mvps[a] } ).forEach((player_name) => {
-                let player_image = players_hash[selected_player].players.filter((iter) => { return iter.name === player_name})[0].picture;
+
+                const playerObj = players_hash[selected_player].players.filter((iter) => { return iter.name === player_name})[0];
+
+                console.log(player_name, players_hash, playerObj);
+
+                let player_image = playerObj?.picture;
                 mvp_options.push(
                     `<div class="item">
                             <img class="ui avatar image" style="height:30px; width:40px;" src="${player_image}">
