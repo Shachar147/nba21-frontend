@@ -243,6 +243,35 @@ export default class Tournament extends React.Component {
             LOADING_DELAY);
     }
 
+    loadStats(){
+        const self = this;
+
+        apiGet(this,
+            get_stats_route,
+            async function(res) {
+                let stats = res.data.data;
+                stats = self.customKeysStats(self, stats);
+
+                await self.setState({ stats, loadedStats: true });
+
+                // initialize stats
+                if (self.canInitStats()){
+                    self.initStats();
+                }
+            },
+            function(error, error_retry) {
+                console.error(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
+                self.setState({ error: req_error, error_retry });
+            },
+            async function() {
+
+            }
+        );
+    }
+
     componentDidMount() {
         if (!what || what === ""){
             this.setState({ loaded:true, error: "Internal Server Error<br/>Opponents Type not specified." });
@@ -262,30 +291,7 @@ export default class Tournament extends React.Component {
         let self = this;
 
         if (get_stats_route && get_stats_route !== "") {
-            apiGet(this,
-                get_stats_route,
-                async function(res) {
-                    let stats = res.data.data;
-                    stats = self.customKeysStats(self, stats);
-
-                    await self.setState({ stats, loadedStats: true });
-
-                    // initialize stats
-                    if (self.canInitStats()){
-                        self.initStats();
-                    }
-                },
-                function(error, error_retry) {
-                    console.error(error);
-                    let req_error = error.message;
-                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
-                    if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
-                    self.setState({ error: req_error, error_retry });
-                },
-                async function() {
-
-                }
-            );
+            self.loadStats();
         } else {
             self.setState({ loadedstats: true })
         }
@@ -771,8 +777,12 @@ export default class Tournament extends React.Component {
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed saving this game.` }
                 self.setState({ error: req_error, error_retry: retry });
             },
-            function() {
+            async function() {
                 // finally
+                await self.setState({
+                    curr_stats: ["Loading Stats..."],
+                })
+                self.loadStats();
             }
         );
     }
