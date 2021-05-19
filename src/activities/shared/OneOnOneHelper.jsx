@@ -1,5 +1,13 @@
 import StatsTable from "../../components/StatsTable";
-import {TOP_STATS_MAX_VIEW_MORE, TOP_STATS_NUMBER} from "../../helpers/consts";
+import {
+    ICE_COLD_COLOR, ICE_COLD_ICON, ICE_COLD_STYLE,
+    ICE_COLD_THRESHOLD,
+    ON_FIRE_COLOR, ON_FIRE_ICON,
+    ON_FIRE_STYLE,
+    ON_FIRE_THRESHOLD,
+    TOP_STATS_MAX_VIEW_MORE,
+    TOP_STATS_NUMBER
+} from "../../helpers/consts";
 import {formatDate, getRandomElement, isDefined} from "../../helpers/utils";
 import React from "react";
 
@@ -300,6 +308,32 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
         matchups_values['Total Scored'] = [mutual_scored1,mutual_scored2];
         matchups_values['Total Diff'] = [Math.max(0,mutual_scored1-mutual_scored2), Math.max(0,mutual_scored2-mutual_scored1)];
         matchups_values['Knockouts'] = [mutual_knockouts1, mutual_knockouts2];
+    }
+
+    // on fire / ice cold
+    let onfire1 = "";
+    let icecold1 = "";
+    let onfire2 = "";
+    let icecold2 = "";
+    if (stats1.win_streak >= ON_FIRE_THRESHOLD){
+        onfire1 = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img style="${ON_FIRE_STYLE}; top:4px;" src="${ON_FIRE_ICON}" /></span>`
+
+        stats1.win_streak += onfire1;
+    }
+    if (stats1.lose_streak >= ICE_COLD_THRESHOLD){
+        icecold1 = ` <span style="color:${ICE_COLD_COLOR}">Ice Cold <img style="${ICE_COLD_STYLE}; top:4px;" src="${ICE_COLD_ICON}" /></span>`
+
+        stats1.lose_streak += icecold1;
+    }
+    if (stats2.win_streak >= ON_FIRE_THRESHOLD){
+        onfire2 = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img style="${ON_FIRE_STYLE}; top:4px;" src="${ON_FIRE_ICON}" /></span>`
+
+        stats2.win_streak += onfire2;
+    }
+    if (stats2.lose_streak >= ICE_COLD_THRESHOLD){
+        icecold2 = ` <span style="color:${ICE_COLD_COLOR}">Ice Cold <img style="${ICE_COLD_STYLE}; top:4px;" src="${ICE_COLD_ICON}" /></span>`
+
+        stats2.lose_streak += icecold2;
     }
 
     // player stats

@@ -159,6 +159,8 @@ export default class Tournament extends React.Component {
             curr_games_history: {},
 
             tournament_teams: DEFAULT_TOURNAMENT_TEAMS,
+
+            show_stats_in_header: true,
         };
 
         this.nextGame = this.nextGame.bind(this);
@@ -239,46 +241,6 @@ export default class Tournament extends React.Component {
                 }
             },
             LOADING_DELAY);
-
-        // apiGet(this,
-        //     get_route,
-        //     async function(res) {
-        //         let players = res.data.data || res.data;
-        //
-        //         const tournament_teams = this.state.tournament_teams;
-        //
-        //         players = players.filter(iter => tournament_teams.indexOf(iter.name) !== -1);
-        //
-        //         let curr_players = players;
-        //         curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
-        //         curr_players = players.slice(0,self.state.max_teams); // slice
-        //         // if (debug) console.log('curr players', curr_players);
-        //         console.log(curr_players);
-        //
-        //         self.setState({ players, curr_players, tournament_players: curr_players });
-        //         await self.init();
-        //
-        //         setTimeout(async () => {
-        //                 await self.setState({ loaded: true })
-        //
-        //                 // initialize stats
-        //                 if (self.canInitStats()){
-        //                     self.initStats();
-        //                 }
-        //             },
-        //             LOADING_DELAY);
-        //     },
-        //     function(error, error_retry) {
-        //         console.error(error);
-        //         let req_error = error.message;
-        //         if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR }
-        //         if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error` }
-        //         self.setState({ error: req_error, error_retry });
-        //     },
-        //     function() {
-        //
-        //     }
-        // );
     }
 
     componentDidMount() {
@@ -433,11 +395,6 @@ export default class Tournament extends React.Component {
         let is_comeback = false;
         let total_overtimes = 0;
 
-        // const { players, max_teams } = this.state;
-        // let curr_players = players;
-        // curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
-        // if (debug) console.log('curr players', curr_players);
-
         const { tournament_players } = this.state;
         let curr_players = tournament_players;
 
@@ -510,12 +467,12 @@ export default class Tournament extends React.Component {
             });
             // remaining_players.forEach((iter) => { remaining_players.push(iter.name) });
 
-            if (remaining_players.length === 0 && Object.keys(lost_teams).length < curr_players.length) {
-                // remaining_players = curr_players.filter(iter => lost_teams[iter.name] == undefined);
-                console.log(lost_teams);
-                console.log(max);
-                console.log(remaining_player_names);
-            }
+            // if (remaining_players.length === 0 && Object.keys(lost_teams).length < curr_players.length) {
+            //     // remaining_players = curr_players.filter(iter => lost_teams[iter.name] == undefined);
+            //     console.log(lost_teams);
+            //     console.log(max);
+            //     console.log(remaining_player_names);
+            // }
 
             if (debug) console.log('remaing player names', remaining_player_names);
             remaining_players = curr_players.filter(iter => remaining_player_names.indexOf(iter.name) !== -1);
@@ -557,7 +514,6 @@ export default class Tournament extends React.Component {
                 console.log({
                     winner: winner,
                     teams: teams,
-                    // history: games_history,
                     gamesHistory: gamesHistory,
                     mvpPlayer: mvpPlayer,
                 });
@@ -785,16 +741,11 @@ export default class Tournament extends React.Component {
 
         let val = Math.max(scores[player1.name], scores[player2.name]);
         let total_overtimes = 0;
-        // console.log("val: ", val);
-        // console.log("auto calc", auto_calc_ot_game_length);
         while (val >= Number(auto_calc_ot_game_length) + 2) {
             val -= 2;
             total_overtimes++;
-            // console.log("val2:", val);
         }
-
         // console.log("total overtimes: ",total_overtimes);
-
         this.setState({ total_overtimes });
     }
 
@@ -811,9 +762,7 @@ export default class Tournament extends React.Component {
                 mvpPlayer
             },
             async function(res) {
-
                 await self.setState({ saved: true, saved_api:true });
-                // self.initStats();
             },
             function(error, retry) {
                 console.log(error);
@@ -909,8 +858,7 @@ export default class Tournament extends React.Component {
                 cols={["","Game", "Score", "Winner"]}
                 stats={values}
             />
-        )
-
+        );
     }
 
     render(){
@@ -942,24 +890,24 @@ export default class Tournament extends React.Component {
             );
         }
 
-        // const { selected_player } = this.state;
-        //
-        // if (selected_player){
-        //     const get_specific_route = (what === "players") ? "/player" : "/team";
-        //     const this_stats_title = stats_title || game_mode;
-        //
-        //     return (
-        //         <OneOnOneSingleStats
-        //             selected_player={selected_player}
-        //             what={what}
-        //             stats_title={`${this_stats_title} - ${selected_player}`}
-        //             game_mode={game_mode}
-        //             get_route={get_specific_route}
-        //             get_stats_route={get_stats_specific_route}
-        //             onBack={() => { this.setState({ selected_player: undefined }) }}
-        //         />
-        //     );
-        // }
+        const { selected_player } = this.state;
+
+        if (selected_player){
+            const get_specific_route = (what === "players") ? "/player" : "/team";
+            const this_stats_title = stats_title || game_mode;
+
+            return (
+                <OneOnOneSingleStats
+                    selected_player={selected_player}
+                    what={what}
+                    stats_title={`${this_stats_title} - ${selected_player}`}
+                    game_mode={game_mode}
+                    get_route={get_specific_route}
+                    get_stats_route={get_stats_specific_route}
+                    onBack={() => { this.setState({ selected_player: undefined }) }}
+                />
+            );
+        }
 
         const self = this;
 
@@ -1077,7 +1025,6 @@ export default class Tournament extends React.Component {
                     title={"Are you sure?"}
                     description={`Are you sure you want to ${this.state.button_clicked_action_text}?<br>Doing that will erase all the games you did so far.`}
                     okText={"Continue"}
-                    // okColor={"nbared"}
                     okFunc={async () => {
                         await this.state.button_clicked_func();
 
@@ -1189,22 +1136,19 @@ export default class Tournament extends React.Component {
                         all_players={this.state.players}
                         curr_players={[this.state.player1.name, this.state.player2.name]}
 
-                        // todo complete - view stats
-                        // onImageClick={(e) => {
-                        //
-                        //     const target = e.target;
-                        //     const html = $(e.target).wrap("<p>").parent().html();
-                        //
-                        //     // console.log(html);
-                        //
-                        //     // to avoid clicking on 'replace' or 'specific rpelace' from openning stats page.
-                        //     if (html.indexOf('View Stats') !== -1 && get_stats_specific_route) {
-                        //         this.setState({
-                        //             selected_player: player.name,
-                        //         })
-                        //     }
-                        //
-                        // }}
+                        onImageClick={(e) => {
+
+                            const target = e.target;
+                            const html = $(e.target).wrap("<p>").parent().html();
+                            // console.log(html);
+                            // to avoid clicking on 'replace' or 'specific rpelace' from openning stats page.
+                            if (html.indexOf('View Stats') !== -1 && get_stats_specific_route) {
+                                this.setState({
+                                    selected_player: player.name,
+                                })
+                            }
+
+                        }}
                     />
                 );
             })
@@ -1393,24 +1337,36 @@ export default class Tournament extends React.Component {
             <div style={{ paddingTop: "20px" }}>
                 <Header />
 
-                {/*{(get_stats_route && get_stats_route !== "") ?*/}
-                {/*    <div className="ui link cards centered" style={statsStyle}>*/}
-                {/*        {general_stats_block}*/}
-                {/*        <StatsTable*/}
-                {/*            title={"Previous Matchups Stats"}*/}
-                {/*            marginTop="10px"*/}
-                {/*            description={matchups_description}*/}
-                {/*            hidden={(met_each_other === 0)}*/}
-                {/*            cols={["",this.state.player1.name,this.state.player2.name]}*/}
-                {/*            stats={this.state.matchups_values}*/}
-                {/*        />*/}
-                {/*        <StatsTable*/}
-                {/*            title={`${toPascalCase(what)} Individual Stats`}*/}
-                {/*            marginTop="10px"*/}
-                {/*            cols={["",this.state.player1.name,this.state.player2.name]}*/}
-                {/*            stats={this.state.player_stats_values}*/}
-                {/*        />*/}
-                {/*    </div> : ""}*/}
+                {(get_stats_route && get_stats_route !== "") ?
+                    <div className="ui link cards centered" style={statsStyle}>
+
+                        <a
+                            style={{ width: "100%", textAlign: "center", cursor: "pointer", marginBottom: (this.state.show_stats_in_header) ? '15px' : '0px' }}
+                            onClick={() => { this.setState({ show_stats_in_header: !this.state.show_stats_in_header }) }}
+                        >
+                            {
+                                (this.state.show_stats_in_header) ? "Hide Stats" : "Show Stats"
+                            }
+                        </a>
+
+                        <div style={{ display: (this.state.show_stats_in_header) ? "block" : "none", width: "100%" }}>
+                            {general_stats_block}
+                            <StatsTable
+                                title={"Previous Matchups Stats"}
+                                marginTop="10px"
+                                description={matchups_description}
+                                hidden={(met_each_other === 0)}
+                                cols={["",this.state.player1.name,this.state.player2.name]}
+                                stats={this.state.matchups_values}
+                            />
+                            <StatsTable
+                                title={`${toPascalCase(what)} Individual Stats`}
+                                marginTop="10px"
+                                cols={["",this.state.player1.name,this.state.player2.name]}
+                                stats={this.state.player_stats_values}
+                            />
+                        </div>
+                    </div> : ""}
 
                 {standings_block}
 
@@ -1468,7 +1424,7 @@ export default class Tournament extends React.Component {
 
                 <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginTop: "20px" }}>
                     <div className={"card in-game"} style={titleStyle}>Guest</div>
-                    <div style={{ width: 110 }}></div>
+                    <div style={{ width: 110 }} />
                     <div className={"card in-game"} style={titleStyle}>Home</div>
                 </div>
 
