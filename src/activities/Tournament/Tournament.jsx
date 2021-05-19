@@ -27,8 +27,8 @@ import {buildStatsInformation, BuildStatsTable, statsStyle} from "../shared/OneO
 import DropdownInput from "../../components/inputs/DropdownInput";
 import TextInput from "../../components/inputs/TextInput";
 import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
-import Notification from "../../components/internal/Notification";
-import Confirmation from "../../components/internal/Confirmation";
+import Notification from "../../components/modals/Notification";
+import Confirmation from "../../components/modals/Confirmation";
 import Card from "../../components/Card";
 
 const game_mode = "Tournament";

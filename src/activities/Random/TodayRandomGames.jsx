@@ -7,7 +7,7 @@ import {apiDelete, apiGet} from "../../helpers/api";
 import ErrorPage from "../../pages/ErrorPage";
 import LoadingPage from "../../pages/LoadingPage";
 import PlayerPicture from "../../components/internal/PlayerPicture";
-import Confirmation from "../../components/internal/Confirmation";
+import Confirmation from "../../components/modals/Confirmation";
 
 export default class TodayRandomGames extends React.Component {
 
