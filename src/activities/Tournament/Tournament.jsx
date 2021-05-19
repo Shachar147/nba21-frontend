@@ -892,8 +892,8 @@ export default class Tournament extends React.Component {
                     get_route={get_route}
                     get_stats_route={get_stats_route}
                     get_stats_specific_route={get_stats_specific_route}
-                    // mvp_block={mvp_block}
-                    mvp_block={false}
+                    mvp_block={mvp_block}
+                    // mvp_block={false}
                     onBack={() => { this.setState({ view_stats: false }) }}
                     player_from_url={player_from_url}
                 />
