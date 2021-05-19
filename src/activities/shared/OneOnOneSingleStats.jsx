@@ -337,18 +337,20 @@ export default class OneOnOneSingleStats extends React.Component {
 
                 const playerObj = players_hash[selected_player].players.filter((iter) => { return iter.name === player_name})[0];
 
-                console.log(player_name, players_hash, playerObj);
+                // console.log(player_name, players_hash, playerObj);
 
-                let player_image = playerObj?.picture;
-                mvp_options.push(
-                    `<div class="item">
+                if (playerObj) {
+                    let player_image = playerObj?.picture;
+                    mvp_options.push(
+                        `<div class="item">
                             <img class="ui avatar image" style="height:30px; width:40px;" src="${player_image}">
                             <div class="content">
                                 <a class="header">${player_name}</a>
                                 <div class="description">won MVP ${mvps[player_name]} times</div>
                             </div>
                         </div>`
-                );
+                    );
+                }
             })
 
             mvps_block = (
