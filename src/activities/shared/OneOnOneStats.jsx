@@ -200,7 +200,8 @@ class OneOnOneStats extends React.Component {
                     records = filtered;
 
                     const leaderboard = self.buildLeaderBoard(records);
-                    self.setState({ records, leaderboard });
+                    let stats = res.data.stats; // for tournament. for other game modes let it be undefined.
+                    self.setState({ records, leaderboard, stats });
                 },
                 function(error, retry) {
                     console.log(error);
@@ -383,8 +384,16 @@ class OneOnOneStats extends React.Component {
             return option;
         }).sort((a,b) => { return a.name - b.name; });
 
+        let moreStats;
+        let totalTournaments;
+        if (game_mode === 'Tournament' && this.state.stats){
+            const { total_tournaments, total_comebacks, total_knockouts, total_overtimes } = this.state.stats;
+            moreStats = `<br>Total Comebacks: ${total_comebacks} | Total Knockouts: ${total_knockouts} | Total Overtimes: ${total_overtimes}`;
+            totalTournaments = `Total Tournaments: ${total_tournaments}`;
+        }
+
         // one on one stats
-        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats, this.props.percents);
+        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats, this.props.percents, totalTournaments, moreStats);
 
         const description = (custom_description) ? custom_description :
             `Here you can see all NBA ${what} that played on ${game_mode}, ordered from the one with best percentages to the worst.`;

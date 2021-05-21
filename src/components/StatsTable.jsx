@@ -51,7 +51,7 @@ export default class StatsTable extends React.Component {
                 <div style={{ display: "block", width: "100%", textAlign: "center" }}>
                     <ul style={{ padding: "0px", }}>
                         {description_bullets.map((bullet,idx) => { return (
-                            <li key={`bullet_${idx}`} style={{ listStyle: "none" }}>{bullet}</li>
+                            <li key={`bullet_${idx}`} style={{ listStyle: "none" }} dangerouslySetInnerHTML={{__html:bullet }} />
                         )})}
                         {(hidden) ? "" :
                             (<table className="ui celled table">

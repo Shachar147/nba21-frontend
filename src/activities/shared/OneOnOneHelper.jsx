@@ -21,7 +21,7 @@ export const statsStyle = {
     borderRadius: "20px",
 }
 
-export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_stats, percents) {
+export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_stats, percents, totalTournaments, moreStats) {
 
     let mvp_stats_block = null;
     let general_stats_block = null;
@@ -29,6 +29,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
     if (general_stats['total_games'] > 0) {
 
         const description = [];
+        const total_description = [];
 
         const dtToday = formatDate(new Date());
         const total_games_today = general_stats['total_games_per_day'][dtToday] || 0;
@@ -48,8 +49,10 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
         const key2 = (percents) ? 'total_percents' : 'total_points';
         description.push(`Total Games Today: ${total_games_today}`);
         description.push(`Total ${what_stat} Today: ${total_points_today}`);
-        description.push(`Total Games: ${general_stats['total_games']}`);
-        description.push(`Total ${what_stat}: ${general_stats[key2]}`);
+
+        if (totalTournaments) total_description.push(totalTournaments);
+        total_description.push(`Total Games: ${general_stats['total_games']}`);
+        total_description.push(`Total ${what_stat}: ${general_stats[key2]}`);
 
         const values = {};
         const mvp_values = {};
@@ -106,10 +109,15 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#${i+1}`].push(row);
         }
 
+        let descriptionText = description.join(' | ') + '<br>' + total_description.join(' | ');
+        if (moreStats){
+            descriptionText += moreStats;
+        }
+
         general_stats_block = (
             <StatsTable
                 title={`${game_mode} Stats`}
-                description={description.join(' | ')}
+                description={descriptionText}
                 cols={cols || ["","Days with most games", "Days with most points"]}
                 stats={values}
             />
