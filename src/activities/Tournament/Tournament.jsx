@@ -439,7 +439,7 @@ export default class Tournament extends React.Component {
         return this.state.loaded && this.state.loadedStats && this.state.curr_stats.length === 1 && this.state.curr_stats[0] === "Loading Stats...";
     }
 
-    nextGame(){
+    async nextGame(){
         let { scores, games_history, curr_players, lost_teams, step, played_games, leader_mvp, current_game_num, curr_games_history } = this.state;
         if (debug) console.log('players', this.state.players);
         if (debug) console.log('curr players', curr_players);
@@ -552,7 +552,8 @@ export default class Tournament extends React.Component {
 
         if (debug) console.log("lost teams", lost_teams);
 
-        this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, saved_api: false,winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step, current_game_num, curr_games_history });
+        await this.setState({ player1, player2, scores, lost_teams, games_history, curr_players, saved: false, saved_api: false,winner: "", loser: "", saved_game_id: undefined, mvp_player: undefined, is_comeback, total_overtimes, step, current_game_num, curr_games_history });
+        this.initStats();
     }
 
     async updateResult(){
