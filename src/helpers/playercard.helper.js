@@ -333,7 +333,7 @@ export function buildDetails(details, stats){
 
 
     // stopwatch shootout
-    if (isDefined(average_points_per_minute)) stats_arr.push(`Average Scores Per Minute: ${settings['Average Points Per Minute']}`);
+    if (isDefined(average_points_per_minute)) stats_arr.push(`Average Scores Per Minute: ${settings['Average Scores Per Minute']}`);
     if (isDefined(average_round_length)) stats_arr.push(`Average Round Length: ${settings['Average Round Length']}`);
     if (isDefined(total_minutes)) stats_arr.push(`Total Minutes: ${settings['Total Minutes']}`);
 
