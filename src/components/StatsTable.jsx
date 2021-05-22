@@ -46,7 +46,7 @@ export default class StatsTable extends React.Component {
         }
 
         return (
-            <div style={{ width:"100%", textAlign: "center" }}>
+            <div style={{ width:"100%", textAlign: "center", marginBottom: "10px" }}>
                 <div className="ui header" style={{ width:"100%", textAlign: "center", marginBottom: "0px", marginTop: marginTop }}>{title}</div>
                 <div style={{ display: "block", width: "100%", textAlign: "center" }}>
                     <ul style={{ padding: "0px", }}>
@@ -80,7 +80,7 @@ export default class StatsTable extends React.Component {
                                             return (<tr key={`stat-${idx}`}>
                                                 <td style={{fontWeight: "bold"}}>{stat}</td>
                                                 <td dangerouslySetInnerHTML={{__html: value1}} />
-                                                <td dangerouslySetInnerHTML={{__html: value2}} />
+                                                { (cols.length > 2) ? <td dangerouslySetInnerHTML={{__html: value2}} /> : undefined }
                                                 { (value3) ? (<td dangerouslySetInnerHTML={{__html: value3}} />) : "" }
                                             </tr>)
                                     }

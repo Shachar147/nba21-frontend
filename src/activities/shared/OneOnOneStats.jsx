@@ -384,16 +384,25 @@ class OneOnOneStats extends React.Component {
             return option;
         }).sort((a,b) => { return a.name - b.name; });
 
+        // tournament
         let moreStats;
         let totalTournaments;
+        let tournament_mvps;
+        let tournamentStats;
         if (game_mode === 'Tournament' && this.state.stats){
             const { total_tournaments, total_comebacks, total_knockouts, total_overtimes } = this.state.stats;
             moreStats = ` | Comebacks: ${total_comebacks} | Knockouts: ${total_knockouts} | Overtimes: ${total_overtimes}`;
             totalTournaments = `Tournaments: ${total_tournaments}`;
+
+            tournament_mvps = this.state.stats.tournament_mvps;
+
+            tournamentStats = {
+                totalTournaments, moreStats, tournament_mvps
+            };
         }
 
         // one on one stats
-        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats, this.props.percents, totalTournaments, moreStats);
+        let general_stats_block = BuildStatsTable(this.state.general_stats, 1, game_mode, this.props.mvp_block, this.state.mvp_stats, this.props.percents, tournamentStats);
 
         const description = (custom_description) ? custom_description :
             `Here you can see all NBA ${what} that played on ${game_mode}, ordered from the one with best percentages to the worst.`;

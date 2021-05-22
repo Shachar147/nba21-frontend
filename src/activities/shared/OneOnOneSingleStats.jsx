@@ -157,7 +157,9 @@ export default class OneOnOneSingleStats extends React.Component {
         let win_knockout_block = undefined;
         let lose_knockout_block = undefined;
         let mvps_block = undefined;
+        let tournament_mvps_block = undefined;
         let mvp_options = [];
+        let tournament_mvp_options = [];
         const mvps = {};
 
         records.records.reverse().forEach((game) => {
@@ -364,6 +366,40 @@ export default class OneOnOneSingleStats extends React.Component {
             );
         }
 
+        if (this.state.records.tournament_mvps){
+            let { tournament_mvps } = this.state.records;
+
+            Object.keys(tournament_mvps).sort(function(a,b) { return tournament_mvps[b] - tournament_mvps[a] } ).forEach((player_name) => {
+
+                const playerObj = players_hash[selected_player].players.filter((iter) => { return iter.name === player_name})[0];
+
+                // console.log(player_name, players_hash, playerObj);
+
+                if (playerObj) {
+                    let player_image = playerObj?.picture;
+                    tournament_mvp_options.push(
+                        `<div class="item">
+                            <img class="ui avatar image" style="height:30px; width:40px;" src="${player_image}">
+                            <div class="content">
+                                <a class="header">${player_name}</a>
+                                <div class="description">won Tournament MVP ${tournament_mvps[player_name]} times</div>
+                            </div>
+                        </div>`
+                    );
+                }
+            })
+
+            tournament_mvps_block = (
+                <div className="ui link cards centered" style={{ margin: "auto", marginBottom:"20px", marginTop:"20px", borderTop: "1px solid #eaeaea" }}>
+                    <h2 className="ui header centered" style={{margin: "10px", width:"100%"}}>
+                        Tournament MVPs
+                    </h2>
+                    <span style={{ width: "100%", display:"block",textAlign:"center" }}>Total: {tournament_mvp_options.length}</span>
+                    <div className="ui relaxed divided list" dangerouslySetInnerHTML={{ __html: tournament_mvp_options.join("") }} />
+                </div>
+            );
+        }
+
         const { player } = this.state;
         const _2k_rating = player['_2k_rating'] || 'N/A';
         let player_block = (
@@ -490,6 +526,7 @@ export default class OneOnOneSingleStats extends React.Component {
                     {player_block}
                 </div>
 
+                {tournament_mvps_block}
                 {mvps_block}
                 {games_history_block}
                 {win_block}

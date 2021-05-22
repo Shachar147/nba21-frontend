@@ -21,10 +21,22 @@ export const statsStyle = {
     borderRadius: "20px",
 }
 
-export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_stats, percents, totalTournaments, moreStats) {
+export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_stats, percents, tournamentStats) {
 
+    let totalTournaments;
+    let moreStats;
+    let tournament_mvps;
+
+    if (tournamentStats) {
+        totalTournaments = tournamentStats.totalTournaments;
+        moreStats = tournamentStats.moreStats;
+        tournament_mvps = tournamentStats.tournament_mvps;
+    }
+
+    let tournament_mvps_block = null;
     let mvp_stats_block = null;
     let general_stats_block = null;
+
     // console.log(general_stats);
     if (general_stats['total_games'] > 0) {
 
@@ -130,7 +142,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             const mvps_leaderboard = Object.keys(total_mvps_per_player).sort((a,b) => { return total_mvps_per_player[b] - total_mvps_per_player[a] });
             mvps_leaderboard.forEach((player, i) => {
 
-                if (i < TOP_STATS_NUMBER) {
+                if (i < TOP_STATS_NUMBER * 100) {
                     mvp_values[`#${i + 1}`] = mvp_values[`#${i + 1}`] || [];
                     mvp_values[`#${i + 1}`].push(`${player} - ${total_mvps_per_player[player]}`);
                 }
@@ -138,7 +150,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
 
             const mvps_knockouts_leaderboard = Object.keys(total_mvps_on_knockouts_per_player).sort((a,b) => { return total_mvps_on_knockouts_per_player[b] - total_mvps_on_knockouts_per_player[a] });
             mvps_knockouts_leaderboard.forEach((player, i) => {
-                if (i < TOP_STATS_NUMBER) {
+                if (i < TOP_STATS_NUMBER * 100) {
                     mvp_values[`#${i + 1}`] = mvp_values[`#${i + 1}`] || [];
                     mvp_values[`#${i + 1}`].push(`${player} - ${total_mvps_on_knockouts_per_player[player]}`);
                 }
@@ -152,8 +164,37 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
                 <StatsTable
                     title={`MVP Stats`}
                     description={mvp_description.join(' | ')}
-                    cols={["","Most MVPs", "Most MVPs on Knockouts with"]}
+                    cols={["","Total MVPs", "Total MVPs on Knockouts"]}
                     stats={mvp_values}
+                />
+            );
+        }
+
+        if (tournament_mvps) {
+
+            const tournament_mvps_values = {};
+
+            let total_mvps = 0;
+
+            const mvps_leaderboard = Object.keys(tournament_mvps).sort((a,b) => { return tournament_mvps[b] - tournament_mvps[a] });
+            mvps_leaderboard.forEach((player, i) => {
+
+                total_mvps += tournament_mvps[player];
+
+                tournament_mvps_values[`#${i + 1}`] = tournament_mvps_values[`#${i + 1}`] || [];
+                tournament_mvps_values[`#${i + 1}`].push(`${player} - ${tournament_mvps[player]}`);
+            });
+
+            const tournament_mvps_description = [];
+            tournament_mvps_description.push(`Total MVPs: ${total_mvps}`);
+            tournament_mvps_description.push(`Total MVPs Players: ${Object.keys(tournament_mvps).length}`);
+
+            tournament_mvps_block = (
+                <StatsTable
+                    title={`Tournament MVP Stats`}
+                    description={tournament_mvps_description.join(' | ')}
+                    cols={["","Total Tournament MVPs"]}
+                    stats={tournament_mvps_values}
                 />
             );
         }
@@ -162,6 +203,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             general_stats_block = (
                 <div className="ui link cards centered" style={statsStyle}>
                     {general_stats_block}
+                    {tournament_mvps_block}
                     {mvp_stats_block}
                 </div>
             );
