@@ -526,7 +526,8 @@ export default class Tournament extends React.Component {
                 });
 
                 this.setState({
-                    finished: true
+                    finished: true,
+                    mvpPlayer: mvpPlayer,
                 });
 
                 this.saveFinalResult(winner, teams, gamesHistory, mvpPlayer)
@@ -1332,10 +1333,11 @@ export default class Tournament extends React.Component {
             </div>
         );
 
-        let winnerBlock;
+        let winnerBlock = "";
+        let tournamentMVPBlock = "";
         if (this.state.finished) {
 
-            const { player1, player2, winner } = this.state;
+            const { player1, player2, winner, mvpPlayer } = this.state;
 
             const winnerObj = (player1.name === winner) ? player1 : player2;
 
@@ -1349,6 +1351,33 @@ export default class Tournament extends React.Component {
                                 </div>
                             </div>
                         </div>`;
+
+            if (mvpPlayer) {
+
+                let mvpPlayerObj;
+                Object.keys(players).forEach((team) => {
+                    players[team].players.forEach((player) => {
+                        if (player.name === mvpPlayer){
+                            mvpPlayerObj = player;
+                        }
+                    })
+                });
+
+                console.log('here', mvpPlayer, mvpPlayerObj);
+
+                if (mvpPlayerObj) {
+                    tournamentMVPBlock = `<div class="ui cards centered">
+                                <div class="card">
+                                    <div class="image" style="background-color: rgb(242, 242, 242);">
+                                        <img src="${mvpPlayerObj.picture}" alt="${mvpPlayerObj.name}" style="width: 200px; margin: auto; padding: 20px;"/>
+                                    </div>
+                                    <div class="content">
+                                        <div class="header">${mvpPlayer}</div>
+                                    </div>
+                                </div>
+                            </div>`;
+                }
+            }
         }
 
         const game_saved = (this.state.finished && this.state.show_saved_modal && this.state.saved_api) ? (
@@ -1356,7 +1385,7 @@ export default class Tournament extends React.Component {
             <WinnerModal
                 title={"Game was saved!"}
                 // description={"This game was saved. you can take a look at stats page to see details about past games."}
-                description={`<div style="text-align:center">And the winner is.....<br/><br/>${winnerBlock}</div>`}
+                description={`<div style="text-align:center">And the winner is.....<br/><br/>${winnerBlock}<br/>Tournament MVP is:<br/>${tournamentMVPBlock}</div>`}
                 okFunc={() => {
                     this.setState({
                         show_saved_modal: false,

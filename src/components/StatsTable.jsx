@@ -78,11 +78,11 @@ export default class StatsTable extends React.Component {
 
                                         if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
                                             return (<tr key={`stat-${idx}`}>
-                                                <td style={{fontWeight: "bold"}}>{stat}</td>
-                                                <td dangerouslySetInnerHTML={{__html: value1}} />
-                                                { (cols.length > 2) ? <td dangerouslySetInnerHTML={{__html: value2}} /> : undefined }
-                                                { (value3) ? (<td dangerouslySetInnerHTML={{__html: value3}} />) : "" }
-                                            </tr>)
+                                                        <td style={{fontWeight: "bold"}}>{stat}</td>
+                                                        <td dangerouslySetInnerHTML={{__html: value1}} />
+                                                        { (cols.length > 2) ? <td dangerouslySetInnerHTML={{__html: value2}} /> : undefined }
+                                                        { (value3) ? (<td dangerouslySetInnerHTML={{__html: value3}} />) : "" }
+                                                    </tr>)
                                     }
                                 })}
                                 </tbody>

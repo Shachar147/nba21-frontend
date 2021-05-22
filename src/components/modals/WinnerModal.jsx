@@ -23,22 +23,22 @@ export default class WinnerModal extends React.Component {
         okColor = okColor || "blue";
 
         const trophy = TROPHY_DETAILS();
-        console.log(trophy);
+        // console.log(trophy);
 
         const winnerModal = (
             <div className="ui dimmer modals page transition visible active"  style={{display: "flex", zIndex:99999999999}}>
                 <div className="ui modal transition visible active" style={{
                     position: "absolute",
                     width: "900px",
-                    height: "600px",
+                    height: "750px",
                     zIndex: "15",
-                    top: "CALC(50% - 250px)",
+                    top: "CALC(50% - 350px)",
                     left: "50%",
                     margin: "-95px 0 0 -450px",
                 }}>
                     <div className="header">{title}</div>
                     <div className="content" style={{
-                        height: 500,
+                        height: 650,
                         backgroundColor: trophy.backgroundColor,
                     }}>
                         <p dangerouslySetInnerHTML={{ __html: description }} />
