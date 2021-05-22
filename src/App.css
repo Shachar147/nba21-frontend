@@ -88,3 +88,7 @@ hr.divider {
   background: url(https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/gsw.png);
   opacity: 0.08;
 }
+
+#root {
+  padding-bottom:30px;
+}
