@@ -7,7 +7,11 @@
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/playercard.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/playercard.helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneManager.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layouts/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layouts/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +126,7 @@
       <workItem from="1621241380047" duration="4938000" />
       <workItem from="1621361693486" duration="15080000" />
       <workItem from="1621431762663" duration="9972000" />
-      <workItem from="1621609678658" duration="2632000" />
+      <workItem from="1621609678658" duration="6140000" />
     </task>
     <servers />
   </component>

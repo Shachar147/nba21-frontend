@@ -397,3 +397,39 @@ export const PLAYER_STATS_SHOW_MORE_THRESHOLD = 5;
 
 export const MIN_SHOOTOUT_ROUND_LENGTH = 1;
 export const MAX_SHOOTOUT_ROUND_LENGTH = 10;
+
+// https://geojango.com/pages/list-of-nba-teams
+export const NBA_TEAM_ARENA_NAMES = {
+    'Atlanta Hawks': 'State Farm Arena',
+    'Boston Celtics': 'TD Garden',
+    'Brooklyn Nets': 'Barclays Center',
+    'Charlotte Hornets': 'Spectrum Center',
+    'Chicago Bulls': 'United Center',
+    'Cleveland Cavaliers': 'Rocket Mortgage Fieldhouse',
+    'Dallas Mavericks': 'American Airlines Center',
+    'Denver Nuggets': 'Pepsi Center',
+    'Detroit Pistons': 'Little Caesars Arena',
+    'Golden State Warriors': 'Chase Center',
+    'Houston Rockets': 'Toyota Center',
+    'Indiana Pacers': 'Bankers Life Fieldhouse',
+    'Los Angeles Clippers': 'Staples Center',
+    'Los Angeles Lakers': 'Staples Center',
+    'Memphis Grizzlies': 'FedEx Forum',
+    'Miami Heat': 'American Airlines Arena',
+    'Milwaukee Bucks': 'Fiserv Forum',
+    'Minnesota Timberwolves': 'Target Center',
+    'New Orleans Pelicans': 'Smoothie King Center',
+    'New York Knicks': 'Madison Square Garden',
+    'Oklahoma City Thunder': 'Chesapeake Energy Arena',
+    'Orlando Magic': 'Amway Center',
+    'Philadelphia 76ers': 'Wells Fargo Center',
+    'Phoenix Suns': 'Talking Stick Resort Arena',
+    'Portland Trail Blazers': 'Moda Center',
+    'Sacramento Kings': 'Golden 1 Center',
+    'San Antonio Spurs': 'AT&T Center',
+    'Toronto Raptors': 'Scotiabank Arena',
+    'Utah Jazz': 'Vivint Smart Home Arena',
+    'Washington Wizards': 'Capital One Arena',
+    'Team LeBron': 'Orlando Bubble',
+    'Team Durant': 'Orlando Bubble',
+}

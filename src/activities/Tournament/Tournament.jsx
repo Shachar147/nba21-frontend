@@ -16,7 +16,7 @@ import {
     LOADER_DETAILS,
     LOADING_DELAY,
     MAX_TEAMS_IN_TOURNAMENT,
-    MIN_TEAMS_IN_TOURNAMENT,
+    MIN_TEAMS_IN_TOURNAMENT, NBA_TEAM_ARENA_NAMES,
     PLAYER_NO_PICTURE,
     UNAUTHORIZED_ERROR
 } from "../../helpers/consts";
@@ -1248,10 +1248,11 @@ export default class Tournament extends React.Component {
 
         // current game
         const { current_game_num } = this.state;
+        let arena = (this.state.player2) ? NBA_TEAM_ARENA_NAMES[this.state.player2.name] : 'N/A';
         let currGameTitle = (
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
                 <div className="ui header" style={{ width: "100%", textAlign:"center", marginBottom:"10px"}}>Current Game</div>
-                This is Game {current_game_num}/{max_teams-1}
+                This is Game {current_game_num}/{max_teams-1}, Played on <span style={{ opacity: 0.6 }}>{arena}</span>
             </div>
         );
 
@@ -1367,159 +1368,166 @@ export default class Tournament extends React.Component {
         const score1 = scores[this.state.player1.name];
         const score2 = scores[this.state.player2.name];
 
+        let home_team_background;
+        if (this.state.player2){
+            home_team_background = `url(${this.state.player2.logo})`;
+        }
+
         return (
+            <div>
+                <div className="content" style={{ paddingTop: "20px" }}>
+                    <Header />
 
-            <div style={{ paddingTop: "20px" }}>
-                <Header />
+                    {(get_stats_route && get_stats_route !== "") ?
+                        <div className="ui link cards centered" style={statsStyle}>
 
-                {(get_stats_route && get_stats_route !== "") ?
-                    <div className="ui link cards centered" style={statsStyle}>
+                            <a
+                                style={{ width: "100%", textAlign: "center", cursor: "pointer", marginBottom: (this.state.show_stats_in_header) ? '15px' : '0px' }}
+                                onClick={() => { this.setState({ show_stats_in_header: !this.state.show_stats_in_header }) }}
+                            >
+                                {
+                                    (this.state.show_stats_in_header) ? "Hide Stats" : "Show Stats"
+                                }
+                            </a>
 
-                        <a
-                            style={{ width: "100%", textAlign: "center", cursor: "pointer", marginBottom: (this.state.show_stats_in_header) ? '15px' : '0px' }}
-                            onClick={() => { this.setState({ show_stats_in_header: !this.state.show_stats_in_header }) }}
-                        >
-                            {
-                                (this.state.show_stats_in_header) ? "Hide Stats" : "Show Stats"
-                            }
-                        </a>
+                            <div style={{ display: (this.state.show_stats_in_header) ? "block" : "none", width: "100%" }}>
+                                {general_stats_block}
+                                <StatsTable
+                                    title={"Previous Matchups Stats"}
+                                    marginTop="10px"
+                                    description={matchups_description}
+                                    hidden={(met_each_other === 0)}
+                                    cols={["",this.state.player1.name,this.state.player2.name]}
+                                    stats={this.state.matchups_values}
+                                />
+                                <StatsTable
+                                    title={`${toPascalCase(what)} Individual Stats`}
+                                    marginTop="10px"
+                                    cols={["",this.state.player1.name,this.state.player2.name]}
+                                    stats={this.state.player_stats_values}
+                                />
+                            </div>
+                        </div> : ""}
 
-                        <div style={{ display: (this.state.show_stats_in_header) ? "block" : "none", width: "100%" }}>
-                            {general_stats_block}
-                            <StatsTable
-                                title={"Previous Matchups Stats"}
-                                marginTop="10px"
-                                description={matchups_description}
-                                hidden={(met_each_other === 0)}
-                                cols={["",this.state.player1.name,this.state.player2.name]}
-                                stats={this.state.matchups_values}
-                            />
-                            <StatsTable
-                                title={`${toPascalCase(what)} Individual Stats`}
-                                marginTop="10px"
-                                cols={["",this.state.player1.name,this.state.player2.name]}
-                                stats={this.state.player_stats_values}
-                            />
-                        </div>
-                    </div> : ""}
+                    {standings_block}
 
-                {standings_block}
-
-                <div className="ui link cards centered" style={{margin: "auto", marginBottom:"5px"}}>
-                    <ButtonInput
-                        text={"New Tournament"}
-                        style={{ marginLeft:"5px" }}
-                        onClick={() => {
-
-                            if (this.state.played_games.length === 0 || this.state.finished){
-                                this.setState({
-                                    is_started: false,
-                                    loaded: false,
-                                });
-                            }
-                            else {
-                                this.setState({
-                                    button_clicked: "new_tournament",
-                                    button_clicked_action_text: 'Start a New Tournament',
-                                    button_clicked_func: () => {
-                                        this.setState({
-                                            is_started: false,
-                                            loaded: false,
-                                        });
-                                    }
-                                });
-                            }
-                        }}
-                    />
-                    <ButtonInput
-                        text={"Restart Tournament"}
-                        style={{ marginLeft:"5px" }}
-                        onClick={() => {
-
-                            if (this.state.played_games.length === 0 || this.state.finished){
-                                this.init();
-
-                            } else {
-                                this.setState({
-                                    button_clicked: "restart_tournament",
-                                    button_clicked_action_text: 'Restart Tournament',
-                                    button_clicked_func: this.init,
-                                });
-                            }
-                        }}
-                    />
-                    {(stats_page) ?
+                    <div className="ui link cards centered" style={{margin: "auto", marginBottom:"5px"}}>
                         <ButtonInput
-                            text={"View Stats"}
+                            text={"New Tournament"}
                             style={{ marginLeft:"5px" }}
-                            onClick={() => { this.setState({ view_stats: true }) }}
-                        /> : ""}
-                </div>
+                            onClick={() => {
 
+                                if (this.state.played_games.length === 0 || this.state.finished){
+                                    this.setState({
+                                        is_started: false,
+                                        loaded: false,
+                                    });
+                                }
+                                else {
+                                    this.setState({
+                                        button_clicked: "new_tournament",
+                                        button_clicked_action_text: 'Start a New Tournament',
+                                        button_clicked_func: () => {
+                                            this.setState({
+                                                is_started: false,
+                                                loaded: false,
+                                            });
+                                        }
+                                    });
+                                }
+                            }}
+                        />
+                        <ButtonInput
+                            text={"Restart Tournament"}
+                            style={{ marginLeft:"5px" }}
+                            onClick={() => {
 
-                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginTop: "20px" }}>
-                    <div className={"card in-game"} style={titleStyle}>Guest</div>
-                    <div style={{ width: 110 }} />
-                    <div className={"card in-game"} style={titleStyle}>Home</div>
-                </div>
+                                if (this.state.played_games.length === 0 || this.state.finished){
+                                    this.init();
 
-                <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "10px" }}>
-                    {blocks[0]}
-                    <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
-
-                        <div style={{ position: "absolute", bottom: bottom, width:"100%" }}>
-                            {(this.state.saved) ?
-                                (
-                                    <ButtonInput
-                                        text={"Update"}
-                                        style={{ width: "100%" }}
-                                        onClick={this.updateResult}
-                                        disabled={this.state.saving || this.state.finished || (score1 === score2)}
-                                    />
-                                ): (
-                                    <ButtonInput
-                                        text={"Save"}
-                                        style={{ width: "100%" }}
-                                        onClick={this.saveResult}
-                                        disabled={this.state.saved || this.state.saving || this.state.finished || (score1 === score2)}
-                                    />
-                                )}
-                        </div>
-
-                        <div style={{ position: "absolute", bottom: bottom - 50, width:"100%" }}>
-                            {(this.state.saved) ?
-                                (
-                                    <ButtonInput
-                                        text={"Next"}
-                                        style={{ width: "100%" }}
-                                        onClick={this.nextGame}
-                                        disabled={this.state.finished}
-                                    />
-                                ): ""}
-                        </div>
-
+                                } else {
+                                    this.setState({
+                                        button_clicked: "restart_tournament",
+                                        button_clicked_action_text: 'Restart Tournament',
+                                        button_clicked_func: this.init,
+                                    });
+                                }
+                            }}
+                        />
+                        {(stats_page) ?
+                            <ButtonInput
+                                text={"View Stats"}
+                                style={{ marginLeft:"5px" }}
+                                onClick={() => { this.setState({ view_stats: true }) }}
+                            /> : ""}
                     </div>
-                    {blocks[1]}
+
+
+                    <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginTop: "20px" }}>
+                        <div className={"card in-game"} style={titleStyle}>Guest</div>
+                        <div style={{ width: 110 }} />
+                        <div className={"card in-game"} style={titleStyle}>Home</div>
+                    </div>
+
+                    <div className="ui link cards centered" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", marginBottom: "10px" }}>
+                        {blocks[0]}
+                        <div className={"card in-game"} style={{ border:0, width: 100, boxShadow: "unset", cursor: "default", backgroundColor: APP_BACKGROUND_COLOR }}>
+
+                            <div style={{ position: "absolute", bottom: bottom, width:"100%" }}>
+                                {(this.state.saved) ?
+                                    (
+                                        <ButtonInput
+                                            text={"Update"}
+                                            style={{ width: "100%" }}
+                                            onClick={this.updateResult}
+                                            disabled={this.state.saving || this.state.finished || (score1 === score2)}
+                                        />
+                                    ): (
+                                        <ButtonInput
+                                            text={"Save"}
+                                            style={{ width: "100%" }}
+                                            onClick={this.saveResult}
+                                            disabled={this.state.saved || this.state.saving || this.state.finished || (score1 === score2)}
+                                        />
+                                    )}
+                            </div>
+
+                            <div style={{ position: "absolute", bottom: bottom - 50, width:"100%" }}>
+                                {(this.state.saved) ?
+                                    (
+                                        <ButtonInput
+                                            text={"Next"}
+                                            style={{ width: "100%" }}
+                                            onClick={this.nextGame}
+                                            disabled={this.state.finished}
+                                        />
+                                    ): ""}
+                            </div>
+
+                        </div>
+                        {blocks[1]}
+                    </div>
+
+                    <div className="ui link cards centered" style={{
+                        position:"relative", display: "flex", textAlign: "center",
+                        width: "710px", alignItems: "strech", margin: "auto"
+                    }}>
+                        {comeback_block}
+                    </div>
+
+                    {mvp_block_html}
+
+                    <div className="ui link cards centered" style={{
+                        position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", paddingBottom: "20px",
+                        width: "710px",
+                    }}>
+                        {overtime_block}
+                    </div>
+
+                    {confirmation_modal}
+                    {game_saved}
                 </div>
-
-                <div className="ui link cards centered" style={{
-                    position:"relative", display: "flex", textAlign: "center",
-                    width: "710px", alignItems: "strech", margin: "auto"
-                }}>
-                    {comeback_block}
-                </div>
-
-                {mvp_block_html}
-
-                <div className="ui link cards centered" style={{
-                    position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", paddingBottom: "20px",
-                    width: "710px",
-                }}>
-                    {overtime_block}
-                </div>
-
-                {confirmation_modal}
-                {game_saved}
+                <div className={"bg-container"} style={{ background: home_team_background }} />
             </div>
         );
     }

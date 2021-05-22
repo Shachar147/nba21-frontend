@@ -897,9 +897,15 @@ export default class OneOnOneManager extends React.Component {
             </div>
         );
 
+        let home_team_background;
+        if (this.state.player2){
+            home_team_background = `url(${this.state.player2.logo})`;
+        }
+
         return (
 
-            <div style={{ paddingTop: "20px" }}>
+            <div>
+                <div className={"content"} style={{ paddingTop: "20px" }}>
                 <Header />
 
                 {(get_stats_route && get_stats_route !== "") ?
@@ -1002,6 +1008,8 @@ export default class OneOnOneManager extends React.Component {
                     {overtime_block}
                 </div>
 
+            </div>
+                <div className={"bg-container"} style={{ background: home_team_background }} />
             </div>
         );
     }

@@ -7,7 +7,12 @@ import {getUser} from "../../helpers/auth";
 export default function Header(props) {
 
     const logo = (!props.nologo) ? (
-                    <div className={"ui header cards centered"} style={{ width: "100%", backgroundColor: "#FAFAFB" }} >
+                    <div className={"ui header cards centered"} style={{
+                        width: "100%",
+                        // backgroundColor: "#FAFAFB",
+                        marginLeft: "0px",
+                        paddingTop: "45px"
+                    }} >
                         <Logo />
                     </div>): "";
 
@@ -27,7 +32,6 @@ export default function Header(props) {
                     {(user) ? `Connected as: ${user}` : ""}
                 </span>
             </div>
-            <br/><br/>
             {logo}
         </div>
     );
