@@ -47,12 +47,12 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
         // console.log(general_stats);
 
         const key2 = (percents) ? 'total_percents' : 'total_points';
-        description.push(`Total Games Today: ${total_games_today}`);
-        description.push(`Total ${what_stat} Today: ${total_points_today}`);
+        description.push(`Games: ${total_games_today}`);
+        description.push(`${what_stat}: ${total_points_today}`);
 
         if (totalTournaments) total_description.push(totalTournaments);
-        total_description.push(`Total Games: ${general_stats['total_games']}`);
-        total_description.push(`Total ${what_stat}: ${general_stats[key2]}`);
+        total_description.push(`Games: ${general_stats['total_games']}`);
+        total_description.push(`${what_stat}: ${general_stats[key2]}`);
 
         const values = {};
         const mvp_values = {};
@@ -109,7 +109,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#${i+1}`].push(row);
         }
 
-        let descriptionText = description.join(' | ') + '<br>' + total_description.join(' | ');
+        let descriptionText = '<b>Today: </b>' + description.join(' | ') + '<br><b>Total: </b>' + total_description.join(' | ');
         if (moreStats){
             descriptionText += moreStats;
         }

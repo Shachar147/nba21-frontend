@@ -388,8 +388,8 @@ class OneOnOneStats extends React.Component {
         let totalTournaments;
         if (game_mode === 'Tournament' && this.state.stats){
             const { total_tournaments, total_comebacks, total_knockouts, total_overtimes } = this.state.stats;
-            moreStats = `<br>Total Comebacks: ${total_comebacks} | Total Knockouts: ${total_knockouts} | Total Overtimes: ${total_overtimes}`;
-            totalTournaments = `Total Tournaments: ${total_tournaments}`;
+            moreStats = ` | Comebacks: ${total_comebacks} | Knockouts: ${total_knockouts} | Overtimes: ${total_overtimes}`;
+            totalTournaments = `Tournaments: ${total_tournaments}`;
         }
 
         // one on one stats
