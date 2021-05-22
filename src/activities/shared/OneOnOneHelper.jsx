@@ -187,7 +187,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
 
             const tournament_mvps_description = [];
             tournament_mvps_description.push(`Total MVPs: ${total_mvps}`);
-            tournament_mvps_description.push(`Total MVPs Players: ${Object.keys(tournament_mvps).length}`);
+            tournament_mvps_description.push(`Total Players: ${Object.keys(tournament_mvps).length}`);
 
             tournament_mvps_block = (
                 <StatsTable
