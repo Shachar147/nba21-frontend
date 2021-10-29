@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/internal/PlayerPicture.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/PlayerPicture.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +129,8 @@
       <workItem from="1626965091252" duration="905000" />
       <workItem from="1628250631270" duration="1131000" />
       <workItem from="1631829979401" duration="628000" />
-      <workItem from="1634700294031" duration="1225000" />
+      <workItem from="1634700294031" duration="2354000" />
+      <workItem from="1635516122514" duration="332000" />
     </task>
     <servers />
   </component>

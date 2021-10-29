@@ -1,6 +1,6 @@
 import {shuffle} from "./utils";
 
-export const MIN_ROUND_LENGTH = 3;
+export const MIN_ROUND_LENGTH = 1;
 export const MAX_ROUND_LENGTH = 100;
 export const ROUND_DEFAULT_LENGTH = 3;
 export const LOGIN_DELAY = 500;
