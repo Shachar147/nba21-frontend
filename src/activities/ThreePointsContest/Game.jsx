@@ -6,9 +6,10 @@ import ButtonInput from "../../components/inputs/ButtonInput";
 import {_3PT_COMPUTER_SCORE_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
 import ErrorPage from "../../pages/ErrorPage";
 import Notification from "../../components/internal/Notification";
-import {apiPost} from "../../helpers/api";
+import {apiGet, apiPost} from "../../helpers/api";
 import OneOnOneStats from "../shared/OneOnOneStats";
 import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
+import {buildGeneralStats, BuildStatsTable, statsStyle} from "../shared/OneOnOneHelper";
 
 export default class Game extends React.Component {
 
@@ -36,6 +37,8 @@ export default class Game extends React.Component {
             saved: false,
 
             selected_player: undefined,
+
+            general_stats: this.props.general_stats,
         };
 
         this.onScore = this.onScore.bind(this);
@@ -297,8 +300,35 @@ export default class Game extends React.Component {
                 if (error.message.indexOf("400") !== -1) { req_error = `Oops, failed saving this game.` }
                 self.setState({ error: req_error, error_retry: retry });
             },
-            function() {
+            async function() {
                 // finally
+
+                await self.setState({ loadedStats: false })
+                self.initStats(self);
+            }
+        );
+    }
+
+    initStats(self) {
+        const { get_stats_route, percents } = this.props;
+        apiGet(self,
+            get_stats_route,
+            async function(res) {
+                let stats = res.data.data;
+
+                const { general_stats } = buildGeneralStats(stats, percents);
+
+                await self.setState({ stats, general_stats  , loadedStats: true });
+            },
+            function(error, error_retry) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = `Oops, it seems like stats weren't loaded :(<Br>It's probably related to a server error` }
+                self.setState({ error: req_error, error_retry });
+            },
+            async function() {
+
             }
         );
     }
@@ -501,10 +531,41 @@ export default class Game extends React.Component {
             />
         );
 
+
+        let get_stats_route = this.props.get_stats_route;
+        let game_mode = this.props.game_mode;
+        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode, 0, undefined, percents) : "";
+
+        const self = this;
+
         return (
 
             <div style={{ paddingTop: "20px" }}>
                 <Header />
+
+                <div className="ui link cards centered" style={statsStyle}>
+                    {general_stats_block}
+
+                    <div style={{ display: "block", textAlign:"center", marginTop:"5px", width: "100%" }}>
+                        <div className={"ui basic buttons"} style={{ margin: "auto", border: "0px" }}>
+
+                            <ButtonInput
+                                text={"Reload Stats"}
+                                onClick={async () => {
+                                    await self.setState({ loadedStats: false })
+                                    self.initStats(self);
+                                }}
+                            />
+
+                            <ButtonInput
+                                text={"View Stats"}
+                                style={{ marginLeft:"5px" }}
+                                onClick={() => { this.setState({ view_stats: true }) }}
+                            />
+                        </div>
+                    </div>
+
+                </div>
 
                 <div className="ui link cards centered" style={{margin: "auto", marginBottom:"20px"}}>
                     <ButtonInput
@@ -516,11 +577,11 @@ export default class Game extends React.Component {
                         style={{ marginLeft: "5px" }}
                         onClick={this.goHome}
                     />
-                    <ButtonInput
-                        text={"View Stats"}
-                        style={{ marginLeft:"5px" }}
-                        onClick={() => { this.setState({ view_stats: true }) }}
-                    />
+                    {/*<ButtonInput*/}
+                    {/*    text={"View Stats"}*/}
+                    {/*    style={{ marginLeft:"5px" }}*/}
+                    {/*    onClick={() => { this.setState({ view_stats: true }) }}*/}
+                    {/*/>*/}
                 </div>
                 {computers_block}
                 {totals}

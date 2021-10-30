@@ -469,6 +469,10 @@ export default class Settings extends React.Component {
                 computer_levels={this.state.computer_levels}
                 goHome={this.restart}
                 get_stats_specific_route={"/records/three-points-contest/by-player/:name"}
+
+                general_stats={this.state.general_stats}
+                percents={percents}
+                get_stats_route={get_stats_route}
               />
             );
         }
