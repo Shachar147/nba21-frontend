@@ -9,7 +9,7 @@ import Notification from "../../components/internal/Notification";
 import {apiGet, apiPost} from "../../helpers/api";
 import OneOnOneStats from "../shared/OneOnOneStats";
 import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
-import {buildGeneralStats, BuildStatsTable, statsStyle} from "../shared/OneOnOneHelper";
+import {buildGeneralStats, BuildStatsTable, formatTimeAgo, statsStyle} from "../shared/OneOnOneHelper";
 
 export default class Game extends React.Component {
 
@@ -39,6 +39,9 @@ export default class Game extends React.Component {
             selected_player: undefined,
 
             general_stats: this.props.general_stats,
+
+            game_started_at: Date.now(),
+            finished_at : undefined,
         };
 
         this.onScore = this.onScore.bind(this);
@@ -171,7 +174,7 @@ export default class Game extends React.Component {
             let winner = current_player.name;
             this.setState({ current_player, winner });
 
-            this.SaveResult();
+            await this.SaveResult();
         }
         else {
             this.StartRound();
@@ -247,6 +250,9 @@ export default class Game extends React.Component {
             winner: "",
             leaderboard: [],
             saved: false,
+
+            game_started_at: Date.now(),
+            finished_at: undefined,
         });
 
         this.StartRound();
@@ -257,9 +263,23 @@ export default class Game extends React.Component {
         this.props.goHome();
     }
 
+    timePassed(){
+        const current = this.state.finished_at || Date.now();
+        let time_took = current - this.state.game_started_at;
+        time_took /= 1000; // ms to s
+
+        return time_took;
+    }
+
     async SaveResult(){
 
         const self = this;
+
+        const finished_at = Date.now();
+        this.setState({
+            finished_at: finished_at,
+        })
+        // alert("Game took " + formatTimeAgo(finished_at));
 
         const team1_players = this.state.teams[0].map(x => x.name);
         const team2_players = this.state.teams[1].map(x => x.name);
@@ -287,6 +307,7 @@ export default class Game extends React.Component {
                 winner_name: this.state.winner.split(' (')[0],
                 leaderboard: this.state.total_leader_board,
                 scoresHistory: this.state.scores,
+                gameTotalTime: this.timePassed(),
             },
             async function(res) {
 
@@ -499,6 +520,10 @@ export default class Game extends React.Component {
                 </div>
             );
         }
+
+        // total time
+        const totalTime = formatTimeAgo(this.timePassed());
+        totals_arr.push(`<div style="width:100%; text-align:center; display:block;"><b>Passed Time: ${totalTime}</b></div>`);
 
         totals_arr.push(`<div style="width:100%; text-align:center; display:block;"><b>Game Total: ${game_total_made}/${game_total_attempts} - ${game_total_percents}%</b></div>`);
         if (game_total_attempts_no_c !== game_total_attempts){

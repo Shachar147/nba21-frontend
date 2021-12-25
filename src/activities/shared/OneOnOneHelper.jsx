@@ -122,6 +122,14 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
         }
 
         let descriptionText = '<b>Today: </b>' + description.join(' | ') + '<br><b>Total: </b>' + total_description.join(' | ');
+
+        if (general_stats['shortest_game']){
+            descriptionText += '<br><b>Shortest Game: </b>' + formatDate(new Date(general_stats['shortest_game_at'])) + ' - ' +  formatTimeAgo(general_stats['shortest_game']);
+        }
+        if (general_stats['longest_game']){
+            descriptionText += '<br><b>Longest Game: </b>' + formatDate(new Date(general_stats['longest_game_at'])) + ' - ' + formatTimeAgo(general_stats['longest_game']);
+        }
+
         if (moreStats){
             descriptionText += moreStats;
         }
@@ -460,6 +468,26 @@ export function buildGeneralStats(stats, percents, stopwatch) {
 
             // console.log(player, "game #" + idx, "participants " + divide);
 
+            if (record.gameTotalTime){
+                general_stats['shortest_game'] =
+                    (isDefined(general_stats['shortest_game'])) ?
+                        Math.min(general_stats['shortest_game'], record.gameTotalTime) :
+                        record.gameTotalTime;
+
+                if (general_stats['shortest_game'] == record.gameTotalTime) {
+                    general_stats['shortest_game_at'] = record.addedAt;
+                }
+
+                general_stats['longest_game'] =
+                    (isDefined(general_stats['longest_game'])) ?
+                        Math.max(general_stats['longest_game'], record.gameTotalTime) :
+                        record.gameTotalTime;
+
+                if (general_stats['longest_game'] == record.gameTotalTime) {
+                    general_stats['longest_game_at'] = record.addedAt;
+                }
+            }
+
             general_stats['total_games'] += (1/divide);
 
             // console.log("total games: ", general_stats['total_games']);
@@ -553,4 +581,22 @@ export function buildGeneralStats(stats, percents, stopwatch) {
     }
 
     return { general_stats, mvp_stats };
+}
+
+// ms to verbal
+export function formatTimeAgo(time_ago_ms) {
+
+    let parts = [];
+    if (time_ago_ms > 60){
+        let min = parseInt((time_ago_ms / 60).toString());
+        time_ago_ms = time_ago_ms -= (min * 60);
+
+        parts.push(min + " minutes");
+    }
+    time_ago_ms = parseInt((time_ago_ms).toString());
+    if (time_ago_ms > 0){
+        parts.push(time_ago_ms + " seconds");
+    }
+
+    return parts.join(", ");
 }
