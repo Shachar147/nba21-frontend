@@ -143,6 +143,71 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             />
         );
 
+        // ------------------------------------------------------
+        // NBA21-173
+        // ------------------------------------------------------
+        let perfect_scores_block = undefined;
+        let no_scores_block = undefined;
+        if (general_stats['no_scores_data']){
+
+            const hash = {};
+            let i;
+
+            // no scores per day
+            ['no_scores_data', 'perfect_scores_data'].forEach((what) => {
+                ['per_day', 'percents_per_day'].forEach((key) => {
+
+                    i = 0;
+                    Object.keys(general_stats[what][key]).sort((a, b) => {
+                        return general_stats[what][key][b] - general_stats[what][key][a];
+                    }).forEach((day) => {
+                        if (i <= TOP_STATS_MAX_VIEW_MORE) {
+
+                            hash[what] = hash[what] || [];
+
+                            hash[what][`#${i + 1}`] = hash[what][`#${i + 1}`] || [];
+
+                            let total = general_stats[what][key][day];
+                            let row = day + ' - ' + total;
+
+                            if (key.indexOf('percents') !== -1) {
+                                total = (general_stats[what][key][day]).toFixed(2);
+                                row = day + ' - ' + total + '% (' + general_stats[what]['per_day'][day] + '/' + general_stats['rounds_per_day'][day] + ')';
+                            }
+
+                            if (day === dtToday) {
+                                row = `<span style="font-weight:bold">${row}</span>`;
+                            }
+
+                            hash[what][`#${i + 1}`].push(row);
+                        }
+                        i++;
+                    });
+
+                });
+            });
+
+            perfect_scores_block = (
+                <StatsTable
+                    title={`Perfect Scores`}
+                    // description={descriptionText}
+                    cols={["","Days with most perfect scores", "Days with most perfect scores percents"]}
+                    stats={hash['perfect_scores_data']}
+                />
+            );
+
+            no_scores_block = (
+                <StatsTable
+                    title={`No Scores`}
+                    // description={descriptionText}
+                    cols={["","Days with most no-scores", "Days with most no-scores percents"]}
+                    stats={hash['no_scores_data']}
+                />
+            );
+
+        }
+        // ------------------------------------------------------
+
         if (mvp_block && Object.keys(mvp_stats).length > 0) {
 
             const { total_mvps_per_player, total_mvps_on_knockouts_per_player, total_mvps, total_mvps_on_knockouts } = mvp_stats;
@@ -207,10 +272,22 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             );
         }
 
+        // if (!wrap && no_scores_block){
+        //     general_stats_block = (
+        //         <div className="ui link cards centered">
+        //             {general_stats_block}
+        //             {perfect_scores_block}
+        //             {no_scores_block}
+        //         </div>
+        //     )
+        // }
+
         if (wrap){
             general_stats_block = (
                 <div className="ui link cards centered" style={statsStyle}>
                     {general_stats_block}
+                    {perfect_scores_block}
+                    {no_scores_block}
                     {tournament_mvps_block}
                     {mvp_stats_block}
                 </div>
@@ -457,11 +534,57 @@ export function buildGeneralStats(stats, percents, stopwatch) {
         total_from: 0,
     }
 
+    // ------------------------------------------------------
+    // NBA21-173
+    // ------------------------------------------------------
+    let seen_games = {};
+    let no_scores_data = {
+        total: 0,
+        per_day: {},
+    };
+    let perfect_scores_data = {
+        total: 0,
+        per_day: {},
+    }
+    let rounds_per_day = {};
+    // ------------------------------------------------------
+
     Object.keys(stats).forEach((player) => {
 
         if (!stats[player].records) { return; }
 
         stats[player].records.forEach((record,idx) => {
+
+            // ------------------------------------------------------
+            // NBA21-173
+            // ------------------------------------------------------
+            // perfect and no scores totals and percents
+            if (!seen_games[record.id]) {
+                const dt = formatDate(new Date(record['addedAt']));
+                // console.log(dt);
+                Object.keys(record.scoresHistory)
+                    .filter(player => player.toLowerCase().indexOf('computer') === -1)
+                    .forEach((player) => {
+
+                        let total_rounds = record.scoresHistory[player].length;
+                        let total_no_scores = record.scoresHistory[player].filter(score => score === 0).length;
+                        let total_perfect_scores = record.scoresHistory[player].filter(score => score === record.roundLength).length;
+
+                        rounds_per_day[dt] = rounds_per_day[dt] || 0;
+                        rounds_per_day[dt] += total_rounds;
+
+                        no_scores_data['total'] += total_no_scores;
+                        no_scores_data['per_day'][dt] = no_scores_data['per_day'][dt] || 0;
+                        no_scores_data['per_day'][dt] += total_no_scores;
+
+                        perfect_scores_data['total'] += total_perfect_scores;
+                        perfect_scores_data['per_day'][dt] = perfect_scores_data['per_day'][dt] || 0;
+                        perfect_scores_data['per_day'][dt] += total_perfect_scores;
+                });
+                // console.log(record);
+                seen_games[record.id] = 1;
+            }
+            // ------------------------------------------------------
 
             let divide = (percents && record.scoresHistory) ? Object.keys(record.scoresHistory).filter(x => x.indexOf('Computer') === -1).length : 2;
             if (stopwatch) { divide = 1; } // stopwatch shootout
@@ -545,6 +668,30 @@ export function buildGeneralStats(stats, percents, stopwatch) {
             }
         })
     });
+
+    // ------------------------------------------------------
+    // NBA21-173
+    // ------------------------------------------------------
+    Object.keys(rounds_per_day).forEach((day) => {
+        const total_rounds = rounds_per_day[day];
+
+        const total_no_scores = no_scores_data['per_day'][day];
+        const total_perfect_scores = perfect_scores_data['per_day'][day];
+
+        no_scores_data['percents_per_day'] = no_scores_data['percents_per_day'] || {};
+        perfect_scores_data['percents_per_day'] = perfect_scores_data['percents_per_day'] || {};
+
+        no_scores_data['percents_per_day'][day] = (total_no_scores / total_rounds).toFixed(2) * 100;
+        perfect_scores_data['percents_per_day'][day] = (total_perfect_scores / total_rounds).toFixed(2) * 100;
+
+    })
+    // console.log(no_scores_data);
+    // console.log(perfect_scores_data);
+    // console.log(rounds_per_day);
+    general_stats['no_scores_data'] = no_scores_data;
+    general_stats['perfect_scores_data'] = perfect_scores_data;
+    general_stats['rounds_per_day'] = rounds_per_day;
+    // ------------------------------------------------------
 
     // console.log(date_stats);
 
