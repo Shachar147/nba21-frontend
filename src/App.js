@@ -20,6 +20,7 @@ import RealInjured from "./pages/Real/RealInjured";
 import RealInactive from "./pages/Real/RealInactive";
 import UserSettings from "./pages/UserSettings";
 import Tournament from "./activities/Tournament/Tournament";
+import SpaceJam from "./activities/SpaceJam/SpaceJam";
 
 function App() {
 
@@ -40,6 +41,10 @@ function App() {
                     <PrivateRoute exact path="/1on1/" component={OneOnOne} />
                     <PrivateRoute exact path="/1on1/stats" component={OneOnOne} data={{view_stats:true}} />
                     <PrivateRoute path="/1on1/stats/:player" component={OneOnOne} data={{view_stats:true, player_from_url:true}} />
+
+                    <PrivateRoute exact path="/space-jam/" component={SpaceJam} />
+                    <PrivateRoute exact path="/space-jam/stats" component={SpaceJam} data={{view_stats:true}} />
+                    <PrivateRoute path="/space-jam/stats/:player" component={SpaceJam} data={{view_stats:true, player_from_url:true}} />
 
                     <PrivateRoute path="/real/injured/" component={RealInjured} />
                     <PrivateRoute path="/real/inactive/" component={RealInactive} />

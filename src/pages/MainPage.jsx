@@ -83,12 +83,12 @@ export default class MainPage extends React.Component {
                                     disabledAltAddition={"(not available yet)"}
                                 />
                                 <Card
-                                    name={"Space Jam Eddition"}
+                                    name={"Space Jam Edition"}
                                     picture={"/thumbnails/tunesquad.png"}
                                     style={{ width: "160px" }}
-                                    href={"/"} // todo complete
-                                    disabled={true}
-                                    disabledAltAddition={"(not available yet)"}
+                                    href={"/space-jam"}
+                                    // disabled={true}
+                                    // disabledAltAddition={"(not available yet)"}
                                 />
 
                                 <Card

@@ -148,7 +148,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
         // ------------------------------------------------------
         let perfect_scores_block = undefined;
         let no_scores_block = undefined;
-        if (general_stats['no_scores_data']){
+        if (general_stats['rounds_per_day'] && Object.keys(general_stats['rounds_per_day']).length > 0){
 
             const hash = {};
             let i;
@@ -558,31 +558,33 @@ export function buildGeneralStats(stats, percents, stopwatch) {
             // ------------------------------------------------------
             // NBA21-173
             // ------------------------------------------------------
-            // perfect and no scores totals and percents
-            if (!seen_games[record.id]) {
-                const dt = formatDate(new Date(record['addedAt']));
-                // console.log(dt);
-                Object.keys(record.scoresHistory)
-                    .filter(player => player.toLowerCase().indexOf('computer') === -1)
-                    .forEach((player) => {
+            if (record.scoresHistory) {
+                // perfect and no scores totals and percents
+                if (!seen_games[record.id]) {
+                    const dt = formatDate(new Date(record['addedAt']));
+                    // console.log(dt);
+                    Object.keys(record.scoresHistory)
+                        .filter(player => player.toLowerCase().indexOf('computer') === -1)
+                        .forEach((player) => {
 
-                        let total_rounds = record.scoresHistory[player].length;
-                        let total_no_scores = record.scoresHistory[player].filter(score => score === 0).length;
-                        let total_perfect_scores = record.scoresHistory[player].filter(score => score === record.roundLength).length;
+                            let total_rounds = record.scoresHistory[player].length;
+                            let total_no_scores = record.scoresHistory[player].filter(score => score === 0).length;
+                            let total_perfect_scores = record.scoresHistory[player].filter(score => score === record.roundLength).length;
 
-                        rounds_per_day[dt] = rounds_per_day[dt] || 0;
-                        rounds_per_day[dt] += total_rounds;
+                            rounds_per_day[dt] = rounds_per_day[dt] || 0;
+                            rounds_per_day[dt] += total_rounds;
 
-                        no_scores_data['total'] += total_no_scores;
-                        no_scores_data['per_day'][dt] = no_scores_data['per_day'][dt] || 0;
-                        no_scores_data['per_day'][dt] += total_no_scores;
+                            no_scores_data['total'] += total_no_scores;
+                            no_scores_data['per_day'][dt] = no_scores_data['per_day'][dt] || 0;
+                            no_scores_data['per_day'][dt] += total_no_scores;
 
-                        perfect_scores_data['total'] += total_perfect_scores;
-                        perfect_scores_data['per_day'][dt] = perfect_scores_data['per_day'][dt] || 0;
-                        perfect_scores_data['per_day'][dt] += total_perfect_scores;
-                });
-                // console.log(record);
-                seen_games[record.id] = 1;
+                            perfect_scores_data['total'] += total_perfect_scores;
+                            perfect_scores_data['per_day'][dt] = perfect_scores_data['per_day'][dt] || 0;
+                            perfect_scores_data['per_day'][dt] += total_perfect_scores;
+                        });
+                    // console.log(record);
+                    seen_games[record.id] = 1;
+                }
             }
             // ------------------------------------------------------
 
