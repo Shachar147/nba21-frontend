@@ -24,6 +24,18 @@ export default class SpaceJam extends React.Component {
                 stats_page={true}
                 view_stats={this.props.view_stats||false}
                 player_from_url={ this.props.player_from_url }
+                styles={{
+                    imageContainerStyle: {
+                        backgroundColor: "white"
+                    },
+                    imageStyle:{
+                        maxHeight: "212px",
+                        minHeight: "212px",
+                        width: "auto",
+                        maxWidth: "100%",
+                        margin: "auto",
+                    }
+                }}
             />
         );
     }

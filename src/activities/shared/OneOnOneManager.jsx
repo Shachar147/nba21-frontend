@@ -638,7 +638,7 @@ export default class OneOnOneManager extends React.Component {
         const { selected_player } = this.state;
 
         if (selected_player){
-            const get_specific_route = (what === "players") ? "/player" : "/team";
+            const get_specific_route = (what === "players") ? "/player" : (what === "space jam players") ? "/space-jam/player" : "/team";
             const this_stats_title = stats_title || game_mode;
 
             return (
