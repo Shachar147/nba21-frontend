@@ -1,18 +1,18 @@
 import React from 'react';
-import PlayerCard from '../../components/PlayerCard';
-import SearchInput from '../../components/inputs/SearchInput';
-import {formatDate, isDefined, nth} from "../../helpers/utils";
-import LoadingPage from "../../pages/LoadingPage";
-import ErrorPage from "../../pages/ErrorPage";
+import PlayerCard from '@components/PlayerCard';
+import SearchInput from '@components/inputs/SearchInput';
+import {formatDate, isDefined, nth} from "@helpers/utils";
+import LoadingPage from "@pages/LoadingPage";
+import ErrorPage from "@pages/ErrorPage";
 
-import Header from "../../components/layouts/Header";
-import {apiGet} from "../../helpers/api";
+import Header from "@components/layouts/Header";
+import {apiGet} from "@helpers/api";
 import {
     LOADER_DETAILS,
     LOADING_DELAY,
     UNAUTHORIZED_ERROR
-} from "../../helpers/consts";
-import ButtonInput from "../../components/inputs/ButtonInput";
+} from "@helpers/consts";
+import ButtonInput from "@components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 
 export default class OneOnOneSingleStats extends React.Component {

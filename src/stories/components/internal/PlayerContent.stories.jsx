@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PlayerContent from "../../../components/internal/PlayerContent";
+import PlayerContent from "@components/internal/PlayerContent";
 
 export default {
     title: 'Storybook/components/internal/PlayerContent',

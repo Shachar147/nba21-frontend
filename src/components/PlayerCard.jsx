@@ -1,5 +1,5 @@
 import React from "react";
-import {isDefined} from "../helpers/utils";
+import {isDefined} from "@helpers/utils";
 import PropTypes, {string} from "prop-types";
 import LostImage from "./internal/LostImage";
 import PlayerPicture from "./internal/PlayerPicture";

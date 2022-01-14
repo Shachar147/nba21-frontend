@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ErrorPage from "../../pages/ErrorPage";
-import {UNAUTHORIZED_ERROR} from "../../helpers/consts";
+import ErrorPage from "@pages/ErrorPage";
+import {UNAUTHORIZED_ERROR} from "@helpers/consts";
 
 const SERVER = "http://localhost:3001";
 

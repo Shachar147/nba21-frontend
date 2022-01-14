@@ -1,20 +1,20 @@
 import React from 'react';
-import PlayerCard from '../../components/PlayerCard';
-import SearchInput from '../../components/inputs/SearchInput';
-import { isDefined} from "../../helpers/utils";
-import LoadingPage from "../../pages/LoadingPage";
-import ErrorPage from "../../pages/ErrorPage";
+import PlayerCard from '@components/PlayerCard';
+import SearchInput from '@components/inputs/SearchInput';
+import { isDefined} from "@helpers/utils";
+import LoadingPage from "@pages/LoadingPage";
+import ErrorPage from "@pages/ErrorPage";
 
-import Header from "../../components/layouts/Header";
-import {apiGet} from "../../helpers/api";
+import Header from "@components/layouts/Header";
+import {apiGet} from "@helpers/api";
 import {
     DEFAULT_REAL_INACTIVE_ORDER,
     LOADING_DELAY, UNAUTHORIZED_ERROR
-} from "../../helpers/consts";
-import {specificSort, TeamSort, textSort} from "../../helpers/sort";
-import DropdownInput from "../../components/inputs/DropdownInput";
+} from "@helpers/consts";
+import {specificSort, TeamSort, textSort} from "@helpers/sort";
+import DropdownInput from "@components/inputs/DropdownInput";
 import {Link} from "react-router-dom";
-import ButtonInput from "../../components/inputs/ButtonInput";
+import ButtonInput from "@components/inputs/ButtonInput";
 
 export default class RealInactive extends React.Component {
 

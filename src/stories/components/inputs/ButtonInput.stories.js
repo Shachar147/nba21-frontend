@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ButtonInput from '../../../components/inputs/ButtonInput';
+import ButtonInput from '@components/inputs/ButtonInput';
 
 export default {
     title: 'Storybook/components/inputs/ButtonInput',

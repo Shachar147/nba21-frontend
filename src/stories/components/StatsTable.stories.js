@@ -1,6 +1,6 @@
 import React from 'react';
 
-import StatsTable from "../../components/StatsTable";
+import StatsTable from "@components/StatsTable";
 
 export default {
     title: 'Storybook/components/StatsTable',

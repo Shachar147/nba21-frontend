@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ShootingBox from "./ShootingBox";
-import {isDefined, nth} from "../../helpers/utils";
+import {isDefined, nth} from "@helpers/utils";
 import PlayerDetails from "./PlayerDetails";
 
 export default function PlayerContent(props) {

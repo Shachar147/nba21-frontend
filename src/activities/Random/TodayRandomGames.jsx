@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Header from "../../components/layouts/Header";
-import ButtonInput from "../../components/inputs/ButtonInput";
-import {APP_BACKGROUND_COLOR, LOADER_DETAILS, UNAUTHORIZED_ERROR} from "../../helpers/consts";
-import {apiDelete, apiGet} from "../../helpers/api";
-import ErrorPage from "../../pages/ErrorPage";
-import LoadingPage from "../../pages/LoadingPage";
-import PlayerPicture from "../../components/internal/PlayerPicture";
-import ConfirmationModal from "../../components/modals/ConfirmationModal";
+import Header from "@components/layouts/Header";
+import ButtonInput from "@components/inputs/ButtonInput";
+import {APP_BACKGROUND_COLOR, LOADER_DETAILS, UNAUTHORIZED_ERROR} from "@helpers/consts";
+import {apiDelete, apiGet} from "@helpers/api";
+import ErrorPage from "@pages/ErrorPage";
+import LoadingPage from "@pages/LoadingPage";
+import PlayerPicture from "@components/internal/PlayerPicture";
+import ConfirmationModal from "@components/modals/ConfirmationModal";
 
 export default class TodayRandomGames extends React.Component {
 

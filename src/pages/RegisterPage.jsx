@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
-import {getServerAddress} from "../config/config";
+import {getServerAddress} from "@config/config";
 import { Redirect } from 'react-router'
-import Logo from "../components/layouts/Logo";
+import Logo from "@components/layouts/Logo";
 import {Link} from "react-router-dom";
-import {LOGIN_DELAY} from "../helpers/consts";
-import TextInput from "../components/inputs/TextInput";
-import {apiPost} from "../helpers/api";
-import {setToken} from "../helpers/auth";
+import {LOGIN_DELAY} from "@helpers/consts";
+import TextInput from "@components/inputs/TextInput";
+import {apiPost} from "@helpers/api";
+import {setToken} from "@helpers/auth";
 
 export default class RegisterPage extends React.Component {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SelectedPlayers from "../../components/SelectedPlayers";
+import SelectedPlayers from "@components/SelectedPlayers";
 
 export default {
     title: 'Storybook/components/SelectedPlayers',

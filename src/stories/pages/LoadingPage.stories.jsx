@@ -1,7 +1,7 @@
 import React from 'react';
 
-import LoadingPage from "../../pages/LoadingPage";
-import {LOADER_DETAILS} from "../../helpers/consts";
+import LoadingPage from "@pages/LoadingPage";
+import {LOADER_DETAILS} from "@helpers/consts";
 
 const SERVER = "http://localhost:3001";
 

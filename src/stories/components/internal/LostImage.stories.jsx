@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LostImage from '../../../components/internal/LostImage';
+import LostImage from '@components/internal/LostImage';
 
 export default {
     title: 'Storybook/components/internal/LostImage',

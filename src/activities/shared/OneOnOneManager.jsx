@@ -6,27 +6,27 @@ import {
     isDefined, sleep,
     swap,
     toPascalCase
-} from "../../helpers/utils";
-import Header from "../../components/layouts/Header";
-import {apiGet, apiPost, apiPut} from "../../helpers/api";
-import PlayerCard from "../../components/PlayerCard";
-import LoadingPage from "../../pages/LoadingPage";
-import ErrorPage from "../../pages/ErrorPage";
+} from "@helpers/utils";
+import Header from "@components/layouts/Header";
+import {apiGet, apiPost, apiPut} from "@helpers/api";
+import PlayerCard from "@components/PlayerCard";
+import LoadingPage from "@pages/LoadingPage";
+import ErrorPage from "@pages/ErrorPage";
 import {
     APP_BACKGROUND_COLOR,
     LOADER_DETAILS,
     LOADING_DELAY, PLAYER_NO_PICTURE,
     UNAUTHORIZED_ERROR
-} from "../../helpers/consts";
+} from "@helpers/consts";
 import OneOnOneStats from "./OneOnOneStats";
-import StatsTable from "../../components/StatsTable";
-import ButtonInput from "../../components/inputs/ButtonInput";
+import StatsTable from "@components/StatsTable";
+import ButtonInput from "@components/inputs/ButtonInput";
 import {buildStatsInformation, BuildStatsTable, statsStyle} from "./OneOnOneHelper";
 import PropTypes from "prop-types";
-import DropdownInput from "../../components/inputs/DropdownInput";
+import DropdownInput from "@components/inputs/DropdownInput";
 import RealGames from "../Random/RealGames";
 import TodayRandomGames from "../Random/TodayRandomGames";
-import TextInput from "../../components/inputs/TextInput";
+import TextInput from "@components/inputs/TextInput";
 import OneOnOneSingleStats from "./OneOnOneSingleStats";
 
 export default class OneOnOneManager extends React.Component {

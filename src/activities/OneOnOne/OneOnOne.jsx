@@ -1,5 +1,5 @@
 import React from "react";
-import OneOnOneManager from "../shared/OneOnOneManager";
+import OneOnOneManager from "@shared_activities/OneOnOneManager";
 
 export default class OneOnOne extends React.Component {
 

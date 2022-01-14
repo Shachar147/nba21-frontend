@@ -1,7 +1,7 @@
 import React from 'react';
-import PlayerCard from '../../components/PlayerCard';
-import SearchInput from '../../components/inputs/SearchInput';
-import SelectedPlayers from "../../components/SelectedPlayers";
+import PlayerCard from '@components/PlayerCard';
+import SearchInput from '@components/inputs/SearchInput';
+import SelectedPlayers from "@components/SelectedPlayers";
 import Game from './Game';
 import './three.points.contest.css';
 import {
@@ -18,24 +18,24 @@ import {
     TEAM1_COLOR,
     TEAM2_COLOR,
     UNAUTHORIZED_ERROR
-} from "../../helpers/consts";
-import {deepClone, isDefined} from "../../helpers/utils";
-import LoadingPage from "../../pages/LoadingPage";
-import ErrorPage from "../../pages/ErrorPage";
+} from "@helpers/consts";
+import {deepClone, isDefined} from "@helpers/utils";
+import LoadingPage from "@pages/LoadingPage";
+import ErrorPage from "@pages/ErrorPage";
 
-import Header from "../../components/layouts/Header";
-import {apiGet} from "../../helpers/api";
-import ButtonInput from "../../components/inputs/ButtonInput";
-import OneOnOneStats from "../shared/OneOnOneStats";
-import {buildGeneralStats, BuildStatsTable, statsStyle} from "../shared/OneOnOneHelper";
+import Header from "@components/layouts/Header";
+import {apiGet} from "@helpers/api";
+import ButtonInput from "@components/inputs/ButtonInput";
+import OneOnOneStats from "@shared_activities/OneOnOneStats";
+import {buildGeneralStats, BuildStatsTable, statsStyle} from "@shared_activities/OneOnOneHelper";
 import {
     currentLoseStreakSort,
     currentWinStreakSort, maxLoseStreakSort, maxWinStreakSort,
     overallSort, specificSort,
     totalGamesSort, totalLostSort, totalScored,
     totalWinsPercentsSort, totalWinsSort
-} from "../../helpers/sort";
-import DropdownInput from "../../components/inputs/DropdownInput";
+} from "@helpers/sort";
+import DropdownInput from "@components/inputs/DropdownInput";
 
 const game_mode = "Three Points Contest";
 const stats_title = "Three Points Contest";

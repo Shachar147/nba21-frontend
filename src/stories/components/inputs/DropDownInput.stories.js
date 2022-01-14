@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DropdownInput from '../../../components/inputs/DropdownInput';
+import DropdownInput from '@components/inputs/DropdownInput';
 
 export default {
     title: 'Storybook/components/inputs/DropdownInput',

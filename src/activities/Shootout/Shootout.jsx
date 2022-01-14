@@ -1,19 +1,19 @@
 import React from 'react';
-import PlayerCard from '../../components/PlayerCard';
-import SearchInput from '../../components/inputs/SearchInput';
-import { isDefined} from "../../helpers/utils";
-import LoadingPage from "../../pages/LoadingPage";
-import ErrorPage from "../../pages/ErrorPage";
+import PlayerCard from '@components/PlayerCard';
+import SearchInput from '@components/inputs/SearchInput';
+import { isDefined} from "@helpers/utils";
+import LoadingPage from "@pages/LoadingPage";
+import ErrorPage from "@pages/ErrorPage";
 
-import Header from "../../components/layouts/Header";
-import {apiGet, apiPost, apiPut} from "../../helpers/api";
-import ButtonInput from "../../components/inputs/ButtonInput";
-import OneOnOneStats from "../shared/OneOnOneStats";
+import Header from "@components/layouts/Header";
+import {apiGet, apiPost, apiPut} from "@helpers/api";
+import ButtonInput from "@components/inputs/ButtonInput";
+import OneOnOneStats from "@shared_activities/OneOnOneStats";
 import {
     LOADING_DELAY,
     MAX_SHOOTOUT_ROUND_LENGTH,
     MIN_SHOOTOUT_ROUND_LENGTH, TEAM1_COLOR, UNAUTHORIZED_ERROR
-} from "../../helpers/consts";
+} from "@helpers/consts";
 import ShootoutGame from "./ShootoutGame";
 
 export default class Shootout extends React.Component {

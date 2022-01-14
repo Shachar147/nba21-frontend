@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import '../../fireworks.pyro.css';
-import {TROPHY_DETAILS} from "../../helpers/consts";
+import {TROPHY_DETAILS} from "@helpers/consts";
 
 export default class WinnerModal extends React.Component {
 

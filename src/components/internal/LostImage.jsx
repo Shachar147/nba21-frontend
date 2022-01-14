@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {LOST_X_IMAGE} from "../../helpers/consts";
+import {LOST_X_IMAGE} from "@helpers/consts";
 
 export default function LostImage(props) {
     let { show, alt, style, className } = props;

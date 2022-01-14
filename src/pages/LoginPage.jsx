@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
-import {getServerAddress} from "../config/config";
-import {setToken} from "../helpers/auth";
+import {getServerAddress} from "@config/config";
+import {setToken} from "@helpers/auth";
 import { Redirect } from 'react-router'
-import Logo from "../components/layouts/Logo";
+import Logo from "@components/layouts/Logo";
 import {Link} from "react-router-dom";
-import {LOGIN_DELAY, UNAUTHORIZED_ERROR} from "../helpers/consts";
-import TextInput from "../components/inputs/TextInput";
-import {apiPost} from "../helpers/api";
+import {LOGIN_DELAY, UNAUTHORIZED_ERROR} from "@helpers/consts";
+import TextInput from "@components/inputs/TextInput";
+import {apiPost} from "@helpers/api";
 
 export default class LoginPage extends React.Component {
 

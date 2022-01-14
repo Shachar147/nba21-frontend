@@ -1,5 +1,5 @@
 import axios from "axios";
-import {getServerAddress} from "../config/config";
+import {getServerAddress} from "@config/config";
 
 export function apiGet(self, url, onSuccess, onError, onFinish){
     axios.get(getServerAddress() + url)

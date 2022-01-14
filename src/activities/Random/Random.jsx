@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OneOnOneManager from "../shared/OneOnOneManager";
+import OneOnOneManager from "@shared_activities/OneOnOneManager";
 
 export default class Random extends React.Component {
 

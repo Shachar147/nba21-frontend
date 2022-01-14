@@ -1,5 +1,5 @@
 import React from "react";
-import {PLAYER_NO_PICTURE} from "../helpers/consts";
+import {PLAYER_NO_PICTURE} from "@helpers/consts";
 import ButtonInput from "./inputs/ButtonInput";
 import PropTypes from "prop-types";
 

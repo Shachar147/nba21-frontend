@@ -1,4 +1,4 @@
-import StatsTable from "../../components/StatsTable";
+import StatsTable from "@components/StatsTable";
 import {
     ICE_COLD_COLOR, ICE_COLD_ICON, ICE_COLD_STYLE,
     ICE_COLD_THRESHOLD,
@@ -7,8 +7,8 @@ import {
     ON_FIRE_THRESHOLD,
     TOP_STATS_MAX_VIEW_MORE,
     TOP_STATS_NUMBER
-} from "../../helpers/consts";
-import {formatDate, getRandomElement, isDefined} from "../../helpers/utils";
+} from "@helpers/consts";
+import {formatDate, getRandomElement, isDefined} from "@helpers/utils";
 import React from "react";
 
 export const statsStyle = {

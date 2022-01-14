@@ -5,12 +5,12 @@ import {
     isDefined, sleep,
     swap,
     toPascalCase
-} from "../../helpers/utils";
-import Header from "../../components/layouts/Header";
-import {apiGet, apiPost, apiPut} from "../../helpers/api";
-import PlayerCard from "../../components/PlayerCard";
-import LoadingPage from "../../pages/LoadingPage";
-import ErrorPage from "../../pages/ErrorPage";
+} from "@helpers/utils";
+import Header from "@components/layouts/Header";
+import {apiGet, apiPost, apiPut} from "@helpers/api";
+import PlayerCard from "@components/PlayerCard";
+import LoadingPage from "@pages/LoadingPage";
+import ErrorPage from "@pages/ErrorPage";
 import {
     APP_BACKGROUND_COLOR, DEFAULT_MAX_TEAMS_IN_TOURNAMENT, DEFAULT_TOURNAMENT_TEAMS,
     LOADER_DETAILS,
@@ -19,18 +19,18 @@ import {
     MIN_TEAMS_IN_TOURNAMENT, NBA_TEAM_ARENA_NAMES,
     PLAYER_NO_PICTURE,
     UNAUTHORIZED_ERROR
-} from "../../helpers/consts";
-import OneOnOneStats from "../shared/OneOnOneStats";
-import StatsTable from "../../components/StatsTable";
-import ButtonInput from "../../components/inputs/ButtonInput";
-import {buildStatsInformation, BuildStatsTable, statsStyle} from "../shared/OneOnOneHelper";
-import DropdownInput from "../../components/inputs/DropdownInput";
-import TextInput from "../../components/inputs/TextInput";
-import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
-import Notification from "../../components/internal/Notification";
-import ConfirmationModal from "../../components/modals/ConfirmationModal";
-import Card from "../../components/Card";
-import WinnerModal from "../../components/modals/WinnerModal";
+} from "@helpers/consts";
+import OneOnOneStats from "@shared_activities/OneOnOneStats";
+import StatsTable from "@components/StatsTable";
+import ButtonInput from "@components/inputs/ButtonInput";
+import {buildStatsInformation, BuildStatsTable, statsStyle} from "@shared_activities/OneOnOneHelper";
+import DropdownInput from "@components/inputs/DropdownInput";
+import TextInput from "@components/inputs/TextInput";
+import OneOnOneSingleStats from "@shared_activities/OneOnOneSingleStats";
+import Notification from "@components/internal/Notification";
+import ConfirmationModal from "@components/modals/ConfirmationModal";
+import Card from "@components/Card";
+import WinnerModal from "@components/modals/WinnerModal";
 
 const game_mode = "Tournament";
 const what = "teams";

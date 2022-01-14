@@ -5,7 +5,7 @@
 // If not: they are redirected to the login page.
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import {isLoggedOn} from "../helpers/auth";
+import {isLoggedOn} from "@helpers/auth";
 
 const PrivateRoute = ({ component: Component, data, ...rest }) => {
 

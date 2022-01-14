@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
-import Logo from "../components/layouts/Logo";
-import {apiGet, apiPut} from "../helpers/api";
-import Header from "../components/layouts/Header";
-import {LOADING_DELAY, UNAUTHORIZED_ERROR} from "../helpers/consts";
-import TextInput from "../components/inputs/TextInput";
+import Logo from "@components/layouts/Logo";
+import {apiGet, apiPut} from "@helpers/api";
+import Header from "@components/layouts/Header";
+import {LOADING_DELAY, UNAUTHORIZED_ERROR} from "@helpers/consts";
+import TextInput from "@components/inputs/TextInput";
 
 export default class UserSettings extends React.Component {
 

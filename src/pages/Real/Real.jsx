@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../../components/layouts/Header";
-import Logo from "../../components/layouts/Logo";
-import Card from "../../components/Card";
+import Header from "@components/layouts/Header";
+import Logo from "@components/layouts/Logo";
+import Card from "@components/Card";
 
 export default class Real extends React.Component {
 

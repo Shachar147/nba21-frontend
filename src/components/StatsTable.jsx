@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {TOP_STATS_NUMBER} from "../helpers/consts";
+import {TOP_STATS_NUMBER} from "@helpers/consts";
 
 export default class StatsTable extends React.Component {
 

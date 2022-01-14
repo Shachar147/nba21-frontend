@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import Logo from "./Logo";
 import PropTypes from "prop-types";
-import {getUser} from "../../helpers/auth";
+import {getUser} from "@helpers/auth";
 
 export default function Header(props) {
 

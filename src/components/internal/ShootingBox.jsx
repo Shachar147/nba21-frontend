@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {isDefined} from "../../helpers/utils";
+import {isDefined} from "@helpers/utils";
 
 export default class ShootingBox extends React.Component {
 

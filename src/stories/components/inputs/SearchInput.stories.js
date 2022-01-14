@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SearchInput from '../../../components/inputs/SearchInput';
+import SearchInput from '@components/inputs/SearchInput';
 
 export default {
     title: 'Storybook/components/inputs/SearchInput',

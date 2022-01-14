@@ -1,5 +1,5 @@
 import React from "react";
-import {setToken} from "../helpers/auth";
+import {setToken} from "@helpers/auth";
 import { Redirect } from 'react-router'
 
 export default class LogoutPage extends React.Component {

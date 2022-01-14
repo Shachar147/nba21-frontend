@@ -1,27 +1,27 @@
 import React from 'react';
-import PlayerCard from '../../components/PlayerCard';
-import SearchInput from '../../components/inputs/SearchInput';
-import {isDefined} from "../../helpers/utils";
+import PlayerCard from '@components/PlayerCard';
+import SearchInput from '@components/inputs/SearchInput';
+import {isDefined} from "@helpers/utils";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
 
-import Header from "../../components/layouts/Header";
-import {apiGet} from "../../helpers/api";
+import Header from "@components/layouts/Header";
+import {apiGet} from "@helpers/api";
 import {
     DEFAULT_REAL_STATS_MIN_GAMES,
     DEFAULT_REAL_STATS_ORDER,
     LOADER_DETAILS,
     LOADING_DELAY,
     UNAUTHORIZED_ERROR
-} from "../../helpers/consts";
+} from "@helpers/consts";
 import {
     GPSort,
     specificSort, specificSortDate,
     WPSort
-} from "../../helpers/sort";
-import DropdownInput from "../../components/inputs/DropdownInput";
-import ButtonInput from "../../components/inputs/ButtonInput";
-import TextInput from "../../components/inputs/TextInput";
+} from "@helpers/sort";
+import DropdownInput from "@components/inputs/DropdownInput";
+import ButtonInput from "@components/inputs/ButtonInput";
+import TextInput from "@components/inputs/TextInput";
 import {Link} from "react-router-dom";
 
 export default class RealStats extends React.Component {

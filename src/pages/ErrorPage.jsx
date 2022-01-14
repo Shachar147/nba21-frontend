@@ -1,9 +1,9 @@
 import React from "react";
-import Header from "../components/layouts/Header";
+import Header from "@components/layouts/Header";
 import {Redirect} from "react-router-dom";
-import {UNAUTHORIZED_ERROR} from "../helpers/consts";
+import {UNAUTHORIZED_ERROR} from "@helpers/consts";
 import PropTypes from "prop-types";
-import ButtonInput from "../components/inputs/ButtonInput";
+import ButtonInput from "@components/inputs/ButtonInput";
 
 export default class ErrorPage extends React.Component {
 

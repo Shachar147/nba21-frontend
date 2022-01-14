@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PlayerCard from "../../components/PlayerCard";
-import {ICE_COLD_THRESHOLD, ON_FIRE_THRESHOLD, TEAM1_COLOR} from "../../helpers/consts";
+import PlayerCard from "@components/PlayerCard";
+import {ICE_COLD_THRESHOLD, ON_FIRE_THRESHOLD, TEAM1_COLOR} from "@helpers/consts";
 
 const SERVER = "http://localhost:3001";
 

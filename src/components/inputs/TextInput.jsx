@@ -1,5 +1,5 @@
 import React from "react";
-import {isDefined} from "../../helpers/utils";
+import {isDefined} from "@helpers/utils";
 import PropTypes from "prop-types";
 
 export default function TextInput(props) {

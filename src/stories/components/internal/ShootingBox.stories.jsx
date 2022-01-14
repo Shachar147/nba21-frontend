@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ShootingBox from '../../../components/internal/ShootingBox';
+import ShootingBox from '@components/internal/ShootingBox';
 
 export default {
     title: 'Storybook/components/internal/ShootingBox',

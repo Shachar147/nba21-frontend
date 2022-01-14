@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {buildDetails} from "../../helpers/playercard.helper";
-import {PLAYER_STATS_SHOW_MORE_THRESHOLD} from "../../helpers/consts";
+import {buildDetails} from "@helpers/playercard.helper";
+import {PLAYER_STATS_SHOW_MORE_THRESHOLD} from "@helpers/consts";
 
 export default class PlayerDetails extends React.Component {
 

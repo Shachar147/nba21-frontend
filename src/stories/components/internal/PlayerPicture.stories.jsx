@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PlayerPicture from '../../../components/internal/PlayerPicture';
+import PlayerPicture from '@components/internal/PlayerPicture';
 
 export default {
     title: 'Storybook/components/internal/PlayerPicture',

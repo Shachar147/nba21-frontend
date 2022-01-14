@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Header from "../../components/layouts/Header";
-import ButtonInput from "../../components/inputs/ButtonInput";
-import {APP_BACKGROUND_COLOR, LOADER_DETAILS, UNAUTHORIZED_ERROR} from "../../helpers/consts";
-import {apiGet} from "../../helpers/api";
-import ErrorPage from "../../pages/ErrorPage";
-import LoadingPage from "../../pages/LoadingPage";
-import PlayerPicture from "../../components/internal/PlayerPicture";
-import {formatDate} from "../../helpers/utils";
+import Header from "@components/layouts/Header";
+import ButtonInput from "@components/inputs/ButtonInput";
+import {APP_BACKGROUND_COLOR, LOADER_DETAILS, UNAUTHORIZED_ERROR} from "@helpers/consts";
+import {apiGet} from "@helpers/api";
+import ErrorPage from "@pages/ErrorPage";
+import LoadingPage from "@pages/LoadingPage";
+import PlayerPicture from "@components/internal/PlayerPicture";
+import {formatDate} from "@helpers/utils";
 
 export default class RealGames extends React.Component {
 

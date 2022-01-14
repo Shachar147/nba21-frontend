@@ -1,8 +1,8 @@
-import Header from "../../components/layouts/Header";
-import TimerView from "../../components/TimerView";
-import PlayerCard from "../../components/PlayerCard";
-import {TEAM1_COLOR} from "../../helpers/consts";
-import ButtonInput from "../../components/inputs/ButtonInput";
+import Header from "@components/layouts/Header";
+import TimerView from "@components/TimerView";
+import PlayerCard from "@components/PlayerCard";
+import {TEAM1_COLOR} from "@helpers/consts";
+import ButtonInput from "@components/inputs/ButtonInput";
 import React from "react";
 
 export default function ShootoutGame(props) {

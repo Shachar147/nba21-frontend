@@ -1,15 +1,15 @@
 import React from 'react';
-import {deepClone, getRandomElement, shuffle} from "../../helpers/utils";
-import PlayerCard from "../../components/PlayerCard";
-import Header from "../../components/layouts/Header";
-import ButtonInput from "../../components/inputs/ButtonInput";
-import {_3PT_COMPUTER_SCORE_DELAY, UNAUTHORIZED_ERROR} from "../../helpers/consts";
-import ErrorPage from "../../pages/ErrorPage";
-import Notification from "../../components/internal/Notification";
-import {apiGet, apiPost} from "../../helpers/api";
-import OneOnOneStats from "../shared/OneOnOneStats";
-import OneOnOneSingleStats from "../shared/OneOnOneSingleStats";
-import {buildGeneralStats, BuildStatsTable, formatTimeAgo, statsStyle} from "../shared/OneOnOneHelper";
+import {deepClone, getRandomElement, shuffle} from "@helpers/utils";
+import PlayerCard from "@components/PlayerCard";
+import Header from "@components/layouts/Header";
+import ButtonInput from "@components/inputs/ButtonInput";
+import {_3PT_COMPUTER_SCORE_DELAY, UNAUTHORIZED_ERROR} from "@helpers/consts";
+import ErrorPage from "@pages/ErrorPage";
+import Notification from "@components/internal/Notification";
+import {apiGet, apiPost} from "@helpers/api";
+import OneOnOneStats from "@shared_activities/OneOnOneStats";
+import OneOnOneSingleStats from "@shared_activities/OneOnOneSingleStats";
+import {buildGeneralStats, BuildStatsTable, formatTimeAgo, statsStyle} from "@shared_activities/OneOnOneHelper";
 
 export default class Game extends React.Component {
 
