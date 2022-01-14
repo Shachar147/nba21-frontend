@@ -41,6 +41,7 @@
     "start:dev:mac": "PORT=3001 REACT_APP_MODE=development craco start",
     "build": "craco build",
     "test": "craco test --watchAll=false",
+    "test:watch": "craco test",
     "eject": "react-scripts eject",
     "storybook": "SET STORYBOOK_APP_MODE=development && start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
