@@ -81,7 +81,7 @@ export default class DropdownInput extends React.Component {
         return (
             <div style={style}>
                 {label}
-                <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px", cursor: (disabled) ? "default" : "pointer" }} defaultValue={selected[this.props.valueKey]} defaultValue={selected[this.props.valueKey]} onChange={this.onChange} disabled={disabled}>
+                <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px", cursor: (disabled) ? "default" : "pointer" }} defaultValue={selected[this.props.valueKey]} onChange={this.onChange} disabled={disabled}>
                     {
                         (options.length === 0) ?
                             <option>No Options</option>
@@ -96,7 +96,7 @@ export default class DropdownInput extends React.Component {
                                 <option
                                     key={key}
                                     value={value}
-                                    selected={selected[this.props.valueKey] === value}
+                                    // selected={selected[this.props.valueKey] === value}
                                 >
                                     {name}
                                 </option>
@@ -120,7 +120,7 @@ DropdownInput.propTypes = {
      * Example:
      * [{"id":"1","name":"Option1","value":"1"},{"id":"2","name":"Option2","value":"2"}]
      */
-    options: PropTypes.object.isRequired,
+    options: PropTypes.array.isRequired,
     /**
      * the key of the name inside the option's hash.
      *
