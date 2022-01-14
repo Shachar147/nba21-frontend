@@ -82,27 +82,27 @@ export default class DropdownInput extends React.Component {
             <div style={style}>
                 {label}
                 <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px", cursor: (disabled) ? "default" : "pointer" }} defaultValue={selected[this.props.valueKey]} onChange={this.onChange} disabled={disabled}>
-                    {/*{*/}
-                    {/*    (options.length === 0) ?*/}
-                    {/*        <option>No Options</option>*/}
-                    {/*        :*/}
-                    {/*    options.map((option) => {*/}
+                    {
+                        (options.length === 0) ?
+                            <option>No Options</option>
+                            :
+                        options.map((option) => {
 
-                    {/*        const key = option[this.props.idKey];*/}
-                    {/*        const value = option[this.props.valueKey];*/}
-                    {/*        const name = option[this.props.nameKey];*/}
+                            const key = option[this.props.idKey];
+                            const value = option[this.props.valueKey];
+                            const name = option[this.props.nameKey];
 
-                    {/*        return (*/}
-                    {/*            <option*/}
-                    {/*                key={key}*/}
-                    {/*                value={value}*/}
-                    {/*                // selected={selected[this.props.valueKey] === value}*/}
-                    {/*            >*/}
-                    {/*                {name}*/}
-                    {/*            </option>*/}
-                    {/*        )*/}
-                    {/*    })*/}
-                    {/*}*/}
+                            return (
+                                <option
+                                    key={key}
+                                    value={value}
+                                    // selected={selected[this.props.valueKey] === value}
+                                >
+                                    {name}
+                                </option>
+                            )
+                        })
+                    }
                 </select>
             </div>
         );
