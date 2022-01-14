@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 export default class DropdownInput extends React.Component {
 
-
     constructor(props) {
         super(props);
 
