@@ -28,7 +28,7 @@ export default class Real extends React.Component {
                                     name={"View Teams & Players"}
                                     picture={"/thumbnails/teamsNplayers.png"}
                                     style={{ width: "160px" }}
-                                    href={"/real"} // todo complete
+                                    href={"/real"}
                                     disabled={true}
                                     disabledAltAddition={"(not available yet)"}
                                 />

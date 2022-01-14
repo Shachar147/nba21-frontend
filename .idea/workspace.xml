@@ -5,70 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/craco.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/inputs/__tests__/ButtonInput.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOne.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/OneOnOne/OneOnOne.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Random/Random.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Random/Random.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Random/RealGames.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Random/RealGames.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Random/TodayRandomGames.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Random/TodayRandomGames.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Shootout/Shootout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Shootout/Shootout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Shootout/ShootoutGame.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Shootout/ShootoutGame.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneManager.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PlayerCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PlayerCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PrivateRoute.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PrivateRoute.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SelectedPlayers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SelectedPlayers.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/StatsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StatsTable.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/inputs/TextInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputs/TextInput.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/internal/LostImage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/LostImage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/internal/PlayerContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/PlayerContent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/internal/PlayerDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/PlayerDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/internal/PlayerPicture.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/PlayerPicture.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/internal/ShootingBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/ShootingBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layouts/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layouts/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layouts/Logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layouts/Logo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/modals/WinnerModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/modals/WinnerModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/ErrorPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ErrorPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoadingPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoadingPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Logout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Logout.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Real/Real.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Real/Real.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Real/RealInactive.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Real/RealInactive.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Real/RealInjured.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Real/RealInjured.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Real/RealStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Real/RealStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/RegisterPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/RegisterPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/SyncPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SyncPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserSettings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserSettings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/activities/OneOnOneManager.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/activities/OneOnOneManager.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/Card.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/Card.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/PlayerCard.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/PlayerCard.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/SelectedPlayers.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/SelectedPlayers.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/StatsTable.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/StatsTable.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/inputs/ButtonInput.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/inputs/ButtonInput.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/inputs/DropDownInput.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/inputs/DropDownInput.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/inputs/SearchInput.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/inputs/SearchInput.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/inputs/TextInput.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/inputs/TextInput.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/internal/LostImage.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/internal/LostImage.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/internal/PlayerContent.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/internal/PlayerContent.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/internal/PlayerDetails.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/internal/PlayerDetails.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/internal/PlayerPicture.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/internal/PlayerPicture.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/internal/ShootingBox.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/internal/ShootingBox.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/layouts/Header.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/layouts/Header.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/components/layouts/Logo.stories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/layouts/Logo.stories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/pages/ErrorPage.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/pages/ErrorPage.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/pages/LoadingPage.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/pages/LoadingPage.stories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stories/pages/MainPage.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/pages/MainPage.stories.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,6 +46,7 @@
     <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/react-scripts" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -117,14 +61,27 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\repos\node-js\nba21-frontend\src\components\inputs" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components\internal" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
       <recent name="C:\repos\node-js\nba21-frontend\src\modals" />
       <recent name="C:\repos\node-js\nba21-frontend\src" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Jest.&lt;ButtonInput /&gt;">
+    <configuration name="&lt;ButtonInput /&gt;" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/ButtonInput.test.js" />
+      <test-names>
+        <test-name value="&lt;ButtonInput /&gt;" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="start:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -137,6 +94,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;ButtonInput /&gt;" />
         <item itemvalue="npm.start:dev" />
       </list>
     </recent_temporary>

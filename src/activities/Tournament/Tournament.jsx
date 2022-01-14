@@ -62,7 +62,7 @@ const update_result_route = undefined; // todo complete (?) <- save at the middl
 const debug = 0;
 
 let view_stats = undefined; // if true it'll open stats page by default
-let player_from_url = undefined; // todo complete
+let player_from_url = undefined; // passed as property
 let mvp;
 
 export default class Tournament extends React.Component {
