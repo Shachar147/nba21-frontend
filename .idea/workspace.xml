@@ -69,7 +69,20 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.test:all">
+  <component name="RunManager" selected="Jest.&lt;ButtonInput /&gt; test suite">
+    <configuration name="&lt;ButtonInput /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/ButtonInput.test.js" />
+      <test-names>
+        <test-name value="&lt;ButtonInput /&gt; test suite" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="&lt;ThreePointsContest /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -111,20 +124,6 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;ThreePointsContest /&gt; E2E test suite.${scope} - make sure players loaded" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" />
-      <test-names>
-        <test-name value="&lt;ThreePointsContest /&gt; E2E test suite" />
-        <test-name value="${scope} - make sure players loaded" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="test:all" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -137,11 +136,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;ButtonInput /&gt; test suite" />
         <item itemvalue="npm.test:all" />
         <item itemvalue="Jest.&lt;ThreePointsContest /&gt; E2E test suite.${scope} - can change round length" />
         <item itemvalue="Jest.&lt;ThreePointsContest /&gt; E2E test suite.${scope} - can change computer level" />
         <item itemvalue="Jest.&lt;ThreePointsContest /&gt; E2E test suite" />
-        <item itemvalue="Jest.&lt;ThreePointsContest /&gt; E2E test suite.${scope} - make sure players loaded" />
       </list>
     </recent_temporary>
   </component>
@@ -198,7 +197,7 @@
       <workItem from="1634700294031" duration="2354000" />
       <workItem from="1635516122514" duration="4719000" />
       <workItem from="1640442096796" duration="5060000" />
-      <workItem from="1642686467051" duration="10312000" />
+      <workItem from="1642686467051" duration="10899000" />
     </task>
     <servers />
   </component>

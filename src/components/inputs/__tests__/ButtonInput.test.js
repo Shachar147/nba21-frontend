@@ -5,9 +5,9 @@ import ButtonInput from "../ButtonInput";
 
 const defaultProps = {
     text: 'Button Text',
-    style: undefined,
-    disabled: false,
-    onClick: undefined,
+    // style: undefined,
+    // disabled: false,
+    // onClick: undefined,
 }
 
 describe('<ButtonInput /> test suite', () => {
@@ -21,6 +21,7 @@ describe('<ButtonInput /> test suite', () => {
         const screen = render(<ButtonInput {...setProps()} />);
         expect(screen.getByText(/Button Text/i)).toBeInTheDocument();
         expect(screen.getByText(/Button Text/i)).not.toHaveAttribute('disabled');
+        expect(screen.getByText(/Button Text/i)).not.toHaveAttribute('onclick');
     });
 
     // text

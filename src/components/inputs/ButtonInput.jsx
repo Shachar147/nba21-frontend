@@ -1,15 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function ButtonInput(props) {
-    let { style, text, onClick, disabled } = props;
-
-    return (
-        <button className={"ui button basic blue"} style={style} onClick={onClick} disabled={disabled}>
-            {text}
-        </button>
-    );
-}
+const ButtonInput = ({ style, text, onClick, disabled }) => (
+    <button className={"ui button basic blue"} style={style} onClick={onClick} disabled={disabled}>
+        {text}
+    </button>
+);
 
 ButtonInput.propTypes = {
     /**
@@ -35,3 +31,5 @@ ButtonInput.defaultProps = {
     disabled: false,
     onClick: undefined,
 };
+
+export default ButtonInput;
