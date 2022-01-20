@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/__tests__/LoginPage.e2e.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/inputs/TextInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputs/TextInput.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/inputs/__tests__/DropdownInput.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputs/__tests__/DropdownInput.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginPage.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,6 +19,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1n1ycRP3aJnMUTg9DjDL6UoMzIg" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -50,72 +51,85 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\repos\node-js\nba21-frontend\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.webpack" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/activities" />
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\repos\node-js\nba21-frontend\src\components\inputs" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components\internal" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
       <recent name="C:\repos\node-js\nba21-frontend\src\modals" />
       <recent name="C:\repos\node-js\nba21-frontend\src" />
+      <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.start:dev">
-    <configuration name="&lt;ButtonInput /&gt;" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="npm.test:all">
+    <configuration name="&lt;ThreePointsContest /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/ButtonInput.test.js" />
+      <test-file value="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" />
       <test-names>
-        <test-name value="&lt;ButtonInput /&gt;" />
+        <test-name value="&lt;ThreePointsContest /&gt; E2E test suite" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="start:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start:dev" />
-      </scripts>
+    <configuration name="&lt;ThreePointsContest /&gt; E2E test suite.${scope} - can change computer level" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
       <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;ThreePointsContest /&gt; E2E test suite" />
+        <test-name value="${scope} - can change computer level" />
+      </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="test" />
-      </scripts>
+    <configuration name="&lt;ThreePointsContest /&gt; E2E test suite.${scope} - can change round length" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
       <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;ThreePointsContest /&gt; E2E test suite" />
+        <test-name value="${scope} - can change round length" />
+      </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="test:e2e:watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="test:e2e:watch" />
-      </scripts>
+    <configuration name="&lt;ThreePointsContest /&gt; E2E test suite.${scope} - make sure players loaded" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
       <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;ThreePointsContest /&gt; E2E test suite" />
+        <test-name value="${scope} - make sure players loaded" />
+      </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="teste2e" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="test:all" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
-        <script value="teste2e" />
+        <script value="test:all" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -123,11 +137,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.test:e2e:watch" />
-        <item itemvalue="npm.start:dev" />
-        <item itemvalue="npm.test" />
-        <item itemvalue="npm.teste2e" />
-        <item itemvalue="Jest.&lt;ButtonInput /&gt;" />
+        <item itemvalue="npm.test:all" />
+        <item itemvalue="Jest.&lt;ThreePointsContest /&gt; E2E test suite.${scope} - can change round length" />
+        <item itemvalue="Jest.&lt;ThreePointsContest /&gt; E2E test suite.${scope} - can change computer level" />
+        <item itemvalue="Jest.&lt;ThreePointsContest /&gt; E2E test suite" />
+        <item itemvalue="Jest.&lt;ThreePointsContest /&gt; E2E test suite.${scope} - make sure players loaded" />
       </list>
     </recent_temporary>
   </component>
@@ -184,8 +198,7 @@
       <workItem from="1634700294031" duration="2354000" />
       <workItem from="1635516122514" duration="4719000" />
       <workItem from="1640442096796" duration="5060000" />
-      <workItem from="1640967169870" duration="2219000" />
-      <workItem from="1642180344697" duration="2938000" />
+      <workItem from="1642686467051" duration="10177000" />
     </task>
     <servers />
   </component>

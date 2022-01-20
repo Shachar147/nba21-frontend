@@ -25,11 +25,13 @@ export default function Card(props) {
 
     }
 
+    const testid = props["data-testid"] || props.name;
+
     const picture = (props.href) ? (
-        <Link to={props.href} title={alt}  className={"image"} style={linkStyle} disabled={props.disabled}>
+        <Link to={props.href} title={alt} data-testid={testid} className={"image"} style={linkStyle} disabled={props.disabled}>
             <img src={props.picture} alt={alt} style={{ width: "60%" }} />
         </Link>
-    ) : (<div onClick={props.onClick} title={alt}  className={"image"} style={linkStyle} disabled={props.disabled}>
+    ) : (<div onClick={props.onClick} title={alt} data-testid={testid} className={"image"} style={linkStyle} disabled={props.disabled}>
             <img src={props.picture} alt={alt} style={{ width: "60%" }} />
         </div>);
 

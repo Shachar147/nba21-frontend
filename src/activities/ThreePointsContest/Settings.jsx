@@ -547,7 +547,7 @@ export default class Settings extends React.Component {
 
                             <div style={{ display:"inline-block", width:"50%", textAlign: "center" }}>
                                 <span style={{ lineHeight: "38px", marginRight: "10px"}} > Computer Level: </span>
-                                <select style={{ border: "1px solid #eaeaea", borderRadius: "5px", padding: "5px" }} onChange={this.setComputerLevel} value={computer_level}>
+                                <select data-testid={"computer-level"} style={{ border: "1px solid #eaeaea", borderRadius: "5px", padding: "5px" }} onChange={this.setComputerLevel} value={computer_level}>
                                     {
                                         Object.keys(this.state.computer_levels).map((x,idx) => <option key={idx} value={x}>{x}</option>)
                                     }
@@ -556,7 +556,7 @@ export default class Settings extends React.Component {
 
                             <div style={{ display:"inline-block", width:"50%", textAlign: "center" }}>
                                 <span style={{ lineHeight: "38px", marginRight: "10px"}} > Round Length: </span>
-                                <input type={"number"} value={this.state.round_length} min={MIN_ROUND_LENGTH} max={MAX_ROUND_LENGTH} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
+                                <input data-testid={"round-length"} type={"number"} value={this.state.round_length} min={MIN_ROUND_LENGTH} max={MAX_ROUND_LENGTH} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
                             </div>
                         </div>
                         <div style={{ display: "block", textAlign:"center", marginTop:"15px", width: "100%" }}>

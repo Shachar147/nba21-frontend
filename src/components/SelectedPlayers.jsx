@@ -35,11 +35,11 @@ export default class SelectedPlayers extends React.Component {
 
                 </div>
                 <div style={{margin: "20px"}}>
-                    <div className="ui ordered list">
+                    <div className="ui ordered list" data-testid={`${this.props.title.replace(/\s/g, '-')}`}>
                         {team.map((player) => (
                             <a key={player.name} className={"item"} title={"Click to remove"} onClick={() => (this.props.toggle) ? this.props.toggle(player) : undefined}>
                                 <span style={{ width: "200px", display:"inline-block", textAlign: "left" }} >
-                                    <img className={"ui avatar image"} style={{ height: "1.4em" }} src={player.picture} onError={this.onError.bind(this)}  />
+                                    <img data-testid={`Selected-${player.name.replace(/\s/g,'-')}`} className={"ui avatar image"} style={{ height: "1.4em" }} src={player.picture} onError={this.onError.bind(this)}  />
                                     {player.name}
                                 </span>
                             </a>

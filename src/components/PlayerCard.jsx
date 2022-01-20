@@ -90,7 +90,7 @@ export default class PlayerCard extends React.Component {
         }
 
         const card = (
-            <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
+            <div className={"card player" + (className ? " " + className : "")} onClick={onClick} style={style}>
                 <LostImage show={(lost) ? true : false} />
                 <PlayerPicture
                     picture={picture}

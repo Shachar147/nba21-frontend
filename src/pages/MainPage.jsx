@@ -28,6 +28,7 @@ export default class MainPage extends React.Component {
                                     picture={"/thumbnails/3pointsContest.png"}
                                     style={{ width: "160px" }}
                                     href={"/three-points"}
+                                    data-testid={"three-points"}
                                 />
                                 <Card
                                     name={"Season"}
