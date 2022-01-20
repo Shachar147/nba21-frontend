@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 export default function TextInput(props) {
 
-    let { disabled, type, name, placeholder, error, value, onChange, onKeyDown, icon, containerStyle, label, inputStyle, labelStyle, onKeyUp} = props;
+    let { disabled, type, name, placeholder, error, value, onChange, onKeyDown, icon, containerStyle, label, inputStyle, labelStyle, onKeyUp, testid = name} = props;
 
     if(!isDefined(type)) type = "text";
 
@@ -41,6 +41,7 @@ export default function TextInput(props) {
                     onChange={onChange}
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
+                    data-testid={testid}
                 />
             </div>
         </div>

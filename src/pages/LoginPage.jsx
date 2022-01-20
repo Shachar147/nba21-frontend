@@ -116,13 +116,13 @@ export default class LoginPage extends React.Component {
         }
 
         let error = (this.state.error !== '') ? (
-            <div className="field" style={{ marginBottom: "10px", color: "#F10B45" }}>
+            <div className="field" data-testid={"error"} style={{ marginBottom: "10px", color: "#F10B45" }}>
                 {this.state.error}
             </div>
         ) : "";
 
         let message = (this.state.message !== '') ? (
-            <div className="field" style={{ marginBottom: "10px", color: "#0068BB" }}>
+            <div className="field" data-testid={"message"} style={{ marginBottom: "10px", color: "#0068BB" }}>
                 {this.state.message}
             </div>
         ) : "";
@@ -179,10 +179,10 @@ export default class LoginPage extends React.Component {
                                     );
                                 })
                             }
-                            <div className="ui fluid large blue submit button" onClick={this.login} style={buttonStyle}>Login</div>
+                            <div className="ui fluid large blue submit button" data-testid={"submit"} onClick={this.login} style={buttonStyle}>Login</div>
                         </div>
                         <div style={{ fontWeight: "normal", fontSize: "16px" }}>
-                            Not a member? <Link to={"/register"}>register!</Link>
+                            Not a member? <Link data-testid={"register"} to={"/register"}>register!</Link>
                         </div>
                     </div>
                 </div>

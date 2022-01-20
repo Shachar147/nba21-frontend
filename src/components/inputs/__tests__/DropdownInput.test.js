@@ -64,7 +64,32 @@ describe('<DropdownInput /> test suite', () => {
         expect(screen.getByText('label2')).toBeInTheDocument();
     });
 
-    // idKey
+    // // idKey
+    // it('Should render options texts based on nameKey', () => {
+    //     let screen = render(<DropdownInput {...setProps({ options: [{"id":"1","name":"Option1","value":"val1"},{"id":"2","name":"Option2","value":"val2"}] })} />);
+    //     expect(screen.getByText('Option1')).toHaveProperty("key", "val1");
+    //     expect(screen.getByText('Option2')).toHaveProperty("key", "val2");
+    //
+    //     cleanup();
+    //
+    //     screen = render(<DropdownInput {...setProps({ idKey: "name", options: [{"id":"1","name":"Option1","value":"val1"},{"id":"2","name":"Option2","value":"val2"}] })} />);
+    //     expect(screen.getByText('Option1')).toHaveProperty("key", "Option1");
+    //     expect(screen.getByText('Option2')).toHaveProperty("key", "Option2");
+    //
+    //     cleanup();
+    //
+    //     screen = render(<DropdownInput {...setProps({ idKey: "id", options: [{"id":"1","name":"Option1","value":"val1"},{"id":"2","name":"Option2","value":"val2"}] })} />);
+    //     expect(screen.getByText('Option1')).toHaveProperty("key", "1");
+    //     expect(screen.getByText('Option2')).toHaveProperty("key", "2");
+    // });
+
+    // sort
+    // todo complete
+
+    // sortKey
+    // todo complete
+
+    // selectedOption
     // todo complete
 
     // placeholder
