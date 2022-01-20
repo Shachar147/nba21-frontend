@@ -46,14 +46,15 @@
     "build-storybook": "build-storybook -s public",
     "test": "craco test --testPathIgnorePatterns=.*e2e.test.js --watchAll=false",
     "test:watch": "craco test --testPathIgnorePatterns=.*e2e.test.js",
-    "teste2e": "SET REACT_APP_MODE=development && craco test --testPathPattern=.*e2e.test.js$ --watchAll=false",
-    "teste2e:mac": "REACT_APP_MODE=development craco test --testPathPattern=.*e2e.test.js$ --watchAll=false",
+    "test:e2e": "SET REACT_APP_MODE=development && craco test --testPathPattern=.*e2e.test.js$ --watchAll=false",
+    "test:e2e:mac": "REACT_APP_MODE=development craco test --testPathPattern=.*e2e.test.js$ --watchAll=false",
     "test:e2e:watch": "SET REACT_APP_MODE=development && craco test --testPathPattern=.*e2e.test.js$",
     "test:all": "craco test --watchAll=false"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test"
+      "pre-commit": "npm run test",
+      "pre-push": "npm run test:e2e:mac"
     }
   },
   "author": "",
