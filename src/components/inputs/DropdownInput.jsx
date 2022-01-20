@@ -50,7 +50,7 @@ export default class DropdownInput extends React.Component {
 
         if (this.props.placeholder){
             options = [{
-                [this.props.idKey]: null,
+                [this.props.idKey]: 0,
                 [this.props.nameKey]: placeholder,
                 [this.props.valueKey]: placeholder
             }]

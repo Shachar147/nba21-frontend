@@ -64,30 +64,45 @@ describe('<DropdownInput /> test suite', () => {
         expect(screen.getByText('label2')).toBeInTheDocument();
     });
 
-    // // idKey
-    // it('Should render options texts based on nameKey', () => {
-    //     let screen = render(<DropdownInput {...setProps({ options: [{"id":"1","name":"Option1","value":"val1"},{"id":"2","name":"Option2","value":"val2"}] })} />);
-    //     expect(screen.getByText('Option1')).toHaveProperty("key", "val1");
-    //     expect(screen.getByText('Option2')).toHaveProperty("key", "val2");
+    // // sort
+    // it('Should render options texts based on the given sortKey and sort',  () => {
     //
-    //     cleanup();
+    //     const OPTIONS = [{"id":"1","name":"ZZZ","label": "BBB", "value":"val1"},{"id":"2","name":"AAA","label": "YYY", "value":"val2"}];
     //
-    //     screen = render(<DropdownInput {...setProps({ idKey: "name", options: [{"id":"1","name":"Option1","value":"val1"},{"id":"2","name":"Option2","value":"val2"}] })} />);
-    //     expect(screen.getByText('Option1')).toHaveProperty("key", "Option1");
-    //     expect(screen.getByText('Option2')).toHaveProperty("key", "Option2");
+    //     let screen, options;
     //
-    //     cleanup();
+    //     // order by name desc
+    //     screen = render(<DropdownInput {
+    //          ...setProps({ sortKey: "name", sort: "desc", options: OPTIONS })
+    //      } />);
+    //     options = screen.getAllByRole(/option/i);
+    //     expect(options[0].value).toEqual('val1'); // ZZZ
+    //     expect(options[1].value).toEqual('val2'); // AAA
     //
-    //     screen = render(<DropdownInput {...setProps({ idKey: "id", options: [{"id":"1","name":"Option1","value":"val1"},{"id":"2","name":"Option2","value":"val2"}] })} />);
-    //     expect(screen.getByText('Option1')).toHaveProperty("key", "1");
-    //     expect(screen.getByText('Option2')).toHaveProperty("key", "2");
+    //     // order by name asc
+    //     const screen2 = render(<DropdownInput {
+    //        ...setProps({ sortKey: "name", sort: "asc", options: OPTIONS })
+    //     } />);
+    //     options = screen2.getAllByRole(/option/i);
+    //     expect(options[0].value).toEqual("val2"); // AAA
+    //     expect(options[1].value).toEqual("val1"); // ZZZ
+    //
+    //     // // order by label desc
+    //     // screen = render(<DropdownInput {
+    //     //    ...setProps({ sortKey: "label", sort: "asc", options: OPTIONS })
+    //     // } />);
+    //     // options = screen.getAllByRole(/option/i);
+    //     // expect(options[0].value).toEqual("val1"); // since the label is BBB
+    //     // expect(options[1].value).toEqual("val2"); // since the label is YYY
+    //
+    //     // // order by label desc
+    //     // screen = render(<DropdownInput {
+    //     //    ...setProps({ sortKey: "label", sort: "desc", options: OPTIONS })
+    //     // } />);
+    //     // options = screen.getAllByRole(/option/i);
+    //     // expect(options[0].value).toEqual("val2"); // since the label is YYY
+    //     // expect(options[1].value).toEqual("val1"); // since the label is BBB
     // });
-
-    // sort
-    // todo complete
-
-    // sortKey
-    // todo complete
 
     // selectedOption
     // todo complete
