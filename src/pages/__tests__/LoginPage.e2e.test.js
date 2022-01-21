@@ -59,6 +59,7 @@ describe("<LoginPage /> E2E test suite", () => {
     });
 
     test('invalid credentials', async () => {
+        await page.reload();
         await page.waitForSelector(userSelector);
         await page.click(userSelector);
         await page.$eval(userSelector, el => (el.value = ''));
