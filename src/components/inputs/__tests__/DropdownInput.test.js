@@ -186,18 +186,68 @@ describe('<DropdownInput /> test suite', () => {
     });
 
     // label
-    // todo complete
+    it('Should show label if it was passed.', () => {
+        const OPTIONS = [{"id":"1","name":"ZZZ","label": "BBB", "value":"val1"},{"id":"2","name":"AAA","label": "YYY", "value":"val2"}];
+        const labelText = "Please Select an Option:"
+        let screen = render(<DropdownInput {...setProps({ options: OPTIONS, label: labelText })} />);
+        expect(screen.getByText(labelText)).toBeInTheDocument();
+    });
 
     // width
-    // todo complete
+    it('Should set select width based on given width prop, if passed', () => {
+        const OPTIONS = [{"id":"1","name":"ZZZ","label": "BBB", "value":"val1"},{"id":"2","name":"AAA","label": "YYY", "value":"val2"}];
+        let width, screen;
+
+        // width 300
+        width = 300;
+        screen = render(<DropdownInput {...setProps({ options: OPTIONS, width, "data-testid":"my-select" })} />);
+        expect(screen.getByTestId('my-select')).toHaveStyle('width: ' + width + 'px');
+
+        cleanup();
+
+        // width 400
+        width = 400;
+        screen = render(<DropdownInput {...setProps({ options: OPTIONS, width, "data-testid":"my-select" })} />);
+        expect(screen.getByTestId('my-select')).toHaveStyle('width: ' + width + 'px');
+    });
 
     // onChange
-    // todo complete
+    it('Should fire onChange event if onChange callback was passed.', () => {
+        const onChange = jest.fn();
+        const screen = render(<DropdownInput {...setProps({ onChange, 'data-testid': 'my-select' })} />);
+        fireEvent.change(screen.getByTestId('my-select'));
+        expect(onChange).toHaveBeenCalled();
+    });
 
     // styles
-    // todo complete
+    it('Should apply styles on wrapper div, if styles prop was passed.', () => {
+        const screen = render(<DropdownInput {...setProps({
+            style: {
+                textAlign: 'center',
+                width: '420px',
+                backgroundColor: 'rgba(0,0,0,0.08)',
+                fontSize: '14px',
+                padding: '10px',
+                borderRadius: '30px',
+                border: '1px solid #ccc'
+            } , 'data-testid': 'my-select'
+        })} />);
+        expect(screen.getByTestId('my-select-wrapper')).toBeInTheDocument();
+        expect(screen.getByTestId('my-select-wrapper')).toHaveStyle('text-align: center');
+        expect(screen.getByTestId('my-select-wrapper')).toHaveStyle('width: 420px');
+        expect(screen.getByTestId('my-select-wrapper')).toHaveStyle('font-size: 14px');
+        expect(screen.getByTestId('my-select-wrapper')).toHaveStyle('padding: 10px');
+        expect(screen.getByTestId('my-select-wrapper')).toHaveStyle('border-radius: 30px');
+        expect(screen.getByTestId('my-select-wrapper')).toHaveStyle('border: 1px solid #ccc');
+    });
 
     // disabled
-    // todo complete
+    it('Should be disabled if disabled prop was passed.', () => {
+        const screen = render(<DropdownInput {...setProps({
+            'data-testid': 'my-select',
+            disabled: true
+        })} />);
+        expect(screen.getByTestId('my-select')).toHaveAttribute('disabled');
+    });
 
 });

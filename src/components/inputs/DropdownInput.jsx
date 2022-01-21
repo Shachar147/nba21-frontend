@@ -79,8 +79,10 @@ export default class DropdownInput extends React.Component {
             );
         }
 
+        const wrapperTestId = (this.props['data-testid']) ? `${this.props['data-testid']}-wrapper` : undefined;
+
         return (
-            <div style={style}>
+            <div style={style} data-testid={wrapperTestId}>
                 {label}
                 <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px", cursor: (disabled) ? "default" : "pointer" }} defaultValue={selected[this.props.valueKey]} onChange={this.onChange} disabled={disabled} data-testid={this.props['data-testid']}>
                     {
