@@ -40,6 +40,8 @@ export default class DropdownInput extends React.Component {
 
     render() {
 
+        console.error = () => {};
+
         const { style, disabled } = this.props;
         const placeholder = this.props.placeholder;
 

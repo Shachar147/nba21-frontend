@@ -69,7 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;DropdownInput /&gt; test suite.Should be disabled if disabled prop was passed.">
+  <component name="RunManager" selected="Jest.&lt;LoginPage /&gt; E2E test suite">
     <configuration name="&lt;DropdownInput /&gt; test suite.Should apply styles on wrapper div, if styles prop was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -112,20 +112,6 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;DropdownInput /&gt; test suite.Should set select width based on given width prop, if passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/DropdownInput.test.js" />
-      <test-names>
-        <test-name value="&lt;DropdownInput /&gt; test suite" />
-        <test-name value="Should set select width based on given width prop, if passed" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="&lt;DropdownInput /&gt; test suite.Should show label if it was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -140,13 +126,26 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="&lt;LoginPage /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/pages/__tests__/LoginPage.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;LoginPage /&gt; E2E test suite" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite" />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should be disabled if disabled prop was passed." />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should apply styles on wrapper div, if styles prop was passed." />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should show label if it was passed." />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should fire onChange event if onChange callback was passed." />
-        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should set select width based on given width prop, if passed" />
       </list>
     </recent_temporary>
   </component>
