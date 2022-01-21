@@ -40,6 +40,8 @@ export default class DropdownInput extends React.Component {
 
     render() {
 
+        // to disable "console.error Warning useDefault..." message.
+        // need this for the tests.
         console.error = () => {};
 
         const { style, disabled } = this.props;
