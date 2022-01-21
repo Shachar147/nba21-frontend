@@ -23,6 +23,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
     "react-test-renderer": "^17.0.2",
+    "storybook-preset-craco": "^0.0.6",
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
@@ -43,6 +44,7 @@
     "build": "craco build",
     "eject": "react-scripts eject",
     "storybook": "SET STORYBOOK_APP_MODE=development && start-storybook -p 6006 -s public",
+    "storybook:mac": "STORYBOOK_APP_MODE=development start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "test": "craco test --testPathIgnorePatterns=.*e2e.test.js --watchAll=false",
     "test:watch": "craco test --testPathIgnorePatterns=.*e2e.test.js",

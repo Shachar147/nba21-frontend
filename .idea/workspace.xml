@@ -69,7 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;SearchInput /&gt; test suite.Should fire onclick event if onClick callback was passed.">
+  <component name="RunManager" selected="npm.storybook:mac">
     <configuration name="&lt;ButtonInput /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -124,11 +124,11 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="test:all" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="storybook:mac" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
-        <script value="test:all" />
+        <script value="storybook:mac" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -136,11 +136,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.storybook:mac" />
         <item itemvalue="Jest.&lt;SearchInput /&gt; test suite.Should fire onclick event if onClick callback was passed." />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort" />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite" />
         <item itemvalue="Jest.&lt;ButtonInput /&gt; test suite" />
-        <item itemvalue="npm.test:all" />
       </list>
     </recent_temporary>
   </component>
@@ -197,7 +197,7 @@
       <workItem from="1634700294031" duration="2354000" />
       <workItem from="1635516122514" duration="4719000" />
       <workItem from="1640442096796" duration="5060000" />
-      <workItem from="1642686467051" duration="15033000" />
+      <workItem from="1642686467051" duration="16932000" />
     </task>
     <servers />
   </component>

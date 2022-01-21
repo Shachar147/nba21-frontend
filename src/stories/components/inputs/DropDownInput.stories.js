@@ -10,6 +10,8 @@ export default {
         options: { control: 'object' },
         nameKey: { control: 'text' },
         valueKey: { control: 'text' },
+        sort: { control: 'select', options: ['asc','desc'] },
+        sortKey: { control: 'text' },
         idKey: { control: 'text' },
         label: { control: 'text' },
         width: { control: 'number' },
