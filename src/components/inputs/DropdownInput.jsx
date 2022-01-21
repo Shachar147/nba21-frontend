@@ -139,7 +139,7 @@ DropdownInput.propTypes = {
      * optional style property to apply on the wrapper div
      *
      */
-    styles: PropTypes.object,
+    style: PropTypes.object,
     /**
      * should this dropdown be disabled?
      *
