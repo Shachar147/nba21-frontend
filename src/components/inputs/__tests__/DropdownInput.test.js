@@ -64,45 +64,51 @@ describe('<DropdownInput /> test suite', () => {
         expect(screen.getByText('label2')).toBeInTheDocument();
     });
 
-    // // sort
-    // it('Should render options texts based on the given sortKey and sort',  () => {
-    //
-    //     const OPTIONS = [{"id":"1","name":"ZZZ","label": "BBB", "value":"val1"},{"id":"2","name":"AAA","label": "YYY", "value":"val2"}];
-    //
-    //     let screen, options;
-    //
-    //     // order by name desc
-    //     screen = render(<DropdownInput {
-    //          ...setProps({ sortKey: "name", sort: "desc", options: OPTIONS })
-    //      } />);
-    //     options = screen.getAllByRole(/option/i);
-    //     expect(options[0].value).toEqual('val1'); // ZZZ
-    //     expect(options[1].value).toEqual('val2'); // AAA
-    //
-    //     // order by name asc
-    //     const screen2 = render(<DropdownInput {
-    //        ...setProps({ sortKey: "name", sort: "asc", options: OPTIONS })
-    //     } />);
-    //     options = screen2.getAllByRole(/option/i);
-    //     expect(options[0].value).toEqual("val2"); // AAA
-    //     expect(options[1].value).toEqual("val1"); // ZZZ
-    //
-    //     // // order by label desc
-    //     // screen = render(<DropdownInput {
-    //     //    ...setProps({ sortKey: "label", sort: "asc", options: OPTIONS })
-    //     // } />);
-    //     // options = screen.getAllByRole(/option/i);
-    //     // expect(options[0].value).toEqual("val1"); // since the label is BBB
-    //     // expect(options[1].value).toEqual("val2"); // since the label is YYY
-    //
-    //     // // order by label desc
-    //     // screen = render(<DropdownInput {
-    //     //    ...setProps({ sortKey: "label", sort: "desc", options: OPTIONS })
-    //     // } />);
-    //     // options = screen.getAllByRole(/option/i);
-    //     // expect(options[0].value).toEqual("val2"); // since the label is YYY
-    //     // expect(options[1].value).toEqual("val1"); // since the label is BBB
-    // });
+    // sort
+    it('Should render options texts based on the given sortKey and sort',  () => {
+
+        const OPTIONS = [{"id":"1","name":"ZZZ","label": "BBB", "value":"val1"},{"id":"2","name":"AAA","label": "YYY", "value":"val2"}];
+
+        let screen, options;
+
+        // order by name desc
+        screen = render(<DropdownInput {
+             ...setProps({ sortKey: "name", sort: "desc", options: OPTIONS })
+         } />);
+        options = screen.queryAllByRole(/option/i);
+        expect(options[0].textContent).toEqual("ZZZ"); // ZZZ
+        expect(options[1].textContent).toEqual("AAA"); // AAA
+
+        cleanup();
+
+        // order by name asc
+        screen = render(<DropdownInput {
+           ...setProps({ sortKey: "name", sort: "asc", options: OPTIONS })
+        } />);
+        options = Array.from(screen.queryAllByRole(/option/i));
+        expect(options[0].textContent).toEqual("AAA"); // AAA
+        expect(options[1].textContent).toEqual("ZZZ"); // ZZZ
+
+        cleanup();
+
+        // order by label desc
+        screen = render(<DropdownInput {
+           ...setProps({ sortKey: "label", sort: "asc", options: OPTIONS })
+        } />);
+        options = screen.getAllByRole(/option/i);
+        expect(options[0].textContent).toEqual("ZZZ"); // since the label is BBB
+        expect(options[1].textContent).toEqual("AAA"); // since the label is YYY
+
+        cleanup();
+
+        // order by label desc
+        screen = render(<DropdownInput {
+           ...setProps({ sortKey: "label", sort: "desc", options: OPTIONS })
+        } />);
+        options = screen.getAllByRole(/option/i);
+        expect(options[0].textContent).toEqual("AAA"); // since the label is YYY
+        expect(options[1].textContent).toEqual("ZZZ"); // since the label is BBB
+    });
 
     // selectedOption
     // todo complete

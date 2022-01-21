@@ -52,7 +52,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\repos\node-js\nba21-frontend\node_modules\prettier" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -69,20 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.storybook:mac">
-    <configuration name="&lt;ButtonInput /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/ButtonInput.test.js" />
-      <test-names>
-        <test-name value="&lt;ButtonInput /&gt; test suite" />
-      </test-names>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Jest.&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort">
     <configuration name="&lt;DropdownInput /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -107,6 +94,20 @@
       <test-names>
         <test-name value="&lt;DropdownInput /&gt; test suite" />
         <test-name value="Should render options texts based on the given sortKey and sort" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;LoginPage /&gt; E2E test suite.correct credentials" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/pages/__tests__/LoginPage.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;LoginPage /&gt; E2E test suite" />
+        <test-name value="correct credentials" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -136,11 +137,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort" />
+        <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite.correct credentials" />
         <item itemvalue="npm.storybook:mac" />
         <item itemvalue="Jest.&lt;SearchInput /&gt; test suite.Should fire onclick event if onClick callback was passed." />
-        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort" />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite" />
-        <item itemvalue="Jest.&lt;ButtonInput /&gt; test suite" />
       </list>
     </recent_temporary>
   </component>
@@ -197,7 +198,7 @@
       <workItem from="1634700294031" duration="2354000" />
       <workItem from="1635516122514" duration="4719000" />
       <workItem from="1640442096796" duration="5060000" />
-      <workItem from="1642686467051" duration="16932000" />
+      <workItem from="1642686467051" duration="18227000" />
     </task>
     <servers />
   </component>
