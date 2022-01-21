@@ -19,15 +19,15 @@ const DropdownInput = (props) => {
         idKey,
         valueKey,
         nameKey,
-        sortKey,
+        sortKey = nameKey,
     } = props;
     const dataTestId = props['data-testid'];
 
     // build options list, sorted.
-    const renderSortKey = sortKey || nameKey;
     let renderOptions = [...options];
-    const applySort = (a,b, sortKey) => { if (a[sortKey] > b[sortKey]) return 1; else return -1; }
-    renderOptions = (sort && sort === 'desc') ? renderOptions.sort((a,b) => applySort(b,a, renderSortKey)) : renderOptions.sort((a,b) => applySort(a,b, renderSortKey));
+    const applySort = (a,b) => { if (a[sortKey] > b[sortKey]) return 1; else return -1; }
+    renderOptions = renderOptions.sort(applySort);
+    if (sort && sort === 'desc') renderOptions.reverse();
 
     // if placeholder, add it to options list.
     if (placeholder){
@@ -64,9 +64,9 @@ const DropdownInput = (props) => {
                     defaultValue={selectedOpt[valueKey]}
                     onChange={(e) => {
                         const value = e.target.value;
-                        if (value !== placeholder){
+                        if (onChange && value !== placeholder){
                             let option = options.find(opt => (opt[valueKey]) === value);
-                            if (onChange) onChange(option);
+                            onChange(option);
                         }
                     }}
                     disabled={disabled}

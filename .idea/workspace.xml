@@ -69,7 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;DropdownInput /&gt; test suite">
+  <component name="RunManager" selected="Jest.&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort">
     <configuration name="&lt;DropdownInput /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -80,20 +80,6 @@
       <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/DropdownInput.test.js" />
       <test-names>
         <test-name value="&lt;DropdownInput /&gt; test suite" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="&lt;DropdownInput /&gt; test suite.Should apply styles on wrapper div, if styles prop was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/DropdownInput.test.js" />
-      <test-names>
-        <test-name value="&lt;DropdownInput /&gt; test suite" />
-        <test-name value="Should apply styles on wrapper div, if styles prop was passed." />
       </test-names>
       <method v="2" />
     </configuration>
@@ -125,6 +111,20 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/DropdownInput.test.js" />
+      <test-names>
+        <test-name value="&lt;DropdownInput /&gt; test suite" />
+        <test-name value="Should render options texts based on the given sortKey and sort" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="&lt;LoginPage /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -140,11 +140,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort" />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite" />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should fire onChange event if onChange callback was passed." />
         <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite" />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should be disabled if disabled prop was passed." />
-        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should apply styles on wrapper div, if styles prop was passed." />
       </list>
     </recent_temporary>
   </component>

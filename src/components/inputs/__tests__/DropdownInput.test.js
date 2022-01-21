@@ -108,6 +108,28 @@ describe('<DropdownInput /> test suite', () => {
         options = screen.getAllByRole(/option/i);
         expect(options[0].textContent).toEqual("AAA"); // since the label is YYY
         expect(options[1].textContent).toEqual("ZZZ"); // since the label is BBB
+
+        cleanup();
+
+        // if sortkey not passed - should order by nameKey [desc]
+        screen = render(<DropdownInput {
+                                           ...setProps({ nameKey: "name", sort: "desc", options: OPTIONS })
+                                       } />);
+        options = screen.queryAllByRole(/option/i);
+        expect(options[0].textContent).toEqual("ZZZ"); // ZZZ
+        expect(options[1].textContent).toEqual("AAA"); // AAA
+
+        cleanup();
+
+        // if sortkey not passed - should order by nameKey [asc]
+        screen = render(<DropdownInput {
+                                           ...setProps({ nameKey: "name", sort: "asc", options: OPTIONS })
+                                       } />);
+        options = Array.from(screen.queryAllByRole(/option/i));
+        expect(options[0].textContent).toEqual("AAA"); // AAA
+        expect(options[1].textContent).toEqual("ZZZ"); // ZZZ
+
+        cleanup();
     });
 
     // selectedOption
