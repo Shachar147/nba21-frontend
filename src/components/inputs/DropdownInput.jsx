@@ -34,6 +34,7 @@ export default class DropdownInput extends React.Component {
 
             // trigger onChange on parent
             if (this.props.onChange) this.props.onChange(option);
+            // else this.setState({ selectedOption: option });
         }
     }
 
@@ -48,14 +49,6 @@ export default class DropdownInput extends React.Component {
 
         let options = [];
 
-        if (this.props.placeholder){
-            options = [{
-                [this.props.idKey]: 0,
-                [this.props.nameKey]: placeholder,
-                [this.props.valueKey]: placeholder
-            }]
-        }
-
         const sortKey = this.props.sortKey || this.props.nameKey;
         const sort = this.props.sort || "asc";
 
@@ -65,6 +58,14 @@ export default class DropdownInput extends React.Component {
             options = options.sort((a,b) => {  if (a[sortKey] > b[sortKey]) return 1; else return -1; });
         } else {
             options = options.sort((a,b) => {  if (b[sortKey] > a[sortKey]) return 1; else return -1; });
+        }
+
+        if (this.props.placeholder){
+            options = [{
+                [this.props.idKey]: 0,
+                [this.props.nameKey]: placeholder,
+                [this.props.valueKey]: placeholder
+            },...options];
         }
 
         const width = this.props.width || "100%";
@@ -81,7 +82,7 @@ export default class DropdownInput extends React.Component {
         return (
             <div style={style}>
                 {label}
-                <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px", cursor: (disabled) ? "default" : "pointer" }} defaultValue={selected[this.props.valueKey]} onChange={this.onChange} disabled={disabled}>
+                <select className="ui search dropdown" style={{ width: width, marginBottom:"5px", fontSize: "14px", cursor: (disabled) ? "default" : "pointer" }} defaultValue={selected[this.props.valueKey]} onChange={this.onChange} disabled={disabled} data-testid={this.props['data-testid']}>
                     {
                         (options.length === 0) ?
                             <option>No Options</option>
@@ -96,7 +97,7 @@ export default class DropdownInput extends React.Component {
                                 <option
                                     key={key}
                                     value={value}
-                                    // selected={selected[this.props.valueKey] === value}
+                                    selected={selected[this.props.valueKey] === value}
                                 >
                                     {name}
                                 </option>

@@ -111,10 +111,79 @@ describe('<DropdownInput /> test suite', () => {
     });
 
     // selectedOption
-    // todo complete
+    it('Should select given option, if selectedOption was given',  () => {
+
+        // define variables
+        const option1 = {"id":"1","name":"Option1","value":"val1"};
+        const option2 = {"id":"2","name":"Option2","value":"val2"};
+        const option3 = {"id":"3","name":"Option3","value":"val3"};
+        let testProps = {
+            options: [option1, option2, option3],
+            'data-testid': 'my-select',
+        };
+        let screen;
+
+        // when selectedOption not passed - should select first option
+        screen = render(<DropdownInput {...setProps(testProps)} />);
+        expect((screen.getByText("Option1")).selected).toBeTruthy();
+        expect((screen.getByText("Option2")).selected).toBeFalsy();
+        expect((screen.getByText("Option3")).selected).toBeFalsy();
+        cleanup();
+
+        // when selectedOption passed - should select what was passed. (option 2)
+        testProps["selectedOption"] = option2;
+        screen = render(<DropdownInput {...setProps(testProps)} />);
+        expect((screen.getByText("Option1")).selected).toBeFalsy();
+        expect((screen.getByText("Option2")).selected).toBeTruthy();
+        expect((screen.getByText("Option3")).selected).toBeFalsy();
+        cleanup();
+
+        // when selectedOption passed - should select what was passed. (option 3)
+        testProps["selectedOption"] = option3;
+        screen = render(<DropdownInput {...setProps(testProps)} />);
+        expect((screen.getByText("Option1")).selected).toBeFalsy();
+        expect((screen.getByText("Option2")).selected).toBeFalsy();
+        expect((screen.getByText("Option3")).selected).toBeTruthy();
+        cleanup();
+
+        // when selectedOption passed - should select what was passed. (option 1)
+        testProps["selectedOption"] = option1;
+        screen = render(<DropdownInput {...setProps(testProps)} />);
+        expect((screen.getByText("Option1")).selected).toBeTruthy();
+        expect((screen.getByText("Option2")).selected).toBeFalsy();
+        expect((screen.getByText("Option3")).selected).toBeFalsy();
+        cleanup();
+
+        // when wrong option was passed - should select first option
+        testProps["selectedOption"] = { };
+        screen = render(<DropdownInput {...setProps(testProps)} />);
+        expect((screen.getByText("Option1")).selected).toBeTruthy();
+        expect((screen.getByText("Option2")).selected).toBeFalsy();
+        expect((screen.getByText("Option3")).selected).toBeFalsy();
+    });
 
     // placeholder
-    // todo complete
+    it('Should show placeholder if it was passed.', () => {
+        const OPTIONS = [{"id":"1","name":"ZZZ","label": "BBB", "value":"val1"},{"id":"2","name":"AAA","label": "YYY", "value":"val2"}];
+        let screen, options;
+
+        // no placeholder
+        screen = render(<DropdownInput {...setProps({ options: OPTIONS })} />);
+        options = screen.queryAllByRole(/option/i);
+        expect(options.length).toBe(2);
+        cleanup();
+
+        // placeholder, make sure its first.
+        screen = render(<DropdownInput {...setProps({ 'data-testid':'my-select', placeholder: 'Choose Something...', options: OPTIONS })} />);
+        options = screen.queryAllByRole(/option/i);
+        expect(options.length).toBe(3);
+        expect(options[0].textContent).toBe("Choose Something...");
+
+        // choose something, make sure placeholder still first.
+        const select = screen.getByTestId('my-select');
+        fireEvent.change(select, { target: { value: 'val2' } } );
+        expect(options[0].textContent).toBe("Choose Something...");
+    });
 
     // label
     // todo complete

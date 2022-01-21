@@ -69,7 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort">
+  <component name="RunManager" selected="Jest.&lt;DropdownInput /&gt; test suite.Should select given option, if selectedOption was given">
     <configuration name="&lt;DropdownInput /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -97,6 +97,34 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="&lt;DropdownInput /&gt; test suite.Should select given option, if selectedOption was given" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/DropdownInput.test.js" />
+      <test-names>
+        <test-name value="&lt;DropdownInput /&gt; test suite" />
+        <test-name value="Should select given option, if selectedOption was given" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;DropdownInput /&gt; test suite.Should show placeholder if it was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/DropdownInput.test.js" />
+      <test-names>
+        <test-name value="&lt;DropdownInput /&gt; test suite" />
+        <test-name value="Should show placeholder if it was passed." />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="&lt;LoginPage /&gt; E2E test suite.correct credentials" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -111,37 +139,13 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;SearchInput /&gt; test suite.Should fire onclick event if onClick callback was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/SearchInput.test.js" />
-      <test-names>
-        <test-name value="&lt;SearchInput /&gt; test suite" />
-        <test-name value="Should fire onclick event if onClick callback was passed." />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="storybook:mac" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="storybook:mac" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should select given option, if selectedOption was given" />
+        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should show placeholder if it was passed." />
+        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite" />
         <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite.Should render options texts based on the given sortKey and sort" />
         <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite.correct credentials" />
-        <item itemvalue="npm.storybook:mac" />
-        <item itemvalue="Jest.&lt;SearchInput /&gt; test suite.Should fire onclick event if onClick callback was passed." />
-        <item itemvalue="Jest.&lt;DropdownInput /&gt; test suite" />
       </list>
     </recent_temporary>
   </component>
@@ -198,7 +202,7 @@
       <workItem from="1634700294031" duration="2354000" />
       <workItem from="1635516122514" duration="4719000" />
       <workItem from="1640442096796" duration="5060000" />
-      <workItem from="1642686467051" duration="18227000" />
+      <workItem from="1642686467051" duration="24211000" />
     </task>
     <servers />
   </component>
