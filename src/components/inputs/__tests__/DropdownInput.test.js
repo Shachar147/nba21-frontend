@@ -211,12 +211,23 @@ describe('<DropdownInput /> test suite', () => {
         expect(screen.getByTestId('my-select')).toHaveStyle('width: ' + width + 'px');
     });
 
-    // onChange
+    // onChange called
     it('Should fire onChange event if onChange callback was passed.', () => {
         const onChange = jest.fn();
         const screen = render(<DropdownInput {...setProps({ onChange, 'data-testid': 'my-select' })} />);
-        fireEvent.change(screen.getByTestId('my-select'));
+        fireEvent.change(screen.getByTestId('my-select'), { target: { value: 'val2' }} );
         expect(onChange).toHaveBeenCalled();
+    });
+
+    // onChange - called, and with the right parameters.
+    it('Should fire onChange with changed option, if onChange callback was ppased.', () => {
+        const option1 = {"id":"1","name":"ZZZ","label": "BBB", "value":"val1"};
+        const option2 = {"id":"2","name":"AAA","label": "YYY", "value":"val2"};
+        const OPTIONS = [option1, option2];
+        const onChange = jest.fn();
+        const screen = render(<DropdownInput {...setProps({ options: OPTIONS, onChange, 'data-testid': 'my-select' })} />);
+        fireEvent.change(screen.getByTestId('my-select'), { target: { value: 'val2' }} );
+        expect(onChange).toHaveBeenCalledWith(option2);
     });
 
     // styles
