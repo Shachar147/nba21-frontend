@@ -5,7 +5,7 @@ import {isDefined} from "@helpers/utils";
 import LoadingPage from "../LoadingPage";
 import ErrorPage from "../ErrorPage";
 
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import {apiGet} from "@helpers/api";
 import {
     DEFAULT_REAL_STATS_MIN_GAMES,

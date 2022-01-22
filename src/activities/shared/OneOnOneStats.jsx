@@ -5,7 +5,7 @@ import {formatDate, isDefined, nth} from "@helpers/utils";
 import LoadingPage from "@pages/LoadingPage";
 import ErrorPage from "@pages/ErrorPage";
 
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import {apiGet} from "@helpers/api";
 import {
     DEFAULT_STATS_ORDER,

@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import {Redirect} from "react-router-dom";
 import {UNAUTHORIZED_ERROR} from "@helpers/consts";
 import PropTypes from "prop-types";

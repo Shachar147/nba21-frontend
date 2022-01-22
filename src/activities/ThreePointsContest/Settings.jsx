@@ -23,7 +23,7 @@ import {deepClone, isDefined} from "@helpers/utils";
 import LoadingPage from "@pages/LoadingPage";
 import ErrorPage from "@pages/ErrorPage";
 
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import {apiGet} from "@helpers/api";
 import ButtonInput from "@components/inputs/ButtonInput";
 import OneOnOneStats from "@shared_activities/OneOnOneStats";

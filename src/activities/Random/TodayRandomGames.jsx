@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import ButtonInput from "@components/inputs/ButtonInput";
 import {APP_BACKGROUND_COLOR, LOADER_DETAILS, UNAUTHORIZED_ERROR} from "@helpers/consts";
 import {apiDelete, apiGet} from "@helpers/api";

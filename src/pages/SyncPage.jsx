@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Logo from "@components/layouts/Logo";
+import Logo from "@components/layout/Logo";
 import {apiPut} from "@helpers/api";
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 
 export default class SyncPage extends React.Component {
 

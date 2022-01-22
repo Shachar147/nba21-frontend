@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import {setToken} from "@helpers/auth";
 import { Redirect } from 'react-router'
-import Logo from "@components/layouts/Logo";
+import Logo from "@components/layout/Logo";
 import {Link} from "react-router-dom";
 import {LOGIN_DELAY, UNAUTHORIZED_ERROR} from "@helpers/consts";
 import TextInput from "@components/inputs/TextInput";

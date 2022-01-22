@@ -1,4 +1,4 @@
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import TimerView from "@components/TimerView";
 import PlayerCard from "@components/PlayerCard";
 import {TEAM1_COLOR} from "@helpers/consts";
