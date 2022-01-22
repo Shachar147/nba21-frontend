@@ -86,6 +86,16 @@ describe("<LoginPage /> E2E test suite", () => {
         expect(home).toContain('Hello! Choose the activity you want to use:');
     });
 
+    test('correct credentials - hit Enter', async () => {
+
+        browser.close();
+        [browser,page] = await openPage(browser, page);
+
+        page = await performLogin(page,true);
+        const home = await page.$eval('.header.content', el => el.textContent);
+        expect(home).toContain('Hello! Choose the activity you want to use:');
+    });
+
     test('register button works', async () => {
 
         browser.close();

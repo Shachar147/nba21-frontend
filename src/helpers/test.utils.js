@@ -24,7 +24,7 @@ export async function openPage(){
 export const userSelector = '[data-testid="username"]';
 export const passwordSelector = '[data-testid="password"]';
 export const buttonSelector = '[data-testid="submit"]';
-export async function performLogin(page){
+export async function performLogin(page, hitEnter = false){
     await page.waitForSelector(userSelector);
     await page.$eval(userSelector, el => (el.value = '')); // clear the input field
     await page.click(userSelector);
@@ -35,8 +35,14 @@ export async function performLogin(page){
     await page.click(passwordSelector);
     await page.keyboard.type(CREDENTIALS.PASS);
 
-    await page.waitForSelector(buttonSelector);
-    await page.click(buttonSelector);
+    if (hitEnter){
+        await page.click(passwordSelector);
+        await page.keyboard.press('Enter');
+    }
+    else {
+        await page.waitForSelector(buttonSelector);
+        await page.click(buttonSelector);
+    }
 
     // delay
     await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));

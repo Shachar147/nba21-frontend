@@ -83,6 +83,20 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="&lt;LoginPage /&gt; E2E test suite.correct credentials - hit Enter" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/pages/__tests__/LoginPage.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;LoginPage /&gt; E2E test suite" />
+        <test-name value="correct credentials - hit Enter" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="&lt;TextInput /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -124,27 +138,13 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;TextInput /&gt; test suite.todo complete" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/TextInput.test.js" />
-      <test-names>
-        <test-name value="&lt;TextInput /&gt; test suite" />
-        <test-name value="todo complete" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite" />
+        <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite.correct credentials - hit Enter" />
         <item itemvalue="Jest.&lt;TextInput /&gt; test suite" />
         <item itemvalue="Jest.&lt;TextInput /&gt; test suite.label should have the style given as labelStyle, if property was passed" />
         <item itemvalue="Jest.&lt;TextInput /&gt; test suite.container should have the style given as containerStyle, if property was passed" />
-        <item itemvalue="Jest.&lt;TextInput /&gt; test suite.todo complete" />
       </list>
     </recent_temporary>
   </component>
