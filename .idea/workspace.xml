@@ -69,35 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;TextInput /&gt; test suite.todo complete">
-    <configuration name="&lt;TextInput /&gt; test suite.Should fire onChange event if onChange callback was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/TextInput.test.js" />
-      <test-names>
-        <test-name value="&lt;TextInput /&gt; test suite" />
-        <test-name value="Should fire onChange event if onChange callback was passed." />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="&lt;TextInput /&gt; test suite.Should render iconblock if icon prop was passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/TextInput.test.js" />
-      <test-names>
-        <test-name value="&lt;TextInput /&gt; test suite" />
-        <test-name value="Should render iconblock if icon prop was passed" />
-      </test-names>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Jest.&lt;TextInput /&gt; test suite.label should have the style given as labelStyle, if property was passed">
     <configuration name="&lt;TextInput /&gt; test suite.Should render label if label property was passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -112,6 +84,20 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="&lt;TextInput /&gt; test suite.container should have the style given as containerStyle, if property was passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/TextInput.test.js" />
+      <test-names>
+        <test-name value="&lt;TextInput /&gt; test suite" />
+        <test-name value="container should have the style given as containerStyle, if property was passed" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="&lt;TextInput /&gt; test suite.input should have the style given on inputStyle, if property was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -123,6 +109,20 @@
       <test-names>
         <test-name value="&lt;TextInput /&gt; test suite" />
         <test-name value="input should have the style given on inputStyle, if property was passed." />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;TextInput /&gt; test suite.label should have the style given as labelStyle, if property was passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/components/inputs/__tests__/TextInput.test.js" />
+      <test-names>
+        <test-name value="&lt;TextInput /&gt; test suite" />
+        <test-name value="label should have the style given as labelStyle, if property was passed" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -142,11 +142,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;TextInput /&gt; test suite.label should have the style given as labelStyle, if property was passed" />
+        <item itemvalue="Jest.&lt;TextInput /&gt; test suite.container should have the style given as containerStyle, if property was passed" />
         <item itemvalue="Jest.&lt;TextInput /&gt; test suite.todo complete" />
         <item itemvalue="Jest.&lt;TextInput /&gt; test suite.input should have the style given on inputStyle, if property was passed." />
         <item itemvalue="Jest.&lt;TextInput /&gt; test suite.Should render label if label property was passed" />
-        <item itemvalue="Jest.&lt;TextInput /&gt; test suite.Should render iconblock if icon prop was passed" />
-        <item itemvalue="Jest.&lt;TextInput /&gt; test suite.Should fire onChange event if onChange callback was passed." />
       </list>
     </recent_temporary>
   </component>
