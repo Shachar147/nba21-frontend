@@ -1,35 +1,50 @@
 import React from "react";
-import { isDefined } from "../../helpers/utils";
 import PropTypes from "prop-types";
 
-export default function TextInput(props) {
+const TextInput = (props) => {
 
-    let { disabled, type, name, placeholder, error, value, onChange, onKeyDown, icon, containerStyle, label, inputStyle, labelStyle, onKeyUp} = props;
+    const {
+        containerStyle,
+        disabled,
+        error,
+        icon,
+        inputStyle,
+        label,
+        name,
+        onChange,
+        onKeyDown,
+        onKeyUp,
+        placeholder,
+        type,
+        value,
+    } = props;
 
-    if(!isDefined(type)) type = "text";
+    let {
+        labelStyle
+    } = props;
 
-    const icon_block = (icon) ? (<i data-testid={(props['data-testid']) ? `${props['data-testid']}-icon` : undefined} className={`${icon} icon`} />) : null;
-    let style = (error) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
-    if (inputStyle) { style = {...style, ...inputStyle }; }
-    let className = "ui left";
-    if (icon) className += " icon";
-    className += " input"; // must be last, otherwise icon will be right
+    // data-test-ids
+    const inputTestId = props['data-testid'];
+    const containerTestId = (inputTestId) ? `${inputTestId}-container` : undefined;
+    const iconTestId = (inputTestId) ? `${inputTestId}-icon` : undefined;
+    const labelTestId = (inputTestId) ? `${inputTestId}-label` : undefined;
 
-    labelStyle = labelStyle || {};
-    labelStyle = {...{ marginRight: "5px", lineHeight: "38px" }, ...labelStyle};
+    // styles
+    const style = { width: "100%", border: (error) ? "1px solid #F10B45" : undefined, ...inputStyle};
+    const defaultLabelStyle = { marginRight: "5px", lineHeight: "38px" };
+    const subContainerStyle = { width: "100%", marginBottom: "10px" };
+    labelStyle = {...labelStyle, ...defaultLabelStyle };
 
-    if(label){
-        label = (
-            <label style={labelStyle} data-testid={(props['data-testid']) ? `${props['data-testid']}-label` : undefined}>
-                {label}
-            </label>
-        );
-    }
+    // build blocks
+    const icon_block = (!icon) ? undefined : (<i data-testid={iconTestId} className={`${icon} icon`} />);
+    const label_block = (!label) ? undefined : (<label style={labelStyle} data-testid={labelTestId}>{label}</label>);
+
+    const className = `ui left input ${ (icon) ? `icon` : '' }`;
 
     return (
-        <div className="field" style={containerStyle}data-testid={(props['data-testid']) ? `${props['data-testid']}-container` : undefined}>
-            <div className={className} style={{ width: "100%", marginBottom: "10px" }}>
-                {label}
+        <div className="field" style={containerStyle} data-testid={containerTestId}>
+            <div className={className} style={subContainerStyle}>
+                {label_block}
                 {icon_block}
                 <input
                     disabled={disabled}
@@ -41,12 +56,14 @@ export default function TextInput(props) {
                     onChange={onChange}
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
-                    data-testid={props['data-testid']}
+                    data-testid={inputTestId}
                 />
             </div>
         </div>
     );
 }
+
+export default TextInput;
 
 TextInput.propTypes = {
     /**
@@ -83,6 +100,18 @@ TextInput.propTypes = {
      * optional onKeyDown callback for the input.
      */
     onKeyDown: PropTypes.func,
+    /**
+     * optional inputStyle object for styling the input.
+     */
+    inputStyle: PropTypes.object,
+    /**
+     * optional containerStyle object for styling the container.
+     */
+    containerStyle: PropTypes.object,
+    /**
+     * optional labelStyle object for styling the label.
+     */
+    labelStyle: PropTypes.object,
 };
 
 TextInput.defaultProps = {
@@ -93,5 +122,8 @@ TextInput.defaultProps = {
     error: false,
     value: '',
     onChange: null,
-    onKeyDown: null
+    onKeyDown: null,
+    inputStyle: {},
+    labelStyle: {},
+    containerStyle: {},
 };
