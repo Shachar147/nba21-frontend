@@ -6,7 +6,7 @@ import axios from "axios";
 import PrivateRoute from "@components/PrivateRoute";
 import {getToken} from "@helpers/auth";
 import Settings from '@activities/ThreePointsContest/Settings';
-import LoginPage from "@pages/LoginPage";
+import LoginPage from "@pages/Login/LoginPage";
 import MainPage from "@pages/MainPage";
 import LogoutPage from "@pages/Logout";
 import RegisterPage from "@pages/RegisterPage";

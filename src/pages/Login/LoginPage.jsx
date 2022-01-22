@@ -7,16 +7,10 @@ import {Link} from "react-router-dom";
 import {LOGIN_DELAY, UNAUTHORIZED_ERROR} from "@helpers/consts";
 import TextInput from "@components/inputs/TextInput";
 import {apiPost} from "@helpers/api";
+import {defaultErrorField, errorTestId, messageTestId} from "./Model";
+import style from './style';
 
 const LoginPage = () => {
-
-    // define defaults
-    const defaultErrorField = {
-        username: false,
-        password: false
-    };
-    const errorTestId = "error";
-    const messageTestId = "message";
 
     // define states
     const [username, setUsername] = useState("");
@@ -91,14 +85,7 @@ const LoginPage = () => {
         }
     }
 
-    // styles & more settings
-    const bottom = (message !== '' || error !== '') ? "-24px" : "0px";
-    const containerStyle = { width: "100%", height: "100vh", backgroundColor: "#FAFAFB" };
-    const subContainerStyle = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
-    const formContainerStyle = { width:"100%", bottom: bottom, textAlign: "center", fontSize: "20px", fontWeight: "bold" };
-    const errorStyle = { marginBottom: "10px", color: "#F10B45" };
-    const messageStyle = { marginBottom: "10px", color: "#0068BB" };
-    const buttonStyle = (validating) ? { opacity: 0.6 , cursor: "default" } : {};
+    // more settings
     const inputs = [
         {
             name: 'username',
@@ -120,15 +107,15 @@ const LoginPage = () => {
 
     // building blocks
     const error_block = (error === '') ? "" :
-        (<div className={"field"} data-testid={errorTestId} style={errorStyle}>{error}</div>);
+        (<style.Error className={"field"} data-testid={errorTestId}>{error}</style.Error>);
     const message_block = (message === '' || error !== '') ? "" :
-        (<div className={"field"} data-testid={messageTestId} style={messageStyle}>{message}</div>);
+        (<style.Message className={"field"} data-testid={messageTestId}>{message}</style.Message>);
 
     return (redirect) ? (<Redirect to="/" />) : (
-        <div className={"ui header cards centered"} style={containerStyle} >
-            <div style={subContainerStyle}>
+        <style.Container className={"ui header cards centered"} >
+            <style.SubContainer>
                 <Logo />
-                <div className={"sub cards header content"} style={formContainerStyle}>
+                <div className={"sub cards header content"}>
                     <div className={"ui segment"}>
                         {message_block}
                         {error_block}
@@ -155,14 +142,21 @@ const LoginPage = () => {
                                 );
                             })
                         }
-                        <div className="ui fluid large blue submit button" data-testid={"submit"} onClick={login} style={buttonStyle}>Login</div>
+                        <style.Button
+                            validating={validating}
+                            className="ui fluid large blue submit button"
+                            data-testid={"submit"}
+                            onClick={login}
+                        >
+                            Login
+                        </style.Button>
                     </div>
-                    <div style={{ fontWeight: "normal", fontSize: "16px" }}>
+                    <style.RegisterLink>
                         Not a member? <Link data-testid={"register"} to={"/register"}>register!</Link>
-                    </div>
+                    </style.RegisterLink>
                 </div>
-            </div>
-        </div>
+            </style.SubContainer>
+        </style.Container>
     )
 };
 export default LoginPage;

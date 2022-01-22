@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { openPage, performLogin, buttonSelector, passwordSelector, userSelector } from "../../../src/helpers/test.utils";
+import { openPage, performLogin, buttonSelector, passwordSelector, userSelector } from "../../../helpers/test.utils";
 
 let browser, page;
 
@@ -72,6 +72,9 @@ describe("<LoginPage /> E2E test suite", () => {
 
         await page.waitForSelector(buttonSelector);
         await page.click(buttonSelector);
+
+        // delay
+        await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));
 
         const error = await page.$eval(errorSelector, el => el.textContent);
         expect(error).toBe(MESSAGES.INCORRECT);
