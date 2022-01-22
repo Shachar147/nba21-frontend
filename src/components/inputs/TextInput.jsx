@@ -1,14 +1,14 @@
 import React from "react";
-import {isDefined} from "@helpers/utils";
+import { isDefined } from "../../helpers/utils";
 import PropTypes from "prop-types";
 
 export default function TextInput(props) {
 
-    let { disabled, type, name, placeholder, error, value, onChange, onKeyDown, icon, containerStyle, label, inputStyle, labelStyle, onKeyUp, testid = name} = props;
+    let { disabled, type, name, placeholder, error, value, onChange, onKeyDown, icon, containerStyle, label, inputStyle, labelStyle, onKeyUp} = props;
 
     if(!isDefined(type)) type = "text";
 
-    const icon_block = (icon) ? (<i className={`${icon} icon`} />) : null;
+    const icon_block = (icon) ? (<i data-testid={(props['data-testid']) ? `${props['data-testid']}-icon` : undefined} className={`${icon} icon`} />) : null;
     let style = (error) ? { width: "100%", "border":"1px solid #F10B45"} : { width: "100%" };
     if (inputStyle) { style = {...style, ...inputStyle }; }
     let className = "ui left";
@@ -20,14 +20,14 @@ export default function TextInput(props) {
 
     if(label){
         label = (
-            <label style={labelStyle}>
+            <label style={labelStyle} data-testid={(props['data-testid']) ? `${props['data-testid']}-label` : undefined}>
                 {label}
             </label>
         );
     }
 
     return (
-        <div className="field" style={containerStyle}>
+        <div className="field" style={containerStyle}data-testid={(props['data-testid']) ? `${props['data-testid']}-container` : undefined}>
             <div className={className} style={{ width: "100%", marginBottom: "10px" }}>
                 {label}
                 {icon_block}
@@ -41,7 +41,7 @@ export default function TextInput(props) {
                     onChange={onChange}
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
-                    data-testid={testid}
+                    data-testid={props['data-testid']}
                 />
             </div>
         </div>
@@ -91,7 +91,7 @@ TextInput.defaultProps = {
     name: null,
     placeholder: null,
     error: false,
-    value: null,
+    value: '',
     onChange: null,
     onKeyDown: null
 };

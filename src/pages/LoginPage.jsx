@@ -170,6 +170,7 @@ export default class LoginPage extends React.Component {
                                             error={this.state.errorField[name]}
                                             value={this.state[name]}
                                             onChange={(e) => {
+                                                console.log(e.target);
                                                 let errorField = this.state.errorField;
                                                 errorField[name] = false;
                                                 this.setState({ [name]: e.target.value, errorField: errorField });
