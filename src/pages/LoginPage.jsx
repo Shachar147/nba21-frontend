@@ -176,6 +176,7 @@ export default class LoginPage extends React.Component {
                                                 this.setState({ [name]: e.target.value, errorField: errorField });
                                             }}
                                             onKeyDown={this.onKeyDown}
+                                            data-testid={name}
                                         />
                                     );
                                 })
