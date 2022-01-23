@@ -18,7 +18,7 @@ import Shootout from "@activities/Shootout/Shootout";
 import Real from "@pages/Real/Real";
 import RealInjured from "@pages/Real/RealInjured";
 import RealInactive from "@pages/Real/RealInactive";
-import UserSettings from "@pages/UserSettings";
+import UserSettings from "@pages/UserSettings/UserSettings";
 import Tournament from "@activities/Tournament/Tournament";
 import SpaceJam from "@activities/SpaceJam/SpaceJam";
 

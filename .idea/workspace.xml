@@ -62,89 +62,90 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/UserSettings" />
       <recent name="$PROJECT_DIR$/src/pages/Register" />
       <recent name="$PROJECT_DIR$/src/pages/Login" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components\internal" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\modals" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;RegisterPage /&gt; E2E test suite">
-    <configuration name="&lt;LoginPage /&gt; E2E test suite (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.&lt;UserSettings /&gt; E2E test suite">
+    <configuration name="&lt;UserSettings /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/pages/Login/__tests__/LoginPage.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
       <test-names>
-        <test-name value="&lt;LoginPage /&gt; E2E test suite" />
+        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;RegisterPage /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/pages/Register/__tests__/RegisterPage.e2e.test.js" />
-      <test-names>
-        <test-name value="&lt;RegisterPage /&gt; E2E test suite" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="&lt;RegisterPage /&gt; E2E test suite.Username already exist" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;UserSettings /&gt; E2E test suite.game length option is numeric (can't use alphabeth)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/Register/__tests__/RegisterPage.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
       <test-names>
-        <test-name value="&lt;RegisterPage /&gt; E2E test suite" />
-        <test-name value="Username already exist" />
+        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
+        <test-name value="game length option is numeric (can't use alphabeth)" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;RegisterPage /&gt; E2E test suite.page loads correctly" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/Register/__tests__/RegisterPage.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
       <test-names>
-        <test-name value="&lt;RegisterPage /&gt; E2E test suite" />
-        <test-name value="page loads correctly" />
+        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
+        <test-name value="make sure save works - auto calc ot" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;RegisterPage /&gt; E2E test suite.password complexity - password can't be weak" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure save works - default game length" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/Register/__tests__/RegisterPage.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
       <test-names>
-        <test-name value="&lt;RegisterPage /&gt; E2E test suite" />
-        <test-name value="password complexity - password can't be weak" />
+        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
+        <test-name value="make sure save works - default game length" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure save works" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
+        <test-name value="make sure save works" />
       </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.&lt;RegisterPage /&gt; E2E test suite" />
-        <item itemvalue="Jest.&lt;RegisterPage /&gt; E2E test suite.Username already exist" />
-        <item itemvalue="Jest.&lt;RegisterPage /&gt; E2E test suite.password complexity - password can't be weak" />
-        <item itemvalue="Jest.&lt;RegisterPage /&gt; E2E test suite.page loads correctly" />
-        <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite (1)" />
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite" />
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - default game length" />
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" />
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works" />
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.game length option is numeric (can't use alphabeth)" />
       </list>
     </recent_temporary>
   </component>
