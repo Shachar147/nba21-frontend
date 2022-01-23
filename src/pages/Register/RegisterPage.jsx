@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import {getServerAddress} from "@config/config";
 import { Redirect } from 'react-router'
@@ -8,83 +8,57 @@ import {LOGIN_DELAY} from "@helpers/consts";
 import TextInput from "@components/inputs/TextInput";
 import {apiPost} from "@helpers/api";
 import {setToken} from "@helpers/auth";
+import {defaultErrorField, errorTestId, messageTestId} from "./Model";
+import style from "./style";
 
-export default class RegisterPage extends React.Component {
+const RegisterPage = () => {
 
-    constructor(props) {
-        super(props);
+    // define states
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordAgain, setPasswordAgain] = useState("");
+    const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
+    const [errorField, setErrorField] = useState(defaultErrorField);
+    const [validating, setValidating] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
-        this.state = {
-            username: "",
-            password: "",
-            error: "",
-            message: "",
-            token: undefined,
-            errorField: {
-                username: false,
-                password: false,
-                passwordAgain: false,
-            },
-            validating: false,
-        };
+    const register = () => {
 
-        this.register = this.register.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
-    }
+        // if we're already trying to perform login, do not try again.
+        if (validating) return;
 
-    onKeyDown(e){
-        if(e.keyCode === 13) this.register();
-    }
-
-    register(){
-
-        let message = "";
-        let error = "";
-        let self = this;
-        let token = undefined;
-
-        let errorField = {
-            username: undefined,
-            password: undefined,
+        // validate inputs
+        if (username.length === 0){
+            setError("Username can't be empty");
+            setErrorField({...errorField, username: true });
         }
-
-        if (this.state.username.length === 0) {
-            error = "Username can't be empty";
-            errorField.username = true;
-            self.setState({error, errorField});
+        else if (password.length === 0){
+            setError("Password can't be empty");
+            setErrorField({...errorField, password: true });
         }
-        else if (this.state.password.length === 0) {
-            error = "Password can't be empty";
-            errorField.password = true;
-            self.setState({error, errorField});
-        }
-        else if (this.state.password !== this.state.passwordAgain) {
-            error = "Passwords do not match";
-            errorField.password = true;
-            errorField.passwordAgain = true;
-            self.setState({error, errorField});
+        else if (password !== passwordAgain) {
+            setError("Passwords do not match");
+            setErrorField({...errorField, password: true, passwordAgain: true });
         }
         else {
-
-            this.setState({validating: true});
-
+            setErrorField(defaultErrorField);
+            setValidating(true);
 
             apiPost(this,
                 '/auth/signup',
                 {
-                    username: this.state.username,
-                    password: this.state.password,
+                    username: username,
+                    password: password,
                 },
                 async function (res) {
 
                     // console.log(res);
                     if (res && res.error) {
-                        error = res.error
+                        setError(res.error);
                     } else {
-                        message = "Registered successfully!";
-                        setTimeout(function (self) {
-                            self.setState({redirect: true})
-                        }, LOGIN_DELAY, self);
+                        setMessage("Registered successfully!");
+                        setTimeout(function (self) { setRedirect(true);}, LOGIN_DELAY, self);
                     }
 
                 },
@@ -92,104 +66,112 @@ export default class RegisterPage extends React.Component {
 
                     if (err.response && err.response.data && err.response.data.message) {
                         const message = err.response.data.message;
-                        error = (typeof (message) === "object") ? message.join("<br>") : message;
+                        setError((typeof (message) === "object") ? message.join("<br>") : message);
 
                         console.log(err, message);
 
                         if (err.response.data.statusCode && [404].indexOf(err.response.data.statusCode) !== -1) {
-                            error = "Network Error";
+                            setError("Network Error");
                         }
                     } else {
-                        error = "Network Error";
+                        setError("Network Error");
                     }
 
                 },
                 function () {
-                    // finally
-                    self.setState({error, message, token, errorField, validating: false});
+                    setValidating(false);
                 }
             );
         }
     }
 
-    render() {
-
-        if (this.state.redirect){
-            return <Redirect to="/login" />;
+    const onKeyDown = keyCode => {
+        if (keyCode === 13){
+            register();
         }
-
-        let error = (this.state.error !== '') ? (
-            <div data-testid={"error"} className="field" style={{ marginBottom: "10px", color: "#F10B45" }} dangerouslySetInnerHTML={{ __html: this.state.error }} />
-        ) : "";
-        let message = (this.state.message !== '') ? (
-            <div data-testid={"message"} className="field" style={{ marginBottom: "10px", color: "#0068BB" }}>
-                {this.state.message}
-            </div>
-        ) : "";
-        if (error) { message = ""; }
-        let bottom = (message !== '' || error !== '') ? "-24px" : "0px";
-        let buttonStyle = (this.state.validating) ? { opacity: 0.6 , cursor: "default" } : {};
-
-        const inputs = [
-            {
-                name: 'username',
-                type: 'text',
-                placeholder: 'Username',
-                icon: 'user',
-            },
-            {
-                name: 'password',
-                type: 'password',
-                placeholder: 'Password',
-                icon: 'lock',
-            },
-            {
-                name: 'passwordAgain',
-                type: 'password',
-                placeholder: 'Repeat Password',
-                icon: 'lock',
-            }
-        ];
-
-        return (
-            <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >
-                <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                    <Logo />
-                    <div className="sub cards header content" style={{ width:"100%", bottom: bottom, textAlign: "center", fontSize: "20px", fontWeight: "bold" }}>
-                        <div className="ui segment">
-                            {message}
-                            {error}
-                            {
-                                inputs.map((input) => {
-                                    const { name, type, placeholder, icon } = input;
-                                    return (
-                                        <TextInput
-                                            name={name}
-                                            type={type}
-                                            icon={icon}
-                                            disabled={this.state.validating}
-                                            placeholder={placeholder}
-                                            error={this.state.errorField[name]}
-                                            value={this.state[name]}
-                                            onChange={(e) => {
-                                                let errorField = this.state.errorField;
-                                                errorField[name] = false;
-                                                this.setState({ [name]: e.target.value, errorField: errorField });
-                                            }}
-                                            onKeyDown={this.onKeyDown}
-                                            data-testid={name}
-                                        />
-                                    );
-                                })
-                            }
-                            <div data-testid={"submit"} className="ui fluid large blue submit button" onClick={this.register} style={buttonStyle}>Register</div>
-                        </div>
-                        <div style={{ fontWeight: "normal", fontSize: "16px" }}>
-                            Already a member? <Link data-testid={"login"} to={"/login"}>login!</Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
     }
-}
+
+    // more settings
+    const inputs = [
+        {
+            name: 'username',
+            type: 'text',
+            placeholder: 'Username',
+            icon: 'user',
+            value: username,
+            setValue: setUsername
+        },
+        {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Password',
+            icon: 'lock',
+            value: password,
+            setValue: setPassword,
+        },
+        {
+            name: 'passwordAgain',
+            type: 'password',
+            placeholder: 'Repeat Password',
+            icon: 'lock',
+            value: passwordAgain,
+            setValue: setPasswordAgain,
+        }
+    ];
+
+    // building blocks
+    const error_block = (error === '') ? "" :
+        (<style.Error className={"field"} data-testid={errorTestId}>{error}</style.Error>);
+    const message_block = (message === '' || error !== '') ? "" :
+        (<style.Message className={"field"} data-testid={messageTestId}>{message}</style.Message>);
+
+    return (redirect) ? (<Redirect to="/login" />) : (
+        <style.Container className={"ui header cards centered"} >
+            <style.SubContainer>
+                <Logo />
+                <div className={"sub cards header content"}>
+                    <div className={"ui segment"}>
+                        {message_block}
+                        {error_block}
+                        {
+                            inputs.map((input,idx) => {
+                                const { name, type, placeholder, icon, value, setValue } = input;
+                                return (
+                                    <TextInput
+                                        key={idx}
+                                        name={name}
+                                        type={type}
+                                        icon={icon}
+                                        disabled={validating}
+                                        placeholder={placeholder}
+                                        error={errorField[name]}
+                                        value={value}
+                                        onChange={(e) => {
+                                            setValue(e.target.value);
+                                            setErrorField({...errorField, [name]: false});
+                                        }}
+                                        onKeyDown={e => onKeyDown(e.keyCode)}
+                                        data-testid={name}
+                                    />
+                                );
+                            })
+                        }
+                        <style.Button
+                            validating={validating}
+                            className="ui fluid large blue submit button"
+                            data-testid={"submit"}
+                            onClick={register}
+                        >
+                            Register
+                        </style.Button>
+                    </div>
+                    <style.RegisterLink>
+                        Already a member? <Link data-testid={"login"} to={"/login"}>login!</Link>
+                    </style.RegisterLink>
+                </div>
+            </style.SubContainer>
+        </style.Container>
+    )
+};
+
+export default RegisterPage;
