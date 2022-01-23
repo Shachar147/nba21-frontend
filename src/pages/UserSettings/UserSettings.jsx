@@ -1,18 +1,13 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import Logo from "@components/layout/Logo";
 import {apiGet, apiPut} from "@helpers/api";
 import Header from "@components/layout/Header";
 import {LOADING_DELAY, UNAUTHORIZED_ERROR} from "@helpers/consts";
 import TextInput from "@components/inputs/TextInput";
+import {defaultSettings, gameLengthStyle} from "./Model";
+import style from './style';
 
 const UserSettings = () => {
-
-    const defaultSettings = {
-        show_inactive_players: 0,
-        auto_calc_ot: 0,
-        auto_calc_ot_game_length: 0,
-    };
 
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(undefined);
@@ -88,15 +83,14 @@ const UserSettings = () => {
     return (
         <div>
             <Header nologo={true} />
-            <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >
-                <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+            <style.Container className={"ui header cards centered"}>
+                <style.SubContainer>
                     <Logo />
-                    <div className="sub cards header content" style={{ width:"100%", bottom: 0, textAlign: "center", fontSize: "20px", fontWeight: "bold" }}>
-                        <div className="sub cards header content centered" style={{ width:"100%", bottom: "0px", margin: "auto" }}>
+                    <style.FormWrapper className="sub cards header content">
+                        <style.FormContainer className="sub cards header content centered">
                             Hello! in this page you can configure your personal settings.
                             <br/><br/>
-
-                            <form className="ui form" style={{ padding: "20px 0px", textAlign: "left" }}>
+                            <style.Form className="ui form">
                                 <h4 className="ui dividing header" data-testid={"general-settings"}>General Settings</h4>
 
                                 {/*Total Overtimes*/}
@@ -123,8 +117,8 @@ const UserSettings = () => {
                                     </div>
                                 </div>
 
-                                {/*Total Overtimes Game Length*/}
-                                <div className="field" style={{ display: (Number(settings.auto_calc_ot)) ? "block" : "none" }}>
+                                {/*Game Length (for Total Overtimes)*/}
+                                <style.GameLength className="field" display={(Number(settings.auto_calc_ot))}>
                                     <div className="ui segment">
                                         <label>Default Game Length (for OT calculation)</label>
                                         <div className="field"  style={{ top: "10px", position: "relative" }}>
@@ -133,9 +127,7 @@ const UserSettings = () => {
                                                 <TextInput
                                                     name={"auto_calc_ot_game_length"}
                                                     type={"number"}
-                                                    inputStyle={{
-                                                        width: "90px",
-                                                    }}
+                                                    inputStyle={gameLengthStyle}
                                                     value={settings.auto_calc_ot_game_length}
                                                     onChange={(e) => {
                                                         setSettings({
@@ -150,14 +142,14 @@ const UserSettings = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </style.GameLength>
+                            </style.Form>
 
                             <div data-testid={"submit"} className="ui fluid large blue submit button" onClick={save}>Save</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </style.FormContainer>
+                    </style.FormWrapper>
+                </style.SubContainer>
+            </style.Container>
         </div>
     );
 };
