@@ -29,11 +29,11 @@ const LoginPage = () => {
         // validate inputs
         if (username.length === 0){
             setError("Username can't be empty");
-            setErrorField(prevState => ({...prevState, username: true }));
+            setErrorField({...errorField, username: true });
         }
         else if (password.length === 0){
             setError("Password can't be empty");
-            setErrorField(prevState => ({...prevState, password: true }));
+            setErrorField({...errorField, password: true });
         }
         else {
             setErrorField(defaultErrorField);
@@ -134,7 +134,7 @@ const LoginPage = () => {
                                         value={value}
                                         onChange={(e) => {
                                             setValue(e.target.value);
-                                            setErrorField(prevState => ({...prevState, [name]: false}));
+                                            setErrorField({...errorField, [name]: false});
                                         }}
                                         onKeyDown={e => onKeyDown(e.keyCode)}
                                         data-testid={name}
