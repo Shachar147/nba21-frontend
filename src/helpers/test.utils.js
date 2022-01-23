@@ -24,6 +24,8 @@ export async function openPage(){
 export const userSelector = '[data-testid="username"]';
 export const passwordSelector = '[data-testid="password"]';
 export const buttonSelector = '[data-testid="submit"]';
+export const registerSelector = '[data-testid="register"]';
+
 export async function performLogin(page, hitEnter = false){
     await page.waitForSelector(userSelector);
     await page.$eval(userSelector, el => (el.value = '')); // clear the input field

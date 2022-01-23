@@ -9,7 +9,7 @@ import Settings from '@activities/ThreePointsContest/Settings';
 import LoginPage from "@pages/Login/LoginPage";
 import MainPage from "@pages/MainPage";
 import LogoutPage from "@pages/Logout";
-import RegisterPage from "@pages/RegisterPage";
+import RegisterPage from "@pages/Register/RegisterPage";
 import OneOnOne from "@activities/OneOnOne/OneOnOne";
 import RealStats from "@pages/Real/RealStats";
 import Random from "@activities/Random/Random";

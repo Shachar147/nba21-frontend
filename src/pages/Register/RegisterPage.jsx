@@ -94,6 +94,8 @@ export default class RegisterPage extends React.Component {
                         const message = err.response.data.message;
                         error = (typeof (message) === "object") ? message.join("<br>") : message;
 
+                        console.log(err, message);
+
                         if (err.response.data.statusCode && [404].indexOf(err.response.data.statusCode) !== -1) {
                             error = "Network Error";
                         }
@@ -117,10 +119,10 @@ export default class RegisterPage extends React.Component {
         }
 
         let error = (this.state.error !== '') ? (
-            <div className="field" style={{ marginBottom: "10px", color: "#F10B45" }} dangerouslySetInnerHTML={{ __html: this.state.error }} />
+            <div data-testid={"error"} className="field" style={{ marginBottom: "10px", color: "#F10B45" }} dangerouslySetInnerHTML={{ __html: this.state.error }} />
         ) : "";
         let message = (this.state.message !== '') ? (
-            <div className="field" style={{ marginBottom: "10px", color: "#0068BB" }}>
+            <div data-testid={"message"} className="field" style={{ marginBottom: "10px", color: "#0068BB" }}>
                 {this.state.message}
             </div>
         ) : "";
@@ -175,14 +177,15 @@ export default class RegisterPage extends React.Component {
                                                 this.setState({ [name]: e.target.value, errorField: errorField });
                                             }}
                                             onKeyDown={this.onKeyDown}
+                                            data-testid={name}
                                         />
                                     );
                                 })
                             }
-                            <div className="ui fluid large blue submit button" onClick={this.register} style={buttonStyle}>Register</div>
+                            <div data-testid={"submit"} className="ui fluid large blue submit button" onClick={this.register} style={buttonStyle}>Register</div>
                         </div>
                         <div style={{ fontWeight: "normal", fontSize: "16px" }}>
-                            Already a member? <Link to={"/login"}>login!</Link>
+                            Already a member? <Link data-testid={"login"} to={"/login"}>login!</Link>
                         </div>
                     </div>
                 </div>

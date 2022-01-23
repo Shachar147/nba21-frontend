@@ -1,11 +1,10 @@
 import puppeteer from 'puppeteer';
-import { openPage, performLogin, buttonSelector, passwordSelector, userSelector } from "../../../helpers/test.utils";
+import { openPage, performLogin, buttonSelector, passwordSelector, userSelector, registerSelector } from "../../../helpers/test.utils";
 
 let browser, page;
 
 const errorSelector = '[data-testid="error"]';
 const messageSelector = '[data-testid="message"]';
-const registerSelector = '[data-testid="register"]';
 
 const MESSAGES = {
     USER_EMPTY: "Username can't be empty",
@@ -99,7 +98,7 @@ describe("<LoginPage /> E2E test suite", () => {
         expect(home).toContain('Hello! Choose the activity you want to use:');
     });
 
-    test('register button works', async () => {
+    test('register link works', async () => {
 
         browser.close();
         [browser,page] = await openPage(browser, page);
