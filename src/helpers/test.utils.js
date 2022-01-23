@@ -10,6 +10,7 @@ export const URL = 'http://localhost:3001/';
 export async function openPage(){
     let browser = await puppeteer.launch({
         headless: true,
+        slowMo: 8,
 
         // debug
         // headless: false,
