@@ -22,7 +22,7 @@ import UserSettings from "@pages/UserSettings/UserSettings";
 import Tournament from "@activities/Tournament/Tournament";
 import SpaceJam from "@activities/SpaceJam/SpaceJam";
 
-function App() {
+const App = () => {
 
     axios.defaults.headers.Authorization = `Bearer ${getToken()}`;
 
