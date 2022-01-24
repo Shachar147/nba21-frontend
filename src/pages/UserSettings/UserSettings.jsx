@@ -12,9 +12,9 @@ const UserSettings = () => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(undefined);
     const [settings, setSettings] = useState(defaultSettings);
-    const [totalFinished, setTotalFinished] = useState(0);
-    const [totalFailed, setTotalFailed] = useState(0);
-    const [totalSucceeded, setTotalSucceedded] = useState(0);
+    let [totalFinished, setTotalFinished] = useState(0);
+    let [totalFailed, setTotalFailed] = useState(0);
+    let [totalSucceeded, setTotalSucceedded] = useState(0);
 
     useEffect(() => {
         loadSettings();
@@ -67,7 +67,8 @@ const UserSettings = () => {
                     setTotalFailed(totalFailed + 1);
                 },
                 async function() {
-                    setTotalFinished(totalFinished + 1);
+                    totalFinished += 1;
+                    await setTotalFinished(totalFinished);
                     if (totalFinished === Object.keys(settings).length) {
                         alert ("saved!");
                         setTotalFinished(0);
@@ -95,7 +96,7 @@ const UserSettings = () => {
 
                                 {/*Total Overtimes*/}
                                 <div className="field">
-                                    <div className="ui segment">
+                                    <div className="ui segment2">
                                         <div className="field">
                                             <div className="ui toggle checkbox">
                                                 <input

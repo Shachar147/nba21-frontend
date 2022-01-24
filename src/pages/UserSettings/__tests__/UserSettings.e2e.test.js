@@ -62,6 +62,22 @@ describe("<UserSettings /> E2E test suite", () => {
         expect(gameLengthAfterChange).toEqual("");
     });
 
+    // test("make sure after save, 'Saved!' prompt appears", async () => {
+    //     await page.$eval(buttonSelector, el => el.click());
+    //
+    //     await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 3000));
+    //
+    //     await page.$eval(buttonSelector, async (el) => {
+    //         let message;
+    //         await page.on('dialog', async dialog => {
+    //             message = dialog.message();
+    //             dialog.accept();
+    //         });
+    //
+    //         expect(message).toEqual('Saved!');
+    //     });
+    // });
+
     // make sure save works
     test("make sure save works - auto calc ot", async () => {
 

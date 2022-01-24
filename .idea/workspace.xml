@@ -69,7 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot">
+  <component name="RunManager" selected="Jest.&lt;UserSettings /&gt; E2E test suite.make sure after save, 'Saved!' prompt appears">
     <configuration name="&lt;UserSettings /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -83,7 +83,7 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;UserSettings /&gt; E2E test suite.game length option is numeric (can't use alphabeth)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure after save, 'Saved!' prompt appears" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
@@ -93,7 +93,7 @@
       <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
       <test-names>
         <test-name value="&lt;UserSettings /&gt; E2E test suite" />
-        <test-name value="game length option is numeric (can't use alphabeth)" />
+        <test-name value="make sure after save, 'Saved!' prompt appears" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -141,11 +141,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure after save, 'Saved!' prompt appears" />
         <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" />
         <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite" />
         <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - default game length" />
         <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works" />
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.game length option is numeric (can't use alphabeth)" />
       </list>
     </recent_temporary>
   </component>
