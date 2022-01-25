@@ -173,7 +173,7 @@ describe('<PlayerCard /> test suite', () => {
     });
 
     // curr_players
-    it('Should render the given curr_players, if passed', () => {
+    it('Should be used in replace - to filter all players except of curr players as options.', () => {
         // todo complete
     });
 
