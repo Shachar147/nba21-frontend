@@ -69,83 +69,84 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot">
-    <configuration name="&lt;UserSettings /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
-      <test-names>
-        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure after save, 'Saved!' prompt appears" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.&lt;PlayerCard /&gt; test suite.Should render a title to details, if passed">
+    <configuration name="&lt;PlayerCard /&gt; test suite.Executes onScore if passed when clicking on shooting box Go button" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
-        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
-        <test-name value="make sure after save, 'Saved!' prompt appears" />
+        <test-name value="&lt;PlayerCard /&gt; test suite" />
+        <test-name value="Executes onScore if passed when clicking on shooting box Go button" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;PlayerCard /&gt; test suite.Round length should affect rounds total number if passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
-        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
-        <test-name value="make sure save works - auto calc ot" />
+        <test-name value="&lt;PlayerCard /&gt; test suite" />
+        <test-name value="Round length should affect rounds total number if passed." />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure save works - default game length" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;PlayerCard /&gt; test suite.Should render a title to details, if passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
-        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
-        <test-name value="make sure save works - default game length" />
+        <test-name value="&lt;PlayerCard /&gt; test suite" />
+        <test-name value="Should render a title to details, if passed" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure save works" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;PlayerCard /&gt; test suite.Should render shoot block, if shoot param passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
-        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
-        <test-name value="make sure save works" />
+        <test-name value="&lt;PlayerCard /&gt; test suite" />
+        <test-name value="Should render shoot block, if shoot param passed" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;PlayerCard /&gt; test suite.Should render the given details, if passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
+      <test-names>
+        <test-name value="&lt;PlayerCard /&gt; test suite" />
+        <test-name value="Should render the given details, if passed" />
       </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" />
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure after save, 'Saved!' prompt appears" />
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite" />
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - default game length" />
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should render a title to details, if passed" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should render the given details, if passed" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Executes onScore if passed when clicking on shooting box Go button" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should render shoot block, if shoot param passed" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Round length should affect rounds total number if passed." />
       </list>
     </recent_temporary>
   </component>

@@ -84,13 +84,16 @@ export default class PlayerCard extends React.Component {
         if (position) position_block = `Position: ${position}`;
         if (team_division) position_block = `Division: ${team_division}`;
 
-
         if (disabled){
             onClick = undefined;
         }
 
+        // test ids
+        const dataTestId = this.props['data-testid'];
+        const wrapperTestId = (dataTestId) ? `${dataTestId}-wrapper` : undefined;
+
         const card = (
-            <div className={"card player" + (className ? " " + className : "")} onClick={onClick} style={style}>
+            <div data-testid={dataTestId} className={"card player" + (className ? " " + className : "")} onClick={onClick} style={style}>
                 <LostImage show={(lost) ? true : false} />
                 <PlayerPicture
                     picture={picture}
@@ -140,7 +143,7 @@ export default class PlayerCard extends React.Component {
 
         if (wrapper){
             return (
-                <div className="ui link cards centered" style={{ margin: "auto" }} key={"wrapper-" + name}>
+                <div className="ui link cards centered" data-testid={wrapperTestId} style={{ margin: "auto" }} key={"wrapper-" + name}>
                     {card}
                 </div>
             )

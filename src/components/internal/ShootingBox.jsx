@@ -26,7 +26,7 @@ export default class ShootingBox extends React.Component {
 
         // shoot
         let shoot_block = (!is_winner && !is_loser) ? (
-            <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea"}}>
+            <div style={{display: "inline-block", paddingTop: "10px", marginTop: "10px", borderTop: "1px solid #eaeaea"}} data-testid={"shooting-box"}>
                 <input
                     type={"number"}
                     value={shoot_score}
@@ -39,9 +39,10 @@ export default class ShootingBox extends React.Component {
                         })
                     }}
                     style={input_style}
+                    data-testid={"shooting-box-score"}
                 />
                 <span style={{ margin: "0px 5px" }} > / </span>
-                <input type={"number"} value={round_length} disabled style={input_style}/>
+                <input type={"number"} value={round_length} data-testid={"shooting-box-round-length"} disabled style={input_style}/>
                 <div className={"ui basic buttons"} style={{ marginLeft: "10px" }}>
                     <input
                         type={"button"}
@@ -51,6 +52,7 @@ export default class ShootingBox extends React.Component {
                             if (onScore) onScore(shoot_score);
                             this.setState({ shoot_score: 0});
                         }}
+                        data-testid={"shooting-box-go"}
                     />
                 </div>
             </div>
