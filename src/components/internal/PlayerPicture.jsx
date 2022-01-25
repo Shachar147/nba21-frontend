@@ -60,7 +60,9 @@ export default class PlayerPicture extends React.Component {
         const place_tag = (!place || !placeRibbon) ? null : (
             <a
                 className={`ui ${placeRibbon} ribbon label`}
-                style={{ left: "-15px", top: "3px", position: "absolute" }}>
+                style={{ left: "-15px", top: "3px", position: "absolute" }}
+                data-testid={"place-ribbon"}
+            >
                 {place_text}
             </a>
         );

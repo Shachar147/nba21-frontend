@@ -151,7 +151,17 @@ describe('<PlayerCard /> test suite', () => {
 
     // custom_details
     it('Should render the given custom_details, if passed', () => {
-        // todo complete
+
+        const custom_details_title = 'Details:';
+        const custom_details = ["detail1","detail2"];
+
+        screen = render(<PlayerCard {...setProps({
+            custom_details_title,
+            custom_details,
+        } )} />);
+
+        const regex = `${defaultProps['name']}.*${custom_details_title}.*${custom_details.join('.*')}`;
+        expect(screen.getByTestId(defaultProps['data-testid'])).toHaveTextContent(new RegExp(regex), { exact: false });
     });
 
     // all_players
@@ -169,52 +179,165 @@ describe('<PlayerCard /> test suite', () => {
 
     // position
     it('Should render the given position, if passed', () => {
-        // todo complete
+        screen = render(<PlayerCard {...setProps({
+            position: "Guard",
+        } )} />);
+
+        const text = `Position: Guard`;
+        expect(screen.getByText(text)).toBeInTheDocument();
     });
 
     // team_division
     it('Should render the given team_division, if passed', () => {
-        // todo complete
+        screen = render(<PlayerCard {...setProps({
+            team_division: "Pacific",
+        } )} />);
+        const text = `Division: Pacific`;
+        expect(screen.getByText(text)).toBeInTheDocument();
+
+        cleanup();
+
+        screen = render(<PlayerCard {...setProps({
+            position: "Guard",
+            team_division: "Pacific"
+        } )} />);
+
+        expect(screen.getByText(text)).toBeInTheDocument();
+        let element = screen.queryByText('Position: Guard');
+        expect(element).not.toBeInTheDocument();
     });
 
-    // debut
+    // debut_year
     it('Should render the given debut, if passed', () => {
-        // todo complete
+        screen = render(<PlayerCard {...setProps({
+            debut_year: 2009
+        } )} />);
+        const text = `Joined in 2009`;
+        expect(screen.getByText(text)).toBeInTheDocument();
     });
 
     // stats
     it('Should render the given stats, if passed', () => {
-        // todo complete
+        const stats = {
+            "win_streak": 2,
+            "max_win_streak": 10,
+            "lose_streak": 0,
+            "max_lose_streak": 0,
+            "total_win_percents": "80.00%",
+            "total_games": 100,
+            "total_wins": 80,
+            "total_lost": 20,
+            "total_diff": 250,
+            "total_diff_per_game": 2.5,
+            "total_away_games": 50,
+            "total_home_games": 50,
+            "total_knockouts": 25,
+            "avg_opponent_2k_rating": 95,
+            "total_scored": 1250,
+            "total_suffered": 1000,
+            "total_suffered_knockouts": 3
+        };
+
+        screen = render(<PlayerCard {...setProps({
+            stats
+        } )} />);
+
+        const settings_ordered = [
+            stats.total_win_percents,
+            stats.total_games,
+            stats.win_streak,
+            stats.max_win_streak,
+            stats.lose_streak,
+            stats.max_lose_streak,
+            stats.total_home_games,
+            stats.total_away_games,
+        ];
+        const regex = settings_ordered.join('.*');
+        expect(screen.getByTestId(defaultProps['data-testid'])).toHaveTextContent(new RegExp(regex), { exact: false });
+        expect(screen.getByText("Show More")).toBeInTheDocument();
     });
 
     // place
     it('Should render the given place, if passed', () => {
-        // todo complete
+        screen = render(<PlayerCard {...setProps({
+            place: 1,
+            styles: {
+                placeRibbon: "blue"
+            }
+        } )} />);
+
+        expect(screen.getByTestId("place-ribbon")).toBeInTheDocument();
+        expect(screen.getByTestId("place-ribbon").textContent).toBe("#1");
+        expect(screen.getByTestId("place-ribbon")).toHaveClass("ribbon");
+        expect(screen.getByTestId("place-ribbon")).toHaveClass("blue");
+
+        cleanup();
+
+        screen = render(<PlayerCard {...setProps({
+            place: 4,
+            styles: {
+                placeRibbon: "red"
+            }
+        } )} />);
+
+        expect(screen.getByTestId("place-ribbon")).toBeInTheDocument();
+        expect(screen.getByTestId("place-ribbon").textContent).toBe("#4");
+        expect(screen.getByTestId("place-ribbon")).toHaveClass("ribbon");
+        expect(screen.getByTestId("place-ribbon")).toHaveClass("red");
     });
 
     // winner
     it('Should render the given winner, if passed', () => {
-        // todo complete
+        screen = render(<PlayerCard {...setProps({
+            shoot: true,
+            winner: true
+        } )} />);
+        expect(screen.getByText("Winner!")).toBeInTheDocument();
     });
 
     // lost
     it('Should render the given lost, if passed', () => {
-        // todo complete
+        screen = render(<PlayerCard {...setProps({
+            shoot: true,
+            lost: true
+        } )} />);
+        expect(screen.getByText("Loser")).toBeInTheDocument();
+        const lost_image = screen.getByTestId("lost-image")
+        expect(lost_image).toBeInTheDocument();
+        expect(lost_image).toHaveAttribute('src','/x-png-icon-8.jpg');
     });
 
     // singleShot
     it('Should render the given singleShot, if passed', () => {
-        // todo complete
+        screen = render(<PlayerCard {...setProps({
+            shoot: true,
+            singleShot: 4
+        } )} />);
+        expect(screen.queryByTestId("single-shot")).toBeInTheDocument();
+        expect(screen.queryByTestId("single-shot")).toHaveAttribute("type","number");
+        expect(screen.queryByTestId("single-shot")).toHaveAttribute("value", "4");
     });
 
     // singleRounds
     it('Should render the given singleRounds, if passed', () => {
-        // todo complete
+        const singleRounds = [7,5,10];
+        screen = render(<PlayerCard {...setProps({
+            shoot: true,
+            singleShot: 4,
+            singleRounds,
+        } )} />);
+
+        const regex = singleRounds.map(x => x + ' Points').join('.*');
+        expect(screen.getByTestId(defaultProps['data-testid'])).toHaveTextContent(new RegExp(regex), { exact: false });
+
     });
 
     // className
     it('Should render the given className, if passed', () => {
-        // todo complete
+        screen = render(<PlayerCard {...setProps({
+            className: "some-class"
+        } )} />);
+        expect(screen.getByTestId(defaultProps['data-testid'])).toHaveClass('some-class');
     });
 
     // style
@@ -288,30 +411,61 @@ describe('<PlayerCard /> test suite', () => {
 
     // on fire
     // todo complete
+    it('', () => {
+
+    });
 
     // ice cold
     // todo complete
+    it('', () => {
+
+    });
 
     // fallback picture
     // todo complete
+    it('', () => {
+
+    });
 
     // unknown player
     // todo complete
+    it('', () => {
+
+    });
 
     // full stats
     // todo complete
+    it('', () => {
+
+    });
 
     // replace - check that it works
     // todo complete
+    it('', () => {
+
+    });
 
     // specific replace - check that clicking on replace once, shows the specific replace
     // todo complete
+    it('', () => {
+
+    });
 
     // specific replace - check that specific replace works
     // todo complete
+    it('', () => {
+
+    });
 
     // show stats link - check that it appears
     // todo complete
+    it('', () => {
+
+    });
 
     // show more appears if data is too long
+    // todo complete
+    it('', () => {
+
+    });
 });

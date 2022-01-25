@@ -14,7 +14,7 @@ export default function LostImage(props) {
     }
 
     return (
-        <img className={classNames} style={style} alt={alt} title={alt} src={LOST_X_IMAGE} />
+        <img className={classNames} style={style} alt={alt} title={alt} src={LOST_X_IMAGE} data-testid={"lost-image"} />
     )
 }
 

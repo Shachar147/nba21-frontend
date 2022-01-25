@@ -81,6 +81,7 @@ export default class ShootingBox extends React.Component {
                             if (onChange) onChange(e);
                         }}
                         style={input_style}
+                        data-testid={"single-shot"}
                     />
                 </div>
             );
