@@ -69,7 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;UserSettings /&gt; E2E test suite.make sure after save, 'Saved!' prompt appears">
+  <component name="RunManager" selected="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot">
     <configuration name="&lt;UserSettings /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -141,8 +141,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure after save, 'Saved!' prompt appears" />
         <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" />
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure after save, 'Saved!' prompt appears" />
         <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite" />
         <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - default game length" />
         <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works" />
