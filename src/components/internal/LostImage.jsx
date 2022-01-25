@@ -2,19 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import {LOST_X_IMAGE} from "@helpers/consts";
 
-export default function LostImage(props) {
-    let { show, alt, style, className } = props;
+const LostImage = ({ show, alt, style, className }) => {
 
+    if (!show) return "";
+
+    // defaults
     style = style || { position: "absolute", top: "-30px", zIndex:"9999999"};
     alt = alt || "lost";
-    const classNames = `lost-image ${className}`;
-
-    if (!show){
-        return "";
-    }
 
     return (
-        <img className={classNames} style={style} alt={alt} title={alt} src={LOST_X_IMAGE} data-testid={"lost-image"} />
+        <img className={`lost-image ${className}`} style={style} alt={alt} title={alt} src={LOST_X_IMAGE} data-testid={"lost-image"} />
     )
 }
 
@@ -41,3 +38,5 @@ LostImage.defaultProps = {
     show: true,
     alt: "lost"
 };
+
+export default LostImage;

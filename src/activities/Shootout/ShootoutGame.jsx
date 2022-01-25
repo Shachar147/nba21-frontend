@@ -5,23 +5,21 @@ import {TEAM1_COLOR} from "@helpers/consts";
 import ButtonInput from "@components/inputs/ButtonInput";
 import React from "react";
 
-export default function ShootoutGame(props) {
-
-    const {
-        selected_player,
-        show_save_form,
-        round_length,
-        score,
-        onFinish,
-        onChange,
-        onSave,
-        isSaveDisabled,
-        onRematch,
-        onEndGame,
-        onViewStats,
-        saved_game_id,
-        onUpdate,
-    } = props;
+const ShootoutGame = ({
+    selected_player,
+    show_save_form,
+    round_length,
+    score,
+    onFinish,
+    onChange,
+    onSave,
+    isSaveDisabled,
+    onRematch,
+    onEndGame,
+    onViewStats,
+    saved_game_id,
+    onUpdate,
+}) => {
 
     const _2k_rating = selected_player['_2k_rating'] || 'N/A';
     return (
@@ -96,5 +94,6 @@ export default function ShootoutGame(props) {
 
         </div>
     );
+};
 
-}
+export default ShootoutGame;
