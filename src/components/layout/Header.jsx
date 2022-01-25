@@ -6,7 +6,7 @@ import {getUser} from "@helpers/auth";
 
 const Header = ({ nologo }) => {
 
-    const logo = (!props.nologo) ? (
+    const logo = (!nologo) ? (
                     <div className={"ui header cards centered"} style={{
                         width: "100%",
                         // backgroundColor: "#FAFAFB",
