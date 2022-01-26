@@ -252,15 +252,6 @@ describe('<PlayerCard /> test suite', () => {
         expect(screen.queryByText("James Harden")).toHaveAttribute("value", "James Harden");
     });
 
-    it('Should show given players when clicking on replace', () => {
-        // todo complete
-    });
-
-    // curr_players
-    it('Should be used in replace - to filter all players except of curr players as options.', () => {
-        // todo complete
-    });
-
     // position
     it('Should render the given position, if passed', () => {
         screen = render(<PlayerCard {...setProps({
@@ -426,12 +417,56 @@ describe('<PlayerCard /> test suite', () => {
 
     // style
     it('Should render the given style, if passed', () => {
-        // todo complete
+        const style = {
+            border: '1px solid lightseagreen',
+            opacity: 1
+        };
+        screen = render(<PlayerCard {...setProps({ style })} />);
+        expect(screen.getByTestId(defaultProps['data-testid'])).toHaveStyle("border: 1px solid lightseagreen");
+        expect(screen.getByTestId(defaultProps['data-testid'])).toHaveStyle("opacity: 1");
     });
 
     // styles
     it('Should render the given styles, if passed', () => {
-        // todo complete
+        const styles = {
+            descriptionStyle: {
+                minHeight: '290px'
+            },
+            extraContentStyle: {
+                display: 'none'
+            },
+            imageContainerStyle: {
+                backgroundColor: '#F2F2F2'
+            },
+            imageStyle: {
+                margin: 'auto',
+                padding: '20px',
+                width: 200
+            },
+            placeRibbon: 'blue'
+        };
+
+        screen = render(<PlayerCard {...setProps({
+            place: 1,
+            styles
+        })} />);
+
+        // descriptionStyle
+        expect(screen.getByTestId('player-details')).toHaveStyle("min-height: 290px");
+
+        // extraContentStyle
+        expect(screen.getByTestId('extra-content')).toHaveStyle("display: none");
+
+        // imageContainerStyle
+        expect(screen.getByTestId('image-container')).toHaveStyle("background-color: #F2F2F2");
+
+        // imageStyle
+        expect(screen.getByTestId('image')).toHaveStyle("margin: auto");
+        expect(screen.getByTestId('image')).toHaveStyle("padding: 20px");
+        expect(screen.getByTestId('image')).toHaveStyle("width: 200px");
+
+        // place-ribbon
+        expect(screen.getByTestId('place-ribbon')).toHaveClass('blue');
     });
 
     // onClick

@@ -111,9 +111,9 @@ export default class PlayerPicture extends React.Component {
         ) : "";
 
        const playerPicture = (
-           <div className="image" style={container}>
+           <div className="image" style={container} data-testid={"image-container"}>
                {place_tag}
-               <img src={picture} onError={this.onError} alt={name} style={image} />
+               <img src={picture} onError={this.onError} alt={name} style={image} data-testid={"image"} />
                {replace}
                {specific_replace_link}
                {specific_replace_block}

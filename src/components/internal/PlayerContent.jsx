@@ -51,8 +51,10 @@ export default function PlayerContent(props) {
         );
     }
 
+    const dataTestId = props['data-testid'];
+
     const playerContent = (
-        <div className="content">
+        <div className="content" data-testid={dataTestId}>
             <div className="header">{name}</div>
             <div className="meta">
                 <a disabled={true} style={{ cursor: "default" }}>
@@ -60,6 +62,7 @@ export default function PlayerContent(props) {
                 </a>
             </div>
             <PlayerDetails
+                data-testid={"player-details"}
                 details={details}
                 stats={stats}
                 custom_details={custom_details}

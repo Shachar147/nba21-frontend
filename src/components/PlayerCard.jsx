@@ -110,6 +110,7 @@ export default class PlayerCard extends React.Component {
                     onImageClick={onImageClick}
                 />
                 <PlayerContent
+                    data-testid={"player-content"}
                     name={name}
                     team={team}
                     custom_details_title={custom_details_title}
@@ -131,7 +132,7 @@ export default class PlayerCard extends React.Component {
                         description: descriptionStyle,
                     }}
                 />
-                <div className="extra content" style={extraContentStyle}>
+                <div className="extra content" style={extraContentStyle} data-testid={"extra-content"}>
                     <span className="right floated">{debut_year_block}</span>
                     <span>
                     <i className="user icon"/>
