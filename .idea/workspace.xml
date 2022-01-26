@@ -69,7 +69,7 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.PlayerCard.test.js">
+  <component name="RunManager" selected="Jest.&lt;PlayerCard /&gt; test suite">
     <configuration name="PlayerCard.test.js" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -78,6 +78,19 @@
       <envs />
       <scope-kind value="TEST_FILE" />
       <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;PlayerCard /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
+      <test-names>
+        <test-name value="&lt;PlayerCard /&gt; test suite" />
+      </test-names>
       <method v="2" />
     </configuration>
     <configuration name="&lt;PlayerCard /&gt; test suite.Should render the given className, if passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
@@ -91,20 +104,6 @@
       <test-names>
         <test-name value="&lt;PlayerCard /&gt; test suite" />
         <test-name value="Should render the given className, if passed" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="&lt;PlayerCard /&gt; test suite.Should render the given lost, if passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
-      <test-names>
-        <test-name value="&lt;PlayerCard /&gt; test suite" />
-        <test-name value="Should render the given lost, if passed" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -122,7 +121,7 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;PlayerCard /&gt; test suite.Should render the given singleShot, if passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;PlayerCard /&gt; test suite.Specific Replace Behavior - show option to choose specific replace if clicked on replace -&gt; specific replace" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
@@ -132,17 +131,17 @@
       <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
         <test-name value="&lt;PlayerCard /&gt; test suite" />
-        <test-name value="Should render the given singleShot, if passed" />
+        <test-name value="Specific Replace Behavior - show option to choose specific replace if clicked on replace -&gt; specific replace" />
       </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Specific Replace Behavior - show option to choose specific replace if clicked on replace -&gt; specific replace" />
         <item itemvalue="Jest.PlayerCard.test.js" />
         <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should render the given className, if passed" />
         <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should render the given singleRounds, if passed" />
-        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should render the given singleShot, if passed" />
-        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should render the given lost, if passed" />
       </list>
     </recent_temporary>
   </component>

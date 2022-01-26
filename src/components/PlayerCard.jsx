@@ -535,4 +535,5 @@ PlayerCard.defaultProps = {
     stats: {},
     details: {},
     disabled: false,
+    all_players: [],
 };

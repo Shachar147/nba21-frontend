@@ -88,6 +88,7 @@ export default class PlayerPicture extends React.Component {
 
         const specific_replace_block = (select_replacement) ?
             <DropdownInput
+                data-testid={"specific-replace-select"}
                 options={replace_options}
                 name={"select_replacement"}
                 placeholder={"Select Replacement..."}

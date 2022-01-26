@@ -164,10 +164,94 @@ describe('<PlayerCard /> test suite', () => {
         expect(screen.getByTestId(defaultProps['data-testid'])).toHaveTextContent(new RegExp(regex), { exact: false });
     });
 
-    // all_players
-    it('Should render the given all_players, if passed', () => {
-        // todo complete
+    // SpecificReplace
+    it('Specific Replace Behavior - Appears only after clicking on replace', async () => {
+
+        const onReplace = jest.fn();
+        const onSpecificReplace = jest.fn();
+
+        screen = render(<PlayerCard {...setProps({
+            onSpecificReplace,
+            onReplace
+        } )} />);
+
+        // make sure specific replace appears only after clicking on replace.
+        expect(screen.getByText('Replace')).toBeInTheDocument();
+        expect(screen.queryByText('Specific Replace')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('specific-replace-select')).not.toBeInTheDocument();
+        await fireEvent.click(screen.getByText('Replace'));
+        expect(screen.getByText('Specific Replace')).toBeInTheDocument();
+        expect(screen.queryByText('specific-replace-select')).not.toBeInTheDocument();
+        await fireEvent.click(screen.getByText('Specific Replace'));
+        expect(screen.getByTestId('specific-replace-select')).toBeInTheDocument();
     });
+
+    it('Specific Replace Behavior - Options are all_players minus curr player (by name)', async () => {
+
+        const onReplace = jest.fn();
+        const onSpecificReplace = jest.fn();
+
+        const all_players = JSON.parse('[{"id":233,"name":"LeBron James", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2544.png", "position":"Forward","heightfeet":6,"heightmeters":2.06,"heightinches":9,"weightpounds":250, "weightkgs":113.4,"jersey":23,"debutyear":2003, "2krating":97,"team":{"id":14,"name":"Los Angeles Lakers", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/lal.png", "division":"PACIFIC","conference":"WEST"}}, {"id":184,"name":"James Harden", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201935.png", "position":"Guard","heightfeet":6,"heightmeters":1.96,"heightinches":5,"weightpounds":220, "weightkgs":99.8,"jersey":13,"debutyear":2009,"2krating":95, "team":{"id":3,"name":"Brooklyn Nets", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png","division":"ATLANTIC", "conference":"EAST"}}, {"id":109,"name":"Stephen Curry", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201939.png", "position":"Guard","heightfeet":6,"heightmeters":1.9,"heightinches":3,"weightpounds":185,"weight_kgs":83.9, "jersey":30,"debutyear":2009,"2k_rating":95, "team":{"id":10,"name":"Golden State Warriors", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/gsw.png", "division":"PACIFIC","conference":"WEST"}}]');
+
+        screen = render(<PlayerCard {...setProps({
+            name: 'Stephen Curry',
+            all_players,
+            onSpecificReplace,
+            onReplace
+        } )} />);
+
+        //
+        await fireEvent.click(screen.getByText('Replace'));
+        await fireEvent.click(screen.getByText('Specific Replace'));
+
+        const specificReplaceSelect = screen.getByTestId('specific-replace-select');
+        expect(specificReplaceSelect).toBeInTheDocument();
+
+        // make sure only players that aren't current one are rendered.
+        expect(screen.queryByText("Select Replacement...")).toBeInTheDocument();
+        expect(screen.queryByText("James Harden")).toBeInTheDocument();
+        expect(screen.queryByText("LeBron James")).toBeInTheDocument();
+        expect(document.querySelector("option[value='Stephen Curry']")).not.toBeInTheDocument();
+
+        // make sure value is same as text
+        expect(screen.queryByText("Select Replacement...")).toHaveAttribute("value", "Select Replacement...");
+        expect(screen.queryByText("James Harden")).toHaveAttribute("value", "James Harden");
+        expect(screen.queryByText("LeBron James")).toHaveAttribute("value", "LeBron James");
+    });
+
+    it('Specific Replace Behavior - Options are all_players minus curr player (by curr_players)', async () => {
+
+        const onReplace = jest.fn();
+        const onSpecificReplace = jest.fn();
+
+        const all_players = JSON.parse('[{"id":233,"name":"LeBron James", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2544.png", "position":"Forward","heightfeet":6,"heightmeters":2.06,"heightinches":9,"weightpounds":250, "weightkgs":113.4,"jersey":23,"debutyear":2003, "2krating":97,"team":{"id":14,"name":"Los Angeles Lakers", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/lal.png", "division":"PACIFIC","conference":"WEST"}}, {"id":184,"name":"James Harden", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201935.png", "position":"Guard","heightfeet":6,"heightmeters":1.96,"heightinches":5,"weightpounds":220, "weightkgs":99.8,"jersey":13,"debutyear":2009,"2krating":95, "team":{"id":3,"name":"Brooklyn Nets", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png","division":"ATLANTIC", "conference":"EAST"}}, {"id":109,"name":"Stephen Curry", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201939.png", "position":"Guard","heightfeet":6,"heightmeters":1.9,"heightinches":3,"weightpounds":185,"weight_kgs":83.9, "jersey":30,"debutyear":2009,"2k_rating":95, "team":{"id":10,"name":"Golden State Warriors", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/gsw.png", "division":"PACIFIC","conference":"WEST"}}]');
+
+        screen = render(<PlayerCard {...setProps({
+            name: 'Stephen Curry',
+            curr_players: ['Stephen Curry', 'LeBron James'],
+            all_players,
+            onSpecificReplace,
+            onReplace
+        } )} />);
+
+        //
+        await fireEvent.click(screen.getByText('Replace'));
+        await fireEvent.click(screen.getByText('Specific Replace'));
+
+        const specificReplaceSelect = screen.getByTestId('specific-replace-select');
+        expect(specificReplaceSelect).toBeInTheDocument();
+
+        // make sure only players that aren't current one are rendered.
+        expect(document.querySelector("option[value='Select Replacement...']")).toBeInTheDocument();
+        expect(document.querySelector("option[value='James Harden']")).toBeInTheDocument();
+        expect(document.querySelector("option[value='LeBron James']")).not.toBeInTheDocument();
+        expect(document.querySelector("option[value='Stephen Curry']")).not.toBeInTheDocument();
+
+        // make sure value is same as text
+        expect(screen.queryByText("Select Replacement...")).toHaveAttribute("value", "Select Replacement...");
+        expect(screen.queryByText("James Harden")).toHaveAttribute("value", "James Harden");
+    });
+
     it('Should show given players when clicking on replace', () => {
         // todo complete
     });
