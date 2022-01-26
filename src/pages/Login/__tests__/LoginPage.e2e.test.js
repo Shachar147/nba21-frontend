@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import { openPage, performLogin, buttonSelector, passwordSelector, userSelector, registerSelector } from "../../../helpers/test.utils";
+import {sleep} from "../../../helpers/utils";
 
 let browser, page;
 
@@ -73,7 +74,7 @@ describe("<LoginPage /> E2E test suite", () => {
         await page.click(buttonSelector);
 
         // delay
-        await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));
+        await sleep(1000);
 
         const error = await page.$eval(errorSelector, el => el.textContent);
         expect(error).toBe(MESSAGES.INCORRECT);
@@ -107,7 +108,7 @@ describe("<LoginPage /> E2E test suite", () => {
         await page.click(registerSelector);
 
         // delay
-        await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));
+        await sleep(1000);
 
         expect(page.url()).toContain("register");
     });

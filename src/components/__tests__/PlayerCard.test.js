@@ -2,7 +2,14 @@ import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 
 import PlayerCard from "../PlayerCard";
-import {ICE_COLD_ICON, ICE_COLD_THRESHOLD, ON_FIRE_ICON, ON_FIRE_THRESHOLD} from "../../helpers/consts";
+import {
+    ICE_COLD_ICON,
+    ICE_COLD_THRESHOLD,
+    ON_FIRE_ICON,
+    ON_FIRE_THRESHOLD,
+    PLAYER_NO_PICTURE
+} from "../../helpers/consts";
+import {sleep} from "../../helpers/utils";
 
 const defaultProps = {
     name: "Stephen Curry",
@@ -185,6 +192,10 @@ describe('<PlayerCard /> test suite', () => {
         expect(screen.queryByText('specific-replace-select')).not.toBeInTheDocument();
         await fireEvent.click(screen.getByText('Specific Replace'));
         expect(screen.getByTestId('specific-replace-select')).toBeInTheDocument();
+
+        // another click should hide dropdown.
+        await fireEvent.click(screen.getByText('Specific Replace'));
+        expect(screen.queryByTestId('specific-replace-select')).not.toBeInTheDocument();
     });
 
     it('Specific Replace Behavior - Options are all_players minus curr player (by name)', async () => {
@@ -293,7 +304,7 @@ describe('<PlayerCard /> test suite', () => {
     });
 
     // stats
-    it('Should render the given stats, if passed', () => {
+    it('Should render the given stats, if passed', async () => {
         const stats = {
             "win_streak": 2,
             "max_win_streak": 10,
@@ -327,9 +338,36 @@ describe('<PlayerCard /> test suite', () => {
             stats.max_lose_streak,
             stats.total_home_games,
             stats.total_away_games,
+            stats.total_diff,
+            stats.total_diff_per_game,
         ];
         const regex = settings_ordered.join('.*');
         expect(screen.getByTestId(defaultProps['data-testid'])).toHaveTextContent(new RegExp(regex), { exact: false });
+        expect(screen.getByText("Show More")).toBeInTheDocument();
+
+        await fireEvent.click(screen.getByText("Show More"));
+
+        const settings_ordered_full = [
+            stats.total_win_percents,
+            stats.total_games,
+            stats.win_streak,
+            stats.max_win_streak,
+            stats.lose_streak,
+            stats.max_lose_streak,
+            stats.total_home_games,
+            stats.total_away_games,
+            stats.total_diff,
+            stats.total_diff_per_game,
+            stats.total_scored,
+            stats.total_suffered,
+            stats.total_knockouts,
+            stats.total_suffered_knockouts,
+        ];
+        const regex_full = settings_ordered_full.join('.*');
+        expect(screen.getByTestId(defaultProps['data-testid'])).toHaveTextContent(new RegExp(regex_full), { exact: false });
+        expect(screen.getByText("Show Less")).toBeInTheDocument();
+
+        await fireEvent.click(screen.getByText("Show Less"));
         expect(screen.getByText("Show More")).toBeInTheDocument();
     });
 
@@ -587,33 +625,44 @@ describe('<PlayerCard /> test suite', () => {
     });
 
     // fallback picture
-    // todo complete
-    it('', () => {
-
-    });
+    // todo complete - no sure why, but it's not working.
+    // it('if picture passed broken, it should use fallback picture to generate Players picture from nba-players.herokuapp', async () => {
+    //     const name = "Stephen Curry";
+    //     // https://nba-players.herokuapp.com/players/Curry/Stephen
+    //     const fallbackPicture = 'https://nba-players.herokuapp.com/players/' + name.replace(".", "").split(' ').reverse().join('/')
+    //     screen = render(<PlayerCard {...setProps({
+    //         name,
+    //         picture: 'broken link'
+    //     })} />);
+    //
+    //     await sleep(1000);
+    //
+    //     expect(screen.getByTestId("image")).toHaveAttribute("src", fallbackPicture);
+    //     // expect(document.querySelector('img[src="' + fallbackPicture + '"]')).toBeInTheDocument();
+    // });
 
     // unknown player
-    // todo complete
-    it('', () => {
+    // todo complete - not working probably due to onError
+    // it('Unknown Player - if player picture is not available on nba-players heroku as well, show unknown player picture', async () => {
+    //     const name = "Unknown Player";
+    //     screen = render(<PlayerCard {...setProps({
+    //         name,
+    //         picture: 'broken link'
+    //     })} />);
+    //     await fireEvent.load(screen.getByTestId('image'))
+    //     expect(document.querySelector('img[src="' + PLAYER_NO_PICTURE + '"]')).toBeInTheDocument();
+    // });
 
-    });
+    // onImageClick - show stats link - check that it appears
+    it('if onImageClick passed - show stats link will appear', async () => {
+        const onImageClick = jest.fn();
+        screen = render(<PlayerCard {...setProps({
+            name,
+            onImageClick
+        })} />);
 
-    // full stats
-    // todo complete
-    it('', () => {
-
-    });
-
-
-    // show stats link - check that it appears
-    // todo complete
-    it('', () => {
-
-    });
-
-    // show more appears if data is too long
-    // todo complete
-    it('', () => {
-
+        expect(screen.queryByText('View Stats')).toBeInTheDocument();
+        await fireEvent.click(screen.queryByText('View Stats'));
+        expect(onImageClick).toHaveBeenCalled();
     });
 });

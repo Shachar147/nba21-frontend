@@ -202,6 +202,24 @@ OnClick.args = {
     onClick: (e) => { alert(`This player was selected! do something with this information.`) }
 };
 
+export const onImageClick = Template.bind({});
+onImageClick.args = {
+    name:"Stephen Curry",
+    picture: SERVER + "/stories/stephen.curry.png",
+    wrapper: true,
+    position: "Guard",
+    debut_year: 2009,
+    details: {
+        _2k_rating: 95,
+        height_meters: 1.9,
+        weight_kgs: 83.9,
+        percents: "43.43%",
+        team: "Golden State Warriors",
+    },
+    onReplace: undefined,
+    onImageClick: (e) => { alert(`View Stats Clicked`) }
+};
+
 export const Styled = Template.bind({});
 Styled.args = {
     name:"Stephen Curry",

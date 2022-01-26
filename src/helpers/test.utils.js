@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import {sleep} from "./utils";
 
 export const CREDENTIALS = {
     USER: 'Test',
@@ -48,7 +49,7 @@ export async function performLogin(page, hitEnter = false){
     }
 
     // delay
-    await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));
+    await sleep(1000);
     // await page.waitForSelector('.header.content');
 
     return page;

@@ -17,7 +17,7 @@ describe("<ThreePointsContest /> E2E test suite", () => {
 
         await page.waitForSelector('[data-testid="Team-One"]');
 
-        // await new Promise((resolve) => setTimeout(resolve, 5000));
+        // await sleep(1000);
         //await page.click(cardSelector);
         // await page.waitForNavigation();
     });

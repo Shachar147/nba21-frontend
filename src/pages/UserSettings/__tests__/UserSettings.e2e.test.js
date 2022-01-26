@@ -4,6 +4,7 @@ import {
     openPage,
     performLogin,
 } from "../../../helpers/test.utils";
+import {sleep} from "../../../helpers/utils";
 
 let browser, page;
 
@@ -65,7 +66,7 @@ describe("<UserSettings /> E2E test suite", () => {
     // test("make sure after save, 'Saved!' prompt appears", async () => {
     //     await page.$eval(buttonSelector, el => el.click());
     //
-    //     await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 3000));
+    //     await sleep(3000);
     //
     //     await page.$eval(buttonSelector, async (el) => {
     //         let message;
@@ -89,7 +90,7 @@ describe("<UserSettings /> E2E test suite", () => {
         await page.on('dialog', async dialog => dialog.accept());
 
         // delay & reload
-        await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));
+        await sleep(1000);
         await page.reload();
 
         // check if it was saved.
@@ -102,7 +103,7 @@ describe("<UserSettings /> E2E test suite", () => {
         await page.on('dialog', async dialog => dialog.accept());
 
         // delay & reload
-        await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));
+        await sleep(1000);
         await page.reload();
 
         // check if it was saved.
@@ -127,7 +128,7 @@ describe("<UserSettings /> E2E test suite", () => {
     //     await page.on('dialog', async dialog => dialog.accept());
     //
     //     // delay & reload
-    //     await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));
+    //     await sleep(1000);
     //     await page.reload();
     //
     //     // check if it was saved.
@@ -143,7 +144,7 @@ describe("<UserSettings /> E2E test suite", () => {
     //     // await page.on('dialog', async dialog => dialog.accept());
     //     //
     //     // // delay & reload
-    //     // await new Promise((resolve,reject) => setTimeout(() => resolve("resolved!"), 1000));
+    //     // await sleep(1000);
     //     // await page.reload();
     //     //
     //     // // check if it was saved.

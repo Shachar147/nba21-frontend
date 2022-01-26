@@ -69,8 +69,8 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;PlayerCard /&gt; test suite.Should fire onSpecificReplace event if onSpecificReplace callback was passed and user clicked on Replace -&gt; SpecificReplace.">
-    <configuration name="&lt;PlayerCard /&gt; test suite.Should fire onChange event if onChange callback was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.&lt;PlayerCard /&gt; test suite.if picture passed broken, it should use fallback picture to generate Players picture from nba-players.herokuapp">
+    <configuration name="&lt;PlayerCard /&gt; test suite.Should render the given stats, if passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
@@ -80,11 +80,11 @@
       <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
         <test-name value="&lt;PlayerCard /&gt; test suite" />
-        <test-name value="Should fire onChange event if onChange callback was passed." />
+        <test-name value="Should render the given stats, if passed" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;PlayerCard /&gt; test suite.Should fire onSpecificReplace event if onSpecificReplace callback was passed and user clicked on Replace -&gt; SpecificReplace." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;PlayerCard /&gt; test suite.Specific Replace Behavior - Appears only after clicking on replace" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
@@ -94,11 +94,11 @@
       <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
         <test-name value="&lt;PlayerCard /&gt; test suite" />
-        <test-name value="Should fire onSpecificReplace event if onSpecificReplace callback was passed and user clicked on Replace -&gt; SpecificReplace." />
+        <test-name value="Specific Replace Behavior - Appears only after clicking on replace" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;PlayerCard /&gt; test suite.Should fire onclick event if onScore callback was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;PlayerCard /&gt; test suite.Unknown Player - if player picture is not available on nba-players heroku as well, show unknown player picture" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
@@ -108,11 +108,11 @@
       <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
         <test-name value="&lt;PlayerCard /&gt; test suite" />
-        <test-name value="Should fire onclick event if onScore callback was passed." />
+        <test-name value="Unknown Player - if player picture is not available on nba-players heroku as well, show unknown player picture" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;PlayerCard /&gt; test suite.Should show ice cold message if player is on a big losing streak." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;PlayerCard /&gt; test suite.if onImageClick passed - show stats link will appear" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
@@ -122,11 +122,11 @@
       <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
         <test-name value="&lt;PlayerCard /&gt; test suite" />
-        <test-name value="Should show ice cold message if player is on a big losing streak." />
+        <test-name value="if onImageClick passed - show stats link will appear" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;PlayerCard /&gt; test suite.Should show on fire message if player is on a big winning streak." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;PlayerCard /&gt; test suite.if picture passed broken, it should use fallback picture to generate Players picture from nba-players.herokuapp" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
@@ -136,17 +136,17 @@
       <test-file value="$PROJECT_DIR$/src/components/__tests__/PlayerCard.test.js" />
       <test-names>
         <test-name value="&lt;PlayerCard /&gt; test suite" />
-        <test-name value="Should show on fire message if player is on a big winning streak." />
+        <test-name value="if picture passed broken, it should use fallback picture to generate Players picture from nba-players.herokuapp" />
       </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should fire onSpecificReplace event if onSpecificReplace callback was passed and user clicked on Replace -&gt; SpecificReplace." />
-        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should show ice cold message if player is on a big losing streak." />
-        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should show on fire message if player is on a big winning streak." />
-        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should fire onclick event if onScore callback was passed." />
-        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should fire onChange event if onChange callback was passed." />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.if picture passed broken, it should use fallback picture to generate Players picture from nba-players.herokuapp" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.if onImageClick passed - show stats link will appear" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Should render the given stats, if passed" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Unknown Player - if player picture is not available on nba-players heroku as well, show unknown player picture" />
+        <item itemvalue="Jest.&lt;PlayerCard /&gt; test suite.Specific Replace Behavior - Appears only after clicking on replace" />
       </list>
     </recent_temporary>
   </component>
