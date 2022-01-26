@@ -2,6 +2,7 @@ import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 
 import PlayerCard from "../PlayerCard";
+import {ICE_COLD_ICON, ICE_COLD_THRESHOLD, ON_FIRE_ICON, ON_FIRE_THRESHOLD} from "../../helpers/consts";
 
 const defaultProps = {
     name: "Stephen Curry",
@@ -493,51 +494,96 @@ describe('<PlayerCard /> test suite', () => {
     });
 
     // onReplace
-    it('Should fire onclick event if onReplace callback was passed.', () => {
-        // const onClick = jest.fn();
-        // screen = render(<PlayerCard {...setProps({ onClick })} />);
-        // fireEvent.click(screen.getByTestId(defaultProps['data-testid']);
-        // expect(onClick).toHaveBeenCalled();
-        // todo complete
+    it('Should fire onReplace event if onReplace callback was passed and user clicked on Replace.', () => {
+        const onReplace = jest.fn();
+        screen = render(<PlayerCard {...setProps({ onReplace })} />);
+        fireEvent.click(screen.getByText('Replace'));
+        expect(onReplace).toHaveBeenCalled();
     });
 
     // onSpecificReplace
-    it('Should fire onclick event if onSpecificReplace callback was passed.', () => {
-        // const onClick = jest.fn();
-        // screen = render(<PlayerCard {...setProps({ onClick })} />);
-        // fireEvent.click(screen.getByTestId(defaultProps['data-testid']);
-        // expect(onClick).toHaveBeenCalled();
-        // todo complete
+    it('Should fire onSpecificReplace event if onSpecificReplace callback was passed and user clicked on Replace -> SpecificReplace.', async () => {
+        const onReplace = jest.fn();
+        const onSpecificReplace = jest.fn();
+        const all_players = JSON.parse('[{"id":233,"name":"LeBron James", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2544.png", "position":"Forward","heightfeet":6,"heightmeters":2.06,"heightinches":9,"weightpounds":250, "weightkgs":113.4,"jersey":23,"debutyear":2003, "2krating":97,"team":{"id":14,"name":"Los Angeles Lakers", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/lal.png", "division":"PACIFIC","conference":"WEST"}}, {"id":184,"name":"James Harden", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201935.png", "position":"Guard","heightfeet":6,"heightmeters":1.96,"heightinches":5,"weightpounds":220, "weightkgs":99.8,"jersey":13,"debutyear":2009,"2krating":95, "team":{"id":3,"name":"Brooklyn Nets", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png","division":"ATLANTIC", "conference":"EAST"}}, {"id":109,"name":"Stephen Curry", "picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201939.png", "position":"Guard","heightfeet":6,"heightmeters":1.9,"heightinches":3,"weightpounds":185,"weight_kgs":83.9, "jersey":30,"debutyear":2009,"2k_rating":95, "team":{"id":10,"name":"Golden State Warriors", "logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/gsw.png", "division":"PACIFIC","conference":"WEST"}}]');
+        screen = render(<PlayerCard {...setProps({
+            name: 'Stephen Curry',
+            all_players,
+            onReplace,
+            onSpecificReplace
+        })} />);
+        await fireEvent.click(screen.getByText('Replace'));
+        await fireEvent.click(screen.getByText('Specific Replace'));
+
+        await fireEvent.change(screen.getByTestId('specific-replace-select'), { target: { value: 'James Harden' } });
+
+        expect(onSpecificReplace).toHaveBeenCalled();
     });
 
     // onChange
-    it('Should fire onclick event if onChange callback was passed.', () => {
-        // const onClick = jest.fn();
-        // screen = render(<PlayerCard {...setProps({ onClick })} />);
-        // fireEvent.click(screen.getByTestId(defaultProps['data-testid']);
-        // expect(onClick).toHaveBeenCalled();
-        // todo complete
+    it('Should fire onChange event if onChange callback was passed.', async () => {
+        const onChange = jest.fn();
+        screen = render(<PlayerCard {...setProps({
+            onChange,
+            singleShot: 3,
+        })} />);
+        await fireEvent.change(screen.getByTestId('single-shot'), { target: { value: 5 } });
+        expect(onChange).toHaveBeenCalled();
     });
 
     // onScore
     it('Should fire onclick event if onScore callback was passed.', () => {
-        // const onClick = jest.fn();
-        // screen = render(<PlayerCard {...setProps({ onClick })} />);
-        // fireEvent.click(screen.getByTestId(defaultProps['data-testid']);
-        // expect(onClick).toHaveBeenCalled();
-        // todo complete
+        const onScore = jest.fn();
+        screen = render(<PlayerCard {...setProps({
+            onScore,
+            shoot: true,
+        })} />);
+        fireEvent.click(screen.getByTestId('shooting-box-go'), { target: { value: 5 } });
+        expect(onScore).toHaveBeenCalled();
     });
 
     // on fire
-    // todo complete
-    it('', () => {
+    it('Should show on fire message if player is on a big winning streak.', () => {
+        const THRESHOLD = ON_FIRE_THRESHOLD;
 
+        // wining streak is same as threshold
+        screen = render(<PlayerCard {...setProps({ stats: { win_streak: THRESHOLD } })} />);
+        expect(screen.queryByText("On Fire!")).toBeInTheDocument();
+        expect(document.querySelector('img[src="' + ON_FIRE_ICON + '"]')).toBeInTheDocument();
+        cleanup();
+
+        // wining streak is less then threshold
+        screen = render(<PlayerCard {...setProps({ stats: { win_streak: THRESHOLD - 1 }})} />);
+        expect(screen.queryByText("On Fire!")).not.toBeInTheDocument();
+        expect(document.querySelector('img[src="' + ON_FIRE_ICON + '"]')).not.toBeInTheDocument();
+        cleanup();
+
+        // wining streak is more than threshold
+        screen = render(<PlayerCard {...setProps({ stats: { win_streak: THRESHOLD + 1 }})} />);
+        expect(screen.queryByText("On Fire!")).toBeInTheDocument();
+        expect(document.querySelector('img[src="' + ON_FIRE_ICON + '"]')).toBeInTheDocument();
     });
 
     // ice cold
-    // todo complete
-    it('', () => {
+    it('Should show ice cold message if player is on a big losing streak.', () => {
+        const THRESHOLD = ICE_COLD_THRESHOLD;
 
+        // wining streak is same as threshold
+        screen = render(<PlayerCard {...setProps({ stats: { lose_streak: THRESHOLD } })} />);
+        expect(screen.queryByText("Ice Cold")).toBeInTheDocument();
+        expect(document.querySelector('img[src="' + ICE_COLD_ICON + '"]')).toBeInTheDocument();
+        cleanup();
+
+        // wining streak is less then threshold
+        screen = render(<PlayerCard {...setProps({ stats: { lose_streak: THRESHOLD - 1 }})} />);
+        expect(screen.queryByText("Ice Cold")).not.toBeInTheDocument();
+        expect(document.querySelector('img[src="' + ICE_COLD_ICON + '"]')).not.toBeInTheDocument();
+        cleanup();
+
+        // wining streak is more than threshold
+        screen = render(<PlayerCard {...setProps({ stats: { lose_streak: THRESHOLD + 1 }})} />);
+        expect(screen.queryByText("Ice Cold")).toBeInTheDocument();
+        expect(document.querySelector('img[src="' + ICE_COLD_ICON + '"]')).toBeInTheDocument();
     });
 
     // fallback picture
@@ -558,23 +604,6 @@ describe('<PlayerCard /> test suite', () => {
 
     });
 
-    // replace - check that it works
-    // todo complete
-    it('', () => {
-
-    });
-
-    // specific replace - check that clicking on replace once, shows the specific replace
-    // todo complete
-    it('', () => {
-
-    });
-
-    // specific replace - check that specific replace works
-    // todo complete
-    it('', () => {
-
-    });
 
     // show stats link - check that it appears
     // todo complete
