@@ -231,7 +231,7 @@ export default class OneOnOneSingleStats extends React.Component {
                     })
                 }
 
-                const winner_image = players_hash[winner_name].picture;
+                const winner_image = players_hash[winner_name]?.picture;
 
                 option = `<div class="item">
                     <img class="ui avatar image" style="${style}" src="${winner_image}">
