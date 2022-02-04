@@ -92,6 +92,7 @@ describe("<UserSettings /> E2E test suite", () => {
         // delay & reload
         await sleep(1000);
         await page.reload();
+        await sleep(4000);
 
         // check if it was saved.
         let autoCalcOT = await page.$eval(autoCalcOTSelector, el => el.checked);
@@ -105,6 +106,7 @@ describe("<UserSettings /> E2E test suite", () => {
         // delay & reload
         await sleep(1000);
         await page.reload();
+        await sleep(4000);
 
         // check if it was saved.
         autoCalcOT = await page.$eval(autoCalcOTSelector, el => el.checked);

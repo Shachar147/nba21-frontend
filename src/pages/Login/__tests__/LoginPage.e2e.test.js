@@ -84,6 +84,9 @@ describe("<LoginPage /> E2E test suite", () => {
 
         page = await performLogin(page);
 
+        // delay
+        await sleep(2000);
+
         const home = await page.$eval('.header.content', el => el.textContent);
 
         expect(home).toContain('Hello! Choose the activity you want to use:');

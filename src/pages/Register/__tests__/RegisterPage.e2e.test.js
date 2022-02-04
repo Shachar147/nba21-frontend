@@ -181,7 +181,7 @@ describe("<RegisterPage /> E2E test suite", () => {
         await page.click(buttonSelector);
 
         // delay
-        await sleep(1000);
+        await sleep(3000);
 
         expect(page.url()).toContain("login");
     });
@@ -214,7 +214,7 @@ describe("<RegisterPage /> E2E test suite", () => {
         await page.keyboard.press('Enter');
 
         // delay
-        await sleep(1000);
+        await sleep(2000);
 
         expect(page.url()).toContain("login");
     });

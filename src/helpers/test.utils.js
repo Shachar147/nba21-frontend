@@ -49,7 +49,7 @@ export async function performLogin(page, hitEnter = false){
     }
 
     // delay
-    await sleep(1000);
+    await sleep(3000);
     // await page.waitForSelector('.header.content');
 
     return page;
