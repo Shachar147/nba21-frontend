@@ -429,16 +429,19 @@ export default class Settings extends React.Component {
 
     render() {
 
-        const players = this.applyFilters();
+        const { teams, randoms, computers, game_started, view_stats } = this.state;
+        const { player_from_url } = this.props;
 
-        let can_start = (this.state.teams[0].length > 0 || this.state.randoms[0].length > 0 || this.state.computers[0].length > 0) && (this.state.teams[1].length > 0 || this.state.randoms[1].length > 0 || this.state.computers[1].length > 0);
+        const filteredPlayers = this.applyFilters();
+
+        let can_start = (teams[0].length > 0 || randoms[0].length > 0 || computers[0].length > 0) && (teams[1].length > 0 || randoms[1].length > 0 || computers[1].length > 0);
         if (this.state.error) can_start = false;
 
         const game_teams = [
-            this.state.teams[0].concat(this.state.randoms[0]).concat(this.state.computers[0]),
-            this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])];
+            teams[0].concat(randoms[0]).concat(computers[0]),
+            teams[1].concat(randoms[1]).concat(computers[1])];
 
-        if (this.state.view_stats){
+        if (view_stats){
             return (
                 <OneOnOneStats
                     what={what}
@@ -449,47 +452,48 @@ export default class Settings extends React.Component {
                     get_stats_route={get_stats_route}
                     get_stats_specific_route={"/records/three-points-contest/by-player/:name"}
                     onBack={() => { this.setState({ view_stats: false }) }}
-                    player_from_url={ this.props.player_from_url }
+                    player_from_url={ player_from_url }
                 />
             );
         }
 
-        if (this.state.game_started){
+        if (game_started){
+
+            const { players, round_length, computer_level, computer_levels, general_stats, records } = this.state;
 
             return (
               <Game
-                all_players={deepClone(this.state.players)}
+                all_players={deepClone(players)}
                 teams={deepClone(game_teams)}
                 stats_title={stats_title}
+                stats={records}
                 game_mode={game_mode}
                 what={what}
-                round_length={this.state.round_length}
-                computer_level={this.state.computer_level}
-                have_computers={(this.state.computers[0].length + this.state.computers[1].length > 0)}
-                computer_levels={this.state.computer_levels}
+                round_length={round_length}
+                computer_level={computer_level}
+                have_computers={(computers[0].length + computers[1].length > 0)}
+                computer_levels={computer_levels}
                 goHome={this.restart}
                 get_stats_specific_route={"/records/three-points-contest/by-player/:name"}
 
-                general_stats={this.state.general_stats}
+                general_stats={general_stats}
                 percents={percents}
                 get_stats_route={get_stats_route}
               />
             );
         }
 
-        const computer_level = this.state.computer_level;
-
-        let { error, error_retry, loaded, loadedStats } = this.state;
+        let { error, error_retry, loaded, loadedStats, computer_level, players, loaderDetails, general_stats } = this.state;
 
         const is_loading = !loaded || !loadedStats;
-        if (error || (!is_loading && this.state.players.length === 0)) {
+        if (error || (!is_loading && players.length === 0)) {
             error = error || "Oops, it seems like no players loaded :(<Br>It's probably related to a server error";
             return (
                 <ErrorPage message={error} retry={error_retry} />
             );
         } else if (is_loading) {
             return (
-                <LoadingPage message={"Please wait while loading players..."} loaderDetails={this.state.loaderDetails} />
+                <LoadingPage message={"Please wait while loading players..."} loaderDetails={loaderDetails} />
             );
         }
 
@@ -499,7 +503,7 @@ export default class Settings extends React.Component {
         const total_selected_players = game_teams[0].length + game_teams[1].length;
 
         // one on one stats
-        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode, 0, undefined, percents) : "";
+        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(general_stats,0,game_mode, 0, undefined, percents) : "";
         const records = this.state.stats;
 
         let selectedOption = null;
@@ -580,14 +584,14 @@ export default class Settings extends React.Component {
 
                 <div className="ui centered selected-players" style={{ display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", width: "80%", marginBottom: "10px" }}>
                     <SelectedPlayers title={"Team One"}
-                                     team={this.state.teams[0].concat(this.state.randoms[0]).concat(this.state.computers[0])}
+                                     team={teams[0].concat(randoms[0]).concat(computers[0])}
                                      onClear={() => this.onClear(0)} toggle={this.toggleState}
                                      onAddRandom={() => this.onAddRandom(0)}
                                      onAddComputer={() => this.onAddComputer(0)}
                                      enabled={this.state.players.length > 0 && total_selected_players < this.state.players.length}
                     />
                     <SelectedPlayers title={"Team Two"}
-                                     team={this.state.teams[1].concat(this.state.randoms[1]).concat(this.state.computers[1])}
+                                     team={teams[1].concat(randoms[1]).concat(computers[1])}
                                      onClear={() => this.onClear(1)} toggle={this.toggleState}
                                      onAddRandom={() => this.onAddRandom(1)}
                                      onAddComputer={() => this.onAddComputer(1)}
@@ -616,7 +620,7 @@ export default class Settings extends React.Component {
                 </div>
 
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
-                    { players.map((player,idx) => {
+                    { filteredPlayers.map((player,idx) => {
                         const _2k_rating = player['_2k_rating'] || 'N/A';
 
                         return (<PlayerCard

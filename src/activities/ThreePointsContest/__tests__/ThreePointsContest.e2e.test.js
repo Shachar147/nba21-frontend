@@ -86,6 +86,8 @@ describe("<ThreePointsContest /> E2E test suite", () => {
     //     // todo complete
     // });
 
+    // todo complete - simulate full game - make sure its working, make sure its saved, make sure that calculation of who wins is good
+
     // ------------------------------------
 
     // await page.evaluate(() => { debugger; });

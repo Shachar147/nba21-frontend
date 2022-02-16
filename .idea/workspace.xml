@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/test.utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/test.utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login/__tests__/LoginPage.e2e.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login/__tests__/LoginPage.e2e.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Register/__tests__/RegisterPage.e2e.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Register/__tests__/RegisterPage.e2e.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
