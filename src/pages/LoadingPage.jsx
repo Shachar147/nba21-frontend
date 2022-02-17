@@ -1,45 +1,34 @@
 import React from "react";
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import {LOADER_DETAILS} from "@helpers/consts";
 import PropTypes from "prop-types";
 
-export default class LoadingPage extends React.Component {
+const LoadingPage = ({ title, message, loaderDetails }) => {
+    loaderDetails = loaderDetails || LOADER_DETAILS();
 
-    constructor(props) {
-        super(props);
-
-        this.state = {};
+    const textStyle = { fontWeight: "normal" }
+    if (loaderDetails.textColor){
+        textStyle.color = loaderDetails.textColor;
     }
 
-    render() {
-
-        let { title, message, loaderDetails } = this.props;
-        loaderDetails = loaderDetails || LOADER_DETAILS();
-
-        const textStyle = { fontWeight: "normal" }
-        if (loaderDetails.textColor){
-            textStyle.color = loaderDetails.textColor;
-        }
-
-        return (
-            <div>
-                <Header nologo={true} />
-                <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: loaderDetails.backgroundColor }} >
-                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                        <div>
-                            <img src={loaderDetails.loader} style={{ width: "80%", maxWidth: "800px" }} />
-                            <div className="sub header content" style={{ width:"100%", textAlign: "center", top: loaderDetails.top, fontSize: "20px", fontWeight: "bold", position: "relative"}}>
-                                <div className="header" style={textStyle}>
-                                    {title}
-                                </div>
-                                <p style={textStyle} dangerouslySetInnerHTML={{ __html: message }} />
+    return (
+        <div>
+            <Header nologo={true} />
+            <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: loaderDetails.backgroundColor }} >
+                <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                    <div>
+                        <img src={loaderDetails.loader} style={{ width: "80%", maxWidth: "800px" }} />
+                        <div className="sub header content" style={{ width:"100%", textAlign: "center", top: loaderDetails.top, fontSize: "20px", fontWeight: "bold", position: "relative"}}>
+                            <div className="header" style={textStyle}>
+                                {title}
                             </div>
+                            <p style={textStyle} dangerouslySetInnerHTML={{ __html: message }} />
                         </div>
                     </div>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 LoadingPage.propTypes = {
@@ -71,3 +60,5 @@ LoadingPage.defaultProps = {
     title: "Loading",
     message: "Please wait while loading...",
 };
+
+export default LoadingPage;

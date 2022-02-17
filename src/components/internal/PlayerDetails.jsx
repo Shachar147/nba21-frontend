@@ -59,10 +59,13 @@ export default class PlayerDetails extends React.Component {
 
         const threshold = show_more_threshold || PLAYER_STATS_SHOW_MORE_THRESHOLD;
 
+        const dataTestId = this.props['data-testid'];
+
         return (
             <div
                 className="description"
                 style={styles.description}
+                data-testid={dataTestId}
             >
                 <div dangerouslySetInnerHTML={{ __html: custom_details_title }} />
                 {

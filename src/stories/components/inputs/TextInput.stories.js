@@ -15,6 +15,9 @@ export default {
         value: { control: "text" },
         onChange: { control: "function" },
         onKeyDown: { control: "function" },
+        inputStyle: { control: 'object' },
+        containerStyle: { control: 'object' },
+        labelStyle: { control: 'object' },
     },
 };
 
@@ -24,8 +27,10 @@ export const Basic = Template.bind({});
 Basic.args = {
 };
 
-export const UsernameInput = Template.bind({});
-UsernameInput.args = {
+
+
+export const UsernameIconInput = Template.bind({});
+UsernameIconInput.args = {
     name: "username",
     type: "text",
     icon: "user",
@@ -34,12 +39,24 @@ UsernameInput.args = {
     error: false,
 };
 
-export const PasswordInput = Template.bind({});
-PasswordInput.args = {
+export const PasswordIconInput = Template.bind({});
+PasswordIconInput.args = {
     name: "password",
     placeholder: "Please Enter Password...",
     icon: "lock",
     type: "password",
+};
+
+export const LabeledInput = Template.bind({});
+LabeledInput.args = {
+    name: "number",
+    label: "Please Choose a number:",
+    type: "number",
+    value: 0,
+    onChange: (e) => { alert(e.target.value); },
+    inputStyle:{
+        width: "90px",
+    }
 };
 
 export const onChange = Template.bind({});
@@ -49,5 +66,5 @@ onChange.args = {
 
 export const onKeyDown = Template.bind({});
 onKeyDown.args = {
-    onKeyDown: (e) => { alert(`Key Down! Current value: ${e.target.value} `) }
+    onKeyDown: (e) => { alert(`Key Down! Pressed Key: ${e.keyCode}, Current value: ${e.target.value} `) }
 };

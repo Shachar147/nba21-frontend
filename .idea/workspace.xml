@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +24,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1n1ycRP3aJnMUTg9DjDL6UoMzIg" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -40,41 +51,104 @@
     <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/react-scripts" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\repos\node-js\nba21-frontend\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.webpack" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/activities" />
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/UserSettings" />
+      <recent name="$PROJECT_DIR$/src/pages/Register" />
+      <recent name="$PROJECT_DIR$/src/pages/Login" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components\internal" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\modals" />
-      <recent name="C:\repos\node-js\nba21-frontend\src" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="start:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start:dev" />
-      </scripts>
+  <component name="RunManager" selected="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot">
+    <configuration name="&lt;LoginPage /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
       <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/pages/Login/__tests__/LoginPage.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;LoginPage /&gt; E2E test suite" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;LoginPage /&gt; E2E test suite.correct credentials" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/pages/Login/__tests__/LoginPage.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;LoginPage /&gt; E2E test suite" />
+        <test-name value="correct credentials" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;RegisterPage /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/pages/Register/__tests__/RegisterPage.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;RegisterPage /&gt; E2E test suite" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;UserSettings /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
+      <test-names>
+        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
+        <test-name value="make sure save works - auto calc ot" />
+      </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start:dev" />
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" />
+        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite" />
+        <item itemvalue="Jest.&lt;RegisterPage /&gt; E2E test suite" />
+        <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite.correct credentials" />
+        <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite" />
       </list>
     </recent_temporary>
   </component>
@@ -131,8 +205,7 @@
       <workItem from="1634700294031" duration="2354000" />
       <workItem from="1635516122514" duration="4719000" />
       <workItem from="1640442096796" duration="5060000" />
-      <workItem from="1640967169870" duration="2219000" />
-      <workItem from="1642180344697" duration="2938000" />
+      <workItem from="1642686467051" duration="24211000" />
     </task>
     <servers />
   </component>

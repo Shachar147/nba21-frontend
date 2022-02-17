@@ -451,22 +451,22 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
     let onfire2 = "";
     let icecold2 = "";
     if (stats1.win_streak >= ON_FIRE_THRESHOLD){
-        onfire1 = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img style="${ON_FIRE_STYLE}; top:4px;" src="${ON_FIRE_ICON}" /></span>`
+        onfire1 = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img className="on-fire-image" style="${ON_FIRE_STYLE}; top:4px;" src="${ON_FIRE_ICON}" /></span>`
 
         stats1.win_streak += onfire1;
     }
     if (stats1.lose_streak >= ICE_COLD_THRESHOLD){
-        icecold1 = ` <span style="color:${ICE_COLD_COLOR}">Ice Cold <img style="${ICE_COLD_STYLE}; top:4px;" src="${ICE_COLD_ICON}" /></span>`
+        icecold1 = ` <span style="color:${ICE_COLD_COLOR}">Ice Cold <img className="ice-cold-image" style="${ICE_COLD_STYLE}; top:4px;" src="${ICE_COLD_ICON}" /></span>`
 
         stats1.lose_streak += icecold1;
     }
     if (stats2.win_streak >= ON_FIRE_THRESHOLD){
-        onfire2 = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img style="${ON_FIRE_STYLE}; top:4px;" src="${ON_FIRE_ICON}" /></span>`
+        onfire2 = ` <span style="color:${ON_FIRE_COLOR}">On Fire! <img className="on-fire-image" style="${ON_FIRE_STYLE}; top:4px;" src="${ON_FIRE_ICON}" /></span>`
 
         stats2.win_streak += onfire2;
     }
     if (stats2.lose_streak >= ICE_COLD_THRESHOLD){
-        icecold2 = ` <span style="color:${ICE_COLD_COLOR}">Ice Cold <img style="${ICE_COLD_STYLE}; top:4px;" src="${ICE_COLD_ICON}" /></span>`
+        icecold2 = ` <span style="color:${ICE_COLD_COLOR}">Ice Cold <img className="ice-cold-image" style="${ICE_COLD_STYLE}; top:4px;" src="${ICE_COLD_ICON}" /></span>`
 
         stats2.lose_streak += icecold2;
     }

@@ -60,7 +60,9 @@ export default class PlayerPicture extends React.Component {
         const place_tag = (!place || !placeRibbon) ? null : (
             <a
                 className={`ui ${placeRibbon} ribbon label`}
-                style={{ left: "-15px", top: "3px", position: "absolute" }}>
+                style={{ left: "-15px", top: "3px", position: "absolute" }}
+                data-testid={"place-ribbon"}
+            >
                 {place_text}
             </a>
         );
@@ -86,6 +88,7 @@ export default class PlayerPicture extends React.Component {
 
         const specific_replace_block = (select_replacement) ?
             <DropdownInput
+                data-testid={"specific-replace-select"}
                 options={replace_options}
                 name={"select_replacement"}
                 placeholder={"Select Replacement..."}
@@ -108,9 +111,9 @@ export default class PlayerPicture extends React.Component {
         ) : "";
 
        const playerPicture = (
-           <div className="image" style={container}>
+           <div className="image" style={container} data-testid={"image-container"}>
                {place_tag}
-               <img src={picture} onError={this.onError} alt={name} style={image} />
+               <img src={picture} onError={this.onError} alt={name} style={image} data-testid={"image"} />
                {replace}
                {specific_replace_link}
                {specific_replace_block}

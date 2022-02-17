@@ -6,10 +6,10 @@ import axios from "axios";
 import PrivateRoute from "@components/PrivateRoute";
 import {getToken} from "@helpers/auth";
 import Settings from '@activities/ThreePointsContest/Settings';
-import LoginPage from "@pages/LoginPage";
+import LoginPage from "@pages/Login/LoginPage";
 import MainPage from "@pages/MainPage";
 import LogoutPage from "@pages/Logout";
-import RegisterPage from "@pages/RegisterPage";
+import RegisterPage from "@pages/Register/RegisterPage";
 import OneOnOne from "@activities/OneOnOne/OneOnOne";
 import RealStats from "@pages/Real/RealStats";
 import Random from "@activities/Random/Random";
@@ -18,11 +18,11 @@ import Shootout from "@activities/Shootout/Shootout";
 import Real from "@pages/Real/Real";
 import RealInjured from "@pages/Real/RealInjured";
 import RealInactive from "@pages/Real/RealInactive";
-import UserSettings from "@pages/UserSettings";
+import UserSettings from "@pages/UserSettings/UserSettings";
 import Tournament from "@activities/Tournament/Tournament";
 import SpaceJam from "@activities/SpaceJam/SpaceJam";
 
-function App() {
+const App = () => {
 
     axios.defaults.headers.Authorization = `Bearer ${getToken()}`;
 

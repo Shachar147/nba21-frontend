@@ -1,0 +1,158 @@
+import React, {useState, useEffect} from "react";
+import Logo from "@components/layout/Logo";
+import {apiGet, apiPut} from "@helpers/api";
+import Header from "@components/layout/Header";
+import {LOADING_DELAY, UNAUTHORIZED_ERROR} from "@helpers/consts";
+import TextInput from "@components/inputs/TextInput";
+import {defaultSettings, gameLengthStyle} from "./Model";
+import style from './style';
+
+const UserSettings = () => {
+
+    const [loaded, setLoaded] = useState(false);
+    const [error, setError] = useState(undefined);
+    const [settings, setSettings] = useState(defaultSettings);
+    let [totalFinished, setTotalFinished] = useState(0);
+    let [totalFailed, setTotalFailed] = useState(0);
+    let [totalSucceeded, setTotalSucceedded] = useState(0);
+
+    useEffect(() => {
+        loadSettings();
+    },[])
+
+    const loadSettings = () => {
+        apiGet(this,
+            `/user/settings`,
+            function(res) {
+                let settings = res.data.data;
+                const loadedSettings = {};
+                settings.forEach((record) => {
+                    loadedSettings[record.name.toLowerCase()] = record.value;
+                })
+                setSettings(loadedSettings);
+            },
+            function(error) {
+                console.log(error);
+                let req_error = error.message;
+                if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like no settings loaded :(<Br>It's probably related to a server error" }
+                setError(req_error);
+            },
+            function() {
+                setTimeout(() => { setLoaded(true); }, LOADING_DELAY);
+            }
+        );
+    }
+
+    const save = () => {
+
+        Object.keys(settings).forEach((setting) => {
+
+            apiPut(this,
+                `/user/settings/name/${setting.toUpperCase()}`,
+                {
+                    value: settings[setting],
+                },
+                function(res) {
+                    // updated
+                    setTotalSucceedded(totalSucceeded + 1);
+                },
+                function(error) {
+                    // failed
+                    console.log(error);
+                    let req_error = error.message;
+                    if (error.message.indexOf("401") !== -1) { req_error = UNAUTHORIZED_ERROR; }
+                    if (error.message.indexOf("400") !== -1) { req_error = "Oops, it seems like update failed :(<Br>It's probably related to a server error" }
+                    setError(req_error);
+                    setTotalFailed(totalFailed + 1);
+                },
+                async function() {
+                    totalFinished += 1;
+                    await setTotalFinished(totalFinished);
+                    if (totalFinished === Object.keys(settings).length) {
+                        alert ("saved!");
+                        setTotalFinished(0);
+                        setTotalFailed(0);
+                        setTotalSucceedded(0);
+                    }
+                }
+            );
+
+        });
+    }
+
+    return (
+        <div>
+            <Header nologo={true} />
+            <style.Container className={"ui header cards centered"}>
+                <style.SubContainer>
+                    <Logo />
+                    <style.FormWrapper className="sub cards header content">
+                        <style.FormContainer className="sub cards header content centered">
+                            Hello! in this page you can configure your personal settings.
+                            <br/><br/>
+                            <style.Form className="ui form">
+                                <h4 className="ui dividing header" data-testid={"general-settings"}>General Settings</h4>
+
+                                {/*Total Overtimes*/}
+                                <div className="field">
+                                    <div className="ui segment2">
+                                        <div className="field">
+                                            <div className="ui toggle checkbox">
+                                                <input
+                                                    type="checkbox"
+                                                    name="auto_calc_ot"
+                                                    tabIndex="0"
+                                                    checked={Number(settings.auto_calc_ot) === 1}
+                                                    onChange={(e) => {
+                                                        setSettings({
+                                                            ...settings,
+                                                            auto_calc_ot: (e.target.checked) ? 1 : 0
+                                                        });
+                                                    }}
+                                                    data-testid={"auto-calc-ot"}
+                                                />
+                                                <label>Auto Calculate Total Overtimes</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/*Game Length (for Total Overtimes)*/}
+                                <style.GameLength className="field" display={(Number(settings.auto_calc_ot))}>
+                                    <div className="ui segment">
+                                        <label>Default Game Length (for OT calculation)</label>
+                                        <div className="field"  style={{ top: "10px", position: "relative" }}>
+                                            <div className="ui">
+
+                                                <TextInput
+                                                    name={"auto_calc_ot_game_length"}
+                                                    type={"number"}
+                                                    inputStyle={gameLengthStyle}
+                                                    value={settings.auto_calc_ot_game_length}
+                                                    onChange={(e) => {
+                                                        setSettings({
+                                                            ...settings,
+                                                            auto_calc_ot_game_length: Math.min(30,Math.max(4,e.target.value))
+                                                        });
+
+                                                    }}
+                                                    data-testid={"default-game-length"}
+                                                />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </style.GameLength>
+                            </style.Form>
+
+                            <div data-testid={"submit"} className="ui fluid large blue submit button" onClick={save}>Save</div>
+                        </style.FormContainer>
+                    </style.FormWrapper>
+                </style.SubContainer>
+            </style.Container>
+        </div>
+    );
+};
+
+export default UserSettings;

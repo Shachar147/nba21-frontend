@@ -1,7 +1,7 @@
 import React from 'react';
 import {deepClone, getRandomElement, shuffle} from "@helpers/utils";
 import PlayerCard from "@components/PlayerCard";
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import ButtonInput from "@components/inputs/ButtonInput";
 import {_3PT_COMPUTER_SCORE_DELAY, UNAUTHORIZED_ERROR} from "@helpers/consts";
 import ErrorPage from "@pages/ErrorPage";
@@ -440,7 +440,7 @@ export default class Game extends React.Component {
         let game_total_attempts_no_c = 0;
         let game_total_percents_no_c = 0;
 
-        const { get_stats_specific_route } = this.props;
+        const { get_stats_specific_route, stats } = this.props;
 
         // build teams blocks
         const teams_blocks = [];

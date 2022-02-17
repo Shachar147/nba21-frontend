@@ -7,7 +7,7 @@ import {
     swap,
     toPascalCase
 } from "@helpers/utils";
-import Header from "@components/layouts/Header";
+import Header from "@components/layout/Header";
 import {apiGet, apiPost, apiPut} from "@helpers/api";
 import PlayerCard from "@components/PlayerCard";
 import LoadingPage from "@pages/LoadingPage";

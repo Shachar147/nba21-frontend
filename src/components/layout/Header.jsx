@@ -4,9 +4,9 @@ import Logo from "./Logo";
 import PropTypes from "prop-types";
 import {getUser} from "@helpers/auth";
 
-export default function Header(props) {
+const Header = ({ nologo }) => {
 
-    const logo = (!props.nologo) ? (
+    const logo = (!nologo) ? (
                     <div className={"ui header cards centered"} style={{
                         width: "100%",
                         // backgroundColor: "#FAFAFB",
@@ -47,3 +47,5 @@ Header.propTypes = {
 Header.defaultProps = {
     nologo: false
 };
+
+export default Header;

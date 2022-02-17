@@ -202,6 +202,24 @@ OnClick.args = {
     onClick: (e) => { alert(`This player was selected! do something with this information.`) }
 };
 
+export const onImageClick = Template.bind({});
+onImageClick.args = {
+    name:"Stephen Curry",
+    picture: SERVER + "/stories/stephen.curry.png",
+    wrapper: true,
+    position: "Guard",
+    debut_year: 2009,
+    details: {
+        _2k_rating: 95,
+        height_meters: 1.9,
+        weight_kgs: 83.9,
+        percents: "43.43%",
+        team: "Golden State Warriors",
+    },
+    onReplace: undefined,
+    onImageClick: (e) => { alert(`View Stats Clicked`) }
+};
+
 export const Styled = Template.bind({});
 Styled.args = {
     name:"Stephen Curry",
@@ -260,6 +278,21 @@ Loser.args = {
     round_length: 3,
     rounds: [0,1,0],
     lost: true,
+};
+
+export const AllPlayers = Template.bind({});
+const allPlayers = JSON.parse('[{"id":363,"name":"Ja Morant","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629630.png","position":"Guard","height_feet":6,"height_meters":1.9,"height_inches":3,"weight_pounds":174,"weight_kgs":78.9,"jersey":12,"debut_year":2019,"_2k_rating":null,"lastSyncAt":"2022-01-25T23:30:00.521Z","last2KSyncAt":null,"draft_pick":2,"date_of_birth":"1999-08-10","college_name":"Murray State","country":"USA","draft_round":1,"isActive":true,"team":{"id":15,"name":"Memphis Grizzlies","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/mem.png","division":"SOUTHWEST","conference":"WEST","lastSyncAt":"2022-01-25T23:29:55.407Z","_2k_rating":null,"last2KSyncAt":null},"allStarTeam":null},{"id":351,"name":"Khris Middleton","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203114.png","position":"Forward","height_feet":6,"height_meters":2.01,"height_inches":7,"weight_pounds":222,"weight_kgs":100.7,"jersey":22,"debut_year":2012,"_2k_rating":null,"lastSyncAt":"2022-01-25T23:30:00.368Z","last2KSyncAt":null,"draft_pick":39,"date_of_birth":"1991-08-12","college_name":"Texas A&M","country":"USA","draft_round":2,"isActive":true,"team":{"id":17,"name":"Milwaukee Bucks","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/mil.png","division":"CENTRAL","conference":"EAST","lastSyncAt":"2022-01-25T23:29:55.422Z","_2k_rating":null,"last2KSyncAt":null},"allStarTeam":null},{"id":530,"name":"John Wall","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202322.png","position":"Guard","height_feet":6,"height_meters":1.9,"height_inches":3,"weight_pounds":210,"weight_kgs":95.3,"jersey":1,"debut_year":2010,"_2k_rating":null,"lastSyncAt":"2022-01-25T23:30:02.589Z","last2KSyncAt":null,"draft_pick":1,"date_of_birth":"1990-09-06","college_name":"Kentucky","country":"USA","draft_round":1,"isActive":true,"team":{"id":11,"name":"Houston Rockets","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/hou.png","division":"SOUTHWEST","conference":"WEST","lastSyncAt":"2022-01-25T23:29:55.376Z","_2k_rating":null,"last2KSyncAt":null},"allStarTeam":null},{"id":135,"name":"Luka Doncic","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629029.png","position":"Forward/Guard","height_feet":6,"height_meters":2.01,"height_inches":7,"weight_pounds":230,"weight_kgs":104.3,"jersey":77,"debut_year":2018,"_2k_rating":null,"lastSyncAt":"2022-01-25T23:29:57.853Z","last2KSyncAt":null,"draft_pick":3,"date_of_birth":"1999-02-28","college_name":"Real Madrid","country":"Slovenia","draft_round":1,"isActive":true,"team":{"id":7,"name":"Dallas Mavericks","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/dal.png","division":"SOUTHWEST","conference":"WEST","lastSyncAt":"2022-01-25T23:29:55.343Z","_2k_rating":null,"last2KSyncAt":null},"allStarTeam":{"id":31,"name":"Team LeBron","logo":"/team-lebron.png","division":"ALLSTAR","conference":"WEST","lastSyncAt":"2022-01-25T23:29:55.526Z","_2k_rating":null,"last2KSyncAt":null}},{"id":230,"name":"Jrue Holiday","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201950.png","position":"Guard","height_feet":6,"height_meters":1.9,"height_inches":3,"weight_pounds":205,"weight_kgs":93,"jersey":21,"debut_year":2009,"_2k_rating":null,"lastSyncAt":"2022-01-25T23:29:58.893Z","last2KSyncAt":null,"draft_pick":17,"date_of_birth":"1990-06-12","college_name":"UCLA","country":"USA","draft_round":1,"isActive":true,"team":{"id":17,"name":"Milwaukee Bucks","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/mil.png","division":"CENTRAL","conference":"EAST","lastSyncAt":"2022-01-25T23:29:55.422Z","_2k_rating":null,"last2KSyncAt":null},"allStarTeam":null},{"id":16,"name":"OG Anunoby","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1628384.png","position":"Forward","height_feet":6,"height_meters":2.01,"height_inches":7,"weight_pounds":232,"weight_kgs":105.2,"jersey":3,"debut_year":2017,"_2k_rating":null,"lastSyncAt":"2022-01-25T23:29:56.284Z","last2KSyncAt":null,"draft_pick":23,"date_of_birth":"1997-07-17","college_name":"Indiana","country":"United Kingdom","draft_round":1,"isActive":true,"team":{"id":28,"name":"Toronto Raptors","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/tor.png","division":"ATLANTIC","conference":"EAST","lastSyncAt":"2022-01-25T23:29:55.503Z","_2k_rating":null,"last2KSyncAt":null},"allStarTeam":null},{"id":397,"name":"Victor Oladipo","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203506.png","position":"Guard","height_feet":6,"height_meters":1.93,"height_inches":4,"weight_pounds":213,"weight_kgs":96.6,"jersey":4,"debut_year":2013,"_2k_rating":null,"lastSyncAt":"2022-01-25T23:30:00.968Z","last2KSyncAt":null,"draft_pick":2,"date_of_birth":"1992-05-04","college_name":"Indiana","country":"USA","draft_round":1,"isActive":true,"team":{"id":16,"name":"Miami Heat","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/mia.png","division":"SOUTHEAST","conference":"EAST","lastSyncAt":"2022-01-25T23:29:55.414Z","_2k_rating":null,"last2KSyncAt":null},"allStarTeam":null},{"id":50,"name":"Eric Bledsoe","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202339.png","position":"Guard","height_feet":6,"height_meters":1.85,"height_inches":1,"weight_pounds":214,"weight_kgs":97.1,"jersey":12,"debut_year":2010,"_2k_rating":null,"lastSyncAt":"2022-01-25T23:29:56.750Z","last2KSyncAt":null,"draft_pick":18,"date_of_birth":"1989-12-09","college_name":"Kentucky","country":"USA","draft_round":1,"isActive":true,"team":{"id":13,"name":"LA Clippers","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/lac.png","division":"PACIFIC","conference":"WEST","lastSyncAt":"2022-01-25T23:29:55.392Z","_2k_rating":null,"last2KSyncAt":null},"allStarTeam":null},{"id":146,"name":"Kevin Durant","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png","position":"Forward","height_feet":6,"height_meters":2.08,"height_inches":10,"weight_pounds":240,"weight_kgs":108.9,"jersey":7,"debut_year":2007,"_2k_rating":96,"lastSyncAt":"2022-01-25T23:29:57.978Z","last2KSyncAt":"2022-01-25T21:30:23.612Z","draft_pick":2,"date_of_birth":"1988-09-29","college_name":"Texas-Austin","country":"USA","draft_round":1,"isActive":true,"team":{"id":3,"name":"Brooklyn Nets","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png","division":"ATLANTIC","conference":"EAST","lastSyncAt":"2022-01-25T23:29:55.309Z","_2k_rating":82,"last2KSyncAt":"2022-01-02T13:26:07.662Z"},"allStarTeam":{"id":32,"name":"Team Durant","logo":"/team-durant.png","division":"ALLSTAR","conference":"EAST","lastSyncAt":"2022-01-25T23:29:55.534Z","_2k_rating":null,"last2KSyncAt":null}},{"id":251,"name":"Kyrie Irving","picture":"https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202681.png","position":"Guard","height_feet":6,"height_meters":1.88,"height_inches":2,"weight_pounds":195,"weight_kgs":88.5,"jersey":11,"debut_year":2011,"_2k_rating":91,"lastSyncAt":"2022-01-25T23:29:59.153Z","last2KSyncAt":"2022-01-25T21:30:23.612Z","draft_pick":1,"date_of_birth":"1992-03-23","college_name":"Duke","country":"Australia","draft_round":1,"isActive":true,"team":{"id":3,"name":"Brooklyn Nets","logo":"https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png","division":"ATLANTIC","conference":"EAST","lastSyncAt":"2022-01-25T23:29:55.309Z","_2k_rating":82,"last2KSyncAt":"2022-01-02T13:26:07.662Z"},"allStarTeam":{"id":32,"name":"Team Durant","logo":"/team-durant.png","division":"ALLSTAR","conference":"EAST","lastSyncAt":"2022-01-25T23:29:55.534Z","_2k_rating":null,"last2KSyncAt":null}}]');
+AllPlayers.args = {
+    name:"Ja Morant",
+    picture: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629630.png",
+    wrapper: true,
+    position: "Guard",
+    details: {
+        height_meters: 1.9,
+        team: "Memphis Grizzlies",
+    },
+    all_players: allPlayers,
+    curr_players: ['Ja Morant'],
 };
 
 export const ExtraStyled = Template.bind({});

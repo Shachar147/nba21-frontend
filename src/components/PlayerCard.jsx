@@ -84,13 +84,16 @@ export default class PlayerCard extends React.Component {
         if (position) position_block = `Position: ${position}`;
         if (team_division) position_block = `Division: ${team_division}`;
 
-
         if (disabled){
             onClick = undefined;
         }
 
+        // test ids
+        const dataTestId = this.props['data-testid'];
+        const wrapperTestId = (dataTestId) ? `${dataTestId}-wrapper` : undefined;
+
         const card = (
-            <div className={"card" + (className ? " " + className : "")} onClick={onClick} style={style}>
+            <div data-testid={dataTestId} className={"card player" + (className ? " " + className : "")} onClick={onClick} style={style}>
                 <LostImage show={(lost) ? true : false} />
                 <PlayerPicture
                     picture={picture}
@@ -107,6 +110,7 @@ export default class PlayerCard extends React.Component {
                     onImageClick={onImageClick}
                 />
                 <PlayerContent
+                    data-testid={"player-content"}
                     name={name}
                     team={team}
                     custom_details_title={custom_details_title}
@@ -128,7 +132,7 @@ export default class PlayerCard extends React.Component {
                         description: descriptionStyle,
                     }}
                 />
-                <div className="extra content" style={extraContentStyle}>
+                <div className="extra content" style={extraContentStyle} data-testid={"extra-content"}>
                     <span className="right floated">{debut_year_block}</span>
                     <span>
                     <i className="user icon"/>
@@ -140,7 +144,7 @@ export default class PlayerCard extends React.Component {
 
         if (wrapper){
             return (
-                <div className="ui link cards centered" style={{ margin: "auto" }} key={"wrapper-" + name}>
+                <div className="ui link cards centered" data-testid={wrapperTestId} style={{ margin: "auto" }} key={"wrapper-" + name}>
                     {card}
                 </div>
             )
@@ -532,4 +536,5 @@ PlayerCard.defaultProps = {
     stats: {},
     details: {},
     disabled: false,
+    all_players: [],
 };

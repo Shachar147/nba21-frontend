@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "@components/layouts/Header";
-import Logo from "@components/layouts/Logo";
+import Header from "@components/layout/Header";
+import Logo from "@components/layout/Logo";
 import Card from "@components/Card";
 
 export default class Real extends React.Component {
@@ -28,7 +28,7 @@ export default class Real extends React.Component {
                                     name={"View Teams & Players"}
                                     picture={"/thumbnails/teamsNplayers.png"}
                                     style={{ width: "160px" }}
-                                    href={"/real"} // todo complete
+                                    href={"/real"}
                                     disabled={true}
                                     disabledAltAddition={"(not available yet)"}
                                 />

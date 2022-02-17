@@ -3,9 +3,16 @@
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
+  "cracoConfig": "craco.config.js",
   "dependencies": {
     "@craco/craco": "^6.4.3",
+    "@testing-library/jest-dom": "^5.16.1",
     "axios": "^0.21.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.2",
+    "jest": "^26.6.0",
+    "jest-dom": "^4.0.0",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^3.1.2",
     "node-sass": "^6.0.0",
@@ -17,6 +24,9 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
+    "react-test-renderer": "^17.0.2",
+    "storybook-preset-craco": "^0.0.6",
+    "styled-components": "^5.3.3",
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
@@ -26,17 +36,33 @@
     "@storybook/node-logger": "^6.1.16",
     "@storybook/preset-create-react-app": "^3.1.5",
     "@storybook/react": "^6.1.16",
-    "husky": "^4.3.8"
+    "@testing-library/dom": "^8.11.2",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "husky": "^4.3.8",
+    "puppeteer": "^13.0.1"
   },
   "scripts": {
     "start": "craco start",
     "start:dev": "SET PORT=3001 && SET REACT_APP_MODE=development && craco start",
     "start:dev:mac": "PORT=3001 REACT_APP_MODE=development craco start",
     "build": "craco build",
-    "test": "craco test",
     "eject": "react-scripts eject",
     "storybook": "SET STORYBOOK_APP_MODE=development && start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "storybook:mac": "STORYBOOK_APP_MODE=development start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "test": "craco test --testPathIgnorePatterns=.*e2e.test.js --watchAll=false",
+    "test:watch": "craco test --testPathIgnorePatterns=.*e2e.test.js",
+    "test:e2e": "SET REACT_APP_MODE=development && craco test --testPathPattern=.*e2e.test.js$ --watchAll=false",
+    "test:e2e:mac": "REACT_APP_MODE=development craco test --testPathPattern=.*e2e.test.js$ --watchAll=false",
+    "test:e2e:watch": "SET REACT_APP_MODE=development && craco test --testPathPattern=.*e2e.test.js$",
+    "test:all": "craco test --watchAll=false"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test",
+      "pre-push": "npm run test:e2e:mac"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -54,5 +80,15 @@
   },
   "engines": {
     "node": "12.16.3"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@helpers(.*)$": "<rootDir>/src/helpers$1",
+      "^@components(.*)$": "<rootDir>/src/components$1",
+      "^@activities(.*)$": "<rootDir>/src/activities$1",
+      "^@shared_activities(.*)$": "<rootDir>/src/activities/shared$1",
+      "^@config(.*)$": "<rootDir>/src/config$1",
+      "^@pages(.*)$": "<rootDir>/src/pages$1"
+    }
   }
 }

@@ -10,10 +10,13 @@ export default {
         options: { control: 'object' },
         nameKey: { control: 'text' },
         valueKey: { control: 'text' },
+        sort: { control: 'select', options: ['asc','desc'] },
+        sortKey: { control: 'text' },
         idKey: { control: 'text' },
         label: { control: 'text' },
         width: { control: 'number' },
         onChange: { control: 'func' },
+        styles: { control: 'object' },
     },
 };
 
@@ -59,5 +62,18 @@ onChange.args = {
     nameKey: "name",
     idKey: "id",
     valueKey: "value",
+    onChange: (option) => { alert(`You chose ${JSON.stringify(option)}!`) },
+};
+
+export const withStyles = Template.bind({});
+withStyles.args = {
+    label: "Please Select an Option:",
+    width: "200px",
+    options: [{"id":"1","name":"Option1","value":"1"},{"id":"2","name":'Option2',"value":"2"}],
+    nameKey: "name",
+    idKey: "id",
+    valueKey: "value",
+    'data-testid': 'my-select',
+    style: { textAlign: 'center', width: '420px', backgroundColor: 'rgba(0,0,0,0.08)', fontSize: '14px', padding: '10px', borderRadius: '30px', border: '1px solid #ccc' },
     onChange: (option) => { alert(`You chose ${JSON.stringify(option)}!`) },
 };
