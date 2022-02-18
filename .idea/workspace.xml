@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/internal/ShootingBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/ShootingBox.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,81 +73,79 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot">
-    <configuration name="&lt;LoginPage /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.&lt;ShootingBox /&gt; test suite.Should render Loser message if is_losser flag was passed.">
+    <configuration name="&lt;ShootingBox /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/pages/Login/__tests__/LoginPage.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" />
       <test-names>
-        <test-name value="&lt;LoginPage /&gt; E2E test suite" />
+        <test-name value="&lt;ShootingBox /&gt; test suite" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;LoginPage /&gt; E2E test suite.correct credentials" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;ShootingBox /&gt; test suite.Should render Loser message if is_losser flag was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/Login/__tests__/LoginPage.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" />
       <test-names>
-        <test-name value="&lt;LoginPage /&gt; E2E test suite" />
-        <test-name value="correct credentials" />
+        <test-name value="&lt;ShootingBox /&gt; test suite" />
+        <test-name value="Should render Loser message if is_losser flag was passed." />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;RegisterPage /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/pages/Register/__tests__/RegisterPage.e2e.test.js" />
-      <test-names>
-        <test-name value="&lt;RegisterPage /&gt; E2E test suite" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="&lt;UserSettings /&gt; E2E test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
-      <test-names>
-        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;ShootingBox /&gt; test suite.Should show single shot input if singleShot param was passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/pages/UserSettings/__tests__/UserSettings.e2e.test.js" />
+      <test-file value="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" />
       <test-names>
-        <test-name value="&lt;UserSettings /&gt; E2E test suite" />
-        <test-name value="make sure save works - auto calc ot" />
+        <test-name value="&lt;ShootingBox /&gt; test suite" />
+        <test-name value="Should show single shot input if singleShot param was passed" />
       </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="&lt;ShootingBox /&gt; test suite.Sinel Shot value should be same as singleShot Parameter" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" />
+      <test-names>
+        <test-name value="&lt;ShootingBox /&gt; test suite" />
+        <test-name value="Sinel Shot value should be same as singleShot Parameter" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="storybook:mac" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="storybook:mac" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite.make sure save works - auto calc ot" />
-        <item itemvalue="Jest.&lt;UserSettings /&gt; E2E test suite" />
-        <item itemvalue="Jest.&lt;RegisterPage /&gt; E2E test suite" />
-        <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite.correct credentials" />
-        <item itemvalue="Jest.&lt;LoginPage /&gt; E2E test suite" />
+        <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Should render Loser message if is_losser flag was passed." />
+        <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite" />
+        <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Sinel Shot value should be same as singleShot Parameter" />
+        <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Should show single shot input if singleShot param was passed" />
+        <item itemvalue="npm.storybook:mac" />
       </list>
     </recent_temporary>
   </component>
@@ -206,6 +203,7 @@
       <workItem from="1635516122514" duration="4719000" />
       <workItem from="1640442096796" duration="5060000" />
       <workItem from="1642686467051" duration="24211000" />
+      <workItem from="1645196016166" duration="829000" />
     </task>
     <servers />
   </component>

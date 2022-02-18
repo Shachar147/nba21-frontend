@@ -96,7 +96,7 @@ export default class ShootingBox extends React.Component {
 
         if (wrapper) {
             return (
-                <div className={"card ui centered"}>
+                <div className={"card ui centered"} data-testid={"shooting-box-wrapper"}>
                     <div className="content">
                         {shoot_block}
                     </div>
