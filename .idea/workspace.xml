@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/internal/ShootingBox/ShootingBox.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/internal/ShootingBox/style.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/internal/ShootingBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/ShootingBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/internal/PlayerContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/PlayerContent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/internal/ShootingBox.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/internal/ShootingBox/__tests__/ShootingBox.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stories/components/internal/ShootingBox.stories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stories/components/internal/ShootingBox.stories.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,14 +70,14 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/internal/ShootingBox" />
       <recent name="$PROJECT_DIR$/src/pages/UserSettings" />
       <recent name="$PROJECT_DIR$/src/pages/Register" />
       <recent name="$PROJECT_DIR$/src/pages/Login" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components\internal" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.&lt;ShootingBox /&gt; test suite.Should render Loser message if is_losser flag was passed.">
+  <component name="RunManager" selected="npm.start:dev:mac">
     <configuration name="&lt;ShootingBox /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -101,7 +105,7 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;ShootingBox /&gt; test suite.Should show single shot input if singleShot param was passed" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="&lt;ShootingBox /&gt; test suite.Should render Winner message if is_winner flag was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
@@ -111,22 +115,18 @@
       <test-file value="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" />
       <test-names>
         <test-name value="&lt;ShootingBox /&gt; test suite" />
-        <test-name value="Should show single shot input if singleShot param was passed" />
+        <test-name value="Should render Winner message if is_winner flag was passed." />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="&lt;ShootingBox /&gt; test suite.Sinel Shot value should be same as singleShot Parameter" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="start:dev:mac" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start:dev:mac" />
+      </scripts>
       <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
       <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" />
-      <test-names>
-        <test-name value="&lt;ShootingBox /&gt; test suite" />
-        <test-name value="Sinel Shot value should be same as singleShot Parameter" />
-      </test-names>
       <method v="2" />
     </configuration>
     <configuration name="storybook:mac" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -141,11 +141,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.start:dev:mac" />
+        <item itemvalue="npm.storybook:mac" />
+        <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Should render Winner message if is_winner flag was passed." />
         <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Should render Loser message if is_losser flag was passed." />
         <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite" />
-        <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Sinel Shot value should be same as singleShot Parameter" />
-        <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Should show single shot input if singleShot param was passed" />
-        <item itemvalue="npm.storybook:mac" />
       </list>
     </recent_temporary>
   </component>
@@ -203,7 +203,7 @@
       <workItem from="1635516122514" duration="4719000" />
       <workItem from="1640442096796" duration="5060000" />
       <workItem from="1642686467051" duration="24211000" />
-      <workItem from="1645196016166" duration="829000" />
+      <workItem from="1645196016166" duration="2708000" />
     </task>
     <servers />
   </component>

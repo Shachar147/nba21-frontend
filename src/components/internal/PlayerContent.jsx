@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ShootingBox from "./ShootingBox";
+import ShootingBox from "./ShootingBox/ShootingBox";
 import {isDefined, nth} from "@helpers/utils";
 import PlayerDetails from "./PlayerDetails";
 
