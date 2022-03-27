@@ -12,6 +12,21 @@ export const LOADING_DELAY = 2000; // to be able to see the loader
 
 export const _3PT_COMPUTER_SCORE_DELAY = 1000; // delay between computer's start turn until score submittion
 
+export const THREE_POINTS_GAME_MODES = [
+    {
+        value: "tournament",
+        label: "Tournament"
+    },
+    {
+        value: "target_score",
+        label: "Target Score"
+    },
+    {
+        value: "team_target_score",
+        label: "Team Target Score"
+    },
+];
+
 // pictures and background
 export const RANDOM_PLAYER_PICTURE = '/nopic.png';
 export const PLAYER_NO_PICTURE = '/nopic.png';

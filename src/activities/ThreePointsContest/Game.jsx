@@ -10,6 +10,7 @@ import {apiGet, apiPost} from "@helpers/api";
 import OneOnOneStats from "@shared_activities/OneOnOneStats";
 import OneOnOneSingleStats from "@shared_activities/OneOnOneSingleStats";
 import {buildGeneralStats, BuildStatsTable, formatTimeAgo, statsStyle} from "@shared_activities/OneOnOneHelper";
+import {THREE_POINTS_GAME_MODES} from "../../helpers/consts";
 
 export default class Game extends React.Component {
 
@@ -168,7 +169,62 @@ export default class Game extends React.Component {
         }
     }
 
+    async CheckGameFinishedTeamTargetScore(){
+        const { teams, leaderboard, scores, targetScore, played_players } = this.state;
+
+        for (let i = 0; i < teams.length; i++) {
+            const teamTotalScore = teams[i].map(player => scores[player.name]?.reduce((a,b) => { return a + b })).reduce((a,b) => { return a+b});
+            // console.log("team ",i, "score", teamTotalScore);
+            if (teamTotalScore >= targetScore){
+
+                const team_players = teams[i].map(player => player.name);
+                const winners = leaderboard.filter((name) => team_players.indexOf(name) !== -1);
+                const player = winners[0];
+
+                // game over!
+                let current_player = played_players.filter(iter => player.indexOf(iter.name) !== -1)[0];
+                let winner = player;
+                let lost = {};
+                leaderboard.filter(iter => iter !== winner && team_players.indexOf(iter) === -1).map(x => lost[x] = 1);
+                await this.setState({ current_player, winner, lost });
+
+                await this.SaveResult();
+
+                // console.log("is finished true");
+                return true;
+            }
+        }
+
+        // for (let i = 0; i< leaderboard.length; i++) {
+        //
+        //     const player = leaderboard[i];
+        //     const totalScore = scores[player].reduce((a,b) => { return a + b });
+        //     if (totalScore >= targetScore){
+        //
+        //         // game over!
+        //         let current_player = played_players.filter(iter => player.indexOf(iter.name) !== -1)[0];
+        //         let winner = player;
+        //         let lost = {};
+        //         leaderboard.filter(iter => iter !== winner).map(x => lost[x] = 1);
+        //         await this.setState({ current_player, winner, lost });
+        //
+        //         await this.SaveResult();
+        //
+        //         // console.log("is finished true");
+        //         return true;
+        //     }
+        // }
+
+        // console.log("is finished false");
+        return false;
+    }
+
     async CheckGameFinishedTargetScore(){
+
+        if (this.state.game_type === 'team_target_score') {
+            return await this.CheckGameFinishedTeamTargetScore();
+        }
+
         const { leaderboard, scores, targetScore, played_players } = this.state;
 
         for (let i = 0; i< leaderboard.length; i++) {
@@ -198,7 +254,7 @@ export default class Game extends React.Component {
 
     async EndRound() {
 
-        if (this.state.game_type === 'target_score'){
+        if (['target_score', 'team_target_score'].indexOf(this.state.game_type) !== -1){
             return this.EndRoundTargetScore();
         }
 
@@ -588,6 +644,14 @@ export default class Game extends React.Component {
                 </div>
             ): "";
 
+        // game mode
+        const game_mode_block = (
+            <div className="ui link cards centered" style={{margin: "auto", marginBottom:"20px"}}>
+                <div className="ui header" style={{lineHeight: "38px"}}>
+                    Game Mode: {THREE_POINTS_GAME_MODES.filter((iter) => iter.value === this.state.game_type)[0].label}
+                </div>
+            </div>
+        )
 
         const game_saved = (this.state.saved) ? (
             <Notification
@@ -607,7 +671,7 @@ export default class Game extends React.Component {
 
         let get_stats_route = this.props.get_stats_route;
         let game_mode = this.props.game_mode;
-        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,`${game_mode} (${this.state.game_type})`, 0, undefined, percents) : "";
+        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode, 0, undefined, percents) : "";
 
         const self = this;
 
@@ -656,6 +720,7 @@ export default class Game extends React.Component {
                     {/*    onClick={() => { this.setState({ view_stats: true }) }}*/}
                     {/*/>*/}
                 </div>
+                {game_mode_block}
                 {computers_block}
                 {totals}
                 {teams_blocks[0]}

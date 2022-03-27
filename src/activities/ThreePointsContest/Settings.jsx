@@ -39,6 +39,7 @@ import {
 } from "@helpers/sort";
 import DropdownInput from "@components/inputs/DropdownInput";
 import RadioButtonGroup from "../../components/inputs/RadioButtonGroup";
+import {THREE_POINTS_GAME_MODES} from "../../helpers/consts";
 
 const game_mode = "Three Points Contest";
 const stats_title = "Three Points Contest";
@@ -586,22 +587,13 @@ export default class Settings extends React.Component {
                                 name={"game_type"}
                                 label={"Game Type"}
                                 selectedValue={game_type}
-                                options={[
-                                    {
-                                        value: "tournament",
-                                        label: "Tournament"
-                                    },
-                                    {
-                                        value: "target_score",
-                                        label: "Target Score"
-                                    },
-                                ]}
+                                options={THREE_POINTS_GAME_MODES}
                                 onChange={(e) => {
                                     console.log(e.target.value);
                                     this.setState({"game_type": e.target.value});
                                 }}
                             />
-                            <div style={{ display: (game_type === 'target_score') ? "inline-block" : "none", width:"50%", textAlign: "center" }}>
+                            <div style={{ display: (game_type.indexOf('target_score') !== -1) ? "inline-block" : "none", width:"50%", textAlign: "center" }}>
                                 <span style={{ lineHeight: "38px", marginRight: "10px"}} > Target Score: </span>
                                 <input data-testid={"target-score"} type={"number"} value={target_score} min={MIN_TARGET_SCORE} max={MAX_TARGET_SCORE}
                                        onChange={this.setTargetScore.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
