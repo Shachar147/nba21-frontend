@@ -42,6 +42,8 @@ export default class Game extends React.Component {
 
             game_started_at: Date.now(),
             finished_at : undefined,
+            game_type: this.props.game_type || "tournament",
+            targetScore: 10,
         };
 
         this.onScore = this.onScore.bind(this);
@@ -155,7 +157,50 @@ export default class Game extends React.Component {
         }
     }
 
+    async EndRoundTargetScore() {
+        const isFinished = await this.CheckGameFinishedTargetScore();
+        if (!isFinished) {
+
+            const { played_players } = this.state;
+            await this.setState({ played_players: [], round_players: played_players });
+
+            this.StartRound();
+        }
+    }
+
+    async CheckGameFinishedTargetScore(){
+        const { leaderboard, scores, targetScore, played_players } = this.state;
+
+        for (let i = 0; i< leaderboard.length; i++) {
+
+            const player = leaderboard[i];
+            const totalScore = scores[player].reduce((a,b) => { return a + b });
+            // console.log("player", player, totalScore, "goal: ", targetScore);
+            if (totalScore >= targetScore){
+
+                // game over!
+                let current_player = played_players.filter(iter => player.indexOf(iter.name) !== -1)[0];
+                let winner = player;
+                let lost = {};
+                leaderboard.filter(iter => iter !== winner).map(x => lost[x] = 1);
+                await this.setState({ current_player, winner, lost });
+
+                await this.SaveResult();
+
+                // console.log("is finished true");
+                return true;
+            }
+        }
+
+        // console.log("is finished false");
+        return false;
+    }
+
     async EndRound() {
+
+        if (this.state.game_type === 'target_score'){
+            return this.EndRoundTargetScore();
+        }
 
         let played_players = this.state.played_players;
 
@@ -182,7 +227,6 @@ export default class Game extends React.Component {
     }
 
     async onScore(score){
-
 
         if(!this.state.game_started){
             return;
@@ -212,7 +256,10 @@ export default class Game extends React.Component {
 
         await this.setState({ played_players, round_players, scores, leaderboard, total_leader_board });
 
-        this.StartRound();
+        const isFinished = await this.CheckGameFinishedTargetScore();
+        if (!isFinished) {
+            this.StartRound();
+        }
     }
 
     buildLeaderBoard(scores){
@@ -239,6 +286,7 @@ export default class Game extends React.Component {
     }
 
     restart(){
+        debugger;
         this.setState({
             all_players: this.props.all_players,
             round_players: this.props.teams[0].concat(this.props.teams[1]),
@@ -559,7 +607,7 @@ export default class Game extends React.Component {
 
         let get_stats_route = this.props.get_stats_route;
         let game_mode = this.props.game_mode;
-        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,game_mode, 0, undefined, percents) : "";
+        let general_stats_block = (get_stats_route && get_stats_route !== "") ? BuildStatsTable(this.state.general_stats,0,`${game_mode} (${this.state.game_type})`, 0, undefined, percents) : "";
 
         const self = this;
 

@@ -2,6 +2,10 @@ import {shuffle} from "./utils";
 
 export const MIN_ROUND_LENGTH = 1;
 export const MAX_ROUND_LENGTH = 100;
+
+export const MIN_TARGET_SCORE = 10;
+export const MAX_TARGET_SCORE = 100;
+
 export const ROUND_DEFAULT_LENGTH = 3;
 export const LOGIN_DELAY = 500;
 export const LOADING_DELAY = 2000; // to be able to see the loader

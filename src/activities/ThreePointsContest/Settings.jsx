@@ -13,6 +13,8 @@ import {
     LOADING_DELAY,
     MAX_ROUND_LENGTH,
     MIN_ROUND_LENGTH,
+    MAX_TARGET_SCORE,
+    MIN_TARGET_SCORE,
     RANDOM_PLAYER_PICTURE,
     ROUND_DEFAULT_LENGTH,
     TEAM1_COLOR,
@@ -36,6 +38,7 @@ import {
     totalWinsPercentsSort, totalWinsSort
 } from "@helpers/sort";
 import DropdownInput from "@components/inputs/DropdownInput";
+import RadioButtonGroup from "../../components/inputs/RadioButtonGroup";
 
 const game_mode = "Three Points Contest";
 const stats_title = "Three Points Contest";
@@ -107,6 +110,9 @@ export default class Settings extends React.Component {
                 { "Total Lost": totalLostSort },
             ],
             players_hash: {}, // for 3pt percents sort
+
+            game_type: "tournament",
+            target_score: 10,
         };
 
         this.state.orderByOptions.push({ 'Average Place': (a,b) => specificSort('average_place',b,a) });
@@ -297,6 +303,16 @@ export default class Settings extends React.Component {
         });
     }
 
+    setTargetScore(event) {
+        let target_score = event.target.value;
+        target_score = Math.min(target_score,MAX_TARGET_SCORE);
+        target_score = Math.max(target_score,MIN_TARGET_SCORE);
+
+        this.setState({
+            target_score
+        });
+    }
+
     setComputerLevel(event) {
         let computer_level = event.target.value;
 
@@ -429,7 +445,7 @@ export default class Settings extends React.Component {
 
     render() {
 
-        const { teams, randoms, computers, game_started, view_stats } = this.state;
+        const { teams, randoms, computers, game_started, view_stats, game_type, target_score } = this.state;
         const { player_from_url } = this.props;
 
         const filteredPlayers = this.applyFilters();
@@ -479,6 +495,8 @@ export default class Settings extends React.Component {
                 general_stats={general_stats}
                 percents={percents}
                 get_stats_route={get_stats_route}
+                game_type={game_type}
+                target_score={target_score}
               />
             );
         }
@@ -561,6 +579,32 @@ export default class Settings extends React.Component {
                             <div style={{ display:"inline-block", width:"50%", textAlign: "center" }}>
                                 <span style={{ lineHeight: "38px", marginRight: "10px"}} > Round Length: </span>
                                 <input data-testid={"round-length"} type={"number"} value={this.state.round_length} min={MIN_ROUND_LENGTH} max={MAX_ROUND_LENGTH} onChange={this.setRoundLength.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
+                            </div>
+                        </div>
+                        <div style={{ display: "block", textAlign:"center", marginTop:"15px", width: "100%" }}>
+                            <RadioButtonGroup
+                                name={"game_type"}
+                                label={"Game Type"}
+                                selectedValue={game_type}
+                                options={[
+                                    {
+                                        value: "tournament",
+                                        label: "Tournament"
+                                    },
+                                    {
+                                        value: "target_score",
+                                        label: "Target Score"
+                                    },
+                                ]}
+                                onChange={(e) => {
+                                    console.log(e.target.value);
+                                    this.setState({"game_type": e.target.value});
+                                }}
+                            />
+                            <div style={{ display: (game_type === 'target_score') ? "inline-block" : "none", width:"50%", textAlign: "center" }}>
+                                <span style={{ lineHeight: "38px", marginRight: "10px"}} > Target Score: </span>
+                                <input data-testid={"target-score"} type={"number"} value={target_score} min={MIN_TARGET_SCORE} max={MAX_TARGET_SCORE}
+                                       onChange={this.setTargetScore.bind(this)} style={{ height: "38px", marginRight: "10px", border: "1px solid #eaeaea", padding:"0px 5px" }}/>
                             </div>
                         </div>
                         <div style={{ display: "block", textAlign:"center", marginTop:"15px", width: "100%" }}>
