@@ -7,8 +7,7 @@
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Game.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/Settings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,19 +74,6 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.start:dev:mac">
-    <configuration name="&lt;ShootingBox /&gt; test suite" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/components/internal/__tests__/ShootingBox.test.js" />
-      <test-names>
-        <test-name value="&lt;ShootingBox /&gt; test suite" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="&lt;ShootingBox /&gt; test suite.Should render Loser message if is_losser flag was passed." type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -116,6 +102,16 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="start:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="start:dev:mac" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -139,10 +135,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.start:dev:mac" />
+        <item itemvalue="npm.start:dev" />
         <item itemvalue="npm.storybook:mac" />
         <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Should render Winner message if is_winner flag was passed." />
         <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite.Should render Loser message if is_losser flag was passed." />
-        <item itemvalue="Jest.&lt;ShootingBox /&gt; test suite" />
       </list>
     </recent_temporary>
   </component>
@@ -201,6 +197,8 @@
       <workItem from="1640442096796" duration="5060000" />
       <workItem from="1642686467051" duration="24211000" />
       <workItem from="1645196016166" duration="2708000" />
+      <workItem from="1650827297275" duration="410000" />
+      <workItem from="1655012171161" duration="1099000" />
     </task>
     <servers />
   </component>

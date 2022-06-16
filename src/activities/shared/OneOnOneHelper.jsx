@@ -613,7 +613,9 @@ export function buildGeneralStats(stats, percents, stopwatch) {
                 }
             }
 
-            general_stats['total_games'] += (1/divide);
+            if (divide > 0) {
+                general_stats['total_games'] += (1 / divide);
+            }
 
             // console.log("total games: ", general_stats['total_games']);
 

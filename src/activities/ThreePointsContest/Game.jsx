@@ -342,7 +342,6 @@ export default class Game extends React.Component {
     }
 
     restart(){
-        debugger;
         this.setState({
             all_players: this.props.all_players,
             round_players: this.props.teams[0].concat(this.props.teams[1]),
