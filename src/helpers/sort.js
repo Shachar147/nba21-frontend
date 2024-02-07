@@ -228,6 +228,14 @@ export function totalWinsSort(a,b){
     return specificSort('total_wins',a,b);
 }
 
+export function totalOTWinsSort(a,b){
+    return specificSort('total_ot_wins',a,b);
+}
+
+export function totalOTLostSort(a,b){
+    return specificSort('total_ot_lost',a,b);
+}
+
 export function totalLostSort(a,b){
     return specificSort('total_lost',a,b);
 }

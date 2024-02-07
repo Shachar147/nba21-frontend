@@ -29,6 +29,7 @@ import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 import OneOnOneSingleStats from "./OneOnOneSingleStats";
 
 import { withRouter } from "react-router";
+import {totalOTLostSort, totalOTWinsSort} from "../../helpers/sort";
 
 class OneOnOneStats extends React.Component {
 
@@ -59,6 +60,8 @@ class OneOnOneStats extends React.Component {
                 { "Total Scored": totalScored },
                 { "Total Wins": totalWinsSort },
                 { "Total Lost": totalLostSort },
+                { "Total OT Wins": totalOTWinsSort },
+                { "Total OT Lost": totalOTLostSort }
             ],
             "orderBy": orderBy,
             loaderDetails: LOADER_DETAILS(),
@@ -147,6 +150,8 @@ class OneOnOneStats extends React.Component {
                 else return 0;
                 // specificSort('total_matchups',b,a)
             } });
+            this.state.orderByOptions.push({ 'Total OT Wins': (a,b) => specificSort('total_ot_wins',a,b) });
+            this.state.orderByOptions.push({ 'Total OT Lost': (a,b) => specificSort('total_ot_lost',a,b) });
         }
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -561,6 +566,8 @@ class OneOnOneStats extends React.Component {
                                     total_tournaments: records[player.name].total_tournaments,
                                     total_tournament_wins: records[player.name].total_tournament_wins,
                                     total_matchups: (records[player.name]['matchups']) ? Object.keys(records[player.name]['matchups']).length : undefined,
+                                    total_ot_wins: records[player.name]['total_ot_wins'],
+                                    total_ot_lost: records[player.name]['total_ot_lost']
                                 }}
 
                                 onImageClick={() => {
