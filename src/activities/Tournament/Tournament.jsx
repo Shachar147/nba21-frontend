@@ -7,7 +7,7 @@ import {
     toPascalCase
 } from "@helpers/utils";
 import Header from "@components/layout/Header";
-import {apiGet, apiPost, apiPut} from "@helpers/api";
+import {apiGet, apiPost} from "@helpers/api";
 import PlayerCard from "@components/PlayerCard";
 import LoadingPage from "@pages/LoadingPage";
 import ErrorPage from "@pages/ErrorPage";
@@ -27,7 +27,6 @@ import {buildStatsInformation, BuildStatsTable, statsStyle} from "@shared_activi
 import DropdownInput from "@components/inputs/DropdownInput";
 import TextInput from "@components/inputs/TextInput";
 import OneOnOneSingleStats from "@shared_activities/OneOnOneSingleStats";
-import Notification from "@components/internal/Notification";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import Card from "@components/Card";
 import WinnerModal from "@components/modals/WinnerModal";
