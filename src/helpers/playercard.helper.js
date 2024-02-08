@@ -238,8 +238,6 @@ export function buildDetails(details, stats){
         'Total Matchups': `${total_matchups}`,
     };
 
-    console.log("total_ot_wins", total_ot_wins);
-
     // on fire / ice cold
     let onfire = "";
     let icecold = "";

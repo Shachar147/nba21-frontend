@@ -29,7 +29,7 @@ import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 import OneOnOneSingleStats from "./OneOnOneSingleStats";
 
 import { withRouter } from "react-router";
-import {totalOTLostSort, totalOTWinsSort} from "../../helpers/sort";
+import {totalOTLostSort, totalOTWinsPercentSort, totalOTWinsSort} from "../../helpers/sort";
 
 class OneOnOneStats extends React.Component {
 
@@ -60,8 +60,10 @@ class OneOnOneStats extends React.Component {
                 { "Total Scored": totalScored },
                 { "Total Wins": totalWinsSort },
                 { "Total Lost": totalLostSort },
-                { "Total OT Wins": totalOTWinsSort },
-                { "Total OT Lost": totalOTLostSort }
+                { "Total Overtimes Wins": totalOTWinsSort },
+                { "Total Overtimes Lost": totalOTLostSort },
+                { "Total Overtimes Wins Percent": totalOTWinsPercentSort },
+                { "Total Games with Overtime": totalGamesWithOTSort }
             ],
             "orderBy": orderBy,
             loaderDetails: LOADER_DETAILS(),

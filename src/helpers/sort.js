@@ -1,4 +1,4 @@
-import {reFormatDate} from "./utils";
+import {calcPercents, reFormatDate} from "./utils";
 
 export function overallSort(a,b){
 
@@ -234,6 +234,20 @@ export function totalOTWinsSort(a,b){
 
 export function totalOTLostSort(a,b){
     return specificSort('total_ot_lost',a,b);
+}
+
+export function totalOTWinsPercentSort(a,b){
+    function getPercent({ total_ot_wins, total_ot_lost }) {
+        return calcPercents(total_ot_wins, total_ot_wins + total_ot_lost);
+    }
+    return specificSort('percent',{ "percent": getPercent(a) }, { "percent": getPercent(b) });
+}
+
+export function totalGamesWithOTSort(a, b){
+    function getTotal({ total_ot_wins, total_ot_lost }) {
+        return total_ot_wins + total_ot_lost;
+    }
+    return specificSort('total',{ "total": getTotal(a) }, { "total": getTotal(b) });
 }
 
 export function totalLostSort(a,b){
