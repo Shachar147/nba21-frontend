@@ -29,7 +29,14 @@ import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 import OneOnOneSingleStats from "./OneOnOneSingleStats";
 
 import { withRouter } from "react-router";
-import {totalGamesWithOTSort, totalOTLostSort, totalOTWinsPercentSort, totalOTWinsSort} from "../../helpers/sort";
+import {
+    totalFinalsPercentsSort,
+    totalGamesWithOTSort,
+    totalOTLostSort,
+    totalOTWinsPercentSort,
+    totalOTWinsSort
+} from "../../helpers/sort";
+import {calcPercents} from "../../helpers/utils";
 
 class OneOnOneStats extends React.Component {
 
@@ -123,6 +130,8 @@ class OneOnOneStats extends React.Component {
                 this.state.orderByOptions.push({ "Total Overtimes Lost": totalOTLostSort });
                 this.state.orderByOptions.push({ "Total Overtimes Wins Percent": totalOTWinsPercentSort });
                 this.state.orderByOptions.push({ "Total Games with Overtime": totalGamesWithOTSort });
+                this.state.orderByOptions.push({ "Total Games with Overtime": totalGamesWithOTSort });
+                this.state.orderByOptions.push({ "Total Finals Percents": totalFinalsPercentsSort })
             }
 
             this.state.orderByOptions.push({ "Total Comebacks Made": (a,b) => specificSort('total_won_comebacks',a, b) });

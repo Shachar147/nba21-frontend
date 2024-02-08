@@ -250,6 +250,14 @@ export function totalGamesWithOTSort(a, b){
     return specificSort('total',{ "total": getTotal(a) }, { "total": getTotal(b) });
 }
 
+export function totalFinalsPercentsSort(a, b) {
+    function getPercents(settings){
+        calcPercents(settings['Total Finals Appearances'], settings['total_tournaments']);
+    }
+
+    return specificSort('total', { "total": getPercents(a) }, { "total": getPercents(b) });
+}
+
 export function totalLostSort(a,b){
     return specificSort('total_lost',a,b);
 }
