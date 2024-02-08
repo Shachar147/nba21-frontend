@@ -113,6 +113,10 @@ export function numberWithCommas(x) {
     return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export function calcPercents(number, total, toFixed = 2){
+    return ((number / total) * 100).toFixed(toFixed);
+}
+
 export function swap(json){
     var ret = {};
     for(var key in json){

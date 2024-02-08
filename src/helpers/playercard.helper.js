@@ -1,4 +1,4 @@
-import {formatDate, isDefined, nth, numberWithCommas} from "./utils";
+import {calcPercents, formatDate, isDefined, nth, numberWithCommas} from "./utils";
 import {
     ICE_COLD_COLOR, ICE_COLD_ICON, ICE_COLD_STYLE,
     ICE_COLD_THRESHOLD,
@@ -128,8 +128,12 @@ export function buildDetails(details, stats){
         total_tournaments,
         total_tournament_wins,
         total_matchups,
+        total_ot_wins,
+        total_ot_lost,
 
     } = stats;
+
+    const total_games_with_overtime = total_ot_wins + total_ot_lost;
 
     total_diff_per_game = total_diff_per_game || 'N/A';
     if(total_win_percents === 0) total_win_percents = "0.00%";
@@ -213,6 +217,10 @@ export function buildDetails(details, stats){
 
         // stopwatch shootout
         'Total Overtimes': `${total_overtimes}`,
+        'Total Overtimes Wins': `${total_ot_wins}`,
+        'Total Overtimes Lost': `${total_ot_lost}`,
+        'Total Games with Overtime': `${total_games_with_overtime}`,
+        'Total Overtimes Wins Percent': `${calcPercents(total_ot_wins, total_ot_wins + total_ot_lost)}%`,
         'Total Comebacks Made': `${total_won_comebacks}`,
         'Total Comebacks Suffered': `${total_lost_comebacks}`,
 
