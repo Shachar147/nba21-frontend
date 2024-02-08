@@ -29,7 +29,7 @@ import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 import OneOnOneSingleStats from "./OneOnOneSingleStats";
 
 import { withRouter } from "react-router";
-import {totalOTLostSort, totalOTWinsPercentSort, totalOTWinsSort} from "../../helpers/sort";
+import {totalGamesWithOTSort, totalOTLostSort, totalOTWinsPercentSort, totalOTWinsSort} from "../../helpers/sort";
 
 class OneOnOneStats extends React.Component {
 
@@ -60,10 +60,6 @@ class OneOnOneStats extends React.Component {
                 { "Total Scored": totalScored },
                 { "Total Wins": totalWinsSort },
                 { "Total Lost": totalLostSort },
-                { "Total Overtimes Wins": totalOTWinsSort },
-                { "Total Overtimes Lost": totalOTLostSort },
-                { "Total Overtimes Wins Percent": totalOTWinsPercentSort },
-                { "Total Games with Overtime": totalGamesWithOTSort }
             ],
             "orderBy": orderBy,
             loaderDetails: LOADER_DETAILS(),
@@ -121,6 +117,14 @@ class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ "Total Suffered Knockouts": totalSufferedKnockoutsSort });
 
             this.state.orderByOptions.push({ "Total Overtimes": (a,b) => specificSort('total_overtimes',a, b) });
+
+            if (this.props.game_mode === "Tournament") {
+                this.state.orderByOptions.push({ "Total Overtimes Wins": totalOTWinsSort });
+                this.state.orderByOptions.push({ "Total Overtimes Lost": totalOTLostSort });
+                this.state.orderByOptions.push({ "Total Overtimes Wins Percent": totalOTWinsPercentSort });
+                this.state.orderByOptions.push({ "Total Games with Overtime": totalGamesWithOTSort });
+            }
+
             this.state.orderByOptions.push({ "Total Comebacks Made": (a,b) => specificSort('total_won_comebacks',a, b) });
             this.state.orderByOptions.push({ "Total Comebacks Suffered": (a,b) => specificSort('total_lost_comebacks',a, b) });
 
