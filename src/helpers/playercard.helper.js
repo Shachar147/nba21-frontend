@@ -361,10 +361,9 @@ export function buildDetails(details, stats){
     if (isDefined(total_ot_wins)) stats_arr.push(`Total Overtimes Wins: ${settings['Total Overtimes Wins']}`);
     if (isDefined(total_ot_lost)) stats_arr.push(`Total Overtimes Lost: ${settings['Total Overtimes Lost']}`);
     if (isDefined(total_games_with_overtime)) stats_arr.push(`Total Games with Overtime: ${settings['Total Games with Overtime']}`);
-    if (isDefined(total_games_with_overtime)) stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']}`);
-
+    // if (isDefined(total_games_with_overtime)) stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']}`);
     if (total_games_with_overtime)
-        stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']} (${settings['Total Overtimes Wins']} - ${settings['Total Overtimes Lost']})`);
+        stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']} (${settings['Total Overtimes Wins']}W - ${settings['Total Overtimes Lost']}L)`);
 
     // highlighted items first
     let first = [];
