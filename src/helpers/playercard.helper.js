@@ -215,7 +215,7 @@ export function buildDetails(details, stats){
         'Average Round Length': `${average_round_length}`,
         'Total Minutes': `${total_minutes}`,
 
-        // stopwatch shootout
+        // tournament
         'Total Overtimes': `${total_overtimes}`,
         'Total Overtimes Wins': `${total_ot_wins}`,
         'Total Overtimes Lost': `${total_ot_lost}`,
@@ -237,6 +237,8 @@ export function buildDetails(details, stats){
         'Total Championships': `${total_tournament_wins}`,
         'Total Matchups': `${total_matchups}`,
     };
+
+    console.log("total_ot_wins", total_ot_wins);
 
     // on fire / ice cold
     let onfire = "";
@@ -357,6 +359,11 @@ export function buildDetails(details, stats){
     if (isDefined(total_road_wins) || isDefined(total_road_lost)) stats_arr.push(`Total Road Wins/Lost: ${settings['Total Road Wins']}-${settings['Total Road Lost']}`);
 
     if (isDefined(total_matchups)) stats_arr.push(`Total Matchups: ${settings['Total Matchups']}`);
+
+    if (isDefined(total_ot_wins)) stats_arr.push(`Total Overtimes Wins: ${settings['Total Overtimes Wins']}`);
+    if (isDefined(total_ot_lost)) stats_arr.push(`Total Overtimes Lost: ${settings['Total Overtimes Lost']}`);
+    if (isDefined(total_games_with_overtime)) stats_arr.push(`Total Games with Overtime: ${settings['Total Games with Overtime']}`);
+    if (isDefined(total_games_with_overtime)) stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']}`);
 
     // highlighted items first
     let first = [];
