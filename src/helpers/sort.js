@@ -252,7 +252,7 @@ export function totalGamesWithOTSort(a, b){
 
 export function totalFinalsPercentsSort(a, b) {
     function getPercents(settings){
-        calcPercents(settings['Total Finals Appearances'], settings['total_tournaments']);
+        calcPercents(settings['total_finals_appearances'], settings['total_tournaments']);
     }
 
     return specificSort('total', { "total": getPercents(a) }, { "total": getPercents(b) });
