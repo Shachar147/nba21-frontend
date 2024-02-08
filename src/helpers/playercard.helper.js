@@ -367,7 +367,7 @@ export function buildDetails(details, stats){
         stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']} (${settings['Total Overtimes Wins']}W - ${settings['Total Overtimes Lost']}L)`);
 
     if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Appearances: ${settings['Total Finals Appearances']}`);
-    if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Percents: ${calcPercents(settings['Total Finals Appearances'], settings['total_tournaments'])}%`);
+    if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Percents: ${calcPercents(settings['total_finals_appearances'], settings['total_tournaments'])}%`);
 
     // highlighted items first
     let first = [];
