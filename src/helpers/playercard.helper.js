@@ -130,7 +130,7 @@ export function buildDetails(details, stats){
         total_matchups,
         total_ot_wins,
         total_ot_lost,
-
+        total_finals_appearances
     } = stats;
 
     const total_games_with_overtime = total_ot_wins + total_ot_lost;
@@ -236,6 +236,7 @@ export function buildDetails(details, stats){
         'Total Tournaments': `${total_tournaments}`,
         'Total Championships': `${total_tournament_wins}`,
         'Total Matchups': `${total_matchups}`,
+        'Total Finals Appearances': total_finals_appearances
     };
 
     // on fire / ice cold
@@ -364,6 +365,8 @@ export function buildDetails(details, stats){
     // if (isDefined(total_games_with_overtime)) stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']}`);
     if (total_games_with_overtime)
         stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']} (${settings['Total Overtimes Wins']}W - ${settings['Total Overtimes Lost']}L)`);
+
+    if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Appearances: ${settings['Total Finals Appearances']}`);
 
     // highlighted items first
     let first = [];
