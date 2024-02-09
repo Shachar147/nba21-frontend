@@ -369,8 +369,8 @@ export function buildDetails(details, stats){
         stats_arr.push(`Total Overtimes Wins Percent: ${settings['Total Overtimes Wins Percent']} (${settings['Total Overtimes Wins']}W - ${settings['Total Overtimes Lost']}L)`);
 
     if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Appearances: ${settings['Total Finals Appearances']}`);
-    if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Wins Percents: ${settings['Total Finals Wins Percents']}% (${total_tournament_wins} championships out of ${settings['Total Finals Appearances']} finals)`);
-    if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Appearances Percents: ${settings['Total Finals Appearances Percents']}% (${settings['Total Finals Appearances']} finals out of ${settings['Total Tournaments']} played tournaments)`);
+    if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Wins Percents: ${settings['Total Finals Wins Percents']}% (${total_tournament_wins} championships / ${total_finals_appearances} finals)`);
+    if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Appearances Percents: ${settings['Total Finals Appearances Percents']}% (${total_finals_appearances} finals / ${total_tournaments} tournaments)`);
 
     // highlighted items first
     let first = [];
