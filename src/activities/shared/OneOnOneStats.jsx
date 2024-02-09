@@ -167,6 +167,7 @@ class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ 'Total OT Wins': (a,b) => specificSort('total_ot_wins',a,b) });
             this.state.orderByOptions.push({ 'Total OT Lost': (a,b) => specificSort('total_ot_lost',a,b) });
             this.state.orderByOptions.push({ 'Total Finals Appearances': (a,b) => specificSort('total_finals_appearances',a,b) });
+            this.state.orderByOptions.push({ 'Total Finals Percents': totalFinalsPercentsSort });
         }
 
         this.applyFilters = this.applyFilters.bind(this);
