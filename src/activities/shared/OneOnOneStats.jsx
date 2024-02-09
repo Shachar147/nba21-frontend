@@ -129,8 +129,7 @@ class OneOnOneStats extends React.Component {
                 this.state.orderByOptions.push({ "Total Overtimes Lost": totalOTLostSort });
                 this.state.orderByOptions.push({ "Total Overtimes Wins Percent": totalOTWinsPercentSort });
                 this.state.orderByOptions.push({ "Total Games with Overtime": totalGamesWithOTSort });
-                this.state.orderByOptions.push({ "Total Games with Overtime": totalGamesWithOTSort });
-                this.state.orderByOptions.push({ "Total Finals Percents": totalFinalsPercentsSort })
+                this.state.orderByOptions.push({ 'Total Finals Percents': totalFinalsPercentsSort });
             }
 
             this.state.orderByOptions.push({ "Total Comebacks Made": (a,b) => specificSort('total_won_comebacks',a, b) });
@@ -164,10 +163,7 @@ class OneOnOneStats extends React.Component {
                 else return 0;
                 // specificSort('total_matchups',b,a)
             } });
-            this.state.orderByOptions.push({ 'Total OT Wins': (a,b) => specificSort('total_ot_wins',a,b) });
-            this.state.orderByOptions.push({ 'Total OT Lost': (a,b) => specificSort('total_ot_lost',a,b) });
             this.state.orderByOptions.push({ 'Total Finals Appearances': (a,b) => specificSort('total_finals_appearances',a,b) });
-            this.state.orderByOptions.push({ 'Total Finals Percents': totalFinalsPercentsSort });
         }
 
         this.applyFilters = this.applyFilters.bind(this);
