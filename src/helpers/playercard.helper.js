@@ -236,7 +236,8 @@ export function buildDetails(details, stats){
         'Total Tournaments': `${total_tournaments}`,
         'Total Championships': `${total_tournament_wins}`,
         'Total Matchups': `${total_matchups}`,
-        'Total Finals Appearances': total_finals_appearances
+        'Total Finals Appearances': total_finals_appearances,
+        'Total Finals Percents': calcPercents(total_finals_appearances, total_tournaments),
     };
 
     // on fire / ice cold

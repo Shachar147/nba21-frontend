@@ -1,7 +1,7 @@
 import React from 'react';
 import PlayerCard from '@components/PlayerCard';
 import SearchInput from '@components/inputs/SearchInput';
-import {formatDate, isDefined, nth} from "@helpers/utils";
+import { isDefined } from "@helpers/utils";
 import LoadingPage from "@pages/LoadingPage";
 import ErrorPage from "@pages/ErrorPage";
 
@@ -36,7 +36,6 @@ import {
     totalOTWinsPercentSort,
     totalOTWinsSort
 } from "../../helpers/sort";
-import {calcPercents} from "../../helpers/utils";
 
 class OneOnOneStats extends React.Component {
 
