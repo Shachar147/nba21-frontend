@@ -30,7 +30,7 @@ import OneOnOneSingleStats from "./OneOnOneSingleStats";
 
 import { withRouter } from "react-router";
 import {
-    totalFinalsPercentsSort,
+    totalFinalsAppearancesPercentsSort, totalFinalsWinsPercentsSort,
     totalGamesWithOTSort,
     totalOTLostSort,
     totalOTWinsPercentSort,
@@ -129,7 +129,9 @@ class OneOnOneStats extends React.Component {
                 this.state.orderByOptions.push({ "Total Overtimes Lost": totalOTLostSort });
                 this.state.orderByOptions.push({ "Total Overtimes Wins Percent": totalOTWinsPercentSort });
                 this.state.orderByOptions.push({ "Total Games with Overtime": totalGamesWithOTSort });
-                this.state.orderByOptions.push({ 'Total Finals Percents': totalFinalsPercentsSort });
+                this.state.orderByOptions.push({ 'Total Finals Appearances': (a,b) => specificSort('total_finals_appearances',a,b) });
+                this.state.orderByOptions.push({ 'Total Finals Appearances Percents': totalFinalsAppearancesPercentsSort });
+                this.state.orderByOptions.push({ 'Total Finals Wins Percents': totalFinalsWinsPercentsSort });
             }
 
             this.state.orderByOptions.push({ "Total Comebacks Made": (a,b) => specificSort('total_won_comebacks',a, b) });
@@ -163,7 +165,6 @@ class OneOnOneStats extends React.Component {
                 else return 0;
                 // specificSort('total_matchups',b,a)
             } });
-            this.state.orderByOptions.push({ 'Total Finals Appearances': (a,b) => specificSort('total_finals_appearances',a,b) });
         }
 
         this.applyFilters = this.applyFilters.bind(this);
