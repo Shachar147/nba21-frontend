@@ -58,12 +58,6 @@
     "test:e2e:watch": "SET REACT_APP_MODE=development && craco test --testPathPattern=.*e2e.test.js$",
     "test:all": "craco test --watchAll=false"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test",
-      "pre-push": "npm run test:e2e:mac"
-    }
-  },
   "author": "",
   "license": "ISC",
   "browserslist": {
