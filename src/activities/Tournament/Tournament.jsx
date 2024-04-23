@@ -226,8 +226,6 @@ export default class Tournament extends React.Component {
         let curr_players = players;
         curr_players = players.sort((a, b) => 0.5 - Math.random()); // shuffle
         curr_players = players.slice(0,self.state.max_teams); // slice
-        // if (debug) console.log('curr players', curr_players);
-        // console.log(curr_players);
 
         await self.setState({ players, curr_players, tournament_players: curr_players });
         await self.init();
@@ -870,165 +868,154 @@ export default class Tournament extends React.Component {
         );
     }
 
-    render(){
+    renderLoadingPage(){
+        return (
+            <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={this.state.loaderDetails} />
+        );
+    }
 
-        let original_custom_title = custom_details_title;
+    renderStats(){
+        return (
+            <OneOnOneStats
+                what={what}
+                stats_title={stats_title}
+                game_mode={game_mode}
+                get_route={get_route}
+                get_stats_route={get_stats_route}
+                get_stats_specific_route={get_stats_specific_route}
+                mvp_block={mvp_block}
+                // mvp_block={false}
+                onBack={() => { this.setState({ view_stats: false }) }}
+                player_from_url={player_from_url}
+            />
+        );
+    }
 
-        let { error, error_retry, loaded, loadedSettings, players, loaderDetails, max_teams, is_started } = this.state;
-
-        if (!this.state.teams){
-            return (
-                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={loaderDetails} />
-            );
-        }
-
-        if (this.state.view_stats && stats_page){
-            return (
-                <OneOnOneStats
-                    what={what}
-                    stats_title={stats_title}
-                    game_mode={game_mode}
-                    get_route={get_route}
-                    get_stats_route={get_stats_route}
-                    get_stats_specific_route={get_stats_specific_route}
-                    mvp_block={mvp_block}
-                    // mvp_block={false}
-                    onBack={() => { this.setState({ view_stats: false }) }}
-                    player_from_url={player_from_url}
-                />
-            );
-        }
-
+    renderSingleStats(){
         const { selected_player } = this.state;
+        const get_specific_route = (what === "players") ? "/player" : "/team";
+        const this_stats_title = stats_title || game_mode;
 
-        if (selected_player){
-            const get_specific_route = (what === "players") ? "/player" : "/team";
-            const this_stats_title = stats_title || game_mode;
+        return (
+            <OneOnOneSingleStats
+                selected_player={selected_player}
+                what={what}
+                stats_title={`${this_stats_title} - ${selected_player}`}
+                game_mode={game_mode}
+                get_route={get_specific_route}
+                get_stats_route={get_stats_specific_route}
+                onBack={() => { this.setState({ selected_player: undefined }) }}
+            />
+        );
+    }
 
-            return (
-                <OneOnOneSingleStats
-                    selected_player={selected_player}
-                    what={what}
-                    stats_title={`${this_stats_title} - ${selected_player}`}
-                    game_mode={game_mode}
-                    get_route={get_specific_route}
-                    get_stats_route={get_stats_specific_route}
-                    onBack={() => { this.setState({ selected_player: undefined }) }}
-                />
-            );
-        }
-
+    renderLoby(){
         const self = this;
-
         let { tournament_teams } = self.state;
+        return (
+            <div style={{ paddingTop: "20px" }}>
+                <Header />
 
-        if (!max_teams || !is_started){
-            return (
-                <div style={{ paddingTop: "20px" }}>
-                    <Header />
-
-                    <div className="ui link cards centered" style={{margin: "auto", marginTop: "20px"}}>
+                <div className="ui link cards centered" style={{margin: "auto", marginTop: "20px"}}>
                     {(stats_page) ?
                         <ButtonInput
                             text={"View Stats"}
                             style={{ marginLeft:"5px" }}
                             onClick={() => { this.setState({ view_stats: true }) }}
                         /> : ""}
+                </div>
+
+                <div className="ui link cards centered" style={{...statsStyle,textAlign: "center"}}>
+                    <div className="ui header" style={{ width: "100%", textAlign: "center", marginBottom: 10}}>
+                        Tournament Settings
                     </div>
+                    Choose which teams do you want to participate in this tournament.<br/>
+                    Total Selected: { tournament_teams.length } <br/>
+                    <div className="ui link cards centered" style={{ margin: "auto" }}>
+                        {
+                            this.state.teams.sort((a,b) => {
+                                let idx1 = tournament_teams.indexOf(a.name);
+                                let idx2 = tournament_teams.indexOf(b.name);
+                                if (idx1 === -1) idx1 = 9999;
+                                if (idx2 === -1) idx2 = 9999;
+                                return idx1 - idx2;
+                            }).map((team) => {
+                                let opacity = (tournament_teams.indexOf(team.name) !== -1) ? 1 : 0.4;
 
-                    <div className="ui link cards centered" style={{...statsStyle,textAlign: "center"}}>
-                        <div className="ui header" style={{ width: "100%", textAlign: "center", marginBottom: 10}}>
-                            Tournament Settings
-                        </div>
-                        Choose which teams do you want to participate in this tournament.<br/>
-                        Total Selected: { tournament_teams.length } <br/>
-                        <div className="ui link cards centered" style={{ margin: "auto" }}>
-                            {
-                                this.state.teams.sort((a,b) => {
-                                    let idx1 = tournament_teams.indexOf(a.name);
-                                    let idx2 = tournament_teams.indexOf(b.name);
-                                    if (idx1 === -1) idx1 = 9999;
-                                    if (idx2 === -1) idx2 = 9999;
-                                    return idx1 - idx2;
-                                }).map((team) => {
-                                    let opacity = (tournament_teams.indexOf(team.name) !== -1) ? 1 : 0.4;
+                                return (
+                                    <Card
+                                        key={`${team.name.replace(/\s/i,'_')}_card`}
+                                        name={team.name}
+                                        picture={team.logo}
+                                        style={{ opacity: opacity, width: '100px' }}
+                                        onClick={() => {
 
-                                    return (
-                                        <Card
-                                            key={`${team.name.replace(/\s/i,'_')}_card`}
-                                            name={team.name}
-                                            picture={team.logo}
-                                            style={{ opacity: opacity, width: '100px' }}
-                                            onClick={() => {
+                                            const idx = tournament_teams.indexOf(team.name);
+                                            if (idx !== -1) {
+                                                tournament_teams.splice(idx,1)
+                                            } else {
+                                                tournament_teams.push(team.name);
+                                            }
+                                            self.setState({ tournament_teams });
+                                        }}
+                                    />
+                                );
+                            })
+                        }
+                    </div>
+                    <br/>
+                    Choose how many teams you want to participate in this tournament.<br/>
+                    <div style={{ width: "100%" }}>
+                        <span style={{ opacity: "0.6" }}>min: {MIN_TEAMS_IN_TOURNAMENT}. max: {MAX_TEAMS_IN_TOURNAMENT}. number must be even.</span>
+                    </div>
+                    <div style={{ width: "100%", marginTop:"20px", zIndex:99999 }}>
+                        <input
+                            type={"number"}
+                            value={this.state.max_teams || DEFAULT_MAX_TEAMS_IN_TOURNAMENT}
+                            min={MIN_TEAMS_IN_TOURNAMENT}
+                            max={MAX_TEAMS_IN_TOURNAMENT}
+                            onChange={(e) => {
+                                let number = e.target.value;
 
-                                                const idx = tournament_teams.indexOf(team.name);
-                                                if (idx !== -1) {
-                                                    tournament_teams.splice(idx,1)
-                                                } else {
-                                                    tournament_teams.push(team.name);
-                                                }
-                                                self.setState({ tournament_teams });
-                                            }}
-                                        />
-                                    );
-                                })
-                            }
-                        </div>
-                        <br/>
-                        Choose how many teams you want to participate in this tournament.<br/>
-                        <div style={{ width: "100%" }}>
-                            <span style={{ opacity: "0.6" }}>min: {MIN_TEAMS_IN_TOURNAMENT}. max: {MAX_TEAMS_IN_TOURNAMENT}. number must be even.</span>
-                        </div>
-                        <div style={{ width: "100%", marginTop:"20px", zIndex:99999 }}>
-                            <input
-                                type={"number"}
-                                value={this.state.max_teams || DEFAULT_MAX_TEAMS_IN_TOURNAMENT}
-                                min={MIN_TEAMS_IN_TOURNAMENT}
-                                max={MAX_TEAMS_IN_TOURNAMENT}
-                                onChange={(e) => {
-                                    let number = e.target.value;
+                                // only even
+                                if (number %2 !== 0){
+                                    number++;
+                                }
 
-                                    // only even
-                                    if (number %2 !== 0){
-                                        number++;
-                                    }
+                                // apply min/max restrictions
+                                number = Math.max(MIN_TEAMS_IN_TOURNAMENT,Math.min(MAX_TEAMS_IN_TOURNAMENT,number));
 
-                                    // apply min/max restrictions
-                                    number = Math.max(MIN_TEAMS_IN_TOURNAMENT,Math.min(MAX_TEAMS_IN_TOURNAMENT,number));
-
-                                    this.setState({ max_teams: number })
-                                }}
-                                style={{ height: "38px", border: "1px solid #eaeaea", padding:"0px 5px", width: "50px" }}/>
-                            <ButtonInput
-                                text={"Start!"}
-                                style={{ marginLeft:"5px" }}
-                                disabled={tournament_teams.length < this.state.max_teams}
-                                onClick={() => {
-                                    this.setState({ is_started: true });
-                                    this.loadTeams();
-                                }}
-                            />
-                        </div>
+                                this.setState({ max_teams: number })
+                            }}
+                            style={{ height: "38px", border: "1px solid #eaeaea", padding:"0px 5px", width: "50px" }}/>
+                        <ButtonInput
+                            text={"Start!"}
+                            style={{ marginLeft:"5px" }}
+                            disabled={tournament_teams.length < this.state.max_teams}
+                            onClick={() => {
+                                this.setState({ is_started: true });
+                                this.loadTeams();
+                            }}
+                        />
                     </div>
                 </div>
-            )
-        }
+            </div>
+        );
+    }
 
-        const is_loading = !loaded || !loadedSettings;
-        if (error || (!is_loading && players.length === 0)) {
-            error = error || `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error`;
-            return (
-                <ErrorPage message={error} retry={error_retry} />
-            );
-        } else if (is_loading) {
-            return (
-                <LoadingPage message={`Please wait while loading ${what}...`} loaderDetails={loaderDetails} />
-            );
-        }
+    renderErrorPage(){
+        let { error, error_retry } = this.state;
+        error = error || `Oops, it seems like no ${what} loaded :(<Br>It's probably related to a server error`;
+        return (
+            <ErrorPage message={error} retry={error_retry} />
+        );
+    }
+
+    renderTournamentGame(){
+        let original_custom_title = custom_details_title;
 
         let confirmation_modal = "";
         if (this.state.button_clicked){
-
             confirmation_modal = (
                 <ConfirmationModal
                     title={"Are you sure?"}
@@ -1056,7 +1043,7 @@ export default class Tournament extends React.Component {
         }
 
         if (custom_details_title){
-            original_custom_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0px; padding-top: 10px;'>${custom_details_title}</div>`;
+            original_custom_title = `<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0; padding-top: 10px;'>${custom_details_title}</div>`;
         }
 
         const { stats, scores, games_history } = this.state;
@@ -1354,15 +1341,13 @@ export default class Tournament extends React.Component {
             if (mvpPlayer) {
 
                 let mvpPlayerObj;
-                Object.keys(players).forEach((team) => {
+                Object.keys(this.state.players).forEach((team) => {
                     players[team].players.forEach((player) => {
                         if (player.name === mvpPlayer){
                             mvpPlayerObj = player;
                         }
                     })
                 });
-
-                console.log('here', mvpPlayer, mvpPlayerObj);
 
                 if (mvpPlayerObj) {
                     tournamentMVPBlock = `<div class="ui cards centered">
@@ -1468,11 +1453,10 @@ export default class Tournament extends React.Component {
                         <ButtonInput
                             text={"Restart Tournament"}
                             style={{ marginLeft:"5px" }}
-                            onClick={() => {
+                            onClick={async () => {
 
                                 if (this.state.played_games.length === 0 || this.state.finished){
-                                    this.init();
-
+                                    await this.init();
                                 } else {
                                     this.setState({
                                         button_clicked: "restart_tournament",
@@ -1558,6 +1542,38 @@ export default class Tournament extends React.Component {
                 <div className={"bg-container"} style={{ background: home_team_background }} />
             </div>
         );
+    }
+
+    render(){
+        const is_loading = !this.state.loaded || !this.state.loadedSettings;
+
+        // render loading page if needed
+        if (!this.state.teams){
+            return this.renderLoadingPage();
+        }
+        // render general stats page
+        else if (this.state.view_stats && stats_page){
+            return this.renderStats();
+        }
+        // render specific team states
+        else if (this.state.selected_player){
+            return this.renderSingleStats();
+        }
+        // render loby (before we start the game)
+        else if (!this.state.max_teams || !this.state.is_started) {
+            return this.renderLoby();
+        }
+        // render error page
+        else if (this.state.error || (!is_loading && this.state.players.length === 0)) {
+            return this.renderErrorPage();
+        }
+        // render loader
+        else if (is_loading) {
+            return this.renderLoadingPage();
+        }
+
+        // render the game itself
+        return this.renderTournamentGame();
     }
 };
 
