@@ -1239,7 +1239,7 @@ export default class Tournament extends React.Component {
         let currGameTitle = (
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
                 <div className="ui header" style={{ width: "100%", textAlign:"center", marginBottom:"10px"}}>Current Game</div>
-                This is Game {current_game_num}/{max_teams-1}, Played on <span style={{ opacity: 0.6 }}>{arena}</span>
+                This is Game {current_game_num}/{this.state.max_teams-1}, Played on <span style={{ opacity: 0.6 }}>{arena}</span>
             </div>
         );
 

@@ -59,20 +59,20 @@ export const DEFAULT_MAX_TEAMS_IN_TOURNAMENT = 4;
 export const DEFAULT_TOURNAMENT_TEAMS = [
     "Los Angeles Lakers",
     "Golden State Warriors",
-    "Brooklyn Nets",
+    // "Brooklyn Nets",
     "Miami Heat",
     "Boston Celtics",
     "Denver Nuggets",
-    "Utah Jazz",
+    // "Utah Jazz",
     "LA Clippers",
     "Phoenix Suns",
     // "New York Knicks", //
     // "Charlotte Hornets", //
 
-    "Philadelphia 76ers", //
+    // "Philadelphia 76ers", //
     // "Toronto Raptors", //
-    // "Milwaukee Bucks", //
-    "Washington Wizards", //
+    "Milwaukee Bucks", //
+    // "Washington Wizards", //
     "Dallas Mavericks",
 ];
 
