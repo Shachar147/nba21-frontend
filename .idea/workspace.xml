@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="" />
+    <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -201,7 +204,7 @@
       <workItem from="1707334548154" duration="4304000" />
       <workItem from="1707546630182" duration="348000" />
       <workItem from="1712412012448" duration="1089000" />
-      <workItem from="1713429530917" duration="864000" />
+      <workItem from="1713429530917" duration="2008000" />
     </task>
     <servers />
   </component>

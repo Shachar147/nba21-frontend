@@ -158,7 +158,7 @@ export default class Tournament extends React.Component {
 
             curr_games_history: {},
 
-            tournament_teams: DEFAULT_TOURNAMENT_TEAMS,
+            tournament_teams: localStorage.getItem('tournament_teams')?.split('|') ?? DEFAULT_TOURNAMENT_TEAMS,
 
             show_stats_in_header: true,
         };
@@ -956,6 +956,9 @@ export default class Tournament extends React.Component {
                                             } else {
                                                 tournament_teams.push(team.name);
                                             }
+
+                                            localStorage.setItem('tournament_teams', tournament_teams.join("|"));
+
                                             self.setState({ tournament_teams });
                                         }}
                                     />
