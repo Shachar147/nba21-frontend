@@ -408,8 +408,11 @@ class OneOnOneStats extends React.Component {
         let tournament_mvps;
         let tournamentStats;
         if (game_mode === 'Tournament' && this.state.stats){
-            const { total_tournaments, total_comebacks, total_knockouts, total_overtimes } = this.state.stats;
-            moreStats = ` | Comebacks: ${total_comebacks} | Knockouts: ${total_knockouts} | Overtimes: ${total_overtimes}`;
+            const { total_tournaments, total_comebacks, total_knockouts, total_overtimes, days_since_last_knockout, games_since_last_knockout } = this.state.stats;
+            moreStats = `<br>Comebacks: ${total_comebacks} | Knockouts: ${total_knockouts} | Overtimes: ${total_overtimes}`;
+            if (days_since_last_knockout !== -1) {
+                moreStats += `<br><b>Last Knockout:</b> by <u>${this.state.stats.last_knockout_by}</u> on the head of <u>${this.state.stats.last_knockout_on}</u>, ${days_since_last_knockout} days ago, ${games_since_last_knockout} games ago`;
+            }
             totalTournaments = `Tournaments: ${total_tournaments}`;
 
             tournament_mvps = this.state.stats.tournament_mvps;
@@ -579,9 +582,9 @@ class OneOnOneStats extends React.Component {
                                     total_tournaments: records[player.name].total_tournaments,
                                     total_tournament_wins: records[player.name].total_tournament_wins,
                                     total_matchups: (records[player.name]['matchups']) ? Object.keys(records[player.name]['matchups']).length : undefined,
-                                    total_ot_wins: records[player.name]['total_ot_wins'],
-                                    total_ot_lost: records[player.name]['total_ot_lost'],
-                                    total_finals_appearances: records[player.name]['total_finals_appearances']
+                                    total_ot_wins: records[player.name].total_ot_wins,
+                                    total_ot_lost: records[player.name].total_ot_lost,
+                                    total_finals_appearances: records[player.name].total_finals_appearances
                                 }}
 
                                 onImageClick={() => {

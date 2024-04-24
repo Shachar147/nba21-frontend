@@ -121,7 +121,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#${i+1}`].push(row);
         }
 
-        let descriptionText = '<b>Today: </b>' + description.join(' | ') + '<br><b>Total: </b>' + total_description.join(' | ');
+        let descriptionText = '<b>Today: </b>' + description.join(' | ') + '<br><b>Totals: </b>' + total_description.join(' | ');
 
         if (general_stats['shortest_game']){
             descriptionText += '<br><b>Shortest Game: </b>' + formatDate(new Date(general_stats['shortest_game_at'])) + ' - ' +  formatTimeAgo(general_stats['shortest_game']);
