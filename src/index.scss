@@ -87,3 +87,33 @@ ul li.arrow:before {
 .width-max-content {
   width: max-content;
 }
+
+.max-height-300 {
+  max-height: 300px;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.bright-scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 15px;
+    background-color: #fafafa;
+    border-color: #dcdcdc;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(224, 224, 224, 0.5);
+    border-radius: 16px;
+    width: 6px;
+  }
+}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Card from "../../../components/Card";
 import {observer} from "mobx-react";
 import ButtonInput from "../../../components/inputs/ButtonInput";
@@ -7,15 +7,34 @@ import TextInput from "../../../components/inputs/TextInput";
 import SeasonApiService from "../services/SeasonApiService";
 import {errorTestId, messageTestId} from "../../../pages/Login/Model";
 import style from "../../../pages/Login/style";
+import {DEFAULT_TOURNAMENT_TEAMS} from "../../../helpers/consts";
+import LoadingPage from "../../../pages/LoadingPage";
+import {apiGet} from "../../../helpers/apiV2";
 
 function CreateSeason(){
 
+    const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [seasonName, setSeasonName] = useState(`Season ${new Date().getFullYear()}-${Number(new Date().getFullYear().toString().slice(2,4))+1}`);
     const [errorMessage, setErrorMessage] = useState<string|undefined>(undefined);
-    const [teams, setTeams] = useState<number[]>([]);
+    const [teams, setTeams] = useState<number[]>(localStorage.getItem('tournament_teams')?.split('|') ?? []);
     const [seasonCreated, setSeasonCreated] = useState(false);
     const [isNameError, setIsNameError] = useState(false);
+    const [allTeams, setAllTeams] = useState([]);
+
+    useEffect(() => { loadAllTeams() }, []);
+
+    async function loadAllTeams() {
+        setIsLoading(true);
+        const teamsResponse = await apiGet("/team");
+        const _teams = teamsResponse.data.data;
+        setAllTeams(_teams);
+
+        if (teams.length == 0) {
+            setTeams(_teams.filter((t: any) => DEFAULT_TOURNAMENT_TEAMS.includes(t.name)).map((t: any) => t.id));
+        }
+        setIsLoading(false);
+    }
 
     function goBack(){
         window.location.href = "/season";
@@ -55,6 +74,7 @@ function CreateSeason(){
                     // onKeyDown={e => onKeyDown(e.keyCode)}
                     data-testid={"automation-create-season-name-input"}
                 />
+                {renderTeamsSelection()}
                 <ButtonInput
                     text={"Submit Form"}
                     className={"ui blue submit button width-max-content"}
@@ -99,6 +119,54 @@ function CreateSeason(){
         )
     }
 
+    function renderTeamsSelection(){
+        return (
+            <>
+            <div className="max-height-300 overflow-auto bright-scrollbar">
+                Choose which teams do you want to participate in this season.<br/>
+                Total Selected: { teams.length } <br/>
+                <div className="ui link cards centered" style={{ margin: "auto" }}>
+                    {
+                        allTeams.sort((a,b) => {
+                            let idx1 = teams.indexOf(a.id);
+                            let idx2 = teams.indexOf(b.id);
+                            if (idx1 === -1) idx1 = 9999;
+                            if (idx2 === -1) idx2 = 9999;
+                            return idx1 - idx2;
+                        }).map((team) => {
+                            let opacity = (teams.indexOf(team.id) !== -1) ? 1 : 0.4;
+
+                            return (
+                                <Card
+                                    key={`${team.id}_card`}
+                                    name={team.name}
+                                    picture={team.logo}
+                                    style={{ opacity: opacity, width: '100px' }}
+                                    onClick={() => {
+                                        const idx = teams.indexOf(team.id);
+                                        if (idx !== -1) {
+                                            teams.splice(idx,1)
+                                        } else {
+                                            teams.push(team.id);
+                                        }
+
+                                        localStorage.setItem('season_teams', teams.join("|"));
+
+                                        setTeams([
+                                            ...teams
+                                        ]);
+                                    }}
+                                />
+                            );
+                        })
+                    }
+                </div>
+            </div>
+            <br/>
+            </>
+        )
+    }
+
     function renderContent(){
         return (
             <div className="flex-column gap-16 align-items-center font-size-16">
@@ -118,6 +186,12 @@ function CreateSeason(){
                 {renderForm()}
                 {renderGoBack()}
             </div>
+        )
+    }
+
+    if (isLoading) {
+        return (
+            <LoadingPage />
         )
     }
 
