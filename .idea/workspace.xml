@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/services/SeasonApiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/services/SeasonApiService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +248,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/activities/Season/services/SeasonApiService.ts</url>
-          <line>16</line>
+          <line>15</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

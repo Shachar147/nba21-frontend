@@ -10,6 +10,7 @@ import style from "../../../pages/Login/style";
 import {DEFAULT_TOURNAMENT_TEAMS} from "../../../helpers/consts";
 import LoadingPage from "../../../pages/LoadingPage";
 import {apiGet} from "../../../helpers/apiV2";
+import './CreateSeason.scss';
 
 function CreateSeason(){
 
@@ -17,7 +18,7 @@ function CreateSeason(){
     const [isSaving, setIsSaving] = useState(false);
     const [seasonName, setSeasonName] = useState(`Season ${new Date().getFullYear()}-${Number(new Date().getFullYear().toString().slice(2,4))+1}`);
     const [errorMessage, setErrorMessage] = useState<string|undefined>(undefined);
-    const [teams, setTeams] = useState<number[]>(localStorage.getItem('tournament_teams')?.split('|') ?? []);
+    const [teams, setTeams] = useState<number[]>(localStorage.getItem('season_teams')?.split('|') ?? []);
     const [seasonCreated, setSeasonCreated] = useState(false);
     const [isNameError, setIsNameError] = useState(false);
     const [allTeams, setAllTeams] = useState([]);
@@ -76,7 +77,7 @@ function CreateSeason(){
                 />
                 {renderTeamsSelection()}
                 <ButtonInput
-                    text={"Submit Form"}
+                    text={"Create Season!"}
                     className={"ui blue submit button width-max-content"}
                     onClick={submitForm}
                     classList={undefined}
@@ -122,7 +123,9 @@ function CreateSeason(){
     function renderTeamsSelection(){
         return (
             <>
-            <div className="max-height-300 overflow-auto bright-scrollbar">
+            <br/>
+            <div className="ui link cards centered max-height-350 overflow-auto bright-scrollbar create-season-choose-teams">
+            {/*<div className="max-height-300 overflow-auto bright-scrollbar">*/}
                 Choose which teams do you want to participate in this season.<br/>
                 Total Selected: { teams.length } <br/>
                 <div className="ui link cards centered" style={{ margin: "auto" }}>

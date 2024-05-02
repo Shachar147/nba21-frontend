@@ -11,7 +11,6 @@ class Service {
 
     createSeason = async(name: string, teams: number[]): Promise<Season[]> => {
         const axiosResponse = await apiPost(seasons_route, { name, teams });
-        debugger;
         return axiosResponse.data.data;
     }
 }
