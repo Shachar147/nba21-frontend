@@ -1,3 +1,10 @@
 .create-season-choose-teams {
   margin: 30px auto 20px; width: 40%; min-width: 700px; background-color: rgba(255, 255, 255, 0.6); padding: 20px; border: 1px solid rgb(234, 234, 234); border-radius: 20px; text-align: center;
+  max-height: 1000px;
+}
+
+@media (min-width: 990px) {
+  .create-season-choose-teams {
+    max-height: 330px !important;
+  }
 }
