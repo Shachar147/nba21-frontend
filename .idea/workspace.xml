@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/NbaPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/services/SeasonApiService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/services/SeasonApiService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/apiV2.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/apiV2.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +217,7 @@
       <workItem from="1714500257109" duration="749000" />
       <workItem from="1714540951337" duration="3603000" />
       <workItem from="1714659644033" duration="3238000" />
-      <workItem from="1714683610663" duration="166000" />
+      <workItem from="1714683610663" duration="3396000" />
     </task>
     <servers />
   </component>
@@ -244,7 +251,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/activities/Season/services/SeasonApiService.ts</url>
-          <line>10</line>
+          <line>16</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

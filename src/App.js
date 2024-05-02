@@ -22,6 +22,7 @@ import UserSettings from "@pages/UserSettings/UserSettings";
 import Tournament from "@activities/Tournament/Tournament";
 import SpaceJam from "@activities/SpaceJam/SpaceJam";
 import Season from "./activities/Season/components/SeasonLobby";
+import CreateSeason from "./activities/Season/components/CreateSeason";
 
 const App = () => {
 
@@ -66,6 +67,8 @@ const App = () => {
                     <PrivateRoute exact path="/tournament/stats/:player" component={Tournament} data={{view_stats:true, player_from_url:true}} />
 
                     <PrivateRoute exact path="/season" component={Season} />
+                    <PrivateRoute exact path="/season/create" component={CreateSeason} />
+
                     {/*todo complete: single season stats*/}
                     {/*todo complete: single team in single season stat*/}
                     {/*todo complete: overall stats*/}
