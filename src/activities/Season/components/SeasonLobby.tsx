@@ -16,7 +16,7 @@ function SeasonLobby(){
         );
     }
 
-    function renderSeasonsIfNeeded(){
+    function renderSeasons(){
         if (!store.seasons?.length){
             return (
                 <div className="sub cards header content" style={{ width:"100%", bottom: "0px" }}>
@@ -27,12 +27,12 @@ function SeasonLobby(){
         }
         return (
             <div className="sub cards header content" style={{ width:"100%", bottom: "0px" }}>
-                Hello! Choose the season you want to play:
+                Hello! Choose the season you want to play or create a new season
                 <br/><br/>
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     {store.seasons.map((season, idx) => (
                         <Card
-                            name={season.name}
+                            name={`${season.name}<br/><span style="color: gray;">${season.teamsCount} teams<br/>${season.playedGamesCount} played games</span>`}
                             picture={"/thumbnails/season.png"}
                             style={{ width: "160px" }}
                             href={`/season/${season.id}`}
@@ -48,7 +48,7 @@ function SeasonLobby(){
     function renderCreateNewSeason(){
         return (
             <ButtonInput
-                text={"Create New SeasonLobby"}
+                text={"Create New Season"}
                 className={"ui blue submit button width-max-content"}
                 onClick={() => window.location.href = "/season/create"}
                 classList={undefined}
@@ -63,7 +63,7 @@ function SeasonLobby(){
                 <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
                     <Logo />
                     <div className="flex-col gap-8 align-items-center">
-                        {renderSeasonsIfNeeded()}
+                        {renderSeasons()}
                         {renderCreateNewSeason()}
                     </div>
                 </div>
