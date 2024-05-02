@@ -1,15 +1,15 @@
 Tech:
 ------------
-TypeScript
-Mobx?
-git
+V TypeScript
+V Mobx?
+
 Components:
 -------------
-1. SeasonLobby / SeasonLobby -
+V 1. SeasonLobby / SeasonLobby -
 shows which seasons there are currently, and allows you to choose from them.
 if there are none - redirect to CreateSeason
 
-2. CreateSeason -
+V 2. CreateSeason -
 let's you create a season. give it a name. (default this and next year), with default selected teams.
 
 3. SeasonGame -

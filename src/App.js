@@ -21,8 +21,9 @@ import RealInactive from "@pages/Real/RealInactive";
 import UserSettings from "@pages/UserSettings/UserSettings";
 import Tournament from "@activities/Tournament/Tournament";
 import SpaceJam from "@activities/SpaceJam/SpaceJam";
-import Season from "./activities/Season/components/SeasonLobby";
-import CreateSeason from "./activities/Season/components/CreateSeason";
+import Season from "./activities/Season/components/SeasonLobby/SeasonLobby";
+import CreateSeason from "./activities/Season/components/CreateSeason/CreateSeason";
+import SeasonGame from "./activities/Season/components/SeasonGame/SeasonGame";
 
 const App = () => {
 
@@ -68,6 +69,8 @@ const App = () => {
 
                     <PrivateRoute exact path="/season" component={Season} />
                     <PrivateRoute exact path="/season/create" component={CreateSeason} />
+                    <PrivateRoute exact path="/season/:seasonId" component={SeasonGame}  />
+
 
                     {/*todo complete: single season stats*/}
                     {/*todo complete: single team in single season stat*/}

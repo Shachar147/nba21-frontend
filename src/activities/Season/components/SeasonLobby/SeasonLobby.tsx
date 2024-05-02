@@ -1,11 +1,11 @@
 import React, {useMemo} from "react";
-import SeasonStore from "../stores/SeasonStore";
-import LoadingPage from "../../../pages/LoadingPage";
-import Header from "../../../components/layout/Header";
-import Logo from "../../../components/layout/Logo";
-import Card from "../../../components/Card";
+import SeasonStore from "../../stores/SeasonStore";
+import LoadingPage from "../../../../pages/LoadingPage";
+import Header from "../../../../components/layout/Header";
+import Logo from "../../../../components/layout/Logo";
+import Card from "../../../../components/Card";
 import {observer} from "mobx-react";
-import ButtonInput from "../../../components/inputs/ButtonInput";
+import ButtonInput from "../../../../components/inputs/ButtonInput";
 
 function SeasonLobby(){
     const store: SeasonStore = useMemo(() => new SeasonStore(), []);

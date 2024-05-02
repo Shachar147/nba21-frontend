@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason/CreateSeason.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/CreateSeason/CreateSeason.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby/SeasonLobby.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/todos.readme" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/todos.readme" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,11 +72,11 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby" />
+      <recent name="$PROJECT_DIR$/src/activities/Season/components/CreateSeason" />
       <recent name="$PROJECT_DIR$/src/activities/Season/components" />
       <recent name="$PROJECT_DIR$/src/components/internal/ShootingBox" />
       <recent name="$PROJECT_DIR$/src/pages/UserSettings" />
-      <recent name="$PROJECT_DIR$/src/pages/Register" />
-      <recent name="$PROJECT_DIR$/src/pages/Login" />
     </key>
   </component>
   <component name="RunManager" selected="npm.start:dev:mac">

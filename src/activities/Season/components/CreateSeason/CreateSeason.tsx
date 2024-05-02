@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from "react";
-import Card from "../../../components/Card";
+import Card from "../../../../components/Card";
 import {observer} from "mobx-react";
-import ButtonInput from "../../../components/inputs/ButtonInput";
-import NbaPage from "../../../components/NbaPage";
-import TextInput from "../../../components/inputs/TextInput";
-import SeasonApiService from "../services/SeasonApiService";
-import {errorTestId, messageTestId} from "../../../pages/Login/Model";
-import style from "../../../pages/Login/style";
-import {DEFAULT_TOURNAMENT_TEAMS} from "../../../helpers/consts";
-import LoadingPage from "../../../pages/LoadingPage";
-import {apiGet} from "../../../helpers/apiV2";
+import ButtonInput from "../../../../components/inputs/ButtonInput";
+import NbaPage from "../../../../components/NbaPage";
+import TextInput from "../../../../components/inputs/TextInput";
+import SeasonApiService from "../../services/SeasonApiService";
+import {errorTestId, messageTestId} from "../../../../pages/Login/Model";
+import style from "../../../../pages/Login/style";
+import {DEFAULT_TOURNAMENT_TEAMS} from "../../../../helpers/consts";
+import LoadingPage from "../../../../pages/LoadingPage";
+import {apiGet} from "../../../../helpers/apiV2";
 import './CreateSeason.scss';
 
 function CreateSeason(){
