@@ -1,8 +1,11 @@
-export function deepClone(obj){
+// @ts-ignore
+import _ from 'lodash';
+
+export function deepClone(obj: any){
     return JSON.parse(JSON.stringify(obj));
 }
 
-export function shuffle(array) {
+export function shuffle(array: any[]) {
     let counter = array.length;
 
     // While there are elements in the array
@@ -22,7 +25,7 @@ export function shuffle(array) {
     return array;
 }
 
-export function nth(d) {
+export function nth(d: number) {
     if (d > 3 && d < 21) return 'th';
     switch (d % 10) {
         case 1:  return "st";
@@ -32,7 +35,7 @@ export function nth(d) {
     }
 }
 
-export function uiError(error){
+export function uiError(error: string){
 
     if (error.indexOf("Network Error") !== -1){
         return "Oops, it seems like there was some kind of a network error." + '<br>' +
@@ -41,16 +44,16 @@ export function uiError(error){
     return error;
 }
 
-export function isDefined(value){
+export function isDefined(value: any){
     return typeof(value) !== 'undefined';
 }
 
-export function getRandomElement(arr) {
+export function getRandomElement(arr: any[]) {
     let shuffled = shuffle(arr);
     return shuffled[0];
 }
 
-export function getPlayerShortenPosition(position){
+export function getPlayerShortenPosition(position: string){
     switch (position)
     {
         case 'Center':
@@ -89,8 +92,8 @@ export function getPlayerShortenPosition(position){
     }
 }
 
-export function toPascalCase(string) {
-    return `${string}`
+export function toPascalCase(str: string) {
+    return `${str}`
         .replace(new RegExp(/[-_]+/, 'g'), ' ')
         .replace(new RegExp(/[^\w\s]/, 'g'), '')
         .replace(
@@ -101,30 +104,36 @@ export function toPascalCase(string) {
         .replace(new RegExp(/\w/), s => s.toUpperCase());
 }
 
-export function formatDate(dt){
+export function formatDate(dt: Date){
     return dt.toISOString().slice(0,10).split('-').reverse().join('/');
 }
 
-export function reFormatDate(dtString){
+export function reFormatDate(dtString: string){
     return new Date(dtString.split('/').reverse().join("-"));
 }
 
-export function numberWithCommas(x) {
+export function numberWithCommas(x?: string) {
     return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export function calcPercents(number, total, toFixed = 2){
+export function calcPercents(number: number, total: number, toFixed = 2){
     return ((number / total) * 100).toFixed(toFixed);
 }
 
-export function swap(json){
+export function swap(json: any){
     var ret = {};
     for(var key in json){
+        // @ts-ignore
         ret[json[key]] = key;
     }
     return ret;
 }
 
-export async function sleep(ms) {
+export async function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+type AcceptableGetClassesType = string | boolean | undefined | null | 0;
+export function getClasses(...args: Array<AcceptableGetClassesType | AcceptableGetClassesType[]>): string | undefined {
+    return _.flatten(args).filter(Boolean).join(" ").trim() || undefined;
 }

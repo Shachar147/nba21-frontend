@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {getClasses} from "../../helpers/utils";
 
-const ButtonInput = ({ style, text, onClick, disabled }) => (
-    <button className={"ui button basic blue"} style={style} onClick={onClick} disabled={disabled}>
+const ButtonInput = ({ style, className, classList, text, onClick, disabled }) => (
+    <button className={className ?? getClasses("ui button basic blue", classList)} style={style} onClick={onClick} disabled={disabled}>
         {text}
     </button>
 );

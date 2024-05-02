@@ -1,0 +1,37 @@
+Tech:
+------------
+TypeScript
+Mobx?
+git
+Components:
+-------------
+1. SeasonLobby / SeasonLobby -
+shows which seasons there are currently, and allows you to choose from them.
+if there are none - redirect to CreateSeason
+
+2. CreateSeason -
+let's you create a season. give it a name. (default this and next year), with default selected teams.
+
+3. SeasonGame -
+shows you specific season game between two random teams.
+
+4. SeasonGameHeaderStats -
+shows you stats about this season (regular season? playoff? semi-finals? finals? etc)
+who cameback from 3-0? from 3-1?
+last 10 games?
+
+5. SeasonStats -
+shows you more detailed stats.
+last ten games?
+who cameback from 3-0? from 3-1?
+- season stats
+- team stats
+- overall stats (cross-season)
+- team overall stats (cross-season)
+
+6. SeasonOver -
+shows you steps of 3 teams num1, num2, num3
+
+7. StasonPlayoffChart
+shows you a playoff chart of the teams and who advanced etc.
+available from playoff+ modes.

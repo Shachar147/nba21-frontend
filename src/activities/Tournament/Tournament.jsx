@@ -244,6 +244,7 @@ export default class Tournament extends React.Component {
     loadStats(){
         const self = this;
 
+
         apiGet(this,
             get_stats_route,
             async function(res) {

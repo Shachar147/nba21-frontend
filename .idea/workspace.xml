@@ -5,11 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/services/SeasonApiService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/stores/SeasonStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/todos.readme" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/utils/interfaces.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/apiV2.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Tournament/Tournament.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/inputs/ButtonInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputs/ButtonInput.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/config.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/playercard.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/playercard.helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/utils.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/utils.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +70,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\repos\node-js\nba21-frontend\node_modules\prettier" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -68,11 +80,11 @@
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/activities/Season/components" />
       <recent name="$PROJECT_DIR$/src/components/internal/ShootingBox" />
       <recent name="$PROJECT_DIR$/src/pages/UserSettings" />
       <recent name="$PROJECT_DIR$/src/pages/Register" />
       <recent name="$PROJECT_DIR$/src/pages/Login" />
-      <recent name="C:\repos\node-js\nba21-frontend\src\components\internal" />
     </key>
   </component>
   <component name="RunManager" selected="npm.start:dev:mac">
@@ -208,7 +220,11 @@
       <workItem from="1707546630182" duration="348000" />
       <workItem from="1712412012448" duration="1089000" />
       <workItem from="1713429530917" duration="2008000" />
-      <workItem from="1713961621401" duration="3133000" />
+      <workItem from="1713961621401" duration="4587000" />
+      <workItem from="1714390065794" duration="723000" />
+      <workItem from="1714500257109" duration="749000" />
+      <workItem from="1714540951337" duration="3603000" />
+      <workItem from="1714659644033" duration="2837000" />
     </task>
     <servers />
   </component>
@@ -224,6 +240,35 @@
         <option value="Default.Subject" />
       </list>
     </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/activities/Season/services/SeasonApiService.ts</url>
+          <line>10</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/activities/Season/stores/SeasonStore.ts</url>
+          <line>21</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

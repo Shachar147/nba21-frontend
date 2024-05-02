@@ -21,6 +21,7 @@ import RealInactive from "@pages/Real/RealInactive";
 import UserSettings from "@pages/UserSettings/UserSettings";
 import Tournament from "@activities/Tournament/Tournament";
 import SpaceJam from "@activities/SpaceJam/SpaceJam";
+import Season from "./activities/Season/components/SeasonLobby";
 
 const App = () => {
 
@@ -63,6 +64,12 @@ const App = () => {
                     <PrivateRoute exact path="/tournament" component={Tournament} />
                     <PrivateRoute exact path="/tournament/stats" component={Tournament} data={{view_stats:true}} />
                     <PrivateRoute exact path="/tournament/stats/:player" component={Tournament} data={{view_stats:true, player_from_url:true}} />
+
+                    <PrivateRoute exact path="/season" component={Season} />
+                    {/*todo complete: single season stats*/}
+                    {/*todo complete: single team in single season stat*/}
+                    {/*todo complete: overall stats*/}
+                    {/*todo complete: overall stats specific team*/}
 
                     <PrivateRoute exact path="/sync" component={SyncPage} />
                     <PrivateRoute exact path="/user/settings" component={UserSettings} />

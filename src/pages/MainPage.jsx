@@ -34,9 +34,7 @@ export default class MainPage extends React.Component {
                                     name={"Season"}
                                     picture={"/thumbnails/season.png"}
                                     style={{ width: "160px" }}
-                                    href={"/"} // todo complete
-                                    disabled={true}
-                                    disabledAltAddition={"(not available yet)"}
+                                    href={"/season"}
                                 />
                                 <Card
                                     name={"Tournament"}

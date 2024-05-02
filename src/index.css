@@ -37,3 +37,29 @@ ul li.arrow:before {
 .x-column-header-text, .x-panel-header-text {
   display: inline-block;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col, .flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-8 {
+  gap: 8px;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.width-max-content {
+  width: max-content;
+}
