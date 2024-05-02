@@ -94,7 +94,8 @@ function CreateSeason(){
             setSeasonCreated(true);
             setTimeout(() => goBack(), 1000);
         }
-        catch (error: any) {
+        catch (error) {
+            // @ts-ignore
             setErrorMessage(error?.response?.data?.message);
             setIsNameError(error?.response?.data?.message?.toLowerCase().includes("name"))
         } finally {
@@ -124,7 +125,7 @@ function CreateSeason(){
         return (
             <>
             <br/>
-            <div className="ui link cards centered max-height-350 overflow-auto bright-scrollbar create-season-choose-teams">
+            <div className="ui link cards centered overflow-auto bright-scrollbar create-season-choose-teams">
             {/*<div className="max-height-300 overflow-auto bright-scrollbar">*/}
                 Choose which teams do you want to participate in this season.<br/>
                 Total Selected: { teams.length } <br/>
