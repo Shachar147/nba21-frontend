@@ -1,8 +1,14 @@
-.save-button {
-  height: 40px;
-  position: relative;
-  bottom: 75px;
-  margin-inline: 8px;
-  align-self: flex-end;
-  min-width: 100px;
+.season-game {
+  .save-button {
+    height: 40px;
+    position: relative;
+    bottom: 75px;
+    margin-inline: 8px;
+    align-self: flex-end;
+    min-width: 100px;
+  }
+
+  .description {
+    min-height: 1000px;
+  }
 }

@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -211,7 +212,7 @@
       <workItem from="1714540951337" duration="3603000" />
       <workItem from="1714659644033" duration="3238000" />
       <workItem from="1714683610663" duration="4494000" />
-      <workItem from="1714728512153" duration="6708000" />
+      <workItem from="1714728512153" duration="7598000" />
     </task>
     <servers />
   </component>

@@ -19,11 +19,14 @@ function SeasonGame({ match }: any){
     // Access the parameter from the URL
     const { seasonId } = match.params;
 
+    const [settings, setSettings] = useState(undefined);
+
     const [showStats, setShowStats] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [allTeamsById, setAllTeamsById] = useState<Record<number, Team>>({})
     const [teamsData, setTeamsData] = useState<Record<string, any> | undefined>(undefined);
 
+    const [scores, setScores] = useState({});
     const [totalOvertimes, setTotalOvertimes] = useState(false);
     const [isComeback, setIsComeback] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
@@ -32,7 +35,7 @@ function SeasonGame({ match }: any){
 
     async function init() {
         setIsLoading(true);
-        await Promise.all([loadNextTeams(), loadAllTeams()]);
+        await Promise.all([loadNextTeams(), loadAllTeams(), loadUserSettings()]);
         setIsLoading(false);
     }
 
@@ -49,6 +52,23 @@ function SeasonGame({ match }: any){
     async function loadNextTeams() {
         const nextTeamsResponse = await apiGet(`/records/season/${seasonId}/next-game`);
         setTeamsData(nextTeamsResponse.data);
+
+        const team1Name = nextTeamsResponse.data.team1.teamName;
+        const team2Name = nextTeamsResponse.data.team2.teamName;
+        scores[team1Name] = 0;
+        scores[team2Name] = 0;
+        setScores(scores);
+    }
+
+    async function loadUserSettings(){
+        const res = await apiGet('/user/settings');
+        const data = res.data.data;
+        let settings = {};
+        data.forEach((setting) => {
+            settings[setting.name.toLowerCase()] = setting.value;
+        });
+        // console.log(settings);
+        setSettings(settings)
     }
 
     function goBack(){
@@ -63,6 +83,21 @@ function SeasonGame({ match }: any){
         return (
             <span> | <b>Total Played Games:</b> {teamsData.totals.totalPlayedGames}/{teamsData.totals.totalGames} | <b>Remaining Games:</b> {teamsData.totals.remainingGames}</span>
         )
+    }
+
+    function calcOT(){
+        const { auto_calc_ot_game_length } = settings;
+
+        const { team1, team2 } = teamsData;
+
+        let val = Math.max(scores[team1.teamName], scores[team2.teamName]);
+        let total_overtimes = 0;
+        while (val >= Number(auto_calc_ot_game_length) + 2) {
+            val -= 2;
+            total_overtimes++;
+        }
+        // console.log("total overtimes: ",total_overtimes);
+        setTotalOvertimes(total_overtimes)
     }
 
     function renderSeasonGame(){
@@ -120,25 +155,25 @@ function SeasonGame({ match }: any){
                         custom_details_title={curr_custom_details_title}
                         custom_details={custom_details}
                         // stats={{
-                        //     win_streak: stats[player.name]?.win_streak || "0",
-                        //     max_win_streak: stats[player.name]?.max_win_streak || "0",
-                        //     lose_streak: stats[player.name]?.lose_streak || "0",
-                        //     max_lose_streak: stats[player.name]?.max_lose_streak || "0",
+                        //     win_streak: stats[team.name]?.win_streak || "0",
+                        //     max_win_streak: stats[team.name]?.max_win_streak || "0",
+                        //     lose_streak: stats[team.name]?.lose_streak || "0",
+                        //     max_lose_streak: stats[team.name]?.max_lose_streak || "0",
                         // }}
 
-                        // onChange={async (e) => {
-                        //     let scores = this.state.scores;
-                        //     scores[player.name] = Number(Math.max(0,e.target.value));
-                        //     await this.setState({ scores });
-                        //
-                        //     if (Number(this.state.settings.auto_calc_ot)) {
-                        //         this.calcOT();
-                        //     }
-                        // }}
+                        onChange={async (e) => {
+                            scores[team.name] = Number(Math.max(0,e.target.value));
+                            setScores({...scores});
+
+                            if (Number(settings.auto_calc_ot)) {
+                                calcOT();
+                            }
+                        }}
+                        singleShot={scores[team.name]}
 
                         // todo complete:
-                        // lost={(this.state.saved && this.state.loser === player.name)}
-                        // winner={(this.state.saved && this.state.winner === player.name)}
+                        // lost={(this.state.saved && this.state.loser === team.name)}
+                        // winner={(this.state.saved && this.state.winner === team.name)}
 
                         // todo complete:
                         // all_players={this.state.players}
@@ -153,7 +188,7 @@ function SeasonGame({ match }: any){
                         //     // to avoid clicking on 'replace' or 'specific rpelace' from openning stats page.
                         //     if (html.indexOf('View Stats') !== -1 && get_stats_specific_route) {
                         //         this.setState({
-                        //             selected_player: player.name,
+                        //             selected_player: team.name,
                         //         })
                         //     }
                         //
@@ -494,9 +529,9 @@ function SeasonGame({ match }: any){
     }
 
     return (
-        <>
+        <div className="season-game">
             <NbaPage renderContent={renderContent} />
-        </>
+        </div>
     );
 }
 
