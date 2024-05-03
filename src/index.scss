@@ -134,6 +134,42 @@ ul li.arrow:before {
   }
 }
 
+.display-flex {
+  display: flex;
+}
+
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}
+
+.width-100-percents {
+  width: 100%;
+}
+
+.margin-top-20 {
+  margin-top: 20px !important;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.stats-container {
+  margin: 30px auto 20px; width: 40%; min-width: 700px; background-color: rgba(255, 255, 255, 0.6); padding: 20px; border: 1px solid rgb(234, 234, 234); border-radius: 20px;
+
+  .show-hide-stats {
+    width: 100%; text-align: center; cursor: pointer; margin-bottom: 15px;
+  }
+}
+
 iframe {
   z-index: -1111;
   display: none;

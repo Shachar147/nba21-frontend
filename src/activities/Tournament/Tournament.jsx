@@ -34,7 +34,7 @@ import WinnerModal from "@components/modals/WinnerModal";
 const game_mode = "Tournament";
 const what = "teams";
 const get_route = "/team";
-const styles = {
+export const styles = {
     imageContainerStyle: { backgroundColor: "#F2F2F2" },
     imageStyle: { width: 200, margin: "auto", padding: "20px" },
     // extraContentStyle: { display: "none" },
