@@ -225,6 +225,7 @@ function SeasonGame({ match }: any){
                 onClick={() => {
                     alert("todo complete");
                 }}
+                disabled={Object.values(scores).reduce((a, b) => a+b, 0) == 0}
             />
         );
     }
