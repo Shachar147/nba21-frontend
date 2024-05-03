@@ -138,6 +138,10 @@ ul li.arrow:before {
   display: flex;
 }
 
+.display-flex-important {
+  display: flex !important;
+}
+
 .display-none {
   display: none;
 }
@@ -163,7 +167,12 @@ ul li.arrow:before {
 }
 
 .stats-container {
-  margin: 30px auto 20px; width: 40%; min-width: 700px; background-color: rgba(255, 255, 255, 0.6); padding: 20px; border: 1px solid rgb(234, 234, 234); border-radius: 20px;
+  margin: 30px auto 20px; background-color: rgba(255, 255, 255, 0.6); padding: 20px; border: 1px solid rgb(234, 234, 234); border-radius: 20px;
+  min-width: 700px;
+  //width: max-content;
+  //max-width: 70%;
+  width: 60%;
+
 
   .show-hide-stats {
     width: 100%; text-align: center; cursor: pointer; margin-bottom: 15px;

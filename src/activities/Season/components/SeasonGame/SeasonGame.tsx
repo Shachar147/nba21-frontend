@@ -5,11 +5,13 @@ import LoadingPage from "../../../../pages/LoadingPage";
 import {apiGet} from "../../../../helpers/apiV2";
 import {errorTestId} from "../../../../pages/Login/Model";
 import style from "../../../../pages/Login/style";
-import {Player, Season, SeasonGameTeam, Team} from "../../utils/interfaces";
+import {Player, SeasonGameTeam, Team} from "../../utils/interfaces";
 import PlayerCard from "../../../../components/PlayerCard";
 import {styles} from "../../../Tournament/Tournament";
 import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
 import {getClasses, getPlayerShortenPosition} from "../../../../helpers/utils";
+import ButtonInput from "../../../../components/inputs/ButtonInput";
+import './SeasonGame.scss';
 
 function SeasonGame({ match }: any){
 
@@ -156,18 +158,56 @@ function SeasonGame({ match }: any){
             });
 
         return (
-            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative">
+            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-row">
+                {renderHomeGuestHeaders()}
                 <div className="ui link cards centered display-flex gap-4">
                     {blocks[0]}
+                    {renderSaveButton()}
                     {blocks[1]}
                 </div>
             </div>
         )
     }
 
+    function renderSaveButton(){
+        return (
+            <ButtonInput
+                text={"Save"}
+                classList={"save-button"}
+                onClick={() => {
+                    alert("todo complete");
+                }}
+            />
+        );
+    }
+
+    function renderButtons() {
+        return (
+            <>
+                <ButtonInput
+                    text={"Different Game"}
+                    style={{marginLeft: "5px"}}
+                    onClick={() => {
+                        window.location.reload();
+                    }}
+                />
+                <ButtonInput
+                    text={"View Stats"}
+                    style={{marginLeft: "5px"}}
+                    onClick={() => {
+                        alert("todo complete");
+                        // use stats not window.location.reload, to allow looking at stats while playing without loosing current game.
+                    }}
+                />
+            </>
+        )
+    }
+
     function renderStats(){
         return (
             <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative">
+                {!!teamsData && <span><b>Mode:</b> {teamsData.mode}</span>}
+                <br/><br/>
                 <a className="show-hide-stats" onClick={() => setShowStats(!showStats)}>{showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", showStats ? 'display-block' : 'display-none')}>
                     stats
@@ -282,6 +322,25 @@ function SeasonGame({ match }: any){
         )
     }
 
+    function renderHomeGuestHeaders(){
+        const titleStyle = {
+            margin: 0,
+            padding: 0,
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            fontWeight: "bold",
+            fontSize: "18px",
+        }
+
+        return (
+            <div className="ui link cards centered flex-row align-items-center margin-top-20">
+                <div className={"card in-game"} style={titleStyle}>Guest</div>
+                {/*<div style={{ width: 110 }} />*/}
+                <div className={"card in-game"} style={titleStyle}>Home</div>
+            </div>
+        )
+    }
+
     function renderContent(){
         const team1 = teamsData?.team1?.teamName;
         const team2 = teamsData?.team2?.teamName;
@@ -299,8 +358,11 @@ function SeasonGame({ match }: any){
                 <>
                     <div className="content flex-column gap-8">
                         {renderSmallLogo()}
-                        {renderStats()}
-                        {renderSeasonGame()}
+                        {renderButtons()}
+                        <div className="display-flex-important flex-column align-items-center">
+                            {renderStats()}
+                            {renderSeasonGame()}
+                        </div>
                     </div>
                     <div className="bg-container" style={{ backgroundImage: `url("${home_team_background}")` }} />
                 </>
@@ -308,7 +370,6 @@ function SeasonGame({ match }: any){
 
             // return (
             //     <div className="flex-col gap-4">
-            //         <span><b>Mode:</b> {teamsData.mode}</span>
             //         <span><b>Total Teams:</b> {teamsData.totals.totalTeams} {renderTotals()}</span>
             //         <div>
             //             {`${team1} vs ${team2}`}
