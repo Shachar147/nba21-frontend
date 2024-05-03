@@ -28,6 +28,7 @@ import ButtonInput from "@components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 import OneOnOneSingleStats from "./OneOnOneSingleStats";
 
+// @ts-ignore
 import { withRouter } from "react-router";
 import {
     totalFinalsAppearancesPercentsSort, totalFinalsWinsPercentsSort,

@@ -13,21 +13,23 @@ import {getClasses, getPlayerShortenPosition} from "../../../../helpers/utils";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
 import './SeasonGame.scss';
 import TextInput from "../../../../components/inputs/TextInput";
+import DropdownInput from "../../../../components/inputs/DropdownInput";
 
 function SeasonGame({ match }: any){
 
     // Access the parameter from the URL
     const { seasonId } = match.params;
 
-    const [settings, setSettings] = useState(undefined);
+    const [settings, setSettings] = useState<Record<string, any> | undefined>(undefined);
 
     const [showStats, setShowStats] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [allTeamsById, setAllTeamsById] = useState<Record<number, Team>>({})
-    const [teamsData, setTeamsData] = useState<Record<string, any> | undefined>(undefined);
+    const [teamsData, setTeamsData] = useState<any | undefined>(undefined);
 
-    const [scores, setScores] = useState({});
-    const [totalOvertimes, setTotalOvertimes] = useState(false);
+    const [scores, setScores] = useState<Record<string, number>>({});
+    const [MvpPlayer, setMvpPlayer] = useState<string | undefined>(undefined);
+    const [totalOvertimes, setTotalOvertimes] = useState(0);
     const [isComeback, setIsComeback] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
 
@@ -62,8 +64,8 @@ function SeasonGame({ match }: any){
 
     async function loadUserSettings(){
         const res = await apiGet('/user/settings');
-        const data = res.data.data;
-        let settings = {};
+        const data: any[] = res.data.data;
+        let settings: Record<string, any> = {};
         data.forEach((setting) => {
             settings[setting.name.toLowerCase()] = setting.value;
         });
@@ -86,8 +88,10 @@ function SeasonGame({ match }: any){
     }
 
     function calcOT(){
+        // @ts-ignore
         const { auto_calc_ot_game_length } = settings;
 
+        // @ts-ignore
         const { team1, team2 } = teamsData;
 
         let val = Math.max(scores[team1.teamName], scores[team2.teamName]);
@@ -124,7 +128,7 @@ function SeasonGame({ match }: any){
                 const curr_custom_details_title = `2K Rating: ${_2k_rating}` + original_custom_title;
 
                 team.players.forEach((player) => {
-                    player["rate"] = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";;
+                    player["rate"] = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
                 })
 
                 const arr = team.players.sort((a,b) => {
@@ -142,6 +146,16 @@ function SeasonGame({ match }: any){
                     )
                 });
                 custom_details = [custom_details.concat(...arr).join("")];
+
+                const onChange = async(e: any) => {
+                    scores[team.name] = Number(Math.max(0,e.target.value));
+                    setScores({...scores });
+
+                    // @ts-ignore
+                    if (Number(settings.auto_calc_ot)) {
+                        calcOT();
+                    }
+                }
 
                 return (
                     <PlayerCard
@@ -161,14 +175,7 @@ function SeasonGame({ match }: any){
                         //     max_lose_streak: stats[team.name]?.max_lose_streak || "0",
                         // }}
 
-                        onChange={async (e) => {
-                            scores[team.name] = Number(Math.max(0,e.target.value));
-                            setScores({...scores});
-
-                            if (Number(settings.auto_calc_ot)) {
-                                calcOT();
-                            }
-                        }}
+                        onChange={onChange}
                         singleShot={scores[team.name]}
 
                         // todo complete:
@@ -417,28 +424,29 @@ function SeasonGame({ match }: any){
         );
 
         // mvp
-        const mvp_block_html = "";
-        // const { player1, player2 } = this.state;
-        // const options = (scores[player1.name] > scores[player2.name]) ? player1.players : (scores[player2.name] > scores[player1.name]) ? player2.players : [];
-        // mvp_block_html = (
-        //     <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto" }}>
-        //         <DropdownInput
-        //             options={(options)}
-        //             name={"select_mvp"}
-        //             placeholder={"Select MVP..."}
-        //             nameKey={"name"}
-        //             sortKey={"rate"}
-        //             sort={"desc"}
-        //             valueKey={"name"}
-        //             idKey={"id"}
-        //             style={{ width: "710px", paddingBottom: "15px" }}
-        //             disabled={options.length === 0 || this.state.finished}
-        //             onChange={(player) => {
-        //                 this.setState({ mvp_player: player.name });
-        //             }}
-        //         />
-        //     </div>
-        // );
+        const { team1, team2 } = teamsData;
+        const team1Info = allTeamsById[team1.teamId];
+        const team2Info = allTeamsById[team2.teamId];
+        const options = (scores[team1.teamName] > scores[team2.teamName]) ? team1Info.players : (scores[team2.teamName] > scores[team1.teamName]) ? team2Info.players : [];
+        const mvp_block_html = (
+            <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto" }}>
+                <DropdownInput
+                    options={(options)}
+                    name={"select_mvp"}
+                    placeholder={"Select MVP..."}
+                    nameKey={"name"}
+                    sortKey={"rate"}
+                    sort={"desc"}
+                    valueKey={"name"}
+                    idKey={"id"}
+                    style={{ width: "710px", paddingBottom: "15px" }}
+                    disabled={options.length === 0 || isSaved}
+                    onChange={(player) => {
+                        setMvpPlayer(player.name)
+                    }}
+                />
+            </div>
+        );
 
         return (
             <>
