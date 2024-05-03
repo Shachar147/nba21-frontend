@@ -383,7 +383,17 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
 
     const arr = (stats1.records.length > stats2.records.length) ? stats1.records : stats2.records; // in case one of them is empty
 
+    debugger;
+
     arr.forEach((record) => {
+
+        if (record.team1_name) {
+            record.player1_name = record.team1_name;
+        }
+        if (record.team2_name) {
+            record.player2_name = record.team2_name;
+        }
+
         if ((record.player1_name === player1.name && record.player2_name === player2.name) || (record.player1_name === player2.name && record.player2_name === player1.name)) {
 
             // met each other

@@ -8,12 +8,15 @@ import {Player, SeasonGameTeam, Team} from "../../utils/interfaces";
 import PlayerCard from "../../../../components/PlayerCard";
 import {styles} from "../../../Tournament/Tournament";
 import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
-import {getClasses, getPlayerShortenPosition} from "../../../../helpers/utils";
+import {getClasses, getPlayerShortenPosition, toPascalCase} from "../../../../helpers/utils";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
 import './SeasonGame.scss';
 import TextInput from "../../../../components/inputs/TextInput";
 import DropdownInput from "../../../../components/inputs/DropdownInput";
 import SeasonGameStore from "../../stores/SeasonGameStore";
+import {game_mode, percents, what} from "../../utils/consts";
+import {BuildStatsTable} from "../../../shared/OneOnOneHelper";
+import StatsTable from "../../../../components/StatsTable";
 
 function SeasonGame({ match }: any){
 
@@ -209,6 +212,21 @@ function SeasonGame({ match }: any){
             )
         }
 
+
+
+        // one on one stats
+        let general_stats_block, matchups_description;
+        if (store.statsInfo){
+            general_stats_block = BuildStatsTable(store.statsInfo.general_stats,0, game_mode, percents);
+
+            const { met_each_other } = store.statsInfo;
+            const plural = (met_each_other > 1) ? "s" : "";
+            matchups_description = `These ${what} met each other ${met_each_other} time${plural}.`;
+            if (met_each_other === 0) {
+                matchups_description = `This is the first time these ${what} meet each other.`;
+            }
+        }
+
         return (
             <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-column gap-8">
                 <div className="flex-column">
@@ -217,114 +235,21 @@ function SeasonGame({ match }: any){
                 </div>
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'display-block' : 'display-none')}>
-
-                    stats
-                    {/*<div style="width: 100%; text-align: center; margin-bottom: 10px;">*/}
-                    {/*    <div className="ui header"*/}
-                    {/*         style="width: 100%; text-align: center; margin-bottom: 0px;">Tournament Stats*/}
-                    {/*    </div>*/}
-                    {/*    <div style="display: block; width: 100%; text-align: center;">*/}
-                    {/*        <ul style="padding: 0px;">*/}
-                    {/*            <li style="list-style: none;"><b>Today: </b>Games: 0 | Points: 0<br><b>Totals: </b>Games:*/}
-                    {/*                6 | Points: 52</li>*/}
-                    {/*            <table className="ui celled table">*/}
-                    {/*                <thead>*/}
-                    {/*                <tr>*/}
-                    {/*                    <th></th>*/}
-                    {/*                    <th>Days with most games</th>*/}
-                    {/*                    <th>Days with most points</th>*/}
-                    {/*                </tr>*/}
-                    {/*                </thead>*/}
-                    {/*                <tbody>*/}
-                    {/*                <tr>*/}
-                    {/*                    <td style="font-weight: bold;">#1</td>*/}
-                    {/*                    <td>24/04/2024 - 3</td>*/}
-                    {/*                    <td>24/04/2024 - 33</td>*/}
-                    {/*                </tr>*/}
-                    {/*                <tr>*/}
-                    {/*                    <td style="font-weight: bold;">#2</td>*/}
-                    {/*                    <td>23/04/2024 - 3</td>*/}
-                    {/*                    <td>23/04/2024 - 19</td>*/}
-                    {/*                </tr>*/}
-                    {/*                </tbody>*/}
-                    {/*            </table>*/}
-                    {/*        </ul>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-
-                    {/*<div style="width: 100%; text-align: center; margin-bottom: 10px;">*/}
-                    {/*    <div className="ui header"*/}
-                    {/*         style="width: 100%; text-align: center; margin-bottom: 0px; margin-top: 10px;">Previous*/}
-                    {/*        Matchups Stats*/}
-                    {/*    </div>*/}
-                    {/*    <div style="display: block; width: 100%; text-align: center;">*/}
-                    {/*        <ul style="padding: 0px;">*/}
-                    {/*            <li style="list-style: none;">These teams met each other 1 time.</li>*/}
-                    {/*            <table className="ui celled table">*/}
-                    {/*                <thead>*/}
-                    {/*                <tr>*/}
-                    {/*                    <th></th>*/}
-                    {/*                    <th>Miami Heat</th>*/}
-                    {/*                    <th>LA Clippers</th>*/}
-                    {/*                </tr>*/}
-                    {/*                </thead>*/}
-                    {/*                <tbody>*/}
-                    {/*                <tr>*/}
-                    {/*                    <td style="font-weight: bold;">Wins</td>*/}
-                    {/*                    <td>1</td>*/}
-                    {/*                    <td>0</td>*/}
-                    {/*                </tr>*/}
-                    {/*                <tr>*/}
-                    {/*                    <td style="font-weight: bold;">Total Scored</td>*/}
-                    {/*                    <td>10</td>*/}
-                    {/*                    <td>0</td>*/}
-                    {/*                </tr>*/}
-                    {/*                </tbody>*/}
-                    {/*            </table>*/}
-                    {/*            <a style="cursor: pointer;">Show More</a></ul>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-
-                    {/*<div style="width: 100%; text-align: center; margin-bottom: 10px;">*/}
-                    {/*    <div className="ui header"*/}
-                    {/*         style="width: 100%; text-align: center; margin-bottom: 0px; margin-top: 10px;">Teams*/}
-                    {/*        Individual Stats*/}
-                    {/*    </div>*/}
-                    {/*    <div style="display: block; width: 100%; text-align: center;">*/}
-                    {/*        <ul style="padding: 0px;">*/}
-                    {/*            <li style="list-style: none;"></li>*/}
-                    {/*            <table className="ui celled table">*/}
-                    {/*                <thead>*/}
-                    {/*                <tr>*/}
-                    {/*                    <th></th>*/}
-                    {/*                    <th>Miami Heat</th>*/}
-                    {/*                    <th>LA Clippers</th>*/}
-                    {/*                </tr>*/}
-                    {/*                </thead>*/}
-                    {/*                <tbody>*/}
-                    {/*                <tr>*/}
-                    {/*                    <td style="font-weight: bold;">Total Played Games</td>*/}
-                    {/*                    <td>2</td>*/}
-                    {/*                    <td>1</td>*/}
-                    {/*                </tr>*/}
-                    {/*                <tr>*/}
-                    {/*                    <td style="font-weight: bold;">Standing</td>*/}
-                    {/*                    <td>2W 0L 100.00%</td>*/}
-                    {/*                    <td>0W 1L 0.00%</td>*/}
-                    {/*                </tr>*/}
-                    {/*                <tr>*/}
-                    {/*                    <td style="font-weight: bold;">Current Win Streak</td>*/}
-                    {/*                    <td>2</td>*/}
-                    {/*                    <td>0</td>*/}
-                    {/*                </tr>*/}
-                    {/*                </tbody>*/}
-                    {/*            </table>*/}
-                    {/*            <a style="cursor: pointer;">Show More</a></ul>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
+                    {general_stats_block}
+                    <StatsTable
+                        title={"Previous Matchups Stats"}
+                        marginTop="10px"
+                        description={matchups_description}
+                        hidden={(store.statsInfo?.met_each_other === 0)}
+                        cols={["",store.team1Name, store.team2Name]}
+                        stats={store.statsInfo?.matchups_values}
+                    />
+                    <StatsTable
+                        title={`${toPascalCase(what)} Individual Stats`}
+                        marginTop="10px"
+                        cols={["",store.team1Name, store.team2Name]}
+                        stats={store.statsInfo?.player_stats_values}
+                    />
                 </div>
             </div>
         )

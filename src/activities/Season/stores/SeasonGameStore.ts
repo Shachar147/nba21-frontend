@@ -1,7 +1,9 @@
 import {observable, action, runInAction, makeObservable, computed} from 'mobx';
-import {NextGameDataResponse, Player, Team} from "../utils/interfaces";
+import {NextGameDataResponse, Player, SeasonStats, Team} from "../utils/interfaces";
 import SeasonApiService from "../services/SeasonApiService";
 import {apiGet} from "../../../helpers/apiV2";
+import {buildStatsInformation} from "../../shared/OneOnOneHelper";
+import {percents, what} from "../utils/consts";
 
 export default class SeasonGameStore {
 
@@ -14,7 +16,10 @@ export default class SeasonGameStore {
     @observable showStats = true;
 
     @observable allTeamsById: Record<number, Team> = {};
-    @observable teamsData: NextGameDataResponse = undefined;
+    @observable teamsData: NextGameDataResponse | undefined  = undefined;
+
+    @observable seasonStats: SeasonStats | undefined = undefined;
+    @observable statsInfo: Record<any, any> | undefined = undefined;
 
     @observable scores:Record<string, number> = {};
     @observable totalOvertimes: number = 0;
@@ -32,6 +37,8 @@ export default class SeasonGameStore {
     async loadStuff() {
         this.setLoading(true);
         await Promise.all([this.loadNextTeams(), this.loadAllTeams(), this.loadUserSettings()]);
+        await this.initStats(); // must be after all teams loaded.
+        console.log(JSON.parse(JSON.stringify(this.statsInfo)));
         runInAction(() => {
             this.setLoading(false);
         })
@@ -75,6 +82,47 @@ export default class SeasonGameStore {
         });
         runInAction(() => {
             this.settings = loadedSettings;
+        })
+    }
+
+    @action
+    async initStats(){
+
+        const stats = await SeasonApiService.getSeasonStats(this.seasonId)
+        runInAction(() => {
+            this.seasonStats = stats;
+        })
+
+        const player_stats_values = {
+            'Total Played Games': [],
+            'Standing': [],
+            'Current Win Streak': [],
+            'Current Lose Streak': [],
+            'Best Win Streak': [],
+            'Worst Lose Streak': [],
+            'Total Knockouts': [],
+            'Total Diff': [],
+            'Total Diff Per Game': [],
+        };
+        const matchups_values = {
+            'Total Previous Matchups': [],
+            'Wins': [],
+            'Total Scored': [],
+            'Total Diff': [],
+            'Knockouts': [],
+        }
+        const statsInfo =
+            buildStatsInformation(
+                this.team1,
+                this.team2,
+                stats,
+                player_stats_values,
+                matchups_values,
+                what,
+                percents
+            );
+        runInAction(() => {
+            this.statsInfo = { ... statsInfo };
         })
     }
 
