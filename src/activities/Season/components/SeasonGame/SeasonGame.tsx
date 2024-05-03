@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react";
-import NbaPage from "../../../../components/NbaPage";
+import NbaPage, {renderSmallLogo} from "../../../../components/NbaPage";
 import LoadingPage from "../../../../pages/LoadingPage";
 import {apiGet} from "../../../../helpers/apiV2";
 import {errorTestId} from "../../../../pages/Login/Model";
@@ -8,9 +8,8 @@ import style from "../../../../pages/Login/style";
 import {Player, Season, SeasonGameTeam, Team} from "../../utils/interfaces";
 import PlayerCard from "../../../../components/PlayerCard";
 import {styles} from "../../../Tournament/Tournament";
-import {DEFAULT_TOURNAMENT_TEAMS, PLAYER_NO_PICTURE} from "../../../../helpers/consts";
+import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
 import {getClasses, getPlayerShortenPosition} from "../../../../helpers/utils";
-import OneOnOneStats from "../../../shared/OneOnOneStats";
 
 function SeasonGame({ match }: any){
 
@@ -295,11 +294,16 @@ function SeasonGame({ match }: any){
                 <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!</style.Error>
             );
         } else {
+            const home_team_background = allTeamsById[teamsData?.team1?.teamId]?.logo;
             return (
-                <div className="flex-column gap-8">
-                    {renderStats()}
-                    {renderSeasonGame()}
-                </div>
+                <>
+                    <div className="content flex-column gap-8">
+                        {renderSmallLogo()}
+                        {renderStats()}
+                        {renderSeasonGame()}
+                    </div>
+                    <div className="bg-container" style={{ backgroundImage: `url("${home_team_background}")` }} />
+                </>
             )
 
             // return (
@@ -344,7 +348,9 @@ function SeasonGame({ match }: any){
     }
 
     return (
-        <NbaPage renderContent={renderContent} />
+        <>
+            <NbaPage renderContent={renderContent} />
+        </>
     );
 }
 

@@ -29,6 +29,8 @@ function SeasonLobby(){
             <div className="sub cards header content" style={{ width:"100%", bottom: "0px" }}>
                 Hello! Choose the season you want to play or create a new season
                 <br/><br/>
+                {renderViewStatsButton()}
+                <br/><br/>
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     {store.seasons.map((season, idx) => (
                         <Card
@@ -52,6 +54,18 @@ function SeasonLobby(){
                 className={"ui blue submit button width-max-content"}
                 onClick={() => window.location.href = "/season/create"}
                 classList={undefined}
+            />
+        )
+    }
+
+    function renderViewStatsButton(){
+        return (
+            <ButtonInput
+                text={"View Stats"}
+                style={{marginLeft: "5px"}}
+                onClick={() => {
+                    alert("todo complete");
+                }}
             />
         )
     }

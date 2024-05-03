@@ -3,7 +3,12 @@ import Header from "./layout/Header";
 import Logo from "./layout/Logo";
 import {observer} from "mobx-react";
 
-function NbaPage({ renderContent }: { renderContent: () => React.ReactNode }){
+interface NbaPageProps {
+    renderContent: () => React.ReactNode;
+    noLogo?: boolean;
+}
+
+function NbaPage({ renderContent, noLogo = false }: NbaPageProps){
     // const style = { width: "100%", height: "100vh", backgroundColor: "#FAFAFB" };
     // const subStyle = { position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
     const style = {};
@@ -13,7 +18,7 @@ function NbaPage({ renderContent }: { renderContent: () => React.ReactNode }){
             <Header nologo={true} />
             <div className={"ui header cards centered"} style={style} >
                 <div style={subStyle}>
-                    <Logo />
+                    {!!noLogo && <Logo />}
                     <div className="flex-col gap-8 align-items-center">
                         {renderContent()}
                     </div>
@@ -21,6 +26,14 @@ function NbaPage({ renderContent }: { renderContent: () => React.ReactNode }){
             </div>
         </div>
     );
+}
+
+export function renderSmallLogo(){
+    return (
+        <div className="ui header cards centered" style={{ width: "100%", marginLeft: 0, paddingTop: 45, marginBottom: 20}}>
+            <div><a href="/"><img src="/logo-new.png" style={{ width: "80%", maxWidth: 400}} /></a></div>
+        </div>
+    )
 }
 
 export default observer(NbaPage);
