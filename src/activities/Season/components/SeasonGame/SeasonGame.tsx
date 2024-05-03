@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {observer} from "mobx-react";
 import NbaPage, {renderSmallLogo} from "../../../../components/NbaPage";
 import LoadingPage from "../../../../pages/LoadingPage";
-import {apiGet} from "../../../../helpers/apiV2";
 import {errorTestId} from "../../../../pages/Login/Model";
 import style from "../../../../pages/Login/style";
 import {Player, SeasonGameTeam, Team} from "../../utils/interfaces";
@@ -14,105 +13,43 @@ import ButtonInput from "../../../../components/inputs/ButtonInput";
 import './SeasonGame.scss';
 import TextInput from "../../../../components/inputs/TextInput";
 import DropdownInput from "../../../../components/inputs/DropdownInput";
+import SeasonGameStore from "../../stores/SeasonGameStore";
 
 function SeasonGame({ match }: any){
 
-    // Access the parameter from the URL
     const { seasonId } = match.params;
+    const store = useMemo(() => new SeasonGameStore(seasonId), [seasonId]);
 
-    const [settings, setSettings] = useState<Record<string, any> | undefined>(undefined);
-
-    const [showStats, setShowStats] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
-    const [allTeamsById, setAllTeamsById] = useState<Record<number, Team>>({})
-    const [teamsData, setTeamsData] = useState<any | undefined>(undefined);
-
-    const [scores, setScores] = useState<Record<string, number>>({});
-    const [MvpPlayer, setMvpPlayer] = useState<string | undefined>(undefined);
-    const [totalOvertimes, setTotalOvertimes] = useState(0);
-    const [isComeback, setIsComeback] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
-
-    useEffect(() => { init(); }, [])
-
-    async function init() {
-        setIsLoading(true);
-        await Promise.all([loadNextTeams(), loadAllTeams(), loadUserSettings()]);
-        setIsLoading(false);
-    }
-
-    async function loadAllTeams() {
-        const teamsResponse = await apiGet("/team");
-        const _teams: Team[] = teamsResponse.data.data;
-        const allTeamsById: Record<number, Team> = {};
-        _teams.forEach((team: Team) => {
-            allTeamsById[team.id] = team;
-        })
-        setAllTeamsById(allTeamsById);
-    }
-
-    async function loadNextTeams() {
-        const nextTeamsResponse = await apiGet(`/records/season/${seasonId}/next-game`);
-        setTeamsData(nextTeamsResponse.data);
-
-        const team1Name = nextTeamsResponse.data.team1.teamName;
-        const team2Name = nextTeamsResponse.data.team2.teamName;
-        scores[team1Name] = 0;
-        scores[team2Name] = 0;
-        setScores(scores);
-    }
-
-    async function loadUserSettings(){
-        const res = await apiGet('/user/settings');
-        const data: any[] = res.data.data;
-        let settings: Record<string, any> = {};
-        data.forEach((setting) => {
-            settings[setting.name.toLowerCase()] = setting.value;
-        });
-        // console.log(settings);
-        setSettings(settings)
-    }
-
-    function goBack(){
-        window.location.href = "/season";
-    }
-
-    function renderTotals(){
-        if (!teamsData?.totals?.totalGames) {
-            return null;
-        }
-
-        return (
-            <span> | <b>Total Played Games:</b> {teamsData.totals.totalPlayedGames}/{teamsData.totals.totalGames} | <b>Remaining Games:</b> {teamsData.totals.remainingGames}</span>
-        )
-    }
+    useEffect(() => {
+     store.setMvpPlayer(undefined)
+    }, [store.winnerName])
 
     function calcOT(){
         // @ts-ignore
-        const { auto_calc_ot_game_length } = settings;
+        const { auto_calc_ot_game_length } = store.settings;
 
         // @ts-ignore
-        const { team1, team2 } = teamsData;
+        const { team1, team2 } = store.teamsData;
 
-        let val = Math.max(scores[team1.teamName], scores[team2.teamName]);
+        let val = Math.max(store.scores[team1.teamName], store.scores[team2.teamName]);
         let total_overtimes = 0;
         while (val >= Number(auto_calc_ot_game_length) + 2) {
             val -= 2;
             total_overtimes++;
         }
         // console.log("total overtimes: ",total_overtimes);
-        setTotalOvertimes(total_overtimes)
+        store.setTotalOvertimes(total_overtimes)
     }
 
     function renderSeasonGame(){
-        if (!teamsData) {
+        if (!store.teamsData) {
             return null;
         }
 
-        const team1: SeasonGameTeam = teamsData.team1;
-        const team2: SeasonGameTeam = teamsData.team2;
+        const team1: SeasonGameTeam = store.teamsData.team1;
+        const team2: SeasonGameTeam = store.teamsData.team2;
 
-        if (!team1 || !team2 || teamsData.isSeasonOver){
+        if (!team1 || !team2 || store.teamsData.isSeasonOver){
             return (
                 <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!</style.Error>
             );
@@ -120,7 +57,7 @@ function SeasonGame({ match }: any){
         const blocks =
             [team1, team2].map((seasonGameTeam, idx) => {
                 const { teamId } = seasonGameTeam;
-                const team: Team = allTeamsById[teamId];
+                const team: Team = store.allTeamsById[teamId];
 
                 const _2k_rating = team['_2k_rating'] || 'N/A';
                 let custom_details: string[] = [];
@@ -131,7 +68,7 @@ function SeasonGame({ match }: any){
                     player["rate"] = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
                 })
 
-                const arr = team.players.sort((a,b) => {
+                const arr = team.players.slice().sort((a,b) => {
 
                     let rate1 = (a["rate"] === "N/A") ? 0 : Number(a["rate"]);
                     let rate2 = (b["rate"] === "N/A") ? 0 : Number(b["rate"]);
@@ -148,11 +85,11 @@ function SeasonGame({ match }: any){
                 custom_details = [custom_details.concat(...arr).join("")];
 
                 const onChange = async(e: any) => {
-                    scores[team.name] = Number(Math.max(0,e.target.value));
-                    setScores({...scores });
+                    store.scores[team.name] = Number(Math.max(0,e.target.value));
+                    store.setScores(store.scores);
 
                     // @ts-ignore
-                    if (Number(settings.auto_calc_ot)) {
+                    if (Number(store.settings.auto_calc_ot)) {
                         calcOT();
                     }
                 }
@@ -176,7 +113,7 @@ function SeasonGame({ match }: any){
                         // }}
 
                         onChange={onChange}
-                        singleShot={scores[team.name]}
+                        singleShot={store.scores[team.name]}
 
                         // todo complete:
                         // lost={(this.state.saved && this.state.loser === team.name)}
@@ -225,14 +162,23 @@ function SeasonGame({ match }: any){
                 onClick={() => {
                     alert("todo complete");
                 }}
-                disabled={Object.values(scores).reduce((a, b) => a+b, 0) == 0}
+                disabled={Object.values(store.scores).reduce((a, b) => a+b, 0) == 0}
             />
         );
     }
 
     function renderHeaderButtons() {
+        function goBack(){
+            window.location.href = "/season";
+        }
+
         return (
             <>
+                <ButtonInput
+                    text={"Go Back"}
+                    style={{marginLeft: "5px"}}
+                    onClick={goBack}
+                />
                 <ButtonInput
                     text={"Different Game"}
                     style={{marginLeft: "5px"}}
@@ -253,12 +199,25 @@ function SeasonGame({ match }: any){
     }
 
     function renderStats(){
+        function renderTotals(){
+            if (!store.teamsData?.totals?.totalGames) {
+                return null;
+            }
+
+            return (
+                <span style={{ fontWeight: "normal" }}><b>Total Played Games:</b> {store.teamsData.totals.totalPlayedGames}/{store.teamsData.totals.totalGames} | <b>Remaining Games:</b> {store.teamsData.totals.remainingGames}</span>
+            )
+        }
+
         return (
-            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative">
-                {!!teamsData && <span><b>Mode:</b> {teamsData.mode}</span>}
-                <br/><br/>
-                <a className="show-hide-stats" onClick={() => setShowStats(!showStats)}>{showStats ? "Hide Stats" : "Show Stats"}</a>
-                <div className={getClasses("width-100-percents", showStats ? 'display-block' : 'display-none')}>
+            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-column gap-8">
+                <div className="flex-column">
+                    {!!store.teamsData && <span><b>Mode:</b> {store.teamsData.mode}</span>}
+                    {renderTotals()}
+                </div>
+                <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
+                <div className={getClasses("width-100-percents", store.showStats ? 'display-block' : 'display-none')}>
+
                     stats
                     {/*<div style="width: 100%; text-align: center; margin-bottom: 10px;">*/}
                     {/*    <div className="ui header"*/}
@@ -399,7 +358,7 @@ function SeasonGame({ match }: any){
                 <div
                     className="ui checkbox"
                 >
-                    <input type="checkbox" checked={isComeback} onChange={() => setIsComeback(!isComeback)} disabled={isSaved}  />
+                    <input type="checkbox" checked={store.isComeback} onChange={() => store.setIsComeback(!store.isComeback)} disabled={store.isSaved || store.isSaving}  />
                     <label>Comeback?</label>
                 </div>
             </div>
@@ -413,11 +372,11 @@ function SeasonGame({ match }: any){
                     <TextInput
                         name={'total_overtimes'}
                         type={'number'}
-                        value={totalOvertimes}
+                        value={store.totalOvertimes.toString()}
                         placeholder={"0"}
-                        disabled={isSaved}
+                        disabled={store.isSaved || store.isSaving}
                         onChange={(e) => {
-                            setTotalOvertimes(Math.min(20,Math.max(0,Number(e.target.value)) || 0))
+                            store.setTotalOvertimes(Math.min(20,Math.max(0,Number(e.target.value)) || 0))
                         }}
                     />
                 </div>
@@ -425,10 +384,7 @@ function SeasonGame({ match }: any){
         );
 
         // mvp
-        const { team1, team2 } = teamsData;
-        const team1Info = allTeamsById[team1.teamId];
-        const team2Info = allTeamsById[team2.teamId];
-        const options = (scores[team1.teamName] > scores[team2.teamName]) ? team1Info.players : (scores[team2.teamName] > scores[team1.teamName]) ? team2Info.players : [];
+        const options = store.mvpPlayerOptions;
         const mvp_block_html = (
             <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto" }}>
                 <DropdownInput
@@ -441,9 +397,9 @@ function SeasonGame({ match }: any){
                     valueKey={"name"}
                     idKey={"id"}
                     style={{ width: "710px", paddingBottom: "15px" }}
-                    disabled={options.length === 0 || isSaved}
+                    disabled={options.length === 0 || store.isSaved || store.isSaving}
                     onChange={(player) => {
-                        setMvpPlayer(player.name)
+                        store.setMvpPlayer(player.name)
                     }}
                 />
             </div>
@@ -471,18 +427,18 @@ function SeasonGame({ match }: any){
     }
 
     function renderContent(){
-        const team1 = teamsData?.team1?.teamName;
-        const team2 = teamsData?.team2?.teamName;
-        if (!teamsData) {
+        const team1 = store.teamsData?.team1?.teamName;
+        const team2 = store.teamsData?.team2?.teamName;
+        if (!store.teamsData) {
             return null;
         }
 
-        if (!team1 || !team2 || teamsData.isSeasonOver){
+        if (!team1 || !team2 || store.teamsData.isSeasonOver){
             return (
                 <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!</style.Error>
             );
         } else {
-            const home_team_background = allTeamsById[teamsData?.team1?.teamId]?.logo;
+            const home_team_background = store.allTeamsById[store.teamsData?.team1?.teamId]?.logo;
             return (
                 <>
                     <div className="content flex-column gap-8">
@@ -531,7 +487,7 @@ function SeasonGame({ match }: any){
         // )
     }
 
-    if (isLoading) {
+    if (store.isLoading) {
         return (
             <LoadingPage />
         )
