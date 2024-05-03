@@ -3,14 +3,13 @@ import {observer} from "mobx-react";
 import NbaPage from "../../../../components/NbaPage";
 import LoadingPage from "../../../../pages/LoadingPage";
 import {apiGet} from "../../../../helpers/apiV2";
-import {useParams} from "react-router";
 import {errorTestId} from "../../../../pages/Login/Model";
 import style from "../../../../pages/Login/style";
 
-function SeasonGame(){
+function SeasonGame({ match }: any){
 
     // Access the parameter from the URL
-    const { seasonId } = useParams();
+    const { seasonId } = match.params;
 
     const [isLoading, setIsLoading] = useState(false);
     const [teamsData, setTeamsData] = useState<Record<string, any> | undefined>(undefined);

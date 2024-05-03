@@ -11,6 +11,7 @@ import {DEFAULT_TOURNAMENT_TEAMS} from "../../../../helpers/consts";
 import LoadingPage from "../../../../pages/LoadingPage";
 import {apiGet} from "../../../../helpers/apiV2";
 import './CreateSeason.scss';
+import {Team} from "../../utils/interfaces";
 
 function CreateSeason(){
 
@@ -18,10 +19,10 @@ function CreateSeason(){
     const [isSaving, setIsSaving] = useState(false);
     const [seasonName, setSeasonName] = useState(`Season ${new Date().getFullYear()}-${Number(new Date().getFullYear().toString().slice(2,4))+1}`);
     const [errorMessage, setErrorMessage] = useState<string|undefined>(undefined);
-    const [teams, setTeams] = useState<number[]>(localStorage.getItem('season_teams')?.split('|') ?? []);
+    const [teams, setTeams] = useState<number[]>(localStorage.getItem('season_teams')?.split('|')?.map((i) => Number(i)) ?? []);
     const [seasonCreated, setSeasonCreated] = useState(false);
     const [isNameError, setIsNameError] = useState(false);
-    const [allTeams, setAllTeams] = useState([]);
+    const [allTeams, setAllTeams] = useState<Team[]>([]);
 
     useEffect(() => { loadAllTeams() }, []);
 
@@ -97,6 +98,8 @@ function CreateSeason(){
         catch (error) {
             // @ts-ignore
             setErrorMessage(error?.response?.data?.message);
+
+            // @ts-ignore
             setIsNameError(error?.response?.data?.message?.toLowerCase().includes("name"))
         } finally {
             setIsSaving(false);
@@ -131,13 +134,13 @@ function CreateSeason(){
                 Total Selected: { teams.length } <br/>
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     {
-                        allTeams.sort((a,b) => {
+                        allTeams.sort((a: Team, b: Team) => {
                             let idx1 = teams.indexOf(a.id);
                             let idx2 = teams.indexOf(b.id);
                             if (idx1 === -1) idx1 = 9999;
                             if (idx2 === -1) idx2 = 9999;
                             return idx1 - idx2;
-                        }).map((team) => {
+                        }).map((team: Team) => {
                             let opacity = (teams.indexOf(team.id) !== -1) ? 1 : 0.4;
 
                             return (

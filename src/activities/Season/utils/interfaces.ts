@@ -11,3 +11,10 @@ export interface ExtendedSeason extends Season {
     games: any[]; // todo complete
     teams: any[]; // todo complete
 }
+
+export interface Team {
+    id: number;
+    name: string;
+    logo: string;
+    // todo complete
+}
