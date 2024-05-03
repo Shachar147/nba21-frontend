@@ -1,4 +1,4 @@
-import {Season} from "../utils/interfaces";
+import {NextGameDataResponse, Season} from "../utils/interfaces";
 import {apiGet, apiPost} from "../../../helpers/apiV2";
 
 const seasons_route = '/season';
@@ -9,12 +9,12 @@ class Service {
         return axiosResponse.data.data;
     }
 
-    createSeason = async (name: string, teams: number[]): Promise<Season[]> => {
+    createSeason = async (name: string, teams: number[]): Promise<Season> => {
         const axiosResponse = await apiPost(seasons_route, { name, teams });
         return axiosResponse.data.data;
     }
 
-    getNextGameData = async (seasonId: number): Promise<any> => {
+    getNextGameData = async (seasonId: number): Promise<NextGameDataResponse> => {
         const axiosResponse = await apiGet(`/records/season/${seasonId}/next-game`);
         return axiosResponse.data;
     }

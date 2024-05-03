@@ -3,13 +3,9 @@ export interface Season {
     userId: number;
     name: string;
     addedAt: string;
-    playedGamesCount: number;
-    teamsCount: number;
-}
-
-export interface ExtendedSeason extends Season {
-    games: any[]; // todo complete
-    teams: any[]; // todo complete
+    playedGamesCount?: number;
+    teamsCount?: number;
+    teams?: SeasonGameTeam[];
 }
 
 export interface Team {
@@ -34,4 +30,45 @@ export interface Player {
 export interface SeasonGameTeam {
     name: string;
     teamId: number;
+}
+
+export enum SeasonMode {
+    'Regular Season' = 'Regular Season',
+    'Playoff' = 'Playoff',
+    'SemiFinals' = 'SemiFinals',
+    'Finals' = 'Finals',
+}
+
+export interface NextGameDataResponse {
+    mode: SeasonMode;
+    isSeasonOver: boolean;
+    winner?: string;
+    team1: SeasonGameTeam;
+    team2: SeasonGameTeam;
+    totals: {
+        totalTeams: number;
+        totalGames: number;
+        totalPlayedGames: number;
+        remainingGames: number;
+    };
+    playedGamesByTeam?: Record<number, Record<number, number>>;
+    series: {
+        active: string[];
+        finals: string[];
+        semiFinals: string[];
+        playoff: string[];
+    };
+    advancedTo: {
+        nextRound: string[];
+        finals?: string[];
+        semiFinals?: string[];
+        playoff?: string[];
+    };
+    kickedOut: {
+        playoff: string[];
+        semiFinals: string[];
+        swept: string[];
+        finals: string[];
+    };
+    stats?: any;
 }

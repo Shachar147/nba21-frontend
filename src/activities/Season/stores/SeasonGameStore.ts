@@ -1,5 +1,5 @@
 import {observable, action, runInAction, makeObservable, computed} from 'mobx';
-import {Player, Team} from "../utils/interfaces";
+import {NextGameDataResponse, Player, Team} from "../utils/interfaces";
 import SeasonApiService from "../services/SeasonApiService";
 import {apiGet} from "../../../helpers/apiV2";
 
@@ -14,7 +14,7 @@ export default class SeasonGameStore {
     @observable showStats = true;
 
     @observable allTeamsById: Record<number, Team> = {};
-    @observable teamsData: any = undefined;
+    @observable teamsData: NextGameDataResponse = undefined;
 
     @observable scores:Record<string, number> = {};
     @observable totalOvertimes: number = 0;
