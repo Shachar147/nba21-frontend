@@ -12,6 +12,7 @@ import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
 import {getClasses, getPlayerShortenPosition} from "../../../../helpers/utils";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
 import './SeasonGame.scss';
+import TextInput from "../../../../components/inputs/TextInput";
 
 function SeasonGame({ match }: any){
 
@@ -22,6 +23,10 @@ function SeasonGame({ match }: any){
     const [isLoading, setIsLoading] = useState(false);
     const [allTeamsById, setAllTeamsById] = useState<Record<number, Team>>({})
     const [teamsData, setTeamsData] = useState<Record<string, any> | undefined>(undefined);
+
+    const [totalOvertimes, setTotalOvertimes] = useState(false);
+    const [isComeback, setIsComeback] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
     useEffect(() => { init(); }, [])
 
@@ -158,13 +163,14 @@ function SeasonGame({ match }: any){
             });
 
         return (
-            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-row">
+            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-row gap-8">
                 {renderHomeGuestHeaders()}
                 <div className="ui link cards centered display-flex gap-4">
                     {blocks[0]}
                     {renderSaveButton()}
                     {blocks[1]}
                 </div>
+                {renderPreSaveBlocks()}
             </div>
         )
     }
@@ -181,7 +187,7 @@ function SeasonGame({ match }: any){
         );
     }
 
-    function renderButtons() {
+    function renderHeaderButtons() {
         return (
             <>
                 <ButtonInput
@@ -341,6 +347,85 @@ function SeasonGame({ match }: any){
         )
     }
 
+    function renderPreSaveBlocks(){
+        // <!-- todo complete: remove disabled condition once we will implement update -->
+
+        // comeback
+        const comeback_block = (
+            <div style={{ paddingBottom: "20px", paddingTop: "20px" }}>
+                <div
+                    className="ui checkbox"
+                >
+                    <input type="checkbox" checked={isComeback} onChange={() => setIsComeback(!isComeback)} disabled={isSaved}  />
+                    <label>Comeback?</label>
+                </div>
+            </div>
+        );
+
+        // overtime
+        const overtime_block = (
+            <div style={{ width: "100%", display:"flex", paddingBottom: "10px", }}>
+                <label style={{ display: "inline-block", fontWeight:"bold", marginRight: "7px", lineHeight: "38px" }}>Number of Overtimes:</label>
+                <div style={{ flexGrow: "100", display: "inline-block" }}>
+                    <TextInput
+                        name={'total_overtimes'}
+                        type={'number'}
+                        value={totalOvertimes}
+                        placeholder={"0"}
+                        disabled={isSaved}
+                        onChange={(e) => {
+                            setTotalOvertimes(Math.min(20,Math.max(0,Number(e.target.value)) || 0))
+                        }}
+                    />
+                </div>
+            </div>
+        );
+
+        // mvp
+        const mvp_block_html = "";
+        // const { player1, player2 } = this.state;
+        // const options = (scores[player1.name] > scores[player2.name]) ? player1.players : (scores[player2.name] > scores[player1.name]) ? player2.players : [];
+        // mvp_block_html = (
+        //     <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto" }}>
+        //         <DropdownInput
+        //             options={(options)}
+        //             name={"select_mvp"}
+        //             placeholder={"Select MVP..."}
+        //             nameKey={"name"}
+        //             sortKey={"rate"}
+        //             sort={"desc"}
+        //             valueKey={"name"}
+        //             idKey={"id"}
+        //             style={{ width: "710px", paddingBottom: "15px" }}
+        //             disabled={options.length === 0 || this.state.finished}
+        //             onChange={(player) => {
+        //                 this.setState({ mvp_player: player.name });
+        //             }}
+        //         />
+        //     </div>
+        // );
+
+        return (
+            <>
+                <div className="ui link cards centered" style={{
+                    position:"relative", display: "flex", textAlign: "center",
+                    width: "710px", alignItems: "strech", margin: "auto"
+                }}>
+                    {comeback_block}
+                </div>
+
+                {mvp_block_html}
+
+                <div className="ui link cards centered" style={{
+                    position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto", paddingBottom: "20px",
+                    width: "710px",
+                }}>
+                    {overtime_block}
+                </div>
+            </>
+        )
+    }
+
     function renderContent(){
         const team1 = teamsData?.team1?.teamName;
         const team2 = teamsData?.team2?.teamName;
@@ -358,7 +443,7 @@ function SeasonGame({ match }: any){
                 <>
                     <div className="content flex-column gap-8">
                         {renderSmallLogo()}
-                        {renderButtons()}
+                        {renderHeaderButtons()}
                         <div className="display-flex-important flex-column align-items-center">
                             {renderStats()}
                             {renderSeasonGame()}
