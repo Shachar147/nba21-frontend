@@ -5,6 +5,10 @@
     bottom: 90px;
     align-self: flex-end;
     min-width: 100px;
+
+    &.two-buttons {
+      height: 84px;
+    }
   }
 
   .description {

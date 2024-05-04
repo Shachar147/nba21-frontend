@@ -13,6 +13,8 @@ export default class SeasonGameStore {
     @observable isLoading = false;
     @observable isSaving = false;
     @observable isSaved = false;
+    @observable isUpdated = false;
+    @observable savedGameId: number | undefined = undefined;
     @observable showStats = true;
     @observable viewStatsPage = false;
 
@@ -20,7 +22,7 @@ export default class SeasonGameStore {
     @observable teamsData: NextGameDataResponse | undefined  = undefined;
 
     @observable seasonStats: SeasonStats | undefined = undefined;
-    @observable statsInfo: Record<any, any> | undefined = undefined;
+    @observable statsInfo: Record<any, any> | undefined = undefined; // todo complete: typing
 
     @observable scores:Record<string, number> = {};
     @observable totalOvertimes: number = 0;
@@ -40,10 +42,29 @@ export default class SeasonGameStore {
         this.setLoading(true);
         await Promise.all([this.loadNextTeams(), this.loadAllTeams(), this.loadUserSettings()]);
         await this.initStats(); // must be after all teams loaded.
-        console.log(JSON.parse(JSON.stringify(this.statsInfo)));
         runInAction(() => {
             this.setLoading(false);
-        })
+        });
+    }
+
+    @action
+    resetSettings(){
+        this.isSaved = false;
+        this.savedGameId = undefined;
+        this.isSaving = false;
+        this.isComeback = false;
+        this.mvpPlayer = undefined;
+        this.totalOvertimes = 0;
+        this.isUpdated = false;
+    }
+
+    async nextGame(){
+        this.setLoading(true);
+        this.resetSettings();
+        await Promise.all([this.loadNextTeams(), this.initStats()]);
+        runInAction(() => {
+            this.setLoading(false);
+        });
     }
 
     @action
@@ -67,7 +88,7 @@ export default class SeasonGameStore {
 
             const team1Name = teamsData.team1?.teamName;
             const team2Name = teamsData.team2?.teamName;
-            const newScores = {...this.scores};
+            const newScores: Record<string, number> = {};
             newScores[team1Name] = 0;
             newScores[team2Name] = 0;
             this.scores = newScores;
@@ -159,16 +180,12 @@ export default class SeasonGameStore {
         this.isComeback = isComeback;
     }
 
-    @action
-    async saveGame(): Promise<void>{
-        this.isSaving = true;
-        // todo complete - api call.
-
+    @computed get payload(): SaveGamePayload | undefined {
         if (!this.team1Name || !this.team2Name || !this.teamsData) {
             return;
         }
 
-        const payload: SaveGamePayload = {
+        return {
             team1: this.team1Name,
             team2: this.team2Name,
             score1: this.score1,
@@ -178,16 +195,45 @@ export default class SeasonGameStore {
             total_overtimes: this.totalOvertimes,
             mode: this.teamsData.mode
         };
-        const game = await SeasonApiService.saveGame(this.seasonId, payload);
+    }
 
+    @action
+    async saveGame(): Promise<void>{
+        const payload = this.payload;
+        if (!this.team1Name || !this.team2Name || !this.teamsData || !payload) {
+            return;
+        }
+
+        this.isSaving = true;
+
+        const createdGame = await SeasonApiService.saveGame(this.seasonId, payload);
         runInAction(() => {
             this.isSaving = false;
             this.isSaved = true;
+            this.savedGameId = createdGame.id;
         });
 
-        setTimeout(() => {
-            window.location.reload();
-        }, 1);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 1);
+    }
+
+    @action
+    async updateGame(gameId: number): Promise<void> {
+        const payload = this.payload;
+        if (!this.team1Name || !this.team2Name || !this.teamsData || !payload) {
+            return;
+        }
+
+        this.isSaving = true;
+
+        await SeasonApiService.updateGame(this.seasonId, gameId, payload);
+        runInAction(() => {
+            this.isSaving = false;
+            this.isSaved = true;
+            this.isUpdated = true;
+            this.savedGameId = gameId;
+        });
     }
 
     @action

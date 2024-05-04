@@ -41,10 +41,11 @@ export default class Notification extends React.Component {
         }
 
         const notification = (
-            <div className="ui-alert-content ui-alert-content-bottom-right" style={{ width: "400px", float:"Right", bottom: "20px", position: "fixed", right: "20px" }}>
-                <div id="messages" className="ui icon message"
-                     style={{backgroundColor: "rgb(85, 169, 238)", boxShadow: "rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset, transparent 0px 0px 0px 0px", opacity: {opacity} }}>
-                    <i className="info circle icon" style={{"color": "white;"}} />
+            <div className="ui-alert-content ui-alert-content-bottom-right" style={{ width: "400px", float:"Right", bottom: "20px", position: "fixed", right: "20px", zIndex: 999 }}>
+                <div id="messages" className="ui icon message" style={{
+                    display: "flex", flexDirection: "column", alignItems: "center", gap: "8", padding: 8,
+                    backgroundColor: "rgb(85, 169, 238)", boxShadow: "rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset, transparent 0px 0px 0px 0px", opacity: {opacity} }}>
+                    <i className="info circle icon" style={{"color": "white"}} />
                     <div style={{"color": "#fff", marginRight: "10px"}}>
                         <div className="header">{title}</div>
                         <p> { description }</p>
@@ -61,6 +62,7 @@ Notification.propTypes = {
     delay: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    key: PropTypes.string
 };
 
 Notification.defaultProps = {

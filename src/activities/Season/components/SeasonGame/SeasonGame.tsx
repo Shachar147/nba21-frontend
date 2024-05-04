@@ -1,8 +1,8 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo } from "react";
 import {observer} from "mobx-react";
 import NbaPage, {renderSmallLogo} from "../../../../components/NbaPage";
 import LoadingPage from "../../../../pages/LoadingPage";
-import {errorTestId, messageTestId} from "../../../../pages/Login/Model";
+import {errorTestId} from "../../../../pages/Login/Model";
 import style from "../../../../pages/Login/style";
 import {Player, SeasonGameTeam, Team} from "../../utils/interfaces";
 import PlayerCard from "../../../../components/PlayerCard";
@@ -18,6 +18,7 @@ import {game_mode, percents, what} from "../../utils/consts";
 import {BuildStatsTable} from "../../../shared/OneOnOneHelper";
 import StatsTable from "../../../../components/StatsTable";
 import OneOnOneStats from "../../../shared/OneOnOneStats";
+import Notification from "@components/internal/Notification";
 
 function SeasonGame({ match }: any){
 
@@ -64,11 +65,20 @@ function SeasonGame({ match }: any){
         if (!store.isSaved) {
             return undefined;
         }
+        const title = store.isUpdated ? "Game Updated!" : "Game Saved!";
         return (
-            <div className="margin-top-20">
-                <style.Message className={"field"} data-testid={messageTestId}>{"Game Saved!"}</style.Message>
-            </div>
+            <Notification
+                title={title}
+                description={"This game was saved. you can take a look at stats page to see details about past games."}
+                key={`${title}-${JSON.stringify(store.payload ?? {})}`}
+            />
         )
+
+        // return (
+        //     <div className="margin-top-20">
+        //         <style.Message className={"field"} data-testid={messageTestId}>{store.isUpdated ? "Game Updated!" : "Game Saved!"}</style.Message>
+        //     </div>
+        // )
     }
 
     function renderSeasonAlreadyOverIfNeeded(){
@@ -202,12 +212,63 @@ function SeasonGame({ match }: any){
     }
 
     function renderSaveButton(){
+
+        /*
+        <div style={{ position: "absolute", bottom: bottom, width:"100%" }}>
+            {(this.state.saved) ?
+                (
+                    <ButtonInput
+                        text={"Update"}
+                        style={{ width: "100%" }}
+                        onClick={this.updateResult}
+                        disabled={this.state.saving || this.state.finished || (score1 === score2)}
+                    />
+                ): (
+                    <ButtonInput
+                        text={"Save"}
+                        style={{ width: "100%" }}
+                        onClick={this.saveResult}
+                        disabled={this.state.saved || this.state.saving || this.state.finished || (score1 === score2)}
+                    />
+                )}
+        </div>
+
+        <div style={{ position: "absolute", bottom: bottom - 50, width:"100%" }}>
+            {(this.state.saved) ?
+                (
+                    <ButtonInput
+                        text={"Next"}
+                        style={{ width: "100%" }}
+                        onClick={this.nextGame}
+                        disabled={this.state.finished}
+                    />
+                ): ""}
+        </div>
+         */
+
+        const gameId = store.savedGameId;
+        if (store.isSaved && gameId) {
+            return (
+                <div className="save-button two-buttons flex-column gap-8">
+                    <ButtonInput
+                        text={"Update"}
+                        onClick={() => store.updateGame(gameId)}
+                        disabled={Object.values(store.scores).reduce((a, b) => a+b, 0) == 0}
+                    />
+                    <ButtonInput
+                        text={"Next"}
+                        onClick={() => store.nextGame()}
+                    />
+                </div>
+            )
+        }
+
         return (
             <ButtonInput
                 text={"Save"}
                 classList={"save-button"}
                 onClick={() => store.saveGame()}
-                disabled={Object.values(store.scores).reduce((a, b) => a+b, 0) == 0}
+                disabled={Object.values(store.scores).reduce((a, b) => a+b, 0) == 0 || store.isSaved || store.isSaving}
             />
         );
     }
@@ -323,7 +384,7 @@ function SeasonGame({ match }: any){
                 <div
                     className="ui checkbox"
                 >
-                    <input type="checkbox" checked={store.isComeback} onChange={() => store.setIsComeback(!store.isComeback)} disabled={store.isSaved || store.isSaving || !shouldAllowButtons()}  />
+                    <input type="checkbox" checked={store.isComeback} onChange={() => store.setIsComeback(!store.isComeback)} disabled={store.isSaving || !shouldAllowButtons()}  />
                     <label>Comeback?</label>
                 </div>
             </div>
@@ -339,7 +400,7 @@ function SeasonGame({ match }: any){
                         type={'number'}
                         value={store.totalOvertimes.toString()}
                         placeholder={"0"}
-                        disabled={store.isSaved || store.isSaving || !shouldAllowButtons()}
+                        disabled={store.isSaving || !shouldAllowButtons()}
                         onChange={(e) => {
                             store.setTotalOvertimes(Math.min(20,Math.max(0,Number(e.target.value)) || 0))
                         }}
@@ -362,7 +423,7 @@ function SeasonGame({ match }: any){
                     valueKey={"name"}
                     idKey={"id"}
                     style={{ width: "710px", paddingBottom: "15px" }}
-                    disabled={options.length === 0 || store.isSaved || store.isSaving || !shouldAllowButtons()}
+                    disabled={options.length === 0 || store.isSaving || !shouldAllowButtons()}
                     onChange={(player) => {
                         store.setMvpPlayer(player.name)
                     }}

@@ -12,6 +12,13 @@ export function apiPost(url: string, data: Record<any, any>){
         }})
 }
 
+export function apiPut(url: string, data: Record<any, any>){
+    return axios.put(getServerAddress() + url, data,{
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+        }})
+}
+
 export function apiDelete(url: string){
     return axios.delete(getServerAddress() + url, {
         headers: {
