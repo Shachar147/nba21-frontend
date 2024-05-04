@@ -199,6 +199,7 @@ function SeasonGame({ match }: any){
                         onImageClick={(e: any) => {
 
                             const target = e.target;
+                            // @ts-ignore
                             const html = $(e.target).wrap("<p>").parent().html();
                             // console.log(html);
                             // to avoid clicking on 'replace' or 'specific replace' from openning stats page.
