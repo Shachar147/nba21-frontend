@@ -30,6 +30,7 @@ export default class SeasonGameStore {
     constructor(seasonId: number) {
         makeObservable(this);
         this.seasonId = seasonId;
+        this.viewStatsPage = window.location.href.includes("/stats");
 
         this.loadStuff();
     }

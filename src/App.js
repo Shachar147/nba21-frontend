@@ -70,12 +70,7 @@ const App = () => {
                     <PrivateRoute exact path="/season" component={Season} />
                     <PrivateRoute exact path="/season/create" component={CreateSeason} />
                     <PrivateRoute exact path="/season/:seasonId" component={SeasonGame}  />
-
-
-                    {/*todo complete: single season stats*/}
-                    {/*todo complete: single team in single season stat*/}
-                    {/*todo complete: overall stats*/}
-                    {/*todo complete: overall stats specific team*/}
+                    <PrivateRoute exact path="/season/:seasonId/stats" component={SeasonGame}  />
 
                     <PrivateRoute exact path="/sync" component={SyncPage} />
                     <PrivateRoute exact path="/user/settings" component={UserSettings} />
