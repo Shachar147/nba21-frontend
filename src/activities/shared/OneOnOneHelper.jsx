@@ -668,6 +668,8 @@ export function buildGeneralStats(stats, percents, stopwatch) {
                 }
             }
 
+            record.mvp_player = record.mvp_player || record.mvp_player_name;
+
             if (record.mvp_player){
                 const mvp = record.mvp_player?.name || record.mvp_player;
                 mvp_stats['total_mvps'] += 0.5;

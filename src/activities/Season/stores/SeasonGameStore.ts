@@ -163,18 +163,21 @@ export default class SeasonGameStore {
         this.isSaving = true;
         // todo complete - api call.
 
+        if (!this.team1Name || !this.team2Name) {
+            return;
+        }
+
         const payload: SaveGamePayload = {
-            team1: this.team1Name!,
-            team2: this.team2Name!,
+            team1: this.team1Name,
+            team2: this.team2Name,
             score1: this.score1,
             score2: this.score2,
             is_comeback: this.isComeback,
             mvp_player: this.mvpPlayer,
             total_overtimes: this.totalOvertimes,
-            mode: this.teamsData!.mode
+            mode: this.teamsData.mode
         };
         const game = await SeasonApiService.saveGame(this.seasonId, payload);
-        debugger;
 
         runInAction(() => {
             this.isSaving = false;
