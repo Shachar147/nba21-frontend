@@ -466,7 +466,7 @@ function SeasonGame({ match }: any){
                     game_mode={game_mode}
                     get_route={get_specific_route}
                     get_stats_route={get_stats_specific_route}
-                    onBack={() => { this.setState({ selected_player: undefined }) }}
+                    onBack={() => { store.setViewStatsPage(false)}}
                 />
             );
         }
