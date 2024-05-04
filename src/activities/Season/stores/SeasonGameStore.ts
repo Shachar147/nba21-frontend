@@ -16,7 +16,9 @@ export default class SeasonGameStore {
     @observable isUpdated = false;
     @observable savedGameId: number | undefined = undefined;
     @observable showStats = true;
+
     @observable viewStatsPage = false;
+    @observable selectedTeam: string | undefined = undefined;
 
     @observable allTeamsById: Record<number, Team> = {};
     @observable teamsData: NextGameDataResponse | undefined  = undefined;
@@ -225,6 +227,7 @@ export default class SeasonGameStore {
             return;
         }
 
+        this.isUpdated = false;
         this.isSaving = true;
 
         await SeasonApiService.updateGame(this.seasonId, gameId, payload);
@@ -237,8 +240,14 @@ export default class SeasonGameStore {
     }
 
     @action
-    setViewStatsPage(viewStatsPage: boolean) {
+    setViewStatsPage(viewStatsPage: boolean, specificTeam?: string) {
         this.viewStatsPage = viewStatsPage;
+
+        if (!viewStatsPage) {
+            this.selectedTeam = undefined;
+        } else if (specificTeam){
+            this.selectedTeam = specificTeam;
+        }
     }
 
     // -- computed values -------------------------------------------------

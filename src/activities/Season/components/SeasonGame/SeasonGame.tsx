@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {observer} from "mobx-react";
 import NbaPage, {renderSmallLogo} from "../../../../components/NbaPage";
 import LoadingPage from "../../../../pages/LoadingPage";
@@ -18,16 +18,33 @@ import {game_mode, percents, what} from "../../utils/consts";
 import {BuildStatsTable} from "../../../shared/OneOnOneHelper";
 import StatsTable from "../../../../components/StatsTable";
 import OneOnOneStats from "../../../shared/OneOnOneStats";
-import '../../../../components/internal/Notification';
+import Notification from '../../../../components/internal/Notification';
+import OneOnOneSingleStats from "../../../shared/OneOnOneSingleStats";
+import {runInAction} from "mobx";
 
 function SeasonGame({ match }: any){
 
+    const [shouldShowSaveToastr, setShouldShowSaveToastr] = useState(false);
+    const [updateClickCount, setUpdateClickCount] = useState(0);
+
     const { seasonId } = match.params;
+    const get_stats_specific_route = `/records/season/stats/${seasonId}/:name`;
     const store = useMemo(() => new SeasonGameStore(seasonId), [seasonId]);
 
     useEffect(() => {
      store.setMvpPlayer(undefined)
     }, [store.winnerName])
+
+    useEffect(() => {
+        if (store.isSaved || store.isUpdated) {
+            setShouldShowSaveToastr(!store.isSaving);
+            setTimeout(() => {
+                runInAction(() => {
+                    setShouldShowSaveToastr(false);
+                })
+            }, 2000);
+        }
+    }, [store.isSaved, store.isSaving, store.isUpdated, updateClickCount])
 
     function calcOT(){
         // @ts-ignore
@@ -62,9 +79,10 @@ function SeasonGame({ match }: any){
     }
 
     function renderSavedMessageIfNeeded() {
-        if (!store.isSaved) {
+        if (!store.isSaved || !shouldShowSaveToastr) {
             return undefined;
         }
+
         const title = store.isUpdated ? "Game Updated!" : "Game Saved!";
         const description = "This game was saved. you can take a look at stats page to see details about past games.";
         const key = `${title}-${JSON.stringify(store.payload ?? {})}`;
@@ -171,27 +189,24 @@ function SeasonGame({ match }: any){
                         singleShot={store.scores[team?.name]}
 
                         // todo complete:
-                        // lost={(this.state.saved && this.state.loser === team.name)}
-                        // winner={(this.state.saved && this.state.winner === team.name)}
+                        lost={store.isSaved && store.winnerName !== team.name}
+                        winner={store.isSaved && store.winnerName === team.name}
 
                         // todo complete:
                         // all_players={this.state.players}
                         // curr_players={[this.state.player1.name, this.state.player2.name]}
 
-                        // todo complete:
-                        // onImageClick={(e) => {
-                        //
-                        //     const target = e.target;
-                        //     const html = $(e.target).wrap("<p>").parent().html();
-                        //     // console.log(html);
-                        //     // to avoid clicking on 'replace' or 'specific rpelace' from openning stats page.
-                        //     if (html.indexOf('View Stats') !== -1 && get_stats_specific_route) {
-                        //         this.setState({
-                        //             selected_player: team.name,
-                        //         })
-                        //     }
-                        //
-                        // }}
+                        onImageClick={(e) => {
+
+                            const target = e.target;
+                            const html = $(e.target).wrap("<p>").parent().html();
+                            // console.log(html);
+                            // to avoid clicking on 'replace' or 'specific replace' from openning stats page.
+                            if (html.indexOf('View Stats') !== -1 && get_stats_specific_route) {
+                                store.setViewStatsPage(true, team.name)
+                            }
+
+                        }}
                     />
                 );
             });
@@ -210,47 +225,16 @@ function SeasonGame({ match }: any){
     }
 
     function renderSaveButton(){
-
-        /*
-        <div style={{ position: "absolute", bottom: bottom, width:"100%" }}>
-            {(this.state.saved) ?
-                (
-                    <ButtonInput
-                        text={"Update"}
-                        style={{ width: "100%" }}
-                        onClick={this.updateResult}
-                        disabled={this.state.saving || this.state.finished || (score1 === score2)}
-                    />
-                ): (
-                    <ButtonInput
-                        text={"Save"}
-                        style={{ width: "100%" }}
-                        onClick={this.saveResult}
-                        disabled={this.state.saved || this.state.saving || this.state.finished || (score1 === score2)}
-                    />
-                )}
-        </div>
-
-        <div style={{ position: "absolute", bottom: bottom - 50, width:"100%" }}>
-            {(this.state.saved) ?
-                (
-                    <ButtonInput
-                        text={"Next"}
-                        style={{ width: "100%" }}
-                        onClick={this.nextGame}
-                        disabled={this.state.finished}
-                    />
-                ): ""}
-        </div>
-         */
-
         const gameId = store.savedGameId;
         if (store.isSaved && gameId) {
             return (
                 <div className="save-button two-buttons flex-column gap-8">
                     <ButtonInput
                         text={"Update"}
-                        onClick={() => store.updateGame(gameId)}
+                        onClick={() => {
+                            setUpdateClickCount(updateClickCount + 1);
+                            store.updateGame(gameId);
+                        }}
                         disabled={Object.values(store.scores).reduce((a, b) => a+b, 0) == 0}
                     />
                     <ButtonInput
@@ -374,8 +358,6 @@ function SeasonGame({ match }: any){
     }
 
     function renderPreSaveBlocks(){
-        // <!-- todo complete: remove disabled condition once we will implement update -->
-
         // comeback
         const comeback_block = (
             <div className="width-100-percents-important" style={{ paddingBottom: "20px", paddingTop: "20px" }}>
@@ -461,7 +443,6 @@ function SeasonGame({ match }: any){
                 <div className="content flex-column gap-8">
                     {renderSmallLogo()}
                     {renderHeaderButtons()}
-                    {renderSavedMessageIfNeeded()}
                     {renderSeasonAlreadyOverIfNeeded()}
                     <div className="display-flex-important flex-column align-items-center">
                         {renderStats()}
@@ -473,13 +454,22 @@ function SeasonGame({ match }: any){
         )
     }
 
-    if (store.isLoading) {
-        return (
-            <LoadingPage />
-        )
-    }
+    function renderStatsPage(){
+        if (store.selectedTeam) {
+            const get_specific_route = "/team";
+            return (
+                <OneOnOneSingleStats
+                    selected_player={store.selectedTeam}
+                    what={what}
+                    stats_title={`${game_mode} - ${store.selectedTeam}`}
+                    game_mode={game_mode}
+                    get_route={get_specific_route}
+                    get_stats_route={get_stats_specific_route}
+                    onBack={() => { this.setState({ selected_player: undefined }) }}
+                />
+            );
+        }
 
-    if (store.viewStatsPage) {
         return (
             <OneOnOneStats
                 what={what}
@@ -487,7 +477,7 @@ function SeasonGame({ match }: any){
                 game_mode={game_mode}
                 get_route={"/team"}
                 get_stats_route={`/records/season/${seasonId}/stats`}
-                get_stats_specific_route={undefined} // todo complete
+                get_stats_specific_route={get_stats_specific_route}
                 mvp_block={true}
                 onBack={() => { store.setViewStatsPage(false) }}
                 player_from_url={undefined} // ?
@@ -495,9 +485,20 @@ function SeasonGame({ match }: any){
         )
     }
 
+    if (store.isLoading) {
+        return (
+            <LoadingPage />
+        )
+    }
+
+    if (store.viewStatsPage) {
+        return renderStatsPage();
+    }
+
     return (
         <div className="season-game">
             <NbaPage renderContent={renderContent} />
+            {renderSavedMessageIfNeeded()}
         </div>
     );
 }
