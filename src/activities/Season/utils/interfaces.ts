@@ -45,7 +45,7 @@ export interface Player {
 }
 
 export interface SeasonGameTeam {
-    name: string;
+    teamName: string;
     teamId: number;
 }
 
