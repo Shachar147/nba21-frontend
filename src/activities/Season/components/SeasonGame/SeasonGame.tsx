@@ -270,7 +270,7 @@ function SeasonGame({ match }: any){
         return (
             <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-column gap-8">
                 <div className="flex-column">
-                    {!!store.teamsData && <span><b>Mode:</b> {store.teamsData.mode}</span>}
+                    {!!store.teamsData && <span style={{ fontWeight: "normal" }}><b>Mode:</b> {store.teamsData.mode}</span>}
                     {renderTotals()}
                 </div>
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
