@@ -70,7 +70,7 @@ function SeasonGame({ match }: any){
         const key = `${title}-${JSON.stringify(store.payload ?? {})}`;
 
         // @ts-ignore
-        return <Notification title={title} description={} key={key}/>
+        return <Notification title={title} description={description} key={key}/>
 
         // return (
         //     <div className="margin-top-20">
