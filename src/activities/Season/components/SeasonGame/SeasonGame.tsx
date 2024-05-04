@@ -196,7 +196,7 @@ function SeasonGame({ match }: any){
                         // all_players={this.state.players}
                         // curr_players={[this.state.player1.name, this.state.player2.name]}
 
-                        onImageClick={(e) => {
+                        onImageClick={(e: any) => {
 
                             const target = e.target;
                             const html = $(e.target).wrap("<p>").parent().html();
