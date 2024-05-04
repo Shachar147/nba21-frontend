@@ -208,11 +208,17 @@ export default class SeasonGameStore {
 
     @computed
     get score1(): number {
+        if (!this.team1Name){
+            return 0;
+        }
         return this.scores[this.team1Name];
     }
 
     @computed
     get score2(): number {
+        if (!this.team2Name){
+            return 0;
+        }
         return this.scores[this.team2Name];
     }
 
