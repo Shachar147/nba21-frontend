@@ -164,7 +164,7 @@ export default class SeasonGameStore {
         this.isSaving = true;
         // todo complete - api call.
 
-        if (!this.team1Name || !this.team2Name) {
+        if (!this.team1Name || !this.team2Name || !this.teamsData) {
             return;
         }
 
