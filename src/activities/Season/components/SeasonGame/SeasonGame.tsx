@@ -66,13 +66,11 @@ function SeasonGame({ match }: any){
             return undefined;
         }
         const title = store.isUpdated ? "Game Updated!" : "Game Saved!";
-        return (
-            <Notification
-                title={title}
-                description={"This game was saved. you can take a look at stats page to see details about past games."}
-                key={`${title}-${JSON.stringify(store.payload ?? {})}`}
-            />
-        )
+        const description = "This game was saved. you can take a look at stats page to see details about past games.";
+        const key = `${title}-${JSON.stringify(store.payload ?? {})}`;
+
+        // @ts-ignore
+        return <Notification title={title} description={} key={key}/>
 
         // return (
         //     <div className="margin-top-20">
