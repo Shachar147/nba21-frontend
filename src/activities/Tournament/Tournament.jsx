@@ -34,7 +34,7 @@ import WinnerModal from "@components/modals/WinnerModal";
 const game_mode = "Tournament";
 const what = "teams";
 const get_route = "/team";
-const styles = {
+export const styles = {
     imageContainerStyle: { backgroundColor: "#F2F2F2" },
     imageStyle: { width: 200, margin: "auto", padding: "20px" },
     // extraContentStyle: { display: "none" },
@@ -158,7 +158,7 @@ export default class Tournament extends React.Component {
 
             curr_games_history: {},
 
-            tournament_teams: DEFAULT_TOURNAMENT_TEAMS,
+            tournament_teams: localStorage.getItem('tournament_teams')?.split('|') ?? DEFAULT_TOURNAMENT_TEAMS,
 
             show_stats_in_header: true,
         };
@@ -243,6 +243,7 @@ export default class Tournament extends React.Component {
 
     loadStats(){
         const self = this;
+
 
         apiGet(this,
             get_stats_route,
@@ -956,6 +957,9 @@ export default class Tournament extends React.Component {
                                             } else {
                                                 tournament_teams.push(team.name);
                                             }
+
+                                            localStorage.setItem('tournament_teams', tournament_teams.join("|"));
+
                                             self.setState({ tournament_teams });
                                         }}
                                     />

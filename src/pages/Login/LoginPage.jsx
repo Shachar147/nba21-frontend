@@ -9,6 +9,7 @@ import TextInput from "@components/inputs/TextInput";
 import {apiPost} from "@helpers/api";
 import {defaultErrorField, errorTestId, messageTestId} from "./Model";
 import style from './style';
+import {isLabelWithInternallyDisabledControl} from "@testing-library/user-event/dist/utils";
 
 const LoginPage = () => {
 
@@ -111,7 +112,12 @@ const LoginPage = () => {
     const message_block = (message === '' || error !== '') ? "" :
         (<style.Message className={"field"} data-testid={messageTestId}>{message}</style.Message>);
 
-    return (redirect) ? (<Redirect to="/" />) : (
+    if (redirect) {
+        window.location.href = "/";
+    }
+
+    // return (redirect) ? (<Redirect to="/" />) : (
+    return (
         <style.Container className={"ui header cards centered"} >
             <style.SubContainer>
                 <Logo />

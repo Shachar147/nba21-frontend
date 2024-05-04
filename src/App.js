@@ -21,6 +21,9 @@ import RealInactive from "@pages/Real/RealInactive";
 import UserSettings from "@pages/UserSettings/UserSettings";
 import Tournament from "@activities/Tournament/Tournament";
 import SpaceJam from "@activities/SpaceJam/SpaceJam";
+import Season from "./activities/Season/components/SeasonLobby/SeasonLobby";
+import CreateSeason from "./activities/Season/components/CreateSeason/CreateSeason";
+import SeasonGame from "./activities/Season/components/SeasonGame/SeasonGame";
 
 const App = () => {
 
@@ -63,6 +66,11 @@ const App = () => {
                     <PrivateRoute exact path="/tournament" component={Tournament} />
                     <PrivateRoute exact path="/tournament/stats" component={Tournament} data={{view_stats:true}} />
                     <PrivateRoute exact path="/tournament/stats/:player" component={Tournament} data={{view_stats:true, player_from_url:true}} />
+
+                    <PrivateRoute exact path="/season" component={Season} />
+                    <PrivateRoute exact path="/season/create" component={CreateSeason} />
+                    <PrivateRoute exact path="/season/:seasonId" component={SeasonGame}  />
+                    <PrivateRoute exact path="/season/:seasonId/stats" component={SeasonGame}  />
 
                     <PrivateRoute exact path="/sync" component={SyncPage} />
                     <PrivateRoute exact path="/user/settings" component={UserSettings} />

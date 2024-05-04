@@ -133,7 +133,7 @@ export function buildDetails(details, stats){
         total_finals_appearances
     } = stats;
 
-    const total_games_with_overtime = total_ot_wins + total_ot_lost;
+    const total_games_with_overtime = (total_ot_wins ?? 0) + (total_ot_lost ?? 0);
 
     total_diff_per_game = total_diff_per_game || 'N/A';
     if(total_win_percents === 0) total_win_percents = "0.00%";

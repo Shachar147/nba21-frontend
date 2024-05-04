@@ -121,7 +121,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#${i+1}`].push(row);
         }
 
-        let descriptionText = '<b>Today: </b>' + description.join(' | ') + '<br><b>Total: </b>' + total_description.join(' | ');
+        let descriptionText = '<b>Today: </b>' + description.join(' | ') + '<br><b>Totals: </b>' + total_description.join(' | ');
 
         if (general_stats['shortest_game']){
             descriptionText += '<br><b>Shortest Game: </b>' + formatDate(new Date(general_stats['shortest_game_at'])) + ' - ' +  formatTimeAgo(general_stats['shortest_game']);
@@ -367,8 +367,8 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
 
     const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0, total_games:0, total_wins: 0, total_lost: 0, total_win_percents: "" };
 
-    const stats1 = isDefined(stats[player1.name]) ? stats[player1.name] : Object.assign({},noStats);
-    const stats2 = isDefined(stats[player2.name]) ? stats[player2.name] : Object.assign({},noStats);
+    const stats1 = isDefined(stats[player1?.name]) ? stats[player1.name] : Object.assign({},noStats);
+    const stats2 = isDefined(stats[player2?.name]) ? stats[player2.name] : Object.assign({},noStats);
 
     const curr_stats = [];
     const player_stats = [];
@@ -384,6 +384,14 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
     const arr = (stats1.records.length > stats2.records.length) ? stats1.records : stats2.records; // in case one of them is empty
 
     arr.forEach((record) => {
+
+        if (record.team1_name) {
+            record.player1_name = record.team1_name;
+        }
+        if (record.team2_name) {
+            record.player2_name = record.team2_name;
+        }
+
         if ((record.player1_name === player1.name && record.player2_name === player2.name) || (record.player1_name === player2.name && record.player2_name === player1.name)) {
 
             // met each other
@@ -659,6 +667,8 @@ export function buildGeneralStats(stats, percents, stopwatch) {
                     general_stats['total_points_per_day'][dt] += ((record.score1 + record.score2) / 2);
                 }
             }
+
+            record.mvp_player = record.mvp_player || record.mvp_player_name;
 
             if (record.mvp_player){
                 const mvp = record.mvp_player?.name || record.mvp_player;
