@@ -307,9 +307,9 @@ function SeasonGame({ match }: any){
 
         return (
             <div className="ui link cards centered flex-row align-items-center margin-top-20 width-100-percents">
-                <div className={"card in-game"} style={titleStyle}>Guest</div>
-                <div style={{ width: 110 }} />
                 <div className={"card in-game"} style={titleStyle}>Home</div>
+                <div style={{ width: 110 }} />
+                <div className={"card in-game"} style={titleStyle}>Guest</div>
             </div>
         )
     }
