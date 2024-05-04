@@ -220,7 +220,7 @@ function SeasonGame({ match }: any){
         return (
             <>
                 <ButtonInput
-                    text={"Go Back"}
+                    text={"Back To Seasons Lobby"}
                     style={{marginLeft: "5px"}}
                     onClick={goBack}
                 />

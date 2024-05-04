@@ -187,7 +187,7 @@ export default class SeasonGameStore {
 
         setTimeout(() => {
             window.location.reload();
-        }, 1000);
+        }, 1);
     }
 
     @action

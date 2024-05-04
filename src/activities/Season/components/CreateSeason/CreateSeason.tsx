@@ -178,6 +178,8 @@ function CreateSeason(){
         return (
             <div className="flex-column gap-16 align-items-center font-size-16">
                 <div className="sub cards header content" style={{ width:"100%", bottom: "0px" }}>
+                    {renderGoBack()}
+                    <br/><br/>
                     Create a new season:
                     <br/><br/>
                     <div className="ui link cards centered" style={{ margin: "auto" }}>
@@ -191,7 +193,6 @@ function CreateSeason(){
                 {renderMessageIfNeeded()}
                 {renderErrorIfNeeded()}
                 {renderForm()}
-                {renderGoBack()}
             </div>
         )
     }
