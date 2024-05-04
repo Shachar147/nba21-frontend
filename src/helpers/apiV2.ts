@@ -11,3 +11,10 @@ export function apiPost(url: string, data: Record<any, any>){
             'Access-Control-Allow-Origin': '*',
         }})
 }
+
+export function apiDelete(url: string){
+    return axios.delete(getServerAddress() + url, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+        }})
+}

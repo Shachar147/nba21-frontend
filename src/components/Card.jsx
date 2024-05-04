@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
+import {getClasses} from "../helpers/utils";
 
 export default function Card(props) {
     let className = "card";
@@ -42,7 +43,7 @@ export default function Card(props) {
     )
 
     const card = (
-        <div className={className}
+        <div className={getClasses(className, "position-relative")}
              style={style}>
             <div className="image">
                 {picture}
@@ -50,6 +51,7 @@ export default function Card(props) {
             <div className="content" style={{ wordBreak: "break-word" }}>
                 {content}
             </div>
+            {props.onDelete && <a className="font-size-18 cursor-pointer" onClick={() => props.onDelete()} style={{ position: "absolute", top: 3, right: 5 }}>x</a>}
         </div>
     );
 
@@ -109,6 +111,8 @@ Card.propTypes = {
      * default is false because usually we would like to print multiple cards under the same wrapper, so we will print the wrapper outside.
      */
     wrapper: PropTypes.bool,
+
+    onDelete: PropTypes.func,
 };
 
 Card.defaultProps = {

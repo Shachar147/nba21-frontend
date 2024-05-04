@@ -430,7 +430,6 @@ function SeasonGame({ match }: any){
                 get_stats_route={`/records/season/${seasonId}/stats`}
                 get_stats_specific_route={undefined} // todo complete
                 mvp_block={true}
-                // mvp_block={false}
                 onBack={() => { store.setViewStatsPage(false) }}
                 player_from_url={undefined} // ?
             />

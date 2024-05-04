@@ -183,6 +183,10 @@ ul li.arrow:before {
   }
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 iframe {
   z-index: -1111;
   display: none;

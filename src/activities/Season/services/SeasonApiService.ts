@@ -1,5 +1,5 @@
 import {ISeasonGame, NextGameDataResponse, Season, SeasonMode, SeasonStats} from "../utils/interfaces";
-import {apiGet, apiPost} from "../../../helpers/apiV2";
+import {apiDelete, apiGet, apiPost} from "../../../helpers/apiV2";
 
 const seasons_route = '/season';
 
@@ -38,6 +38,11 @@ class Service {
     saveGame = async (seasonId: number, payload: SaveGamePayload): Promise<ISeasonGame> => {
         const axiosResponse = await apiPost(`/records/season/${seasonId}`, payload);
         return axiosResponse.data.data;
+    }
+
+    deleteSeason = async (seasonId: number): Promise<void> => {
+        const axiosResponse = await apiDelete(`/season/${seasonId}`);
+        return axiosResponse.data;
     }
 }
 

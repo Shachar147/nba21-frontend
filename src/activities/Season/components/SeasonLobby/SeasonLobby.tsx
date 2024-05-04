@@ -6,6 +6,7 @@ import Logo from "../../../../components/layout/Logo";
 import Card from "../../../../components/Card";
 import {observer} from "mobx-react";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
+import SeasonApiService from "../../services/SeasonApiService";
 
 function SeasonLobby(){
     const store: SeasonStore = useMemo(() => new SeasonStore(), []);
@@ -40,6 +41,7 @@ function SeasonLobby(){
                             href={`/season/${season.id}`}
                             data-testid={`season-${idx}`}
                             key={`${season.id}-${idx}`}
+                            onDelete={() => SeasonApiService.deleteSeason(season.id).then(() => window.location.reload())}
                         />
                     ))}
                 </div>
