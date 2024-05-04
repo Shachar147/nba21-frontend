@@ -9,21 +9,30 @@ V 1. SeasonLobby / SeasonLobby -
 shows which seasons there are currently, and allows you to choose from them.
 if there are none - redirect to CreateSeason
 
-V 2. CreateSeason -
+V V 2. CreateSeason -
 let's you create a season. give it a name. (default this and next year), with default selected teams.
 
-3. SeasonGame -
+V 3. SeasonGame -
 shows you specific season game between two random teams.
 
-4. SeasonGameHeaderStats -
-shows you stats about this season (regular season? playoff? semi-finals? finals? etc)
-who cameback from 3-0? from 3-1?
-last 10 games?
 
-5. SeasonStats -
-shows you more detailed stats.
-last ten games?
-who cameback from 3-0? from 3-1?
+
+1. update game button, next game button - like we have in tournament.
+2. show more info that we already have in the stats api call like current standings.
+3. show standings list for regular season, and series info in playoff/semi/finals.
+4. show series graph. [allow to switch list/graph view?]
+5. add it to the stats page as well.
+
+
+--> 4. SeasonGameHeaderStats -
+V shows you stats about this season (regular season? playoff? semi-finals? finals? etc)
+--> who cameback from 3-0? from 3-1?
+--> last 10 games?
+
+--> 5. SeasonStats -
+V shows you more detailed stats.
+--> last ten games?
+--> who cameback from 3-0? from 3-1?
 - season stats
 - team stats
 - overall stats (cross-season)
