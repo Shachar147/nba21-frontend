@@ -146,9 +146,9 @@ DropdownInput.propTypes = {
      */
     disabled: PropTypes.bool,
 
-    name: PropTypes.string;
-    sort: PropTypes.string;
-    sortKey: PropTypes.string;
+    name: PropTypes.string,
+    sort: PropTypes.string,
+    sortKey: PropTypes.string,
 };
 
 DropdownInput.defaultProps = {
