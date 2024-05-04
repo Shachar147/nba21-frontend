@@ -18,7 +18,7 @@ import {game_mode, percents, what} from "../../utils/consts";
 import {BuildStatsTable} from "../../../shared/OneOnOneHelper";
 import StatsTable from "../../../../components/StatsTable";
 import OneOnOneStats from "../../../shared/OneOnOneStats";
-import Notification from "@components/internal/Notification";
+import '../../../../components/internal/Notification';
 
 function SeasonGame({ match }: any){
 
