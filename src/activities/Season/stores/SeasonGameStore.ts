@@ -1,6 +1,6 @@
 import {observable, action, runInAction, makeObservable, computed} from 'mobx';
 import {NextGameDataResponse, Player, SeasonStats, Team} from "../utils/interfaces";
-import SeasonApiService from "../services/SeasonApiService";
+import SeasonApiService, {SaveGamePayload} from "../services/SeasonApiService";
 import {apiGet} from "../../../helpers/apiV2";
 import {buildStatsInformation} from "../../shared/OneOnOneHelper";
 import {percents, what} from "../utils/consts";
@@ -163,10 +163,27 @@ export default class SeasonGameStore {
         this.isSaving = true;
         // todo complete - api call.
 
+        const payload: SaveGamePayload = {
+            team1: this.team1Name!,
+            team2: this.team2Name!,
+            score1: this.score1,
+            score2: this.score2,
+            is_comeback: this.isComeback,
+            mvp_player: this.mvpPlayer,
+            total_overtimes: this.totalOvertimes,
+            mode: this.teamsData!.mode
+        };
+        const game = await SeasonApiService.saveGame(this.seasonId, payload);
+        debugger;
+
         runInAction(() => {
             this.isSaving = false;
             this.isSaved = true;
         });
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
 
     @action

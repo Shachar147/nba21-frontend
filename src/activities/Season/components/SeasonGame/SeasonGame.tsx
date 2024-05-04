@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import {observer} from "mobx-react";
 import NbaPage, {renderSmallLogo} from "../../../../components/NbaPage";
 import LoadingPage from "../../../../pages/LoadingPage";
-import {errorTestId} from "../../../../pages/Login/Model";
+import {errorTestId, messageTestId} from "../../../../pages/Login/Model";
 import style from "../../../../pages/Login/style";
 import {Player, SeasonGameTeam, Team} from "../../utils/interfaces";
 import PlayerCard from "../../../../components/PlayerCard";
@@ -58,6 +58,17 @@ function SeasonGame({ match }: any){
         }
 
         return true;
+    }
+
+    function renderSavedMessageIfNeeded() {
+        if (!store.isSaved) {
+            return undefined;
+        }
+        return (
+            <div className="margin-top-20">
+                <style.Message className={"field"} data-testid={messageTestId}>{"Game Saved!"}</style.Message>
+            </div>
+        )
     }
 
     function renderSeasonAlreadyOverIfNeeded(){
@@ -195,9 +206,7 @@ function SeasonGame({ match }: any){
             <ButtonInput
                 text={"Save"}
                 classList={"save-button"}
-                onClick={() => {
-                    alert("todo complete");
-                }}
+                onClick={() => store.saveGame()}
                 disabled={Object.values(store.scores).reduce((a, b) => a+b, 0) == 0}
             />
         );
@@ -393,6 +402,7 @@ function SeasonGame({ match }: any){
                 <div className="content flex-column gap-8">
                     {renderSmallLogo()}
                     {renderHeaderButtons()}
+                    {renderSavedMessageIfNeeded()}
                     {renderSeasonAlreadyOverIfNeeded()}
                     <div className="display-flex-important flex-column align-items-center">
                         {renderStats()}
