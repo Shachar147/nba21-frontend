@@ -14,6 +14,7 @@ export default class SeasonGameStore {
     @observable isSaving = false;
     @observable isSaved = false;
     @observable showStats = true;
+    @observable viewStatsPage = false;
 
     @observable allTeamsById: Record<number, Team> = {};
     @observable teamsData: NextGameDataResponse | undefined  = undefined;
@@ -63,8 +64,8 @@ export default class SeasonGameStore {
         runInAction(() => {
             this.teamsData = teamsData;
 
-            const team1Name = teamsData.team1.teamName;
-            const team2Name = teamsData.team2.teamName;
+            const team1Name = teamsData.team1?.teamName;
+            const team2Name = teamsData.team2?.teamName;
             const newScores = {...this.scores};
             newScores[team1Name] = 0;
             newScores[team2Name] = 0;
@@ -168,15 +169,20 @@ export default class SeasonGameStore {
         });
     }
 
+    @action
+    setViewStatsPage(viewStatsPage: boolean) {
+        this.viewStatsPage = viewStatsPage;
+    }
+
     // -- computed values -------------------------------------------------
     @computed
-    get team1Name(): string {
-        return this.teamsData?.team1.teamName;
+    get team1Name(): string | undefined {
+        return this.teamsData?.team1?.teamName;
     }
 
     @computed
-    get team2Name(): string {
-        return this.teamsData?.team2.teamName;
+    get team2Name(): string | undefined {
+        return this.teamsData?.team2?.teamName;
     }
 
     @computed
@@ -201,22 +207,30 @@ export default class SeasonGameStore {
     }
 
     @computed
-    get team1(): Team {
-        return this.allTeamsById[this.teamsData.team1.teamId];
+    get team1(): Team | undefined {
+        const teamId = this.teamsData?.team1?.teamId;
+        if (!teamId) {
+            return undefined;
+        }
+        return this.allTeamsById[teamId];
     }
 
     @computed
-    get team2(): Team {
-        return this.allTeamsById[this.teamsData.team2.teamId];
+    get team2(): Team | undefined {
+        const teamId = this.teamsData?.team2?.teamId;
+        if (!teamId) {
+            return undefined;
+        }
+        return this.allTeamsById[teamId];
     }
 
     @computed
     get mvpPlayerOptions(): Player[]{
         const winner = this.winnerName;
         if (winner == this.team1Name) {
-            return this.team1.players;
+            return this.team1?.players ?? [];
         } else if (winner == this.team2Name) {
-            return this.team2.players;
+            return this.team2?.players ?? [];
         }
         return [];
     }

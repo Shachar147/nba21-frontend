@@ -44,7 +44,7 @@ class OneOnOneStats extends React.Component {
         super(props);
 
         const orderBy = (props.game_mode === 'Stopwatch Shootout') ? DEFAULT_STOPWATCH_STATS_ORDER :
-                        (props.game_mode === 'Tournament') ? DEFAULT_TOURNAMENT_STATS_ORDER :
+                        (props.game_mode === 'Tournament' || props.game_mode === 'Season') ? DEFAULT_TOURNAMENT_STATS_ORDER :
                         DEFAULT_STATS_ORDER;
 
         this.state = {
@@ -135,6 +135,13 @@ class OneOnOneStats extends React.Component {
                 this.state.orderByOptions.push({ 'Total Finals Wins Percents': totalFinalsWinsPercentsSort });
             }
 
+            if (this.props.game_mode === "Season") {
+                this.state.orderByOptions.push({ "Total Overtimes Wins": totalOTWinsSort });
+                this.state.orderByOptions.push({ "Total Overtimes Lost": totalOTLostSort });
+                this.state.orderByOptions.push({ "Total Overtimes Wins Percent": totalOTWinsPercentSort });
+                this.state.orderByOptions.push({ "Total Games with Overtime": totalGamesWithOTSort });
+            }
+
             this.state.orderByOptions.push({ "Total Comebacks Made": (a,b) => specificSort('total_won_comebacks',a, b) });
             this.state.orderByOptions.push({ "Total Comebacks Suffered": (a,b) => specificSort('total_lost_comebacks',a, b) });
 
@@ -166,6 +173,19 @@ class OneOnOneStats extends React.Component {
                 else return 0;
                 // specificSort('total_matchups',b,a)
             } });
+        }
+
+        if (this.props.game_mode === "Season") {
+            this.state.orderByOptions[0] = { "Overall": overallTournamentSort },
+            this.state.orderByOptions.push({ 'Total Matchups': (b,a) => {
+                    const val1 = Object.keys(a['matchups']).length;
+                    const val2 = Object.keys(b['matchups']).length;
+
+                    if (val1 > val2) return 1;
+                    else if (val1 < val2) return -1;
+                    else return 0;
+                    // specificSort('total_matchups',b,a)
+                } });
         }
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -408,13 +428,14 @@ class OneOnOneStats extends React.Component {
         let totalTournaments;
         let tournament_mvps;
         let tournamentStats;
-        if (game_mode === 'Tournament' && this.state.stats){
-            const { total_tournaments, total_comebacks, total_knockouts, total_overtimes, days_since_last_knockout, games_since_last_knockout } = this.state.stats;
+        if ((game_mode === 'Tournament' || game_mode == 'Season') && this.state.stats){
+            const { total_tournaments = 'N/A', total_comebacks, total_knockouts, total_overtimes, days_since_last_knockout, games_since_last_knockout } = this.state.stats;
             moreStats = `<br>Comebacks: ${total_comebacks} | Knockouts: ${total_knockouts} | Overtimes: ${total_overtimes}`;
             if (days_since_last_knockout !== -1) {
                 moreStats += `<br><b>Last Knockout:</b> by <u>${this.state.stats.last_knockout_by}</u> on the head of <u>${this.state.stats.last_knockout_on}</u>, ${days_since_last_knockout} days ago, ${games_since_last_knockout} games ago`;
             }
-            totalTournaments = `Tournaments: ${total_tournaments}`;
+
+            totalTournaments = game_mode === 'Tournament' ? `Tournaments: ${total_tournaments}` : '';
 
             tournament_mvps = this.state.stats.tournament_mvps;
 
@@ -612,4 +633,5 @@ class OneOnOneStats extends React.Component {
     }
 }
 
-export default withRouter(OneOnOneStats);
+export default OneOnOneStats;
+// export default withRouter(OneOnOneStats);

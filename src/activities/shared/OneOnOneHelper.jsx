@@ -367,8 +367,8 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
 
     const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0, total_games:0, total_wins: 0, total_lost: 0, total_win_percents: "" };
 
-    const stats1 = isDefined(stats[player1.name]) ? stats[player1.name] : Object.assign({},noStats);
-    const stats2 = isDefined(stats[player2.name]) ? stats[player2.name] : Object.assign({},noStats);
+    const stats1 = isDefined(stats[player1?.name]) ? stats[player1.name] : Object.assign({},noStats);
+    const stats2 = isDefined(stats[player2?.name]) ? stats[player2.name] : Object.assign({},noStats);
 
     const curr_stats = [];
     const player_stats = [];
@@ -382,8 +382,6 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
     let mutual_knockouts2 = 0;
 
     const arr = (stats1.records.length > stats2.records.length) ? stats1.records : stats2.records; // in case one of them is empty
-
-    debugger;
 
     arr.forEach((record) => {
 

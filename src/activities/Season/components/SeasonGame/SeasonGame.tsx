@@ -17,6 +17,7 @@ import SeasonGameStore from "../../stores/SeasonGameStore";
 import {game_mode, percents, what} from "../../utils/consts";
 import {BuildStatsTable} from "../../../shared/OneOnOneHelper";
 import StatsTable from "../../../../components/StatsTable";
+import OneOnOneStats from "../../../shared/OneOnOneStats";
 
 function SeasonGame({ match }: any){
 
@@ -44,7 +45,22 @@ function SeasonGame({ match }: any){
         store.setTotalOvertimes(total_overtimes)
     }
 
-    function renderSeasonGame(){
+    function shouldAllowButtons(){
+        if (!store.teamsData) {
+            return false;
+        }
+
+        const team1: SeasonGameTeam = store.teamsData.team1;
+        const team2: SeasonGameTeam = store.teamsData.team2;
+
+        if (!team1 || !team2 || store.teamsData.isSeasonOver){
+            return false;
+        }
+
+        return true;
+    }
+
+    function renderSeasonAlreadyOverIfNeeded(){
         if (!store.teamsData) {
             return null;
         }
@@ -54,24 +70,41 @@ function SeasonGame({ match }: any){
 
         if (!team1 || !team2 || store.teamsData.isSeasonOver){
             return (
-                <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!</style.Error>
+                <div className="margin-top-20">
+                    <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!</style.Error>
+                </div>
             );
         }
+        return undefined;
+    }
+
+    function renderSeasonGame(){
+        if (!store.teamsData) {
+            return null;
+        }
+
+        const team1: SeasonGameTeam = store.teamsData.team1;
+        const team2: SeasonGameTeam = store.teamsData.team2;
+
+        if (!team1 || !team2){
+            return null;
+        }
+
         const blocks =
             [team1, team2].map((seasonGameTeam, idx) => {
-                const { teamId } = seasonGameTeam;
-                const team: Team = store.allTeamsById[teamId];
+                const teamId = seasonGameTeam?.teamId;
+                const team: Team | undefined = store.allTeamsById[teamId];
 
-                const _2k_rating = team['_2k_rating'] || 'N/A';
+                const _2k_rating = team?.['_2k_rating'] || 'N/A';
                 let custom_details: string[] = [];
                 const original_custom_title = "<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0; padding-top: 10px;'>Players:</div>";
                 const curr_custom_details_title = `2K Rating: ${_2k_rating}` + original_custom_title;
 
-                team.players.forEach((player) => {
+                team?.players.forEach((player) => {
                     player["rate"] = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
                 })
 
-                const arr = team.players.slice().sort((a,b) => {
+                const arr = team?.players.slice().sort((a,b) => {
 
                     let rate1 = (a["rate"] === "N/A") ? 0 : Number(a["rate"]);
                     let rate2 = (b["rate"] === "N/A") ? 0 : Number(b["rate"]);
@@ -84,7 +117,7 @@ function SeasonGame({ match }: any){
                             <span>${x.name} <span style='opacity:0.6;'>(${getPlayerShortenPosition(x.position)})</span> <span style='opacity:0.6; display:block; padding-left: 45px;top: -8px;position: relative;'>2K Rating: ${x.rate}</span></span>
                         </div>`
                     )
-                });
+                }) ?? [];
                 custom_details = [custom_details.concat(...arr).join("")];
 
                 const onChange = async(e: any) => {
@@ -103,9 +136,9 @@ function SeasonGame({ match }: any){
                         className={"in-game"}
                         style={{ cursor: "default", textAlign: "left" }}
                         styles={styles}
-                        name={team.name}
-                        picture={team.logo}
-                        team_division={(team.conference && team.division) ? team.division + " (" + team.conference + ")" : undefined}
+                        name={team?.name}
+                        picture={team?.logo}
+                        team_division={(team?.conference && team?.division) ? team.division + " (" + team.conference + ")" : undefined}
                         custom_details_title={curr_custom_details_title}
                         custom_details={custom_details}
                         // stats={{
@@ -116,7 +149,7 @@ function SeasonGame({ match }: any){
                         // }}
 
                         onChange={onChange}
-                        singleShot={store.scores[team.name]}
+                        singleShot={store.scores[team?.name]}
 
                         // todo complete:
                         // lost={(this.state.saved && this.state.loser === team.name)}
@@ -182,19 +215,19 @@ function SeasonGame({ match }: any){
                     style={{marginLeft: "5px"}}
                     onClick={goBack}
                 />
-                <ButtonInput
+                {shouldAllowButtons() && <ButtonInput
                     text={"Different Game"}
                     style={{marginLeft: "5px"}}
                     onClick={() => {
                         window.location.reload();
                     }}
-                />
+                />}
                 <ButtonInput
                     text={"View Stats"}
                     style={{marginLeft: "5px"}}
                     onClick={() => {
-                        alert("todo complete");
                         // use stats not window.location.reload, to allow looking at stats while playing without loosing current game.
+                        store.setViewStatsPage(true);
                     }}
                 />
             </>
@@ -211,8 +244,6 @@ function SeasonGame({ match }: any){
                 <span style={{ fontWeight: "normal" }}><b>Total Played Games:</b> {store.teamsData.totals.totalPlayedGames}/{store.teamsData.totals.totalGames} | <b>Remaining Games:</b> {store.teamsData.totals.remainingGames}</span>
             )
         }
-
-
 
         // one on one stats
         let general_stats_block, matchups_description;
@@ -283,7 +314,7 @@ function SeasonGame({ match }: any){
                 <div
                     className="ui checkbox"
                 >
-                    <input type="checkbox" checked={store.isComeback} onChange={() => store.setIsComeback(!store.isComeback)} disabled={store.isSaved || store.isSaving}  />
+                    <input type="checkbox" checked={store.isComeback} onChange={() => store.setIsComeback(!store.isComeback)} disabled={store.isSaved || store.isSaving || !shouldAllowButtons()}  />
                     <label>Comeback?</label>
                 </div>
             </div>
@@ -299,7 +330,7 @@ function SeasonGame({ match }: any){
                         type={'number'}
                         value={store.totalOvertimes.toString()}
                         placeholder={"0"}
-                        disabled={store.isSaved || store.isSaving}
+                        disabled={store.isSaved || store.isSaving || !shouldAllowButtons()}
                         onChange={(e) => {
                             store.setTotalOvertimes(Math.min(20,Math.max(0,Number(e.target.value)) || 0))
                         }}
@@ -322,7 +353,7 @@ function SeasonGame({ match }: any){
                     valueKey={"name"}
                     idKey={"id"}
                     style={{ width: "710px", paddingBottom: "15px" }}
-                    disabled={options.length === 0 || store.isSaved || store.isSaving}
+                    disabled={options.length === 0 || store.isSaved || store.isSaving || !shouldAllowButtons()}
                     onChange={(player) => {
                         store.setMvpPlayer(player.name)
                     }}
@@ -352,69 +383,47 @@ function SeasonGame({ match }: any){
     }
 
     function renderContent(){
-        const team1 = store.teamsData?.team1?.teamName;
-        const team2 = store.teamsData?.team2?.teamName;
         if (!store.teamsData) {
             return null;
         }
 
-        if (!team1 || !team2 || store.teamsData.isSeasonOver){
-            return (
-                <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!</style.Error>
-            );
-        } else {
-            const home_team_background = store.allTeamsById[store.teamsData?.team1?.teamId]?.logo;
-            return (
-                <>
-                    <div className="content flex-column gap-8">
-                        {renderSmallLogo()}
-                        {renderHeaderButtons()}
-                        <div className="display-flex-important flex-column align-items-center">
-                            {renderStats()}
-                            {renderSeasonGame()}
-                        </div>
+        const home_team_background = store.allTeamsById[store.teamsData?.team1?.teamId]?.logo;
+        return (
+            <>
+                <div className="content flex-column gap-8">
+                    {renderSmallLogo()}
+                    {renderHeaderButtons()}
+                    {renderSeasonAlreadyOverIfNeeded()}
+                    <div className="display-flex-important flex-column align-items-center">
+                        {renderStats()}
+                        {renderSeasonGame()}
                     </div>
-                    <div className="bg-container" style={{ backgroundImage: `url("${home_team_background}")` }} />
-                </>
-            )
-
-            // return (
-            //     <div className="flex-col gap-4">
-            //         <span><b>Total Teams:</b> {teamsData.totals.totalTeams} {renderTotals()}</span>
-            //         <div>
-            //             {`${team1} vs ${team2}`}
-            //         </div>
-            //
-            //         <div className="ui link cards centered" style={{ margin: "auto" }}>
-            //             {renderSeasonGame()}
-            //         </div>
-            //     </div>
-            // )
-        }
-        // return (
-        //     <div className="flex-column gap-16 align-items-center font-size-16">
-        //         <div className="sub cards header content" style={{ width:"100%", bottom: "0px" }}>
-        //             Create a new season:
-        //             <br/><br/>
-        //             <div className="ui link cards centered" style={{ margin: "auto" }}>
-        //                 <Card
-        //                     name={`${seasonName}<br><span style="color:gray">${teams.length} teams</span>`}
-        //                     picture={"/thumbnails/season.png"}
-        //                     style={{ width: "160px" }}
-        //                 />
-        //             </div>
-        //         </div>
-        //         {renderMessageIfNeeded()}
-        //         {renderErrorIfNeeded()}
-        //         {renderForm()}
-        //         {renderGoBack()}
-        //     </div>
-        // )
+                </div>
+                <div className="bg-container" style={{ backgroundImage: `url("${home_team_background}")` }} />
+            </>
+        )
     }
 
     if (store.isLoading) {
         return (
             <LoadingPage />
+        )
+    }
+
+    if (store.viewStatsPage) {
+        return (
+            <OneOnOneStats
+                what={what}
+                stats_title={undefined}
+                game_mode={game_mode}
+                get_route={"/team"}
+                get_stats_route={`/records/season/${seasonId}/stats`}
+                get_stats_specific_route={undefined} // todo complete
+                mvp_block={true}
+                // mvp_block={false}
+                onBack={() => { store.setViewStatsPage(false) }}
+                player_from_url={undefined} // ?
+            />
         )
     }
 
