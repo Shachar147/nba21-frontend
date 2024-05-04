@@ -189,9 +189,9 @@ function SeasonGame({ match }: any){
             });
 
         return (
-            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-row gap-8">
+            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-row gap-8 width-100-percents-important">
                 {renderHomeGuestHeaders()}
-                <div className="ui link cards centered display-flex gap-4">
+                <div className="ui link cards centered display-flex gap-4 width-100-percents">
                     {blocks[0]}
                     {renderSaveButton()}
                     {blocks[1]}
@@ -306,9 +306,9 @@ function SeasonGame({ match }: any){
         }
 
         return (
-            <div className="ui link cards centered flex-row align-items-center margin-top-20">
+            <div className="ui link cards centered flex-row align-items-center margin-top-20 width-100-percents">
                 <div className={"card in-game"} style={titleStyle}>Guest</div>
-                {/*<div style={{ width: 110 }} />*/}
+                <div style={{ width: 110 }} />
                 <div className={"card in-game"} style={titleStyle}>Home</div>
             </div>
         )
@@ -319,7 +319,7 @@ function SeasonGame({ match }: any){
 
         // comeback
         const comeback_block = (
-            <div style={{ paddingBottom: "20px", paddingTop: "20px" }}>
+            <div className="width-100-percents-important" style={{ paddingBottom: "20px", paddingTop: "20px" }}>
                 <div
                     className="ui checkbox"
                 >
@@ -331,7 +331,7 @@ function SeasonGame({ match }: any){
 
         // overtime
         const overtime_block = (
-            <div style={{ width: "100%", display:"flex", paddingBottom: "10px", }}>
+            <div className="width-100-percents-important" style={{ width: "100%", display:"flex", paddingBottom: "10px", }}>
                 <label style={{ display: "inline-block", fontWeight:"bold", marginRight: "7px", lineHeight: "38px" }}>Number of Overtimes:</label>
                 <div style={{ flexGrow: "100", display: "inline-block" }}>
                     <TextInput
@@ -351,7 +351,7 @@ function SeasonGame({ match }: any){
         // mvp
         const options = store.mvpPlayerOptions;
         const mvp_block_html = (
-            <div className="ui link cards centered" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto" }}>
+            <div className="ui link cards centered width-100-percents-important" style={{ position:"relative", display: "flex", textAlign: "center", alignItems: "strech", margin: "auto" }}>
                 <DropdownInput
                     options={(options)}
                     name={"select_mvp"}
