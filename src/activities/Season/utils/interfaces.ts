@@ -49,6 +49,7 @@ export interface SeasonGameTeam {
     teamId: number;
 }
 
+// @ts-ignore
 export enum SeasonMode {
     'Regular Season' = 'Regular Season',
     'Playoff' = 'Playoff',
