@@ -8,7 +8,7 @@ import {Player, SeasonGameTeam, SeasonMode, SeasonStats, Team} from "../../utils
 import PlayerCard from "../../../../components/PlayerCard";
 import {styles} from "../../../Tournament/Tournament";
 import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
-import {getClasses, getPlayerShortenPosition, toPascalCase} from "../../../../helpers/utils";
+import {getClasses, getPlayerShortenPosition, nth, toPascalCase} from "../../../../helpers/utils";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
 import './SeasonGame.scss';
 import TextInput from "../../../../components/inputs/TextInput";
@@ -136,7 +136,9 @@ function SeasonGame({ match }: any){
                 const _2k_rating = team?.['_2k_rating'] || 'N/A';
                 let custom_details: string[] = [];
                 const original_custom_title = "<div style='border-top:1px solid #eaeaea; width:100%; margin: 10px 0; padding-top: 10px;'>Players:</div>";
-                const curr_custom_details_title = `2K Rating: ${_2k_rating}` + original_custom_title;
+
+                const place = store.getTeamPlace(team.name);
+                const curr_custom_details_title = [`Place: ${place}${nth(place)}`, `2K Rating: ${_2k_rating}`].join("<br/>") + original_custom_title;
 
                 team?.players.forEach((player) => {
                     player["rate"] = (player["_2k_rating"]) ? Number(player["_2k_rating"]) : "N/A";
