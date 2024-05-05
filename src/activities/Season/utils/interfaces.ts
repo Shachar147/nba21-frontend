@@ -135,5 +135,7 @@ export interface SeasonTeamStats {
         wins: number[],
         lose: number[]
     };
+
+    teamName?: string;
 }
 export type SeasonStats = Record<string, SeasonTeamStats>

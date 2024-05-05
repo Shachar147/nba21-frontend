@@ -20,7 +20,7 @@ export default class SeasonGameStore {
     @observable viewStatsPage = false;
     @observable selectedTeam: string | undefined = undefined;
 
-    @observable allTeamsById: Record<number, Team> = {};
+    @observable allTeams: Team[] = [];
     @observable teamsData: NextGameDataResponse | undefined  = undefined;
 
     @observable seasonStats: SeasonStats | undefined = undefined;
@@ -73,13 +73,25 @@ export default class SeasonGameStore {
     async loadAllTeams() {
         const teamsResponse = await apiGet("/team");
         const _teams: Team[] = teamsResponse.data.data;
-        const allTeamsById: Record<number, Team> = {};
-        _teams.forEach((team: Team) => {
-            allTeamsById[team.id] = team;
+        this.allTeams = _teams;
+    }
+
+    @computed
+    get allTeamsById(): Record<number, Team> {
+        const _allTeamsById: Record<number, Team> = {};
+        this.allTeams.forEach((team: Team) => {
+            _allTeamsById[team.id] = team;
         })
-        runInAction(() => {
-            this.allTeamsById = allTeamsById;
+        return _allTeamsById;
+    }
+
+    @computed
+    get allTeamsByName(): Record<string, Team> {
+        const _allTeamsById: Record<string, Team> = {};
+        this.allTeams.forEach((team: Team) => {
+            _allTeamsById[team.name] = team;
         })
+        return _allTeamsById;
     }
 
     @action

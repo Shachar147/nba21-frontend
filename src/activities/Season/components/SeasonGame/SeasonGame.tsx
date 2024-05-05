@@ -4,7 +4,7 @@ import NbaPage, {renderSmallLogo} from "../../../../components/NbaPage";
 import LoadingPage from "../../../../pages/LoadingPage";
 import {errorTestId} from "../../../../pages/Login/Model";
 import style from "../../../../pages/Login/style";
-import {Player, SeasonGameTeam, Team} from "../../utils/interfaces";
+import {Player, SeasonGameTeam, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
 import PlayerCard from "../../../../components/PlayerCard";
 import {styles} from "../../../Tournament/Tournament";
 import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
@@ -21,6 +21,7 @@ import OneOnOneStats from "../../../shared/OneOnOneStats";
 import Notification from '../../../../components/internal/Notification';
 import OneOnOneSingleStats from "../../../shared/OneOnOneSingleStats";
 import {runInAction} from "mobx";
+import RegularSeasonStandings from "../RegularSeasonStandings/RegularSeasonStandings";
 
 function SeasonGame({ match }: any){
 
@@ -320,6 +321,9 @@ function SeasonGame({ match }: any){
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'display-block' : 'display-none')}>
                     {general_stats_block}
+                    {store.teamsData?.mode == SeasonMode['Regular Season'] && (
+                        <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} />
+                    )}
                     <StatsTable
                         title={"Previous Matchups Stats"}
                         marginTop="10px"
