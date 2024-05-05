@@ -323,8 +323,8 @@ function SeasonGame({ match }: any){
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'display-block' : 'display-none')}>
                     {general_stats_block}
-                    {store.seasonStats && (
-                        <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} />
+                    {store.regularSeasonStats && (
+                        <RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} />
                     )}
                     <StatsTable
                         title={"Previous Matchups Stats"}

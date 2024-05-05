@@ -25,6 +25,7 @@ export default class SeasonGameStore {
     @observable teamsData: NextGameDataResponse | undefined  = undefined;
 
     @observable seasonStats: SeasonStats | undefined = undefined;
+    @observable regularSeasonStats: SeasonStats | undefined = undefined;
     @observable statsInfo: Record<any, any> | undefined = undefined; // todo complete: typing
 
     @observable scores:Record<string, number> = {};
@@ -126,10 +127,20 @@ export default class SeasonGameStore {
     @action
     async initStats(){
 
-        const stats = await SeasonApiService.getSeasonStats(this.seasonId)
+        const allStats = await SeasonApiService.getSeasonStats(this.seasonId)
+
+        const rStats = await SeasonApiService.getSeasonStats(this.seasonId, 'Regular Season')
         runInAction(() => {
-            this.seasonStats = stats;
+            this.regularSeasonStats = rStats;
+            this.seasonStats = rStats;
         })
+
+        if (this.teamsData?.mode != 'Regular Season') {
+            const stats = await SeasonApiService.getSeasonStats(this.seasonId, this.teamsData?.mode)
+            runInAction(() => {
+                this.seasonStats = stats;
+            })
+        }
 
         const player_stats_values = {
             'Total Played Games': [],
@@ -153,7 +164,7 @@ export default class SeasonGameStore {
             buildStatsInformation(
                 this.team1,
                 this.team2,
-                stats,
+                allStats,
                 player_stats_values,
                 matchups_values,
                 what,

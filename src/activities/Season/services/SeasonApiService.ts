@@ -30,8 +30,8 @@ class Service {
         return axiosResponse.data;
     }
 
-    getSeasonStats = async (seasonId: number): Promise<SeasonStats> => {
-        const axiosResponse = await apiGet(`/records/season/${seasonId}/stats`);
+    getSeasonStats = async (seasonId: number, mode?: SeasonMode): Promise<SeasonStats> => {
+        const axiosResponse = await apiGet(`/records/season/${seasonId}/stats${mode ? `?mode=${mode}` : ''}`);
         return axiosResponse.data.data;
     }
 

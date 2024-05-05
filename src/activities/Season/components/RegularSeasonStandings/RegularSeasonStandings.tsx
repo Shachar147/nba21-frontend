@@ -18,7 +18,7 @@ function RegularSeasonStandings({ stats, teamsByName }: RegularSeasonStandingsPr
     });
     const teamsByStanding = Object.values(teamStats).sort(overallSort);
     const standingStats: Record<string, (number|string)[]> = {};
-    let prevTeamWins: number = 0;
+    let firstTeamWins: number = 0;
     teamsByStanding.forEach((stat, idx) => {
         const teamName = stat.teamName;
         if (teamName) {
@@ -26,12 +26,14 @@ function RegularSeasonStandings({ stats, teamsByName }: RegularSeasonStandingsPr
                 `${idx+1}${nth(idx+1)}`,
                 stat.total_wins,
                 stat.total_lost,
-                idx == 0 ? "-" : (prevTeamWins - stat.total_wins),
+                idx == 0 ? "-" : (firstTeamWins - stat.total_wins),
                 getLastTenGameStats(stat.records, teamName),
                 getMvps(stat.records, teamName)
             ];
 
-            prevTeamWins = stat.total_wins;
+            if (idx == 0) {
+                firstTeamWins = stat.total_wins;
+            }
         }
     });
 
