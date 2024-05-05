@@ -18,14 +18,20 @@ function RegularSeasonStandings({ stats, teamsByName }: RegularSeasonStandingsPr
     });
     const teamsByStanding = Object.values(teamStats).sort(overallSort);
     const standingStats: Record<string, (number|string)[]> = {};
+    let prevTeamWins: number = 0;
     teamsByStanding.forEach((stat, idx) => {
         const teamName = stat.teamName;
         if (teamName) {
             standingStats[getTeamCell(teamName)] = [
                 `${idx+1}${nth(idx+1)}`,
+                stat.total_wins,
+                stat.total_lost,
+                idx == 0 ? "-" : (prevTeamWins - stat.total_wins),
                 getLastTenGameStats(stat.records, teamName),
                 getMvps(stat.records, teamName)
-            ]
+            ];
+
+            prevTeamWins = stat.total_wins;
         }
     });
 
@@ -69,9 +75,9 @@ function RegularSeasonStandings({ stats, teamsByName }: RegularSeasonStandingsPr
 
     return (
         <div>
-            <div className="ui header margin-top-10">Standings</div>
+            <div className="ui header margin-top-10">Regular Season Standings</div>
             <StatsTableInner
-                cols={['Team', 'Standing', 'Last 10 Games', 'MVPs']}
+                cols={['Team', 'Standing', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
                 stats={standingStats}
                 showMoreOpened={true}
                 switchMaxNumber={10}
