@@ -49,13 +49,7 @@ export interface SeasonGameTeam {
     teamId: number;
 }
 
-// @ts-ignore
-export enum SeasonMode {
-    'Regular Season' = 'Regular Season',
-    'Playoff' = 'Playoff',
-    'SemiFinals' = 'SemiFinals',
-    'Finals' = 'Finals',
-}
+export type SeasonMode = 'Regular Season' | 'Playoff' | 'SemiFinals' | 'Finals'
 
 export interface NextGameDataResponse {
     mode: SeasonMode;
@@ -127,7 +121,7 @@ export interface SeasonTeamStats {
     total_ot_lost: number;
     last_knockout_by: string;
     last_knockout_on: string;
-    matchups: Record<string, MatchupsStats>
+    matchups: Record<string, MatchupsStats>;
     records: ISeasonGame[];
     avg_2k_rating: number;
     max_win_streak: number;

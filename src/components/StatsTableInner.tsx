@@ -35,9 +35,9 @@ export default function StatsTableInner({ cols, stats, switchMaxNumber = 10, sho
                         if (!(value1 === 0 && value2 === 0) && !(value1 === "N/A" && value2 === "N/A"))
                             return (<tr key={`stat-${idx}`}>
                                 <td style={{fontWeight: "bold"}} dangerouslySetInnerHTML={{__html: stat}} />
-                                <td dangerouslySetInnerHTML={{__html: value1}} />
-                                { (cols.length > 2) ? <td dangerouslySetInnerHTML={{__html: value2}} /> : undefined }
-                                { (value3) ? (<td dangerouslySetInnerHTML={{__html: value3}} />) : "" }
+                                <td dangerouslySetInnerHTML={{ __html: value1.toString() }} />
+                                { (cols.length > 2) ? <td dangerouslySetInnerHTML={{__html: value2.toString() }} /> : undefined }
+                                { (value3) ? (<td dangerouslySetInnerHTML={{__html: value3.toString() }} />) : "" }
                             </tr>)
                     }
                 })}
