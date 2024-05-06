@@ -53,39 +53,26 @@ export function overallSortTotalWins(a,b){
     // console.log(a,b);
 
     // first sort
-    const percent1 = parseFloat(b['total_wins']?.toString().replace('%', ''));
-    const percent2 = parseFloat(a['total_wins']?.toString().replace('%', ''));
-
-    // // second sort
-    // const total_games1 = parseFloat(b['total_games']);
-    // const total_games2 = parseFloat(a['total_games']);
+    const total1 = parseFloat(b['total_wins']?.toString().replace('%', ''));
+    const total2 = parseFloat(a['total_wins']?.toString().replace('%', ''));
 
     // second sort
+    const percents1 = parseFloat(b['total_win_percents']);
+    const percents2 = parseFloat(a['total_win_percents']);
+
+    // third sort
     const diff1 = parseFloat(b['total_diff_per_game']);
     const diff2 = parseFloat(a['total_diff_per_game']);
 
-    // // third sort
+    // fourth sort
     const total_knockouts1 = parseFloat(b['total_knockouts']);
     const total_knockouts2 = parseFloat(a['total_knockouts']);
 
-    if (percent1 > percent2) return 1;
-    else if (percent1 < percent2) return -1;
+    if (total1 > total2) return 1;
+    else if (total1 < total2) return -1;
 
-    // 3pt
-    if (a["average_place"] != undefined && b["average_place"] != undefined){
-        const place1 = parseFloat(a["average_place"])
-        const place2 = parseFloat(b["average_place"])
-
-        if (place1 > place2) return 1;
-        else if (place1 < place2) return -1;
-    }
-    if (a["total_shot_average"] != undefined && b["total_shot_average"] != undefined){
-        const shot1 = parseFloat(b["total_shot_average"].toString().replace('%',''))
-        const shot2 = parseFloat(a["total_shot_average"].toString().replace('%',''))
-
-        if (shot1 > shot2) return 1;
-        else if (shot1 < shot2) return -1;
-    }
+    if (percents1 > percents2) return 1;
+    else if (percents1 < percents2) return -1;
 
     if (diff1 > diff2) return 1;
     else if (diff1 < diff2) return -1;
@@ -153,6 +140,7 @@ export function overallTournamentSort(a,b){
 
 
 export const OVERALL_HIGHLIGHTS = ['Total Championships', 'Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts', 'Total Shots Average', 'Average Place'];
+export const OVERALL_WINS_HIGHLIGHTS = ['Total Wins', 'Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts'];
 
 export function textSort(key, a, b){
     const value1 = b[key];

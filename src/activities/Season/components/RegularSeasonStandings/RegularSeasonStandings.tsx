@@ -25,6 +25,7 @@ function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStand
         if (teamName) {
             standingStats[getTeamCell(teamName)] = [
                 `${idx+1}${nth(idx+1)}`,
+                stat.total_games,
                 stat.total_wins,
                 stat.total_lost,
                 idx == 0 ? "-" : (firstTeamWins - stat.total_wins),
@@ -80,7 +81,7 @@ function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStand
         <div>
             <div className="ui header margin-top-10">{mode} Standings</div>
             <StatsTableInner
-                cols={['Team', 'Standing', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
+                cols={['Team', 'Standing', 'G', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
                 stats={standingStats}
                 showMoreOpened={true}
                 switchMaxNumber={10}

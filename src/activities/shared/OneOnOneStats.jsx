@@ -31,12 +31,15 @@ import OneOnOneSingleStats from "./OneOnOneSingleStats";
 // @ts-ignore
 import { withRouter } from "react-router";
 import {
+    OVERALL_WINS_HIGHLIGHTS,
+    overallSortTotalWins,
     totalFinalsAppearancesPercentsSort, totalFinalsWinsPercentsSort,
     totalGamesWithOTSort,
     totalOTLostSort,
     totalOTWinsPercentSort,
     totalOTWinsSort
 } from "../../helpers/sort";
+import {DEFAULT_SEASON_STATS_ORDER} from "../../helpers/consts";
 
 class OneOnOneStats extends React.Component {
 
@@ -44,7 +47,8 @@ class OneOnOneStats extends React.Component {
         super(props);
 
         const orderBy = (props.game_mode === 'Stopwatch Shootout') ? DEFAULT_STOPWATCH_STATS_ORDER :
-                        (props.game_mode === 'Tournament' || props.game_mode === 'Season') ? DEFAULT_TOURNAMENT_STATS_ORDER :
+                        (props.game_mode === 'Tournament') ? DEFAULT_TOURNAMENT_STATS_ORDER :
+                        (props.game_mode === 'Season') ? DEFAULT_SEASON_STATS_ORDER :
                         DEFAULT_STATS_ORDER;
 
         this.state = {
@@ -85,6 +89,10 @@ class OneOnOneStats extends React.Component {
             },
             selected_player: undefined,
         };
+
+        if (this.props.game_mode === "Season") {
+            this.state.orderByOptions.push({ 'Overall Wins': overallSortTotalWins })
+        }
 
         if (this.props.game_mode === "Three Points Contest") {
             this.state.orderByOptions.push({ 'Average Place': (a,b) => specificSort('average_place',b,a) });
@@ -546,7 +554,7 @@ class OneOnOneStats extends React.Component {
                                     lose_streak: records[player.name].lose_streak,
                                     max_win_streak: records[player.name].max_win_streak,
                                     max_lose_streak: records[player.name].max_lose_streak,
-                                    highlights: (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
+                                    highlights: (this.state.orderBy === 'Overall Wins') ? OVERALL_WINS_HIGHLIGHTS : (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
 
                                     // 3pt
                                     average_place: records[player.name].average_place,
