@@ -323,8 +323,8 @@ function SeasonGame({ match }: any){
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'display-block' : 'display-none')}>
                     {general_stats_block}
-                    {store.seasonStats && store.teamsData?.mode != 'Regular Season' && (
-                        <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData?.mode} />
+                    {store.seasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
+                        <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData.mode} />
                     )}
                     {store.regularSeasonStats && (
                         <RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} />
