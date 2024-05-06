@@ -6,9 +6,9 @@ import StatsTableInner from "../../../../components/StatsTableInner";
 import {nth} from "../../../../helpers/utils";
 
 interface RegularSeasonStandingsProps {
-    stats: SeasonStats,
-    teamsByName: Record<string, Team>
-    mode: SeasonMode
+    stats: SeasonStats;
+    teamsByName: Record<string, Team>;
+    mode: SeasonMode;
 }
 
 function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStandingsProps){
