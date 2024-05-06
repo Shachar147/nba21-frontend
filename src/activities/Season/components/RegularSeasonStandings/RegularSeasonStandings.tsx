@@ -1,7 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react";
 import {ISeasonGame, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
-import {overallSort} from "../../../../helpers/sort";
+import {overallSortTotalWins} from "../../../../helpers/sort";
 import StatsTableInner from "../../../../components/StatsTableInner";
 import {nth} from "../../../../helpers/utils";
 
@@ -17,7 +17,7 @@ function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStand
     Object.keys(teamStats).forEach((teamName) => {
         teamStats[teamName]["teamName"] = teamName;
     });
-    const teamsByStanding = Object.values(teamStats).sort(overallSort);
+    const teamsByStanding = Object.values(teamStats).sort(overallSortTotalWins);
     const standingStats: Record<string, (number|string)[]> = {};
     let firstTeamWins: number = 0;
     teamsByStanding.forEach((stat, idx) => {
