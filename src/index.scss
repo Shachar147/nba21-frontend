@@ -43,6 +43,11 @@ ul li.arrow:before {
   flex-direction: row;
 }
 
+.flex-row-reversed {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .flex-col, .flex-column {
   display: flex;
   flex-direction: column;

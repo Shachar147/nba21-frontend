@@ -216,7 +216,7 @@ function SeasonGame({ match }: any){
             });
 
         return (
-            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-row gap-8 width-100-percents-important">
+            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-row-reversed gap-8 width-100-percents-important">
                 {renderHomeGuestHeaders()}
                 <div className="ui link cards centered display-flex gap-4 width-100-percents">
                     {blocks[0]}
@@ -360,9 +360,9 @@ function SeasonGame({ match }: any){
 
         return (
             <div className="ui link cards centered flex-row align-items-center margin-top-20 width-100-percents">
-                <div className={"card in-game"} style={titleStyle}>Home</div>
-                <div style={{ width: 110 }} />
                 <div className={"card in-game"} style={titleStyle}>Guest</div>
+                <div style={{ width: 110 }} />
+                <div className={"card in-game"} style={titleStyle}>Home</div>
             </div>
         )
     }
@@ -447,7 +447,7 @@ function SeasonGame({ match }: any){
             return null;
         }
 
-        const home_team_background = store.allTeamsById[store.teamsData?.team1?.teamId]?.logo;
+        const home_team_background = store.allTeamsById[store.teamsData?.team2?.teamId]?.logo;
         return (
             <>
                 <div className="content flex-column gap-8">
