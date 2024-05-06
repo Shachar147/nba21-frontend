@@ -135,8 +135,8 @@ export default class SeasonGameStore {
             this.seasonStats = rStats;
         })
 
-        if (this.teamsData?.mode != 'Regular Season') {
-            const stats = await SeasonApiService.getSeasonStats(this.seasonId, this.teamsData?.mode)
+        if (this.teamsData && this.teamsData?.mode != 'Regular Season') {
+            const stats = await SeasonApiService.getSeasonStats(this.seasonId, this.teamsData.mode)
             runInAction(() => {
                 this.seasonStats = stats;
             })

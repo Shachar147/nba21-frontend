@@ -78,7 +78,7 @@ function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStand
 
     return (
         <div>
-            <div className="ui header margin-top-10">{{ mode }} Standings</div>
+            <div className="ui header margin-top-10">{mode} Standings</div>
             <StatsTableInner
                 cols={['Team', 'Standing', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
                 stats={standingStats}
