@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {ISeasonGame, SeasonStats, Team} from "../../utils/interfaces";
+import {ISeasonGame, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
 import {overallSort} from "../../../../helpers/sort";
 import StatsTableInner from "../../../../components/StatsTableInner";
 import {nth} from "../../../../helpers/utils";
@@ -8,9 +8,10 @@ import {nth} from "../../../../helpers/utils";
 interface RegularSeasonStandingsProps {
     stats: SeasonStats,
     teamsByName: Record<string, Team>
+    mode: SeasonMode
 }
 
-function RegularSeasonStandings({ stats, teamsByName }: RegularSeasonStandingsProps){
+function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStandingsProps){
 
     const teamStats = {...stats};
     Object.keys(teamStats).forEach((teamName) => {
@@ -77,7 +78,7 @@ function RegularSeasonStandings({ stats, teamsByName }: RegularSeasonStandingsPr
 
     return (
         <div>
-            <div className="ui header margin-top-10">Regular Season Standings</div>
+            <div className="ui header margin-top-10">{{ mode }} Standings</div>
             <StatsTableInner
                 cols={['Team', 'Standing', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
                 stats={standingStats}
