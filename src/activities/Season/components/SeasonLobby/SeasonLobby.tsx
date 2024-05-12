@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 import SeasonStore from "../../stores/SeasonStore";
 import LoadingPage from "../../../../pages/LoadingPage";
 import Header from "../../../../components/layout/Header";
@@ -7,9 +7,11 @@ import Card from "../../../../components/Card";
 import {observer} from "mobx-react";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
 import SeasonApiService from "../../services/SeasonApiService";
+import ConfirmationModal from "../../../../components/modals/ConfirmationModal";
 
 function SeasonLobby(){
     const store: SeasonStore = useMemo(() => new SeasonStore(), []);
+    const [deleteSeasonId, setDeleteSeasonId] = useState<number|undefined>(undefined);
 
     if (store.isLoading) {
         return (
@@ -41,7 +43,7 @@ function SeasonLobby(){
                             href={`/season/${season.id}`}
                             data-testid={`season-${idx}`}
                             key={`${season.id}-${idx}`}
-                            onDelete={() => SeasonApiService.deleteSeason(season.id).then(() => window.location.reload())}
+                            onDelete={() => setDeleteSeasonId(season.id)}
                         />
                     ))}
                 </div>
@@ -84,6 +86,21 @@ function SeasonLobby(){
                     </div>
                 </div>
             </div>
+            {!!deleteSeasonId && (
+                <ConfirmationModal
+                    title={"Delete Season"}
+                    description={"Are you sure you want to delete this season?\nOnce you do it, you won't be able to undo."}
+                    okText={"Delete"}
+                    okColor={"nbared"}
+                    okFunc={() => {
+                        SeasonApiService.deleteSeason(deleteSeasonId).then(() => window.location.reload());
+                    }}
+                    cancelText={"Cancel"}
+                    cancelFunc={() => {
+                        setDeleteSeasonId(undefined);
+                    }}
+                />
+            )}
         </div>
     );
 }
