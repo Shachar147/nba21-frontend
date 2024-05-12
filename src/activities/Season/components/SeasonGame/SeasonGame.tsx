@@ -8,7 +8,7 @@ import {Player, SeasonGameTeam, SeasonMode, SeasonStats, Team} from "../../utils
 import PlayerCard from "../../../../components/PlayerCard";
 import {styles} from "../../../Tournament/Tournament";
 import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
-import {getClasses, getPlayerShortenPosition, nth, toPascalCase} from "../../../../helpers/utils";
+import {calcPercents, getClasses, getPlayerShortenPosition, nth, toPascalCase} from "../../../../helpers/utils";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
 import './SeasonGame.scss';
 import TextInput from "../../../../components/inputs/TextInput";
@@ -296,8 +296,11 @@ function SeasonGame({ match }: any){
                 return null;
             }
 
+            const played = store.teamsData.totals.totalPlayedGames;
+            const total = store.teamsData.totals.totalGames;
+
             return (
-                <span style={{ fontWeight: "normal" }}><b>Total Played Games:</b> {store.teamsData.totals.totalPlayedGames}/{store.teamsData.totals.totalGames} | <b>Remaining Games:</b> {store.teamsData.totals.remainingGames}</span>
+                <span style={{ fontWeight: "normal" }}><b>Total Played Games:</b> {played}/{total} - {calcPercents(played, total, 0)}% | <b>Remaining Games:</b> {store.teamsData.totals.remainingGames}</span>
             )
         }
 
@@ -321,7 +324,7 @@ function SeasonGame({ match }: any){
                     {renderTotals()}
                 </div>
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
-                <div className={getClasses("width-100-percents", store.showStats ? 'display-block' : 'display-none')}>
+                <div className={getClasses("width-100-percents", store.showStats ? 'flex-column gap-8' : 'display-none', 'font-weight-normal')}>
                     {general_stats_block}
                     {store.seasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
                         <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData.mode} />

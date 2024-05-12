@@ -23,8 +23,8 @@ function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStand
     teamsByStanding.forEach((stat, idx) => {
         const teamName = stat.teamName;
         if (teamName) {
-            standingStats[getTeamCell(teamName)] = [
-                `${idx+1}${nth(idx+1)}`,
+            standingStats[`${idx+1}${nth(idx+1)}`] = [
+                getTeamCell(teamName),
                 stat.total_games,
                 stat.total_wins,
                 stat.total_lost,
@@ -49,7 +49,7 @@ function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStand
     }
 
     function getLastTenGameStats(records: ISeasonGame[], teamName: string): string{
-        const last10Games = records.slice(0, 10);
+        const last10Games = [...records].sort((a,b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime()).slice(0, 10);
         const wins = last10Games.filter((x) => isTeamWon(x, teamName)).length;
         const lost = last10Games.length - wins;
 
@@ -81,7 +81,7 @@ function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStand
         <div>
             <div className="ui header margin-top-10">{mode} Standings</div>
             <StatsTableInner
-                cols={['Team', 'Standing', 'G', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
+                cols={['Standing', 'Team', 'G', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
                 stats={standingStats}
                 showMoreOpened={true}
                 switchMaxNumber={10}
