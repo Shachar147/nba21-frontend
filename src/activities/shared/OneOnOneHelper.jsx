@@ -397,7 +397,7 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
             let shouldContinue = true;
             if (game_mode?.length) {
                 if (record.mode !== game_mode) {
-                    console.log(record.mode, game_mode, "skipping");
+                    // console.log(record.mode, game_mode, "skipping");
                     shouldContinue = false;
                 }
             }
