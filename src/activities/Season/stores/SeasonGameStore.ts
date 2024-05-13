@@ -130,41 +130,48 @@ export default class SeasonGameStore {
     }
 
     @action
-    async initStats(){
+    async initStats() {
+        const allStatsPromise = SeasonApiService.getSeasonStats(this.seasonId);
+        const rStatsPromise = SeasonApiService.getSeasonStats(this.seasonId, 'Regular Season');
+        let pStatsPromise, sStatsPromise, statsPromise;
 
-        const allStats = await SeasonApiService.getSeasonStats(this.seasonId)
-
-        const rStats = await SeasonApiService.getSeasonStats(this.seasonId, 'Regular Season')
-        runInAction(() => {
-            this.regularSeasonStats = rStats;
-            this.seasonStats = rStats;
-        })
-
-        if (this.teamsData && this.teamsData?.mode != 'Regular Season') {
-
-            const pStats = await SeasonApiService.getSeasonStats(this.seasonId, 'Playoff')
-            runInAction(() => {
-                this.playoffStats = pStats;
-                this.seasonStats = pStats;
-            })
-
-            if (this.teamsData && this.teamsData?.mode != 'Playoff') {
-
-                const sStats = await SeasonApiService.getSeasonStats(this.seasonId, 'SemiFinals')
-                runInAction(() => {
-                    this.semiStats = sStats;
-                    this.seasonStats = sStats;
-                })
-
-                if (this.teamsData && this.teamsData?.mode != 'SemiFinals') {
-                    const stats = await SeasonApiService.getSeasonStats(this.seasonId, 'Finals')
-                    runInAction(() => {
-                        this.finalsStats = stats;
-                        this.seasonStats = stats;
-                    })
+        if (this.teamsData && this.teamsData.mode !== 'Regular Season') {
+            pStatsPromise = SeasonApiService.getSeasonStats(this.seasonId, 'Playoff');
+            if (this.teamsData.mode !== 'Playoff') {
+                sStatsPromise = SeasonApiService.getSeasonStats(this.seasonId, 'SemiFinals');
+                if (this.teamsData.mode !== 'SemiFinals') {
+                    statsPromise = SeasonApiService.getSeasonStats(this.seasonId, 'Finals');
                 }
             }
         }
+
+        const [allStats, rStats, pStats, sStats, stats] = await Promise.all([
+            allStatsPromise,
+            rStatsPromise,
+            pStatsPromise,
+            sStatsPromise,
+            statsPromise
+        ]);
+
+        runInAction(() => {
+            this.regularSeasonStats = rStats;
+            this.seasonStats = rStats;
+
+            if (pStats) {
+                this.playoffStats = pStats;
+                this.seasonStats = pStats;
+
+                if (sStats) {
+                    this.semiStats = sStats;
+                    this.seasonStats = sStats;
+
+                    if (stats) {
+                        this.finalsStats = stats;
+                        this.seasonStats = stats;
+                    }
+                }
+            }
+        });
 
         const player_stats_values = {
             'Total Played Games': [],
@@ -183,25 +190,96 @@ export default class SeasonGameStore {
             'Total Scored': [],
             'Total Diff': [],
             'Knockouts': [],
-        }
-        const statsInfo =
-            buildStatsInformation(
-                this.team1,
-                this.team2,
-                allStats,
-                player_stats_values,
-                matchups_values,
-                what,
-                percents,
-                this.teamsData?.mode
-            );
-
-        console.log("stats info", this.team1?.name, this.team2?.name, this.teamsData?.mode, statsInfo);
+        };
+        const statsInfo = buildStatsInformation(
+            this.team1,
+            this.team2,
+            allStats,
+            player_stats_values,
+            matchups_values,
+            what,
+            percents,
+            this.teamsData?.mode
+        );
 
         runInAction(() => {
-            this.statsInfo = { ... statsInfo };
-        })
+            this.statsInfo = { ...statsInfo };
+        });
     }
+
+    // @action
+    // async initStatsOld(){
+    //
+    //     const allStats = await SeasonApiService.getSeasonStats(this.seasonId)
+    //
+    //     const rStats = await SeasonApiService.getSeasonStats(this.seasonId, 'Regular Season')
+    //     runInAction(() => {
+    //         this.regularSeasonStats = rStats;
+    //         this.seasonStats = rStats;
+    //     })
+    //
+    //     if (this.teamsData && this.teamsData?.mode != 'Regular Season') {
+    //
+    //         const pStats = await SeasonApiService.getSeasonStats(this.seasonId, 'Playoff')
+    //         runInAction(() => {
+    //             this.playoffStats = pStats;
+    //             this.seasonStats = pStats;
+    //         })
+    //
+    //         if (this.teamsData && this.teamsData?.mode != 'Playoff') {
+    //
+    //             const sStats = await SeasonApiService.getSeasonStats(this.seasonId, 'SemiFinals')
+    //             runInAction(() => {
+    //                 this.semiStats = sStats;
+    //                 this.seasonStats = sStats;
+    //             })
+    //
+    //             if (this.teamsData && this.teamsData?.mode != 'SemiFinals') {
+    //                 const stats = await SeasonApiService.getSeasonStats(this.seasonId, 'Finals')
+    //                 runInAction(() => {
+    //                     this.finalsStats = stats;
+    //                     this.seasonStats = stats;
+    //                 })
+    //             }
+    //         }
+    //     }
+    //
+    //     const player_stats_values = {
+    //         'Total Played Games': [],
+    //         'Standing': [],
+    //         'Current Win Streak': [],
+    //         'Current Lose Streak': [],
+    //         'Best Win Streak': [],
+    //         'Worst Lose Streak': [],
+    //         'Total Knockouts': [],
+    //         'Total Diff': [],
+    //         'Total Diff Per Game': [],
+    //     };
+    //     const matchups_values = {
+    //         'Total Previous Matchups': [],
+    //         'Wins': [],
+    //         'Total Scored': [],
+    //         'Total Diff': [],
+    //         'Knockouts': [],
+    //     }
+    //     const statsInfo =
+    //         buildStatsInformation(
+    //             this.team1,
+    //             this.team2,
+    //             allStats,
+    //             player_stats_values,
+    //             matchups_values,
+    //             what,
+    //             percents,
+    //             this.teamsData?.mode
+    //         );
+    //
+    //     console.log("stats info", this.team1?.name, this.team2?.name, this.teamsData?.mode, statsInfo);
+    //
+    //     runInAction(() => {
+    //         this.statsInfo = { ... statsInfo };
+    //     })
+    // }
 
     @action
     setLoading(loading: boolean) {

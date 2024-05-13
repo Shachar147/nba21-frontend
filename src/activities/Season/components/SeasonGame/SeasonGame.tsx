@@ -23,6 +23,7 @@ import OneOnOneSingleStats from "../../../shared/OneOnOneSingleStats";
 import {runInAction} from "mobx";
 import RegularSeasonStandings from "../RegularSeasonStandings/RegularSeasonStandings";
 import SeriesStandings from "../RegularSeasonStandings/SeriesStandings";
+import {winsAndMatchupsSort} from "../../../../helpers/sort";
 
 function SeasonGame({ match }: any){
 
@@ -49,6 +50,19 @@ function SeasonGame({ match }: any){
     }, [store.isSaved, store.isSaving, store.isUpdated, updateClickCount])
 
     const statsBlock = useMemo(renderStats, [store.reRenderCounter, store.isLoading, store.teamsData, store.statsInfo, store.showStats]);
+
+    function renderSeasonWinnerTeam(){
+        if (!store.teamsData?.isSeasonOver || !store.finalsStats) {
+            return null;
+        }
+
+        const teamStats = {...store.finalsStats};
+        Object.keys(teamStats).forEach((teamName) => {
+            teamStats[teamName]["teamName"] = teamName;
+        });
+        const teamsByStanding = Object.values(teamStats).sort(winsAndMatchupsSort);
+        return `🏆 ${teamsByStanding[0].teamName} is the winner! 🏆`;
+    }
 
     function calcOT(){
         // @ts-ignore
@@ -112,7 +126,7 @@ function SeasonGame({ match }: any){
         if (!team1 || !team2 || store.teamsData.isSeasonOver){
             return (
                 <div className="margin-top-20">
-                    <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!</style.Error>
+                    <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!<br/><br/>{renderSeasonWinnerTeam()}</style.Error>
                 </div>
             );
         }
