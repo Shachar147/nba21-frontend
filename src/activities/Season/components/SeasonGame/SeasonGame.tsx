@@ -327,10 +327,10 @@ function SeasonGame({ match }: any){
                 <div className={getClasses("width-100-percents", store.showStats ? 'flex-column gap-8' : 'display-none', 'font-weight-normal')}>
                     {general_stats_block}
                     {store.seasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
-                        <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData.mode} />
+                        <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData.mode} store={store} />
                     )}
                     {store.regularSeasonStats && (
-                        <RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} />
+                        <RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} />
                     )}
                     <StatsTable
                         title={"Previous Matchups Stats"}
@@ -477,7 +477,7 @@ function SeasonGame({ match }: any){
                     stats_title={`${game_mode} - ${store.selectedTeam}`}
                     game_mode={game_mode}
                     get_route={get_specific_route}
-                    get_stats_route={get_stats_specific_route}
+                    get_stats_route={`${get_stats_specific_route}?mode=Regular Season`}
                     onBack={() => { store.setViewStatsPage(false)}}
                 />
             );
@@ -489,8 +489,8 @@ function SeasonGame({ match }: any){
                 stats_title={undefined}
                 game_mode={game_mode}
                 get_route={"/team"}
-                get_stats_route={`/records/season/${seasonId}/stats`}
-                get_stats_specific_route={get_stats_specific_route}
+                get_stats_route={`/records/season/${seasonId}/stats?mode=Regular Season`}
+                get_stats_specific_route={`${get_stats_specific_route}?mode=Regular Season`}
                 mvp_block={true}
                 onBack={() => { store.setViewStatsPage(false) }}
                 player_from_url={undefined} // ?

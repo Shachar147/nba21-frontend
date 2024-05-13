@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import SeasonStore from "../../stores/SeasonStore";
 import LoadingPage from "../../../../pages/LoadingPage";
 import Header from "../../../../components/layout/Header";
@@ -8,10 +8,24 @@ import {observer} from "mobx-react";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
 import SeasonApiService from "../../services/SeasonApiService";
 import ConfirmationModal from "../../../../components/modals/ConfirmationModal";
+import {NextGameDataResponse} from "../../utils/interfaces";
 
 function SeasonLobby(){
     const store: SeasonStore = useMemo(() => new SeasonStore(), []);
     const [deleteSeasonId, setDeleteSeasonId] = useState<number|undefined>(undefined);
+    const [seasonsData, setSeasonsData] = useState<Record<number, NextGameDataResponse>>({});
+
+    // @ts-ignore
+    useEffect(() => loadSeasonsData(), [store.seasons])
+
+    async function loadSeasonsData(){
+        const results = await Promise.all(store.seasons.map((season) => SeasonApiService.getNextGameData(season.id)))
+        const _seasonsData: Record<number, NextGameDataResponse> = {};
+        results.forEach((result) => {
+            _seasonsData[result.seasonId] = result;
+        })
+        setSeasonsData(_seasonsData);
+    }
 
     if (store.isLoading) {
         return (
@@ -37,7 +51,7 @@ function SeasonLobby(){
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     {store.seasons.map((season, idx) => (
                         <Card
-                            name={`${season.name}<br/><span style="color: gray;">${season.teamsCount} teams<br/>${season.playedGamesCount} played games</span>`}
+                            name={`${season.name}<br/><span style="color: gray;">${season.teamsCount} teams<br/>${season.playedGamesCount} played games<br/>${ seasonsData?.[season.id]?.isSeasonOver ? "Season Over" : seasonsData?.[season.id]?.mode ?? 'loading...'}</span>`}
                             picture={"/thumbnails/season.png"}
                             style={{ width: "160px" }}
                             href={`/season/${season.id}`}

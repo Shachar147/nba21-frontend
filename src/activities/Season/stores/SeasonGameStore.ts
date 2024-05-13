@@ -342,7 +342,7 @@ export default class SeasonGameStore {
     }
 
     getTeamPlace(teamName: string): number {
-        const teamStats = {...this.seasonStats};
+        const teamStats = {...this.regularSeasonStats};
         Object.keys(teamStats).forEach((teamName) => {
             teamStats[teamName]["teamName"] = teamName;
         });

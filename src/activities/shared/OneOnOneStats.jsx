@@ -614,7 +614,9 @@ class OneOnOneStats extends React.Component {
                                     total_matchups: (records[player.name]['matchups']) ? Object.keys(records[player.name]['matchups']).length : undefined,
                                     total_ot_wins: records[player.name].total_ot_wins,
                                     total_ot_lost: records[player.name].total_ot_lost,
-                                    total_finals_appearances: records[player.name].total_finals_appearances
+                                    total_finals_appearances: records[player.name].total_finals_appearances,
+                                    matchups: game_mode === 'Season' ? records[player.name]['matchups'] : undefined,
+                                    highlight_matchups: game_mode === 'Season' ? records[player.name]['highlight_matchups'] : undefined
                                 }}
 
                                 onImageClick={() => {

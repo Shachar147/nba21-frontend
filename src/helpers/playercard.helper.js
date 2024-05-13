@@ -130,7 +130,11 @@ export function buildDetails(details, stats){
         total_matchups,
         total_ot_wins,
         total_ot_lost,
-        total_finals_appearances
+        total_finals_appearances,
+
+        // season
+        matchups,
+        highlight_matchups
     } = stats;
 
     const total_games_with_overtime = (total_ot_wins ?? 0) + (total_ot_lost ?? 0);
@@ -236,6 +240,7 @@ export function buildDetails(details, stats){
         'Total Tournaments': `${total_tournaments}`,
         'Total Championships': `${total_tournament_wins}`,
         'Total Matchups': `${total_matchups}`,
+        'Matchups': matchups ? ("<br/>" + Object.keys(matchups).sort((a, b) => matchups[b].total - matchups[a].total).map((teamName) => `- ${teamName} - ${matchups[teamName].win}W - ${matchups[teamName].lose}L`).join("<br/>")) : undefined,
         'Total Finals Appearances': total_finals_appearances,
         'Total Finals Appearances Percents': calcPercents(total_finals_appearances, total_tournaments),
         'Total Finals Wins Percents': calcPercents(total_tournament_wins, total_finals_appearances),
@@ -255,7 +260,28 @@ export function buildDetails(details, stats){
     if (highlights) {
         Object.keys(settings).map((name) => {
             if(highlights.indexOf(name) !== -1){
-                settings[name] = `<b><u>${settings[name]}</u></b>`
+                if (name === 'Matchups') {
+                    if (highlight_matchups) {
+                        const rows = settings[name].split('<br/>');
+                        rows.forEach((row, idx) => {
+                            highlight_matchups.forEach((h) => {
+                                if (row.includes(h)) {
+                                    const parts = row.split(' - ');
+                                    parts.forEach((part, idx2) => {
+                                        parts[idx2] = `<u><b>${part.replace('- ', '')}</b></u>`;
+                                    });
+                                    rows[idx] = `- ${parts.join(" - ")}`
+                                }
+                            });
+                        });
+
+                        settings[name] = "<br/>" + rows.sort((a, b) => b.indexOf("<b>") - a.indexOf("<b>")).join('<br/>').replace("<br/><br/>","<br/>");
+                    } else {
+                        settings[name] = `<b><u>${settings[name]}</u></b>`
+                    }
+                } else {
+                    settings[name] = `<b><u>${settings[name]}</u></b>`
+                }
             }
         });
     }
@@ -360,6 +386,7 @@ export function buildDetails(details, stats){
     if (isDefined(total_road_wins) || isDefined(total_road_lost)) stats_arr.push(`Total Road Wins/Lost: ${settings['Total Road Wins']}-${settings['Total Road Lost']}`);
 
     if (isDefined(total_matchups)) stats_arr.push(`Total Matchups: ${settings['Total Matchups']}`);
+    if (isDefined(matchups)) stats_arr.push(`Matchups: ${settings['Matchups']}`);
 
     if (isDefined(total_ot_wins)) stats_arr.push(`Total Overtimes Wins: ${settings['Total Overtimes Wins']}`);
     if (isDefined(total_ot_lost)) stats_arr.push(`Total Overtimes Lost: ${settings['Total Overtimes Lost']}`);
