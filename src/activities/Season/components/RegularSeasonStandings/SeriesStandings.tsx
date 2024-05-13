@@ -23,8 +23,9 @@ function SeriesStandings({ rStats, stats, mode, teamsByName, store, max=8 }: Ser
         rTeamStats[teamName]["teamName"] = teamName;
     });
     const rTeamsByStanding = Object.values(rTeamStats).sort(winsAndMatchupsSort);
-    const rOrder: string[] = rTeamsByStanding.map((s) => s.teamName).slice(0, 8);
 
+    // @ts-ignore
+    const rOrder: string[] = rTeamsByStanding.map((s) => s.teamName).slice(0, 8);
 
     const teamStats = {...rStats};
     Object.keys(teamStats).forEach((teamName) => {
