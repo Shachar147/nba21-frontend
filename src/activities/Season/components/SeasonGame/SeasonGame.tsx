@@ -24,6 +24,7 @@ import {runInAction} from "mobx";
 import RegularSeasonStandings from "../RegularSeasonStandings/RegularSeasonStandings";
 import SeriesStandings from "../RegularSeasonStandings/SeriesStandings";
 import {winsAndMatchupsSort} from "../../../../helpers/sort";
+import SemiFinalsStandings from "../RegularSeasonStandings/SemiFinalsStandings";
 
 function SeasonGame({ match }: any){
 
@@ -350,8 +351,8 @@ function SeasonGame({ match }: any){
                     {store.finalsStats && store.semiStats && store.teamsData && store.teamsData?.mode == 'Finals' && (
                         <><SeriesStandings rStats={store.semiStats} stats={store.finalsStats} teamsByName={store.allTeamsByName} mode={'Finals'} store={store} max={2} /><br/></>
                     )}
-                    {store.semiStats && store.playoffStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && store.teamsData?.mode != 'Playoff' && (
-                        <><SeriesStandings rStats={store.playoffStats} stats={store.semiStats} teamsByName={store.allTeamsByName} mode={'SemiFinals'} store={store} max={4} /><br/></>
+                    {store.semiStats && store.regularSeasonStats && store.playoffStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && store.teamsData?.mode != 'Playoff' && (
+                        <><SemiFinalsStandings stats={store.semiStats} teamsByName={store.allTeamsByName} mode={'SemiFinals'} store={store} max={4} /><br/></>
                     )}
                     {store.playoffStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
                         <><SeriesStandings rStats={store.regularSeasonStats} stats={store.playoffStats} teamsByName={store.allTeamsByName} mode={'Playoff'} store={store} /><br/></>

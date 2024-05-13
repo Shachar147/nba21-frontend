@@ -6,38 +6,43 @@ import StatsTableInner from "../../../../components/StatsTableInner";
 import {nth} from "../../../../helpers/utils";
 import SeasonGameStore from "../../stores/SeasonGameStore";
 
-interface SeriesStandingsProps {
+interface SemiFinalsStandingsProps {
     stats: SeasonStats;
-    rStats: SeasonStats;
     teamsByName: Record<string, Team>;
     mode: SeasonMode;
     store: SeasonGameStore;
     max?: number;
 }
 
-function SeriesStandings({ rStats, stats, mode, teamsByName, store, max=8 }: SeriesStandingsProps){
+function SemiFinalsStandings({ stats, mode, teamsByName, store, max=8 }: SemiFinalsStandingsProps){
 
     // get regular season top8 teams:
-    const rTeamStats = {...store.regularSeasonStats};
-    Object.keys(rTeamStats).forEach((teamName) => {
-        rTeamStats[teamName]["teamName"] = teamName;
-    });
-    const rTeamsByStanding = Object.values(rTeamStats).sort(winsAndMatchupsSort);
-    const rOrder: string[] = rTeamsByStanding.map((s) => s.teamName).slice(0, 8);
-
-
-    const teamStats = {...rStats};
+    const teamStats = {...store.regularSeasonStats};
     Object.keys(teamStats).forEach((teamName) => {
         teamStats[teamName]["teamName"] = teamName;
     });
     const teamsByStanding = Object.values(teamStats).sort(winsAndMatchupsSort);
     const standingStats: Record<string, (number|string)[]> = {};
+    let order: string[] = teamsByStanding.map((s) => s.teamName).slice(0, 8);
+    const rOrder = [...order];
+
+    const p = {...store.playoffStats};
+    const pSeries = [];
+    for (let i = 0; i < 4; i++) {
+        if (p[order[i]].total_wins == 4) {
+            pSeries.push(p[order[i]].teamName);
+        } else {
+            pSeries.push(p[order[8-1-i]].teamName);
+        }
+    }
 
     // @ts-ignore
-    const order: string[] = teamsByStanding.map((s) => s.teamName).slice(0, max);
+
+    order = pSeries;
+
     const series: string[] = [];
     const seriesWithLogos: string[] = [];
-    order.forEach((team, idx) => {
+    pSeries.forEach((team, idx) => {
         if (idx <= max/2 - 1) {
             series.push(`${team} vs ${order[order.length - 1 - idx]}`);
             seriesWithLogos.push(`<div style="position:relative;"><div style="position:absolute; top:12.5px;">vs</div><div class="flex-col gap-4" style="position:relative; left:20px;">${getTeamCell(team)}${getTeamCell(order[order.length - 1 - idx])}</div></div>`)
@@ -74,7 +79,6 @@ function SeriesStandings({ rStats, stats, mode, teamsByName, store, max=8 }: Ser
         const _idx = rOrder.findIndex((s) => s == team1);
         const _idx2 = rOrder.findIndex((s) => s == team2);
         standingStats[`${_idx+1}${nth(_idx+1)} vs ${_idx2 + 1}${nth(_idx2 + 1)}`] = [
-        // standingStats[`${idx+1}${nth(idx+1)} vs ${8-idx}${nth(8-idx)}`] = [
             seriesWithLogos[idx],
             `<span class="font-weight-normal">${w_l.length == 0 ? 'Not started yet' : w_l.join("&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;")}</span>`,
             `${team1}<br/><span class="font-weight-normal">${getMvps(stats[team1]?.records ?? [], team1)}</span>`,
@@ -126,4 +130,4 @@ function SeriesStandings({ rStats, stats, mode, teamsByName, store, max=8 }: Ser
     );
 }
 
-export default observer(SeriesStandings);
+export default observer(SemiFinalsStandings);
