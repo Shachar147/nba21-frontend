@@ -23,6 +23,8 @@ function SemiFinalsStandings({ stats, mode, teamsByName, store, max=8 }: SemiFin
     });
     const teamsByStanding = Object.values(teamStats).sort(winsAndMatchupsSort);
     const standingStats: Record<string, (number|string)[]> = {};
+
+    // @ts-ignore
     let order: string[] = teamsByStanding.map((s) => s.teamName).slice(0, 8);
     const rOrder = [...order];
 
@@ -81,8 +83,8 @@ function SemiFinalsStandings({ stats, mode, teamsByName, store, max=8 }: SemiFin
         standingStats[`${_idx+1}${nth(_idx+1)} vs ${_idx2 + 1}${nth(_idx2 + 1)}`] = [
             seriesWithLogos[idx],
             `<span class="font-weight-normal">${w_l.length == 0 ? 'Not started yet' : w_l.join("&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;")}</span>`,
-            `${team1}<br/><span class="font-weight-normal">${getMvps(stats[team1]?.records ?? [], team1)}</span>`,
-            `${team2}<br/><span class="font-weight-normal">${getMvps(stats[team2]?.records ?? [], team2)}</span>`
+            `${team1}<br/><span class="font-weight-normal">${w_l.length == 0 ? "-" : getMvps(stats[team1]?.records ?? [], team1)}</span>`,
+            `${team2}<br/><span class="font-weight-normal">${w_l.length == 0 ? "-" : getMvps(stats[team2]?.records ?? [], team2)}</span>`
         ];
     });
 

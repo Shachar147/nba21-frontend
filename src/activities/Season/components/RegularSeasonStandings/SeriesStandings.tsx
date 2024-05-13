@@ -77,8 +77,8 @@ function SeriesStandings({ rStats, stats, mode, teamsByName, store, max=8 }: Ser
         // standingStats[`${idx+1}${nth(idx+1)} vs ${8-idx}${nth(8-idx)}`] = [
             seriesWithLogos[idx],
             `<span class="font-weight-normal">${w_l.length == 0 ? 'Not started yet' : w_l.join("&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;")}</span>`,
-            `${team1}<br/><span class="font-weight-normal">${getMvps(stats[team1]?.records ?? [], team1)}</span>`,
-            `${team2}<br/><span class="font-weight-normal">${getMvps(stats[team2]?.records ?? [], team2)}</span>`
+            `${team1}<br/><span class="font-weight-normal">${w_l.length == 0 ? "-" : getMvps(stats[team1]?.records ?? [], team1)}</span>`,
+            `${team2}<br/><span class="font-weight-normal">${w_l.length == 0 ? "-" : getMvps(stats[team2]?.records ?? [], team2)}</span>`
         ];
     });
 

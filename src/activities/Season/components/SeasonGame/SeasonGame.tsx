@@ -340,7 +340,7 @@ function SeasonGame({ match }: any){
         }
 
         return (
-            <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-column gap-8">
+            <div className="ui link cards centered stats-container main-stats font-size-14 margin-top-20 position-relative flex-column gap-8">
                 <div className="flex-column">
                     {!!store.teamsData && <span style={{ fontWeight: "normal" }}><b>Mode:</b> {store.teamsData.mode}</span>}
                     {renderTotals()}
