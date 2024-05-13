@@ -385,22 +385,23 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
 
     arr.forEach((record) => {
 
-        let shouldContinue = true;
-        if (game_mode?.length) {
-            if (record.mode !== game_mode){
-                shouldContinue = false;
-            }
+        if (record.team1_name) {
+            record.player1_name = record.team1_name;
+        }
+        if (record.team2_name) {
+            record.player2_name = record.team2_name;
         }
 
-        if (shouldContinue) {
-            if (record.team1_name) {
-                record.player1_name = record.team1_name;
-            }
-            if (record.team2_name) {
-                record.player2_name = record.team2_name;
-            }
+        if ((record.player1_name === player1.name && record.player2_name === player2.name) || (record.player1_name === player2.name && record.player2_name === player1.name)) {
 
-            if ((record.player1_name === player1.name && record.player2_name === player2.name) || (record.player1_name === player2.name && record.player2_name === player1.name)) {
+            let shouldContinue = true;
+            if (game_mode?.length) {
+                if (record.mode !== game_mode) {
+                    console.log(record.mode, game_mode, "skipping");
+                    shouldContinue = false;
+                }
+            }
+            if (shouldContinue) {
 
                 // met each other
                 met_each_other += 1;

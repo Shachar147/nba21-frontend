@@ -25,6 +25,9 @@ export default class SeasonGameStore {
     @observable teamsData: NextGameDataResponse | undefined  = undefined;
 
     @observable seasonStats: SeasonStats | undefined = undefined;
+    @observable playoffStats: SeasonStats | undefined = undefined;
+    @observable semiStats: SeasonStats | undefined = undefined;
+    @observable finalsStats: SeasonStats | undefined = undefined;
     @observable regularSeasonStats: SeasonStats | undefined = undefined;
     @observable statsInfo: Record<any, any> | undefined = undefined; // todo complete: typing
 
@@ -32,6 +35,7 @@ export default class SeasonGameStore {
     @observable totalOvertimes: number = 0;
     @observable mvpPlayer: string | undefined = undefined;
     @observable isComeback: boolean = false;
+    @observable reRenderCounter: number = 0;
 
     constructor(seasonId: number) {
         makeObservable(this);
@@ -67,6 +71,7 @@ export default class SeasonGameStore {
         this.resetSettings();
         await Promise.all([this.loadNextTeams(), this.initStats()]);
         runInAction(() => {
+            this.reRenderCounter++;
             this.setLoading(false);
         });
     }
@@ -136,10 +141,29 @@ export default class SeasonGameStore {
         })
 
         if (this.teamsData && this.teamsData?.mode != 'Regular Season') {
-            const stats = await SeasonApiService.getSeasonStats(this.seasonId, this.teamsData.mode)
+
+            const pStats = await SeasonApiService.getSeasonStats(this.seasonId, 'Playoff')
             runInAction(() => {
-                this.seasonStats = stats;
+                this.playoffStats = pStats;
+                this.seasonStats = pStats;
             })
+
+            if (this.teamsData && this.teamsData?.mode != 'Playoff') {
+
+                const sStats = await SeasonApiService.getSeasonStats(this.seasonId, 'SemiFinals')
+                runInAction(() => {
+                    this.semiStats = sStats;
+                    this.seasonStats = sStats;
+                })
+
+                if (this.teamsData && this.teamsData?.mode != 'SemiFinals') {
+                    const stats = await SeasonApiService.getSeasonStats(this.seasonId, 'Finals')
+                    runInAction(() => {
+                        this.finalsStats = stats;
+                        this.seasonStats = stats;
+                    })
+                }
+            }
         }
 
         const player_stats_values = {
@@ -171,6 +195,8 @@ export default class SeasonGameStore {
                 percents,
                 this.teamsData?.mode
             );
+
+        console.log("stats info", this.team1?.name, this.team2?.name, this.teamsData?.mode, statsInfo);
 
         runInAction(() => {
             this.statsInfo = { ... statsInfo };

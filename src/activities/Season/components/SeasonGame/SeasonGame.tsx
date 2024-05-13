@@ -48,6 +48,8 @@ function SeasonGame({ match }: any){
         }
     }, [store.isSaved, store.isSaving, store.isUpdated, updateClickCount])
 
+    const statsBlock = useMemo(renderStats, [store.reRenderCounter, store.isLoading, store.teamsData, store.statsInfo, store.showStats]);
+
     function calcOT(){
         // @ts-ignore
         const { auto_calc_ot_game_length } = store.settings;
@@ -244,7 +246,10 @@ function SeasonGame({ match }: any){
                     />
                     <ButtonInput
                         text={"Next"}
-                        onClick={() => store.nextGame()}
+                        onClick={() => {
+                            window.location.reload();
+                            /* store.nextGame() */
+                        }}
                     />
                 </div>
             )
@@ -292,18 +297,6 @@ function SeasonGame({ match }: any){
     }
 
     function renderStats(){
-        function renderTotals(){
-            if (!store.teamsData?.totals?.totalGames) {
-                return null;
-            }
-
-            const played = store.teamsData.totals.totalPlayedGames;
-            const total = store.teamsData.totals.totalGames;
-
-            return (
-                <span style={{ fontWeight: "normal" }}><b>Total Played Games:</b> {played}/{total} - {calcPercents(played, total, 0)}% | <b>Remaining Games:</b> {store.teamsData.totals.remainingGames}</span>
-            )
-        }
 
         // one on one stats
         let general_stats_block, matchups_description;
@@ -318,6 +311,19 @@ function SeasonGame({ match }: any){
             }
         }
 
+        function renderTotals(){
+            if (!store.teamsData?.totals?.totalGames) {
+                return null;
+            }
+
+            const played = store.teamsData.totals.totalPlayedGames;
+            const total = store.teamsData.totals.totalGames;
+
+            return (
+                <span style={{ fontWeight: "normal" }}><b>Total Played Games:</b> {played}/{total} - {calcPercents(played, total, 0)}% | <b>Remaining Games:</b> {store.teamsData.totals.remainingGames}</span>
+            )
+        }
+
         return (
             <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-column gap-8">
                 <div className="flex-column">
@@ -327,26 +333,42 @@ function SeasonGame({ match }: any){
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'flex-column gap-8' : 'display-none', 'font-weight-normal')}>
                     {general_stats_block}
-                    {store.seasonStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
-                        <><SeriesStandings rStats={store.regularSeasonStats} stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData.mode} store={store} /><br/></>
+                    {store.finalsStats && store.semiStats && store.teamsData && store.teamsData?.mode == 'Finals' && (
+                        <><SeriesStandings rStats={store.semiStats} stats={store.finalsStats} teamsByName={store.allTeamsByName} mode={'Finals'} store={store} max={2} /><br/></>
+                    )}
+                    {store.semiStats && store.playoffStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && store.teamsData?.mode != 'Playoff' && (
+                        <><SeriesStandings rStats={store.playoffStats} stats={store.semiStats} teamsByName={store.allTeamsByName} mode={'SemiFinals'} store={store} max={4} /><br/></>
+                    )}
+                    {store.playoffStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
+                        <><SeriesStandings rStats={store.regularSeasonStats} stats={store.playoffStats} teamsByName={store.allTeamsByName} mode={'Playoff'} store={store} /><br/></>
                     )}
                     {store.regularSeasonStats && (
                         <><RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} /><br/></>
                     )}
-                    <StatsTable
-                        title={"Previous Matchups Stats"}
-                        marginTop="10px"
-                        description={matchups_description}
-                        hidden={(store.statsInfo?.met_each_other === 0)}
-                        cols={["",store.team1Name, store.team2Name]}
-                        stats={store.statsInfo?.matchups_values}
-                    />
-                    <StatsTable
-                        title={`${toPascalCase(what)} Individual Stats`}
-                        marginTop="10px"
-                        cols={["",store.team1Name, store.team2Name]}
-                        stats={store.statsInfo?.player_stats_values}
-                    />
+                    {/*<StatsTable*/}
+                    {/*    title={"Previous Matchups Stats"}*/}
+                    {/*    marginTop="10px"*/}
+                    {/*    description={matchups_description}*/}
+                    {/*    hidden={(store.statsInfo?.met_each_other === 0)}*/}
+                    {/*    cols={["",store.team1Name, store.team2Name]}*/}
+                    {/*    stats={store.statsInfo?.matchups_values}*/}
+                    {/*/>*/}
+                    <div key={`stats-tables-${store.reRenderCounter}`}>
+                        <StatsTable
+                            title={`${toPascalCase(what)} Individual Stats`}
+                            marginTop="10px"
+                            cols={["",store.team1Name, store.team2Name]}
+                            stats={store.statsInfo?.player_stats_values}
+                        />
+                        <StatsTable
+                            title={"Previous Matchups Stats"}
+                            marginTop="10px"
+                            description={matchups_description}
+                            hidden={(store.statsInfo?.met_each_other === 0)}
+                            cols={["",store.team1Name, store.team2Name]}
+                            stats={store.statsInfo?.matchups_values}
+                        />
+                    </div>
                 </div>
             </div>
         )
@@ -458,8 +480,8 @@ function SeasonGame({ match }: any){
                     {renderSmallLogo()}
                     {renderHeaderButtons()}
                     {renderSeasonAlreadyOverIfNeeded()}
-                    <div className="display-flex-important flex-column align-items-center">
-                        {renderStats()}
+                    <div className="display-flex-important flex-column align-items-center min-width-90vw">
+                        {statsBlock}
                         {renderSeasonGame()}
                     </div>
                 </div>
