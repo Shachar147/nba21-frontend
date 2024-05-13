@@ -47,6 +47,7 @@ function SemiFinalsStandings({ stats, mode, teamsByName, store, max=8 }: SemiFin
     pSeries.forEach((team, idx) => {
         if (idx <= max/2 - 1) {
             series.push(`${team} vs ${order[order.length - 1 - idx]}`);
+            // @ts-ignore
             seriesWithLogos.push(`<div style="position:relative;"><div style="position:absolute; top:12.5px;">vs</div><div class="flex-col gap-4" style="position:relative; left:20px;">${getTeamCell(team)}${getTeamCell(order[order.length - 1 - idx])}</div></div>`)
         }
     })
