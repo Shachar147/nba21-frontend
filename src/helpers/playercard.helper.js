@@ -23,12 +23,12 @@ function highlightMatchups(matchups_string, highlight_matchups) {
             });
         });
 
-        matchups_string = "<br/>" + rows.sort((a, b) => b.indexOf("<b>") - a.indexOf("<b>")).join('<br/>').replace("<br/><br/>","<br/>");
+        matchups_string = "<br/>" + rows.sort((a, b) => b.indexOf("<b>") - a.indexOf("<b>")).join('<br/>');
     } else {
         matchups_string = `<b><u>${matchups_string}</u></b>`
     }
 
-    return matchups_string;
+    return matchups_string.replace("<br/><br/>","<br/>");
 }
 
 export function buildDetails(details, stats){

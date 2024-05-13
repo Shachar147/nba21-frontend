@@ -379,7 +379,7 @@ class OneOnOneStats extends React.Component {
     render() {
         const players = this.applyFilters();
 
-        const { what, game_mode, stats_title, custom_description, get_stats_specific_route, get_specific_route, player_from_url } = this.props;
+        const { what, game_mode, stats_title, custom_description, get_stats_specific_route, get_specific_route, player_from_url, max_teams } = this.props;
 
         let { error_retry, error, loaded1, loaded2, merged, loaderDetails, selected_player } = this.state;
 
@@ -536,7 +536,7 @@ class OneOnOneStats extends React.Component {
                                 team_division={(player.conference && player.division) ? player.division + " (" + player.conference + ")" : undefined}
                                 debut_year={player.debut_year}
 
-                                lost={game_mode !== 'Regular Season' && (idx+1 > 8)}
+                                lost={game_mode === 'Season' && max_teams && (idx+1 > max_teams)}
 
                                 stats={{
                                     avg_opponent_2k_rating: records[player.name].avg_2k_rating,
