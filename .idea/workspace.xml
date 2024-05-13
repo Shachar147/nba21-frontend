@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SeriesStandings.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/stores/SeasonGameStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/stores/SeasonGameStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/ThreePointsContest/__tests__/ThreePointsContest.e2e.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneHelper.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/auth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/StatsTableInner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StatsTableInner.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

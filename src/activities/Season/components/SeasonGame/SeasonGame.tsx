@@ -22,6 +22,7 @@ import Notification from '../../../../components/internal/Notification';
 import OneOnOneSingleStats from "../../../shared/OneOnOneSingleStats";
 import {runInAction} from "mobx";
 import RegularSeasonStandings from "../RegularSeasonStandings/RegularSeasonStandings";
+import SeriesStandings from "../RegularSeasonStandings/SeriesStandings";
 
 function SeasonGame({ match }: any){
 
@@ -326,11 +327,11 @@ function SeasonGame({ match }: any){
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'flex-column gap-8' : 'display-none', 'font-weight-normal')}>
                     {general_stats_block}
-                    {store.seasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
-                        <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData.mode} store={store} />
+                    {store.seasonStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
+                        <><SeriesStandings rStats={store.regularSeasonStats} stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData.mode} store={store} /><br/></>
                     )}
                     {store.regularSeasonStats && (
-                        <RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} />
+                        <><RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} /><br/></>
                     )}
                     <StatsTable
                         title={"Previous Matchups Stats"}
