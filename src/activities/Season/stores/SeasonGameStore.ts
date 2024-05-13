@@ -168,8 +168,10 @@ export default class SeasonGameStore {
                 player_stats_values,
                 matchups_values,
                 what,
-                percents
+                percents,
+                this.teamsData?.mode
             );
+
         runInAction(() => {
             this.statsInfo = { ... statsInfo };
         })

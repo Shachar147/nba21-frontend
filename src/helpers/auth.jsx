@@ -35,14 +35,12 @@ export function isLoggedOn(){
     //             // if (error.message.indexOf("401") !== -1) {
     //             //     isLoggedOn = false;
     //             // }
-    //             debugger;
     //             isLoggedOn = false;
     //         },
     //         function() {
     //         }
     //     );
     //
-    //     debugger;
     //     return isLoggedOn;
     // }
     //

@@ -536,6 +536,8 @@ class OneOnOneStats extends React.Component {
                                 team_division={(player.conference && player.division) ? player.division + " (" + player.conference + ")" : undefined}
                                 debut_year={player.debut_year}
 
+                                lost={game_mode !== 'Regular Season' && (idx+1 > 8)}
+
                                 stats={{
                                     avg_opponent_2k_rating: records[player.name].avg_2k_rating,
                                     total_wins: records[player.name].total_wins,

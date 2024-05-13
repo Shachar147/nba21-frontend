@@ -311,9 +311,9 @@ function SeasonGame({ match }: any){
 
             const { met_each_other } = store.statsInfo;
             const plural = (met_each_other > 1) ? "s" : "";
-            matchups_description = `These ${what} met each other ${met_each_other} time${plural}.`;
+            matchups_description = `These ${what} met each other ${met_each_other} time${plural} in the ${store.teamsData?.mode}.`;
             if (met_each_other === 0) {
-                matchups_description = `This is the first time these ${what} meet each other.`;
+                matchups_description = `This is the first time these ${what} meet each other in the ${store.teamsData?.mode}.`;
             }
         }
 
