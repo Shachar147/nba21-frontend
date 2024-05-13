@@ -48,7 +48,7 @@ export function overallSort(a,b){
     return 0;
 }
 
-export function overallSortTotalWins(a,b){
+export function winsAndMatchupsSort(a, b){
 
     // first sort
     const total1 = parseFloat(b['total_wins']?.toString().replace('%', ''));

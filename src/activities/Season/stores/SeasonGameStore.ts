@@ -4,7 +4,7 @@ import SeasonApiService, {SaveGamePayload} from "../services/SeasonApiService";
 import {apiGet} from "../../../helpers/apiV2";
 import {buildStatsInformation} from "../../shared/OneOnOneHelper";
 import {percents, what} from "../utils/consts";
-import {overallSortTotalWins} from "../../../helpers/sort";
+import {winsAndMatchupsSort} from "../../../helpers/sort";
 
 export default class SeasonGameStore {
 
@@ -346,7 +346,7 @@ export default class SeasonGameStore {
         Object.keys(teamStats).forEach((teamName) => {
             teamStats[teamName]["teamName"] = teamName;
         });
-        const teamsByStanding = Object.values(teamStats).sort(overallSortTotalWins);
+        const teamsByStanding = Object.values(teamStats).sort(winsAndMatchupsSort);
         return teamsByStanding.findIndex((t) => t.teamName == teamName) + 1;
     }
 }

@@ -32,7 +32,7 @@ import OneOnOneSingleStats from "./OneOnOneSingleStats";
 import { withRouter } from "react-router";
 import {
     OVERALL_WINS_HIGHLIGHTS,
-    overallSortTotalWins,
+    winsAndMatchupsSort,
     totalFinalsAppearancesPercentsSort, totalFinalsWinsPercentsSort,
     totalGamesWithOTSort,
     totalOTLostSort,
@@ -91,7 +91,7 @@ class OneOnOneStats extends React.Component {
         };
 
         if (this.props.game_mode === "Season") {
-            this.state.orderByOptions.push({ 'Overall Wins': overallSortTotalWins })
+            this.state.orderByOptions.push({ 'Wins & Matchups': winsAndMatchupsSort })
         }
 
         if (this.props.game_mode === "Three Points Contest") {
@@ -554,7 +554,7 @@ class OneOnOneStats extends React.Component {
                                     lose_streak: records[player.name].lose_streak,
                                     max_win_streak: records[player.name].max_win_streak,
                                     max_lose_streak: records[player.name].max_lose_streak,
-                                    highlights: (this.state.orderBy === 'Overall Wins') ? OVERALL_WINS_HIGHLIGHTS : (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
+                                    highlights: (this.state.orderBy === 'Wins & Matchups') ? OVERALL_WINS_HIGHLIGHTS : (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
 
                                     // 3pt
                                     average_place: records[player.name].average_place,
