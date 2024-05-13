@@ -101,7 +101,7 @@ export default class Settings extends React.Component {
                     return parseFloat(b['3pt_percents']?.replace('%','')) - parseFloat(a['3pt_percents']?.replace('%',''));
                 } },
                 { "Total Games": totalGamesSort },
-                { "Total Wins Percents": totalWinsPercentsSort },
+                { "Total Win Percents": totalWinsPercentsSort },
                 { "Current Win Streak": currentWinStreakSort },
                 { "Current Lose Streak": currentLoseStreakSort },
                 { "Max Win Streak": maxWinStreakSort },

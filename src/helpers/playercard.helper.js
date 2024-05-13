@@ -8,6 +8,29 @@ import {
     ON_FIRE_THRESHOLD
 } from "./consts";
 
+function highlightMatchups(matchups_string, highlight_matchups) {
+    if (highlight_matchups) {
+        const rows = matchups_string.split('<br/>');
+        rows.forEach((row, idx) => {
+            highlight_matchups.forEach((h) => {
+                if (row.includes(h)) {
+                    const parts = row.split(' - ');
+                    parts.forEach((part, idx2) => {
+                        parts[idx2] = `<u><b>${part.replace('- ', '')}</b></u>`;
+                    });
+                    rows[idx] = `- ${parts.join(" - ")}`
+                }
+            });
+        });
+
+        matchups_string = "<br/>" + rows.sort((a, b) => b.indexOf("<b>") - a.indexOf("<b>")).join('<br/>').replace("<br/><br/>","<br/>");
+    } else {
+        matchups_string = `<b><u>${matchups_string}</u></b>`
+    }
+
+    return matchups_string;
+}
+
 export function buildDetails(details, stats){
 
     const {
@@ -145,7 +168,7 @@ export function buildDetails(details, stats){
     let settings = {
         '2K Rating': _2k_rating,
 
-        'Total Wins Percents': total_win_percents,
+        'Total Win Percents': total_win_percents,
         'Total Wins': `${total_wins}W`,
         'Total Lost': `${total_lost}L`,
         'Total Games': total_games,
@@ -240,7 +263,7 @@ export function buildDetails(details, stats){
         'Total Tournaments': `${total_tournaments}`,
         'Total Championships': `${total_tournament_wins}`,
         'Total Matchups': `${total_matchups}`,
-        'Matchups': matchups ? ("<br/>" + Object.keys(matchups).sort((a, b) => matchups[b].total - matchups[a].total).map((teamName) => `- ${teamName} - ${matchups[teamName].win}W - ${matchups[teamName].lose}L`).join("<br/>")) : undefined,
+        'Standing Against': matchups ? ("<br/>" + Object.keys(matchups).sort((a, b) => matchups[b].total - matchups[a].total).map((teamName) => `- ${teamName} - ${matchups[teamName].win}W - ${matchups[teamName].lose}L`).join("<br/>")) : undefined,
         'Total Finals Appearances': total_finals_appearances,
         'Total Finals Appearances Percents': calcPercents(total_finals_appearances, total_tournaments),
         'Total Finals Wins Percents': calcPercents(total_tournament_wins, total_finals_appearances),
@@ -260,25 +283,8 @@ export function buildDetails(details, stats){
     if (highlights) {
         Object.keys(settings).map((name) => {
             if(highlights.indexOf(name) !== -1){
-                if (name === 'Matchups') {
-                    if (highlight_matchups) {
-                        const rows = settings[name].split('<br/>');
-                        rows.forEach((row, idx) => {
-                            highlight_matchups.forEach((h) => {
-                                if (row.includes(h)) {
-                                    const parts = row.split(' - ');
-                                    parts.forEach((part, idx2) => {
-                                        parts[idx2] = `<u><b>${part.replace('- ', '')}</b></u>`;
-                                    });
-                                    rows[idx] = `- ${parts.join(" - ")}`
-                                }
-                            });
-                        });
-
-                        settings[name] = "<br/>" + rows.sort((a, b) => b.indexOf("<b>") - a.indexOf("<b>")).join('<br/>').replace("<br/><br/>","<br/>");
-                    } else {
-                        settings[name] = `<b><u>${settings[name]}</u></b>`
-                    }
+                if (name === 'Standing Against') {
+                    settings[name] = highlightMatchups(settings[name], highlight_matchups);
                 } else {
                     settings[name] = `<b><u>${settings[name]}</u></b>`
                 }
@@ -302,7 +308,7 @@ export function buildDetails(details, stats){
     // stats
     let stats_arr = [];
     if (isDefined(total_tournament_wins)) stats_arr.push(`Total Championships: ${settings['Total Championships']}`);
-    if (total_win_percents) stats_arr.push(`Total Wins Percents: ${settings['Total Wins Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
+    if (total_win_percents) stats_arr.push(`Total Win Percents: ${settings['Total Win Percents']} (${settings['Total Wins']} - ${settings['Total Lost']})`);
     if (isDefined(total_tournaments)) stats_arr.push(`Total Tournaments: ${settings['Total Tournaments']}`);
     if (total_games) stats_arr.push(`Total Games: ${settings['Total Games']}`);
     if (isDefined(win_streak)) { stats_arr.push(`Win Streak: ${settings['Current Win Streak']} ${settings['Max Win Streak']}` + onfire); }
@@ -386,7 +392,7 @@ export function buildDetails(details, stats){
     if (isDefined(total_road_wins) || isDefined(total_road_lost)) stats_arr.push(`Total Road Wins/Lost: ${settings['Total Road Wins']}-${settings['Total Road Lost']}`);
 
     if (isDefined(total_matchups)) stats_arr.push(`Total Matchups: ${settings['Total Matchups']}`);
-    if (isDefined(matchups)) stats_arr.push(`Matchups: ${settings['Matchups']}`);
+    if (isDefined(matchups)) stats_arr.push(`Standing Against: ${settings['Standing Against']}`);
 
     if (isDefined(total_ot_wins)) stats_arr.push(`Total Overtimes Wins: ${settings['Total Overtimes Wins']}`);
     if (isDefined(total_ot_lost)) stats_arr.push(`Total Overtimes Lost: ${settings['Total Overtimes Lost']}`);

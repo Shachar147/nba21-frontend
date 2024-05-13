@@ -157,8 +157,8 @@ export function overallTournamentSort(a,b){
 }
 
 
-export const OVERALL_HIGHLIGHTS = ['Total Championships', 'Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts', 'Total Shots Average', 'Average Place'];
-export const OVERALL_WINS_HIGHLIGHTS = ['Total Wins', 'Matchups', /* 'Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts' */];
+export const OVERALL_HIGHLIGHTS = ['Total Championships', 'Total Win Percents', 'Total Diff Per Game', 'Total Knockouts', 'Total Shots Average', 'Average Place'];
+export const OVERALL_WINS_HIGHLIGHTS = ['Total Wins', 'Standing Against', /* 'Total Win Percents', 'Total Diff Per Game', 'Total Knockouts' */];
 
 export function textSort(key, a, b){
     const value1 = b[key];

@@ -63,7 +63,7 @@ class OneOnOneStats extends React.Component {
             "orderByOptions":[
                 { "Overall": overallSort },
                 { "Total Games": totalGamesSort },
-                { "Total Wins Percents": totalWinsPercentsSort },
+                { "Total Win Percents": totalWinsPercentsSort },
                 { "Current Win Streak": currentWinStreakSort },
                 { "Current Lose Streak": currentLoseStreakSort },
                 { "Max Win Streak": maxWinStreakSort },
