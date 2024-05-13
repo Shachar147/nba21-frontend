@@ -16,8 +16,6 @@ interface SeriesStandingsProps {
 
 function SeriesStandings({ rStats, stats, mode, teamsByName, store }: SeriesStandingsProps){
 
-    const seasonMode = store.teamsData?.mode;
-
     const teamStats = {...rStats};
     Object.keys(teamStats).forEach((teamName) => {
         teamStats[teamName]["teamName"] = teamName;
@@ -32,7 +30,6 @@ function SeriesStandings({ rStats, stats, mode, teamsByName, store }: SeriesStan
             series.push(`${team} vs ${order[order.length - 1 - idx]}`);
         }
     })
-    console.log(JSON.parse(JSON.stringify(stats)));
 
     series.forEach((seriesName, idx) => {
         const teams = seriesName.split(' vs ');
