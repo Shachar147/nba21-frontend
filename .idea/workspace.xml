@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby/SeasonLobby.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby/SeasonLobby.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/config.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/stores/SeasonGameStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/stores/SeasonGameStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +42,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="GitIgnore" />
     <property name="js.linters.configure.manually.selectedeslint" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -214,6 +215,7 @@
       <workItem from="1714683610663" duration="4494000" />
       <workItem from="1714728512153" duration="34865000" />
       <workItem from="1714929529282" duration="7228000" />
+      <workItem from="1715579859474" duration="7601000" />
     </task>
     <servers />
   </component>
@@ -254,6 +256,12 @@
           <url>file://$PROJECT_DIR$/src/activities/Season/stores/SeasonStore.ts</url>
           <line>21</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/helpers/sort.js</url>
+          <line>63</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

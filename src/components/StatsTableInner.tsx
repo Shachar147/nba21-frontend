@@ -6,9 +6,10 @@ interface StatsTableInnerProps {
     switchMaxNumber?: number;
     showMoreOpened?: boolean;
     showMoreSwitch?: boolean;
+    isBold?: boolean;
 }
 
-export default function StatsTableInner({ cols, stats, switchMaxNumber = 10, showMoreOpened = false, showMoreSwitch = true }: StatsTableInnerProps) {
+export default function StatsTableInner({ cols, stats, switchMaxNumber = 10, showMoreOpened = false, showMoreSwitch = true, isBold=true }: StatsTableInnerProps) {
     return (
         <table className="ui celled table">
             <thead>
@@ -30,9 +31,9 @@ export default function StatsTableInner({ cols, stats, switchMaxNumber = 10, sho
 
                         return (
                             <tr key={`stat-${idx}`}>
-                                <td style={{fontWeight: "bold"}} dangerouslySetInnerHTML={{__html: stat}} />
+                                <td style={{fontWeight: isBold ? "bold" : "normal"}} dangerouslySetInnerHTML={{__html: stat}} />
                                 {values.map((value = 'N/A') => (
-                                    <td style={{fontWeight: "bold"}} dangerouslySetInnerHTML={{__html: value.toString() }} />
+                                    <td style={{fontWeight: isBold ? "bold" : "normal"}} dangerouslySetInnerHTML={{__html: value.toString() }} />
                                 ))}
                             </tr>
                         )

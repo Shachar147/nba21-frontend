@@ -363,7 +363,7 @@ export function BuildMVPStatsTable(general_stats, wrap, game_mode) {
     return general_stats_block;
 }
 
-export function buildStatsInformation(player1, player2, stats, player_stats_values, matchups_values, what, percents){
+export function buildStatsInformation(player1, player2, stats, player_stats_values, matchups_values, what, percents, game_mode = ''){
 
     const noStats = { records: [], win_streak: 0, lose_streak: 0, max_lose_streak: 0, max_win_streak: 0, total_knockouts: 0, total_diff: 0, total_diff_per_game: 0, total_games:0, total_wins: 0, total_lost: 0, total_win_percents: "" };
 
@@ -394,34 +394,44 @@ export function buildStatsInformation(player1, player2, stats, player_stats_valu
 
         if ((record.player1_name === player1.name && record.player2_name === player2.name) || (record.player1_name === player2.name && record.player2_name === player1.name)) {
 
-            // met each other
-            met_each_other += 1;
+            let shouldContinue = true;
+            if (game_mode?.length) {
+                if (record.mode !== game_mode) {
+                    // console.log(record.mode, game_mode, "skipping");
+                    shouldContinue = false;
+                }
+            }
+            if (shouldContinue) {
 
-            if (record.player1_name === player1.name){
+                // met each other
+                met_each_other += 1;
 
-                // total scored (for diff)
-                mutual_scored1 += record.score1;
-                mutual_scored2 += record.score2;
+                if (record.player1_name === player1.name) {
 
-                // counting player1 wins in these mutual games
-                if (record.score1 > record.score2) mutual_games_wins1+=1;
+                    // total scored (for diff)
+                    mutual_scored1 += record.score1;
+                    mutual_scored2 += record.score2;
 
-                // knockouts
-                if (record.score1 === 0 && record.score2 > 0) mutual_knockouts2 += 1;
-                else if (record.score2 === 0 && record.score1 > 0) mutual_knockouts1 += 1;
+                    // counting player1 wins in these mutual games
+                    if (record.score1 > record.score2) mutual_games_wins1 += 1;
 
-            } else if (record.player2_name === player1.name) {
+                    // knockouts
+                    if (record.score1 === 0 && record.score2 > 0) mutual_knockouts2 += 1;
+                    else if (record.score2 === 0 && record.score1 > 0) mutual_knockouts1 += 1;
 
-                // total scored (for diff)
-                mutual_scored1 += record.score2;
-                mutual_scored2 += record.score1;
+                } else if (record.player2_name === player1.name) {
 
-                // counting player1 wins in these mutual games
-                if (record.score2 > record.score1) mutual_games_wins1+=1;
+                    // total scored (for diff)
+                    mutual_scored1 += record.score2;
+                    mutual_scored2 += record.score1;
 
-                // knockouts
-                if (record.score1 === 0 && record.score2 > 0) mutual_knockouts1 += 1;
-                else if (record.score2 === 0 && record.score1 > 0) mutual_knockouts2 += 1;
+                    // counting player1 wins in these mutual games
+                    if (record.score2 > record.score1) mutual_games_wins1 += 1;
+
+                    // knockouts
+                    if (record.score1 === 0 && record.score2 > 0) mutual_knockouts1 += 1;
+                    else if (record.score2 === 0 && record.score1 > 0) mutual_knockouts2 += 1;
+                }
             }
         }
     });

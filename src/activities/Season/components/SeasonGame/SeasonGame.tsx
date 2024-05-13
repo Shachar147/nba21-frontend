@@ -22,6 +22,8 @@ import Notification from '../../../../components/internal/Notification';
 import OneOnOneSingleStats from "../../../shared/OneOnOneSingleStats";
 import {runInAction} from "mobx";
 import RegularSeasonStandings from "../RegularSeasonStandings/RegularSeasonStandings";
+import SeriesStandings from "../RegularSeasonStandings/SeriesStandings";
+import {winsAndMatchupsSort} from "../../../../helpers/sort";
 
 function SeasonGame({ match }: any){
 
@@ -46,6 +48,21 @@ function SeasonGame({ match }: any){
             }, 2000);
         }
     }, [store.isSaved, store.isSaving, store.isUpdated, updateClickCount])
+
+    const statsBlock = useMemo(renderStats, [store.reRenderCounter, store.isLoading, store.teamsData, store.statsInfo, store.showStats]);
+
+    function renderSeasonWinnerTeam(){
+        if (!store.teamsData?.isSeasonOver || !store.finalsStats) {
+            return null;
+        }
+
+        const teamStats = {...store.finalsStats};
+        Object.keys(teamStats).forEach((teamName) => {
+            teamStats[teamName]["teamName"] = teamName;
+        });
+        const teamsByStanding = Object.values(teamStats).sort(winsAndMatchupsSort);
+        return `🏆 ${teamsByStanding[0].teamName} is the winner! 🏆`;
+    }
 
     function calcOT(){
         // @ts-ignore
@@ -109,7 +126,7 @@ function SeasonGame({ match }: any){
         if (!team1 || !team2 || store.teamsData.isSeasonOver){
             return (
                 <div className="margin-top-20">
-                    <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!</style.Error>
+                    <style.Error className={"field"} data-testid={errorTestId}>It seems like this season is already over!<br/><br/>{renderSeasonWinnerTeam()}</style.Error>
                 </div>
             );
         }
@@ -243,7 +260,10 @@ function SeasonGame({ match }: any){
                     />
                     <ButtonInput
                         text={"Next"}
-                        onClick={() => store.nextGame()}
+                        onClick={() => {
+                            window.location.reload();
+                            /* store.nextGame() */
+                        }}
                     />
                 </div>
             )
@@ -291,6 +311,20 @@ function SeasonGame({ match }: any){
     }
 
     function renderStats(){
+
+        // one on one stats
+        let general_stats_block, matchups_description;
+        if (store.statsInfo){
+            general_stats_block = BuildStatsTable(store.statsInfo.general_stats,0, game_mode, percents);
+
+            const { met_each_other } = store.statsInfo;
+            const plural = (met_each_other > 1) ? "s" : "";
+            matchups_description = `These ${what} met each other ${met_each_other} time${plural} in the ${store.teamsData?.mode}.`;
+            if (met_each_other === 0) {
+                matchups_description = `This is the first time these ${what} meet each other in the ${store.teamsData?.mode}.`;
+            }
+        }
+
         function renderTotals(){
             if (!store.teamsData?.totals?.totalGames) {
                 return null;
@@ -304,19 +338,6 @@ function SeasonGame({ match }: any){
             )
         }
 
-        // one on one stats
-        let general_stats_block, matchups_description;
-        if (store.statsInfo){
-            general_stats_block = BuildStatsTable(store.statsInfo.general_stats,0, game_mode, percents);
-
-            const { met_each_other } = store.statsInfo;
-            const plural = (met_each_other > 1) ? "s" : "";
-            matchups_description = `These ${what} met each other ${met_each_other} time${plural}.`;
-            if (met_each_other === 0) {
-                matchups_description = `This is the first time these ${what} meet each other.`;
-            }
-        }
-
         return (
             <div className="ui link cards centered stats-container font-size-14 margin-top-20 position-relative flex-column gap-8">
                 <div className="flex-column">
@@ -326,26 +347,42 @@ function SeasonGame({ match }: any){
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'flex-column gap-8' : 'display-none', 'font-weight-normal')}>
                     {general_stats_block}
-                    {store.seasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
-                        <RegularSeasonStandings stats={store.seasonStats} teamsByName={store.allTeamsByName} mode={store.teamsData.mode} />
+                    {store.finalsStats && store.semiStats && store.teamsData && store.teamsData?.mode == 'Finals' && (
+                        <><SeriesStandings rStats={store.semiStats} stats={store.finalsStats} teamsByName={store.allTeamsByName} mode={'Finals'} store={store} max={2} /><br/></>
+                    )}
+                    {store.semiStats && store.playoffStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && store.teamsData?.mode != 'Playoff' && (
+                        <><SeriesStandings rStats={store.playoffStats} stats={store.semiStats} teamsByName={store.allTeamsByName} mode={'SemiFinals'} store={store} max={4} /><br/></>
+                    )}
+                    {store.playoffStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
+                        <><SeriesStandings rStats={store.regularSeasonStats} stats={store.playoffStats} teamsByName={store.allTeamsByName} mode={'Playoff'} store={store} /><br/></>
                     )}
                     {store.regularSeasonStats && (
-                        <RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} />
+                        <><RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} /><br/></>
                     )}
-                    <StatsTable
-                        title={"Previous Matchups Stats"}
-                        marginTop="10px"
-                        description={matchups_description}
-                        hidden={(store.statsInfo?.met_each_other === 0)}
-                        cols={["",store.team1Name, store.team2Name]}
-                        stats={store.statsInfo?.matchups_values}
-                    />
-                    <StatsTable
-                        title={`${toPascalCase(what)} Individual Stats`}
-                        marginTop="10px"
-                        cols={["",store.team1Name, store.team2Name]}
-                        stats={store.statsInfo?.player_stats_values}
-                    />
+                    {/*<StatsTable*/}
+                    {/*    title={"Previous Matchups Stats"}*/}
+                    {/*    marginTop="10px"*/}
+                    {/*    description={matchups_description}*/}
+                    {/*    hidden={(store.statsInfo?.met_each_other === 0)}*/}
+                    {/*    cols={["",store.team1Name, store.team2Name]}*/}
+                    {/*    stats={store.statsInfo?.matchups_values}*/}
+                    {/*/>*/}
+                    <div key={`stats-tables-${store.reRenderCounter}`}>
+                        <StatsTable
+                            title={`${toPascalCase(what)} Individual Stats`}
+                            marginTop="10px"
+                            cols={["",store.team1Name, store.team2Name]}
+                            stats={store.statsInfo?.player_stats_values}
+                        />
+                        <StatsTable
+                            title={"Previous Matchups Stats"}
+                            marginTop="10px"
+                            description={matchups_description}
+                            hidden={(store.statsInfo?.met_each_other === 0)}
+                            cols={["",store.team1Name, store.team2Name]}
+                            stats={store.statsInfo?.matchups_values}
+                        />
+                    </div>
                 </div>
             </div>
         )
@@ -457,8 +494,8 @@ function SeasonGame({ match }: any){
                     {renderSmallLogo()}
                     {renderHeaderButtons()}
                     {renderSeasonAlreadyOverIfNeeded()}
-                    <div className="display-flex-important flex-column align-items-center">
-                        {renderStats()}
+                    <div className="display-flex-important flex-column align-items-center min-width-90vw">
+                        {statsBlock}
                         {renderSeasonGame()}
                     </div>
                 </div>
@@ -477,7 +514,7 @@ function SeasonGame({ match }: any){
                     stats_title={`${game_mode} - ${store.selectedTeam}`}
                     game_mode={game_mode}
                     get_route={get_specific_route}
-                    get_stats_route={get_stats_specific_route}
+                    get_stats_route={`${get_stats_specific_route}?mode=Regular Season`}
                     onBack={() => { store.setViewStatsPage(false)}}
                 />
             );
@@ -489,8 +526,8 @@ function SeasonGame({ match }: any){
                 stats_title={undefined}
                 game_mode={game_mode}
                 get_route={"/team"}
-                get_stats_route={`/records/season/${seasonId}/stats`}
-                get_stats_specific_route={get_stats_specific_route}
+                get_stats_route={`/records/season/${seasonId}/stats?mode=Regular Season`}
+                get_stats_specific_route={`${get_stats_specific_route}?mode=Regular Season`}
                 mvp_block={true}
                 onBack={() => { store.setViewStatsPage(false) }}
                 player_from_url={undefined} // ?

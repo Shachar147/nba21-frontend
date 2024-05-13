@@ -48,39 +48,57 @@ export function overallSort(a,b){
     return 0;
 }
 
-export function overallSortTotalWins(a,b){
-
-    // console.log(a,b);
+export function winsAndMatchupsSort(a, b){
 
     // first sort
     const total1 = parseFloat(b['total_wins']?.toString().replace('%', ''));
     const total2 = parseFloat(a['total_wins']?.toString().replace('%', ''));
 
-    // second sort
-    const percents1 = parseFloat(b['total_win_percents']);
-    const percents2 = parseFloat(a['total_win_percents']);
-
-    // third sort
-    const diff1 = parseFloat(b['total_diff_per_game']);
-    const diff2 = parseFloat(a['total_diff_per_game']);
-
-    // fourth sort
-    const total_knockouts1 = parseFloat(b['total_knockouts']);
-    const total_knockouts2 = parseFloat(a['total_knockouts']);
-
     if (total1 > total2) return 1;
     else if (total1 < total2) return -1;
 
-    if (percents1 > percents2) return 1;
-    else if (percents1 < percents2) return -1;
+    // second sort
+    const matchups1 = b["matchups"]?.[a["teamName"]]?.win ?? 0;
+    const matchups2 = a["matchups"]?.[b["teamName"]]?.win ?? 0;
 
-    if (diff1 > diff2) return 1;
-    else if (diff1 < diff2) return -1;
-
-    if (total_knockouts1 > total_knockouts2) return 1;
-    else if (total_knockouts1 < total_knockouts2) return -1;
+    if (matchups1 > matchups2) return 1;
+    else if (matchups1 < matchups2) return -1;
 
     return 0;
+
+    // return a['regularSeasonPlace'] - b['regularSeasonPlace'];
+
+    // console.log(a,b);
+    //
+    // // first sort
+    // const total1 = parseFloat(b['total_wins']?.toString().replace('%', ''));
+    // const total2 = parseFloat(a['total_wins']?.toString().replace('%', ''));
+    //
+    // // second sort
+    // const percents1 = parseFloat(b['total_win_percents']);
+    // const percents2 = parseFloat(a['total_win_percents']);
+    //
+    // // third sort
+    // const diff1 = parseFloat(b['total_diff_per_game']);
+    // const diff2 = parseFloat(a['total_diff_per_game']);
+    //
+    // // fourth sort
+    // const total_knockouts1 = parseFloat(b['total_knockouts']);
+    // const total_knockouts2 = parseFloat(a['total_knockouts']);
+    //
+    // if (total1 > total2) return 1;
+    // else if (total1 < total2) return -1;
+    //
+    // if (percents1 > percents2) return 1;
+    // else if (percents1 < percents2) return -1;
+    //
+    // if (diff1 > diff2) return 1;
+    // else if (diff1 < diff2) return -1;
+    //
+    // if (total_knockouts1 > total_knockouts2) return 1;
+    // else if (total_knockouts1 < total_knockouts2) return -1;
+    //
+    // return 0;
 }
 
 export function overallTournamentSort(a,b){
@@ -139,8 +157,8 @@ export function overallTournamentSort(a,b){
 }
 
 
-export const OVERALL_HIGHLIGHTS = ['Total Championships', 'Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts', 'Total Shots Average', 'Average Place'];
-export const OVERALL_WINS_HIGHLIGHTS = ['Total Wins', 'Total Wins Percents', 'Total Diff Per Game', 'Total Knockouts'];
+export const OVERALL_HIGHLIGHTS = ['Total Championships', 'Total Win Percents', 'Total Diff Per Game', 'Total Knockouts', 'Total Shots Average', 'Average Place'];
+export const OVERALL_WINS_HIGHLIGHTS = ['Total Wins', 'Standing Against', /* 'Total Win Percents', 'Total Diff Per Game', 'Total Knockouts' */];
 
 export function textSort(key, a, b){
     const value1 = b[key];

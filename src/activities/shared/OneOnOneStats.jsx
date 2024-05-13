@@ -32,7 +32,7 @@ import OneOnOneSingleStats from "./OneOnOneSingleStats";
 import { withRouter } from "react-router";
 import {
     OVERALL_WINS_HIGHLIGHTS,
-    overallSortTotalWins,
+    winsAndMatchupsSort,
     totalFinalsAppearancesPercentsSort, totalFinalsWinsPercentsSort,
     totalGamesWithOTSort,
     totalOTLostSort,
@@ -63,7 +63,7 @@ class OneOnOneStats extends React.Component {
             "orderByOptions":[
                 { "Overall": overallSort },
                 { "Total Games": totalGamesSort },
-                { "Total Wins Percents": totalWinsPercentsSort },
+                { "Total Win Percents": totalWinsPercentsSort },
                 { "Current Win Streak": currentWinStreakSort },
                 { "Current Lose Streak": currentLoseStreakSort },
                 { "Max Win Streak": maxWinStreakSort },
@@ -91,7 +91,7 @@ class OneOnOneStats extends React.Component {
         };
 
         if (this.props.game_mode === "Season") {
-            this.state.orderByOptions.push({ 'Overall Wins': overallSortTotalWins })
+            this.state.orderByOptions.push({ 'Wins & Matchups': winsAndMatchupsSort })
         }
 
         if (this.props.game_mode === "Three Points Contest") {
@@ -536,6 +536,8 @@ class OneOnOneStats extends React.Component {
                                 team_division={(player.conference && player.division) ? player.division + " (" + player.conference + ")" : undefined}
                                 debut_year={player.debut_year}
 
+                                lost={game_mode !== 'Regular Season' && (idx+1 > 8)}
+
                                 stats={{
                                     avg_opponent_2k_rating: records[player.name].avg_2k_rating,
                                     total_wins: records[player.name].total_wins,
@@ -554,7 +556,7 @@ class OneOnOneStats extends React.Component {
                                     lose_streak: records[player.name].lose_streak,
                                     max_win_streak: records[player.name].max_win_streak,
                                     max_lose_streak: records[player.name].max_lose_streak,
-                                    highlights: (this.state.orderBy === 'Overall Wins') ? OVERALL_WINS_HIGHLIGHTS : (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
+                                    highlights: (this.state.orderBy === 'Wins & Matchups') ? OVERALL_WINS_HIGHLIGHTS : (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
 
                                     // 3pt
                                     average_place: records[player.name].average_place,
@@ -614,7 +616,9 @@ class OneOnOneStats extends React.Component {
                                     total_matchups: (records[player.name]['matchups']) ? Object.keys(records[player.name]['matchups']).length : undefined,
                                     total_ot_wins: records[player.name].total_ot_wins,
                                     total_ot_lost: records[player.name].total_ot_lost,
-                                    total_finals_appearances: records[player.name].total_finals_appearances
+                                    total_finals_appearances: records[player.name].total_finals_appearances,
+                                    matchups: game_mode === 'Season' ? records[player.name]['matchups'] : undefined,
+                                    highlight_matchups: game_mode === 'Season' ? records[player.name]['highlight_matchups'] : undefined
                                 }}
 
                                 onImageClick={() => {

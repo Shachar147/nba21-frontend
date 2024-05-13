@@ -1,30 +1,34 @@
 import React from "react";
 import {observer} from "mobx-react";
 import {ISeasonGame, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
-import {overallSortTotalWins} from "../../../../helpers/sort";
+import {winsAndMatchupsSort} from "../../../../helpers/sort";
 import StatsTableInner from "../../../../components/StatsTableInner";
 import {nth} from "../../../../helpers/utils";
+import SeasonGameStore from "../../stores/SeasonGameStore";
 
 interface RegularSeasonStandingsProps {
     stats: SeasonStats;
     teamsByName: Record<string, Team>;
     mode: SeasonMode;
+    store: SeasonGameStore;
 }
 
-function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStandingsProps){
+function RegularSeasonStandings({ stats, mode, teamsByName, store }: RegularSeasonStandingsProps){
+
+    const seasonMode = store.teamsData?.mode;
 
     const teamStats = {...stats};
     Object.keys(teamStats).forEach((teamName) => {
         teamStats[teamName]["teamName"] = teamName;
     });
-    const teamsByStanding = Object.values(teamStats).sort(overallSortTotalWins);
+    const teamsByStanding = Object.values(teamStats).sort(winsAndMatchupsSort);
     const standingStats: Record<string, (number|string)[]> = {};
     let firstTeamWins: number = 0;
     teamsByStanding.forEach((stat, idx) => {
         const teamName = stat.teamName;
         if (teamName) {
             standingStats[`${idx+1}${nth(idx+1)}`] = [
-                getTeamCell(teamName),
+                getTeamCell(teamName, idx),
                 stat.total_games,
                 stat.total_wins,
                 stat.total_lost,
@@ -39,9 +43,15 @@ function RegularSeasonStandings({ stats, mode, teamsByName }: RegularSeasonStand
         }
     });
 
-    function getTeamCell(teamName: string): string {
+    function getTeamCell(teamName: string, idx: number): string {
         const teamLogo = teamsByName[teamName].logo;
-        return `<div class="flex-row align-items-center gap-4"><img src=${teamLogo} width="24" height="24" class="border-50-percents"/> ${teamName}</div>`;
+
+        let textDecorationStyle = "";
+        if (seasonMode && seasonMode != 'Regular Season' && mode == 'Regular Season' && idx >= 8) {
+            textDecorationStyle += ' strike-through nba-red-color'
+        }
+
+        return `<div class="flex-row align-items-center gap-4${textDecorationStyle}"><img src=${teamLogo} width="24" height="24" class="border-50-percents"/> ${teamName}</div>`;
     }
 
     function isTeamWon(x: ISeasonGame, teamName: string) {

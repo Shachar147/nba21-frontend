@@ -41,7 +41,7 @@ export const DEFAULT_REAL_STATS_ORDER = 'Career Win%';
 export const DEFAULT_REAL_STATS_MIN_GAMES = 300;
 export const DEFAULT_STOPWATCH_STATS_ORDER = 'Total Games';
 export const DEFAULT_TOURNAMENT_STATS_ORDER = 'Overall'; // 'Total Championships';
-export const DEFAULT_SEASON_STATS_ORDER = 'Overall Wins';
+export const DEFAULT_SEASON_STATS_ORDER = 'Wins & Matchups';
 
 export const DEFAULT_REAL_INJURED_ORDER = 'Injury Last Update';
 export const DEFAULT_REAL_INACTIVE_ORDER = 'Joined In';

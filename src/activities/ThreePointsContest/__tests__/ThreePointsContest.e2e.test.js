@@ -90,8 +90,6 @@ describe("<ThreePointsContest /> E2E test suite", () => {
 
     // ------------------------------------
 
-    // await page.evaluate(() => { debugger; });
-
     afterAll(async () => {
         browser.close();
     });

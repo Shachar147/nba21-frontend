@@ -53,6 +53,7 @@ export type SeasonMode = 'Regular Season' | 'Playoff' | 'SemiFinals' | 'Finals'
 
 export interface NextGameDataResponse {
     mode: SeasonMode;
+    seasonId: number;
     isSeasonOver: boolean;
     winner?: string;
     team1: SeasonGameTeam;
