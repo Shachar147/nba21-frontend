@@ -139,7 +139,7 @@ function SemiFinalsStandings({ stats, mode, teamsByName, store, max=8 }: SemiFin
         <div>
             <div className="ui header margin-top-10">{mode} Standings</div>
             <StatsTableInner
-                cols={['#', 'Series', 'MVPs 1', 'MVPs 2']}
+                cols={['#', 'Series', 'Notes', 'MVPs 1', 'MVPs 2']}
                 stats={standingStats}
                 showMoreOpened={true}
                 switchMaxNumber={10}
