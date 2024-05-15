@@ -523,19 +523,36 @@ function SeasonGame({ match }: any){
 
         const mode = store.teamsData?.mode;
 
+        let advancedTeams: string[] = Object.keys(store.allTeamsByName);
+        // @ts-ignore
+        const maxTeams = mode == 'Playoff' ? 8 : mode == 'SemiFinals' ? 4 : mode == 'Finals' ? 2 : undefined;
+        if (maxTeams) {
+            // @ts-ignore
+            const teamStats = mode == 'Playoff' ? store.regularSeasonStats : mode == 'SemiFinals' ? store.playoffStats : mode == 'Finals' ? store.semiStats : undefined;
+            if (teamStats) {
+                Object.keys(teamStats).forEach((teamName) => {
+                    teamStats[teamName]["teamName"] = teamName;
+                });
+                const teamsByStanding = Object.values(teamStats).sort(winsAndMatchupsSort);
+                // @ts-ignore
+                advancedTeams = teamsByStanding.map((s) => s.teamName).slice(0, maxTeams)
+            }
+        }
+
         return (
             <OneOnOneStats
                 what={what}
                 stats_title={undefined}
                 game_mode={game_mode}
                 get_route={"/team"}
-                get_stats_route={`/records/season/${seasonId}/stats?mode=${mode}`} // ?mode=Regular Season
+                get_stats_route={`/records/season/${seasonId}/stats?mode=Regular Season`} // ?mode=Regular Season
                 get_stats_specific_route={`${get_stats_specific_route}`} // ?mode=${mode}`} // ?mode=Regular Season
                 mvp_block={true}
                 onBack={() => { store.setViewStatsPage(false) }}
                 player_from_url={undefined} // ?
                 // max_teams={mode == 'Playoff' ? 8 : mode == 'SemiFinals' ? 4 : mode == 'Finals' ? 2 : undefined}
-                max_teams={mode == 'Playoff' ? 8 : undefined}
+                // max_teams={mode == 'Playoff' ? 8 : undefined}
+                advanced_teams={advancedTeams}
             />
         )
     }
