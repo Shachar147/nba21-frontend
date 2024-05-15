@@ -529,7 +529,7 @@ function SeasonGame({ match }: any){
                 stats_title={undefined}
                 game_mode={game_mode}
                 get_route={"/team"}
-                get_stats_route={`/records/season/${seasonId}/stats`}  // ?mode=${mode}`} // ?mode=Regular Season
+                get_stats_route={`/records/season/${seasonId}/stats?mode=${mode}`} // ?mode=Regular Season
                 get_stats_specific_route={`${get_stats_specific_route}`} // ?mode=${mode}`} // ?mode=Regular Season
                 mvp_block={true}
                 onBack={() => { store.setViewStatsPage(false) }}
