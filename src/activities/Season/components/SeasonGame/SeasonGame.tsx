@@ -357,8 +357,8 @@ function SeasonGame({ match }: any){
                     {store.playoffStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
                         <><SeriesStandings rStats={store.regularSeasonStats} teamsData={store.teamsData} stats={store.playoffStats} teamsByName={store.allTeamsByName} mode={'Playoff'} store={store} /><br/></>
                     )}
-                    {store.regularSeasonStats && (
-                        <><RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} /><br/></>
+                    {store.regularSeasonStats && store.teamsData && (
+                        <><RegularSeasonStandings stats={store.regularSeasonStats} teamsData={store.teamsData} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} /><br/></>
                     )}
                     {/*<StatsTable*/}
                     {/*    title={"Previous Matchups Stats"}*/}
