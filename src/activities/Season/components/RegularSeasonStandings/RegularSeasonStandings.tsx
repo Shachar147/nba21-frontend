@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {ISeasonGame, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
+import {ISeasonGame, NextGameDataResponse, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
 import {winsAndMatchupsSort} from "../../../../helpers/sort";
 import StatsTableInner from "../../../../components/StatsTableInner";
 import {nth} from "../../../../helpers/utils";
@@ -11,9 +11,10 @@ interface RegularSeasonStandingsProps {
     teamsByName: Record<string, Team>;
     mode: SeasonMode;
     store: SeasonGameStore;
+    teamsData: NextGameDataResponse;
 }
 
-function RegularSeasonStandings({ stats, mode, teamsByName, store }: RegularSeasonStandingsProps){
+function RegularSeasonStandings({ stats, teamsData, mode, teamsByName, store }: RegularSeasonStandingsProps){
 
     const seasonMode = store.teamsData?.mode;
 
@@ -87,9 +88,67 @@ function RegularSeasonStandings({ stats, mode, teamsByName, store }: RegularSeas
         }
     }
 
+    function getPlayerCell(playerName: string): React.ReactNode {
+        const allPlayers = Object.values(teamsByName).map((teamData) => teamData.players).flat();
+        const playerLogo = allPlayers.find((player) => player.name == playerName)?.picture;
+
+        return (
+            <div className="flex-row align-items-center justify-content-center width-100-percents gap-4">
+                <b>Regular Season MVP:</b>
+                <img src={playerLogo} width="28" height="24" className="border-50-percents"/>
+                <u><b><span>{playerName}</span></b></u>
+            </div>
+        );
+    }
+
+    function getMvpContenders(){
+        if (teamsData.regularSeasonMvpName) {
+            return getPlayerCell(teamsData.regularSeasonMvpName);
+        }
+        const mvps: Record<string, number> = {};
+        const playerToTeam: Record<string, string> = {};
+        teamsByStanding.slice(0,8).forEach((stat, idx) => {
+            const teamName = stat.teamName;
+            if (teamName) {
+                stat.records.forEach((game) => {
+                    if (isTeamWon(game, teamName) && game.mvp_player_name) {
+                        mvps[game.mvp_player_name] = mvps[game.mvp_player_name] || 0;
+                        mvps[game.mvp_player_name] += 1;
+                        playerToTeam[game.mvp_player_name] = teamName;
+                    }
+                });
+            }
+        });
+
+        const teams_order = teamsByStanding.map((x) => x.teamName);
+        const sorted_mvps = Object.keys(mvps).sort((a, b) => {
+            if (mvps[a] > mvps[b]){
+                return -1;
+            } else if (mvps[a] < mvps[b]) {
+                return 1;
+            }
+
+            const team1Standing = teams_order.indexOf(playerToTeam[a]);
+            const team2Standing = teams_order.indexOf(playerToTeam[b]);
+
+            if (team1Standing < team2Standing) {
+                return -1;
+            } else if (team1Standing > team2Standing) {
+                return 1;
+            }
+
+            return 0;
+        });
+
+        return (
+            <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => `${x} (${mvps[x]})`).slice(0, 3).join(", ")}</div>
+        )
+    }
+
     return (
         <div>
             <div className="ui header margin-top-10">{mode} Standings</div>
+            {getMvpContenders()}
             <StatsTableInner
                 cols={['Standing', 'Team', 'G', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
                 stats={standingStats}
