@@ -1,10 +1,11 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {ISeasonGame, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
+import {ISeasonGame, NextGameDataResponse, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
 import {winsAndMatchupsSort} from "../../../../helpers/sort";
 import StatsTableInner from "../../../../components/StatsTableInner";
 import {nth} from "../../../../helpers/utils";
 import SeasonGameStore from "../../stores/SeasonGameStore";
+import {ON_FIRE_COLOR} from "../../../../helpers/consts";
 
 interface SemiFinalsStandingsProps {
     stats: SeasonStats;
@@ -12,9 +13,10 @@ interface SemiFinalsStandingsProps {
     mode: SeasonMode;
     store: SeasonGameStore;
     max?: number;
+    teamsData: NextGameDataResponse
 }
 
-function SemiFinalsStandings({ stats, mode, teamsByName, store, max=8 }: SemiFinalsStandingsProps){
+function SemiFinalsStandings({ stats, teamsData, mode, teamsByName, store, max=8 }: SemiFinalsStandingsProps){
 
     // get regular season top8 teams:
     const teamStats = {...store.regularSeasonStats};
@@ -85,6 +87,14 @@ function SemiFinalsStandings({ stats, mode, teamsByName, store, max=8 }: SemiFin
             } else if (w_l[1].includes("3W")) {
                 // w_l[1] += '&nbsp;&nbsp; <span class="color-yellow">Game 7! &nbsp;💪</span>';
                 gameSevenBlock = '<span class="color-yellow">Game 7! &nbsp;💪</span>';
+
+                const teamData = getTeamData()?.find((t: any) => t.teamName == team1);
+                const team2Data = getTeamData()?.find((t: any) => t.teamName == team2);
+                if (teamData?.is_3_0_comeback || team2Data?.is_3_0_comeback) {
+                    gameSevenBlock += `<span style="color:${ON_FIRE_COLOR}">Comeback from 3-0!! &nbsp;🔥🔥🔥 </span>`;
+                } else if (teamData?.is_3_1_comeback || team2Data?.is_3_1_comeback) {
+                    gameSevenBlock += `<span style="color:${ON_FIRE_COLOR}">Comeback from 3-1!! &nbsp;🔥 </span>`;
+                }
             }
         }
 
@@ -93,11 +103,25 @@ function SemiFinalsStandings({ stats, mode, teamsByName, store, max=8 }: SemiFin
         standingStats[`${_idx+1}${nth(_idx+1)} vs ${_idx2 + 1}${nth(_idx2 + 1)}`] = [
             // standingStats[`${idx+1}${nth(idx+1)} vs ${8-idx}${nth(8-idx)}`] = [
             seriesWithLogos[idx],
-            `<span class="font-weight-normal">${w_l.length == 0 ? 'Not started yet' : sweepBlock.length + gameSevenBlock.length == 0 ? '-' : `${sweepBlock}${gameSevenBlock}`}</span>`,
+            `<span class="font-weight-normal flex-column">${w_l.length == 0 ? 'Not started yet' : sweepBlock.length + gameSevenBlock.length == 0 ? '-' : `${sweepBlock}${gameSevenBlock}`}</span>`,
             `${team1}<br/><span class="font-weight-normal">${w_l.length == 0 ? "-" : getMvps(stats[team1]?.records ?? [], team1)}</span>`,
             `${team2}<br/><span class="font-weight-normal">${w_l.length == 0 ? "-" : getMvps(stats[team2]?.records ?? [], team2)}</span>`
         ];
     });
+
+    function getTeamData() {
+        if (mode == "Finals") {
+            return teamsData.finalsStats;
+        }
+        else if (mode == "SemiFinals") {
+            return teamsData.semiFinalsStats;
+        }
+        else if (mode == "Playoff") {
+            return teamsData.playoffStats;
+        }
+        return teamsData.stats;
+    }
+
 
     function isTeamWon(x: ISeasonGame, teamName: string) {
         return (x.score1 > x.score2 && x.team1_name == teamName) || (x.score2 > x.score1 && x.team2_name == teamName);

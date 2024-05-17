@@ -349,13 +349,13 @@ function SeasonGame({ match }: any){
                 <div className={getClasses("width-100-percents", store.showStats ? 'flex-column gap-8' : 'display-none', 'font-weight-normal')}>
                     {general_stats_block}
                     {store.finalsStats && store.semiStats && store.teamsData && store.teamsData?.mode == 'Finals' && (
-                        <><SeriesStandings rStats={store.semiStats} stats={store.finalsStats} teamsByName={store.allTeamsByName} mode={'Finals'} store={store} max={2} /><br/></>
+                        <><SeriesStandings rStats={store.semiStats} teamsData={store.teamsData} stats={store.finalsStats} teamsByName={store.allTeamsByName} mode={'Finals'} store={store} max={2} /><br/></>
                     )}
                     {store.semiStats && store.regularSeasonStats && store.playoffStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && store.teamsData?.mode != 'Playoff' && (
-                        <><SemiFinalsStandings stats={store.semiStats} teamsByName={store.allTeamsByName} mode={'SemiFinals'} store={store} max={4} /><br/></>
+                        <><SemiFinalsStandings stats={store.semiStats} teamsData={store.teamsData} teamsByName={store.allTeamsByName} mode={'SemiFinals'} store={store} max={4} /><br/></>
                     )}
                     {store.playoffStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
-                        <><SeriesStandings rStats={store.regularSeasonStats} stats={store.playoffStats} teamsByName={store.allTeamsByName} mode={'Playoff'} store={store} /><br/></>
+                        <><SeriesStandings rStats={store.regularSeasonStats} teamsData={store.teamsData} stats={store.playoffStats} teamsByName={store.allTeamsByName} mode={'Playoff'} store={store} /><br/></>
                     )}
                     {store.regularSeasonStats && (
                         <><RegularSeasonStandings stats={store.regularSeasonStats} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} /><br/></>
