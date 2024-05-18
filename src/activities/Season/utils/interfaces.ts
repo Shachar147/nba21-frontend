@@ -42,6 +42,7 @@ export interface Player {
     position: string;
     rate?: number | "N/A";
     _2k_rating?: number;
+    // todo complete
 }
 
 export interface SeasonGameTeam {
