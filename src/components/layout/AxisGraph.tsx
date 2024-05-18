@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from 'react';
+
+// @ts-ignore
 import CanvasJSReact from '@canvasjs/react-charts';
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
