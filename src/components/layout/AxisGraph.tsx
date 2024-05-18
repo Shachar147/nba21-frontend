@@ -39,12 +39,14 @@ const AxisGraph = (props: AxisGraphProps) => {
     //     chartRef.current.render();
     // };
 
-    const toggleDataSeries = (e) => {
+    const toggleDataSeries = (e: any) => {
         if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             e.dataSeries.visible = false;
         } else {
             e.dataSeries.visible = true;
         }
+
+        // @ts-ignore
         chartRef.current.render();
     };
 
@@ -89,13 +91,14 @@ const AxisGraph = (props: AxisGraphProps) => {
 
     useEffect(() => {
         if (chartRef.current) {
+            // @ts-ignore
             chartRef.current.render();
         }
     }, [options]);
 
     return (
         <div className="ui link cards centered" style={{ margin: "auto", width: "80%", maxWidth: "1000px" }}>
-            <CanvasJSChart options={options} onRef={ref => chartRef.current = ref} />
+            <CanvasJSChart options={options} onRef={(ref: any) => chartRef.current = ref} />
         </div>
     );
 }
