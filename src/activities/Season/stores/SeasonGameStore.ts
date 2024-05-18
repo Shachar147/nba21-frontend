@@ -42,6 +42,13 @@ export default class SeasonGameStore {
         this.seasonId = seasonId;
         this.viewStatsPage = window.location.href.includes("/stats");
 
+        if (window.location.href.includes("/stats/")) {
+            const teamName = window.location.href.split("/stats/").pop();
+            if (teamName) {
+                this.selectedTeam = decodeURIComponent(teamName);
+            }
+        }
+
         this.loadStuff();
     }
 

@@ -25,6 +25,7 @@ import RegularSeasonStandings from "../RegularSeasonStandings/RegularSeasonStand
 import SeriesStandings from "../RegularSeasonStandings/SeriesStandings";
 import {winsAndMatchupsSort} from "../../../../helpers/sort";
 import SemiFinalsStandings from "../RegularSeasonStandings/SemiFinalsStandings";
+import TabMenu, {Tab} from "../../../../components/layout/TabMenu";
 
 function SeasonGame({ match }: any){
 
@@ -311,6 +312,13 @@ function SeasonGame({ match }: any){
         )
     }
 
+    function getActiveTabName(mode?: SeasonMode) {
+        if (!mode){
+            return undefined;
+        }
+        return `${store.teamsData?.mode.replace("SemiFinals","Semi Finals")} Standings`;
+    }
+
     function renderStats(){
 
         // one on one stats
@@ -339,6 +347,66 @@ function SeasonGame({ match }: any){
             )
         }
 
+        function renderRegularSeasonStats(){
+            if (!(store.regularSeasonStats && store.teamsData)){
+                return null;
+            }
+            return (
+                <RegularSeasonStandings stats={store.regularSeasonStats} teamsData={store.teamsData} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} />
+            );
+        }
+
+        function renderPlayoffStats(){
+            if (!(store.playoffStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season')) {
+                return null;
+            }
+
+            return (
+                <SeriesStandings rStats={store.regularSeasonStats} teamsData={store.teamsData} stats={store.playoffStats} teamsByName={store.allTeamsByName} mode={'Playoff'} store={store} />
+            );
+        }
+
+        function renderSemiFinalsStats(){
+            if (!(
+                store.semiStats && store.regularSeasonStats && store.playoffStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && store.teamsData?.mode != 'Playoff'
+            )){
+                return null;
+            }
+
+            return (
+                <SemiFinalsStandings stats={store.semiStats} teamsData={store.teamsData} teamsByName={store.allTeamsByName} mode={'SemiFinals'} store={store} max={4} />
+            )
+        }
+
+        function renderFinalsStats(){
+            if (!(store.finalsStats && store.semiStats && store.teamsData && store.teamsData?.mode == 'Finals')){
+                return null;
+            }
+            return (
+                <SeriesStandings rStats={store.semiStats} teamsData={store.teamsData} stats={store.finalsStats} teamsByName={store.allTeamsByName} mode={'Finals'} store={store} max={2} />
+            )
+        }
+
+        // @ts-ignore
+        const tabs: Tab[] = [
+            {
+                name: 'Regular Season Standings',
+                render: renderRegularSeasonStats
+            },
+            store.teamsData?.mode != 'Regular Season' && ({
+                name: 'Playoff Standings',
+                render: renderPlayoffStats
+            }),
+            store.teamsData?.mode != 'Regular Season' && store.teamsData?.mode != 'Playoff' && ({
+                name: 'Semi Finals Standings',
+                render: renderSemiFinalsStats
+            }),
+            store.teamsData?.mode == 'Finals' && ({
+                name: 'Finals Standings',
+                render: renderFinalsStats
+            })
+        ].filter(Boolean)
+
         return (
             <div className="ui link cards centered stats-container main-stats font-size-14 margin-top-20 position-relative flex-column gap-8">
                 <div className="flex-column">
@@ -348,28 +416,10 @@ function SeasonGame({ match }: any){
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'flex-column gap-8' : 'display-none', 'font-weight-normal')}>
                     {general_stats_block}
-                    {store.finalsStats && store.semiStats && store.teamsData && store.teamsData?.mode == 'Finals' && (
-                        <><SeriesStandings rStats={store.semiStats} teamsData={store.teamsData} stats={store.finalsStats} teamsByName={store.allTeamsByName} mode={'Finals'} store={store} max={2} /><br/></>
-                    )}
-                    {store.semiStats && store.regularSeasonStats && store.playoffStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && store.teamsData?.mode != 'Playoff' && (
-                        <><SemiFinalsStandings stats={store.semiStats} teamsData={store.teamsData} teamsByName={store.allTeamsByName} mode={'SemiFinals'} store={store} max={4} /><br/></>
-                    )}
-                    {store.playoffStats && store.regularSeasonStats && store.teamsData && store.teamsData?.mode != 'Regular Season' && (
-                        <><SeriesStandings rStats={store.regularSeasonStats} teamsData={store.teamsData} stats={store.playoffStats} teamsByName={store.allTeamsByName} mode={'Playoff'} store={store} /><br/></>
-                    )}
-                    {store.regularSeasonStats && store.teamsData && (
-                        <><RegularSeasonStandings stats={store.regularSeasonStats} teamsData={store.teamsData} teamsByName={store.allTeamsByName} mode={'Regular Season'} store={store} /><br/></>
-                    )}
-                    {/*<StatsTable*/}
-                    {/*    title={"Previous Matchups Stats"}*/}
-                    {/*    marginTop="10px"*/}
-                    {/*    description={matchups_description}*/}
-                    {/*    hidden={(store.statsInfo?.met_each_other === 0)}*/}
-                    {/*    cols={["",store.team1Name, store.team2Name]}*/}
-                    {/*    stats={store.statsInfo?.matchups_values}*/}
-                    {/*/>*/}
+                    <TabMenu activeTab={getActiveTabName(store.teamsData?.mode)} tabs={tabs} />
+
                     <div key={`stats-tables-${store.reRenderCounter}`}>
-                        <StatsTable
+                        {!!(store.team1Name && store.team2Name) && <><StatsTable
                             title={`${toPascalCase(what)} Individual Stats`}
                             marginTop="10px"
                             cols={["",store.team1Name, store.team2Name]}
@@ -383,6 +433,7 @@ function SeasonGame({ match }: any){
                             cols={["",store.team1Name, store.team2Name]}
                             stats={store.statsInfo?.matchups_values}
                         />
+                        </>}
                     </div>
                 </div>
             </div>

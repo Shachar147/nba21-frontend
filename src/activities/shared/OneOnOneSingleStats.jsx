@@ -14,6 +14,63 @@ import {
 } from "@helpers/consts";
 import ButtonInput from "@components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
+import AxisGraph from "../../components/layout/AxisGraph";
+
+export function getGraphDataPoints(games, selected_player){
+    let dataPoints = [];
+    let counter = 0;
+    let previousDate = null;
+
+    games.sort((a, b) => new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime());
+
+    games.forEach((game, idx) => {
+        const currentDate = new Date(game.addedAt);
+        const isSameDay = previousDate && currentDate.getDate() === previousDate.getDate() && currentDate.getMonth() === previousDate.getMonth() && currentDate.getFullYear() === previousDate.getFullYear();
+
+        if (idx === 0) {
+            const date = new Date(game.addedAt);
+            date.setDate(date.getDate() - 1);
+            dataPoints.push({
+                x: date,
+                y: counter
+            })
+        }
+
+        if (!isSameDay) {
+            if (idx !== 0) {
+                dataPoints.push({
+                    x: previousDate,
+                    y: counter
+                });
+            }
+        }
+
+        let { team1_name, team2_name, player1_name, player2_name, score1, score2 } = game;
+        player1_name = player1_name || team1_name;
+        player2_name = player2_name || team2_name;
+        const opponent = (player1_name === selected_player) ? player2_name : player1_name;
+        const lost_or_won = ((player1_name === selected_player && score1 > score2) || (player2_name === selected_player && score2 > score1)) ? "Won" : "Lost";
+
+        if (lost_or_won === "Won") {
+            counter++;
+        } else {
+            counter--;
+        }
+
+        // Store current date as previous date for next iteration
+        previousDate = currentDate;
+    });
+
+    // Push last data point
+    if (previousDate) {
+        dataPoints.push({
+            x: previousDate,
+            y: counter
+        });
+    }
+
+    return dataPoints;
+}
 
 export default class OneOnOneSingleStats extends React.Component {
 
@@ -496,6 +553,16 @@ export default class OneOnOneSingleStats extends React.Component {
             />
         );
 
+        function renderGamesHistoryGraph() {
+            if (game_mode === "Three Points Contest" || game_mode === "Stopwatch Shootout") {
+                return null;
+            }
+
+            const dataPoints = getGraphDataPoints(records.records, selected_player);
+            return (
+                <AxisGraph title="Wins & Losses Over Time" axisY="Wins/Losses Diff" dataPoints={[dataPoints]} legends={[selected_player]} />
+            );
+        }
 
         return (
             <div style={{ paddingTop: "20px" }}>
@@ -528,6 +595,7 @@ export default class OneOnOneSingleStats extends React.Component {
 
                 {tournament_mvps_block}
                 {mvps_block}
+                {renderGamesHistoryGraph()}
                 {games_history_block}
                 {win_block}
                 {lose_block}

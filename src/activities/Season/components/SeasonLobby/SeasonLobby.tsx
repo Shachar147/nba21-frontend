@@ -9,6 +9,7 @@ import ButtonInput from "../../../../components/inputs/ButtonInput";
 import SeasonApiService from "../../services/SeasonApiService";
 import ConfirmationModal from "../../../../components/modals/ConfirmationModal";
 import {NextGameDataResponse} from "../../utils/interfaces";
+import './SeasonLobby.scss';
 
 function SeasonLobby(){
     const store: SeasonStore = useMemo(() => new SeasonStore(), []);
@@ -42,6 +43,21 @@ function SeasonLobby(){
                 </div>
             )
         }
+
+        function daysAgo(dateString: string) {
+            // Parse the given date string into a Date object
+            const givenDate = new Date(dateString). getTime();
+
+            // Get the current date
+            const currentDate = new Date().getTime();
+
+            // Calculate the difference in time (in milliseconds) between the two dates
+            const timeDifference = currentDate - givenDate;
+
+            // Convert the time difference from milliseconds to days
+            return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        }
+
         return (
             <div className="sub cards header content" style={{ width:"100%", bottom: "0px" }}>
                 Hello! Choose the season you want to play or create a new season
@@ -51,8 +67,9 @@ function SeasonLobby(){
                 <div className="ui link cards centered" style={{ margin: "auto" }}>
                     {store.seasons.map((season, idx) => (
                         <Card
-                            name={`${season.name}<br/><span style="color: gray;">${season.teamsCount} teams<br/>${season.playedGamesCount} played games<br/>${ seasonsData?.[season.id]?.isSeasonOver ? "Season Over" : seasonsData?.[season.id]?.mode ?? 'loading...'}</span>`}
+                            name={`${season.name}<br/><span style="color: gray;">${season.teamsCount} teams<br/>${season.playedGamesCount} played games<br/>created ${daysAgo(season.addedAt)} days ago<br/><hr/>${ seasonsData?.[season.id]?.isSeasonOver ? "Season Over" : seasonsData?.[season.id]?.mode ?? 'loading state...'}</span>`}
                             picture={"/thumbnails/season.png"}
+                            className={seasonsData?.[season.id]?.isSeasonOver ? 'opacity-04' : undefined}
                             style={{ width: "160px" }}
                             href={`/season/${season.id}`}
                             data-testid={`season-${idx}`}
@@ -89,7 +106,7 @@ function SeasonLobby(){
     }
 
     return (
-        <div>
+        <div className="season-lobby">
             <Header nologo={true} />
             <div className={"ui header cards centered"} style={{ width: "100%", height: "100vh", backgroundColor: "#FAFAFB" }} >
                 <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
