@@ -5,6 +5,8 @@
   "main": "index.js",
   "cracoConfig": "craco.config.js",
   "dependencies": {
+    "@canvasjs/charts": "^3.8.6",
+    "@canvasjs/react-charts": "^1.0.2",
     "@craco/craco": "^6.4.3",
     "@testing-library/jest-dom": "^5.16.1",
     "ajv": "^8.13.0",

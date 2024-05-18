@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby/SeasonLobby.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/layout/TabMenu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/AxisGraph.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/RegularSeasonStandings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/RegularSeasonStandings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SemiFinalsStandings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SemiFinalsStandings.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby/SeasonLobby.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonLobby/SeasonLobby.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/stores/SeasonGameStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/stores/SeasonGameStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneSingleStats.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

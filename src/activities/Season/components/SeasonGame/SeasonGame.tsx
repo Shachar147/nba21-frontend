@@ -312,6 +312,13 @@ function SeasonGame({ match }: any){
         )
     }
 
+    function getActiveTabName(mode?: SeasonMode) {
+        if (!mode){
+            return undefined;
+        }
+        return `${store.teamsData?.mode.replace("SemiFinals","Semi Finals")} Standings`;
+    }
+
     function renderStats(){
 
         // one on one stats
@@ -409,7 +416,7 @@ function SeasonGame({ match }: any){
                 <a className="show-hide-stats" onClick={() => store.setShowStats(!store.showStats)}>{store.showStats ? "Hide Stats" : "Show Stats"}</a>
                 <div className={getClasses("width-100-percents", store.showStats ? 'flex-column gap-8' : 'display-none', 'font-weight-normal')}>
                     {general_stats_block}
-                    <TabMenu activeTab={"Regular Season Standings"} tabs={tabs} />
+                    <TabMenu activeTab={getActiveTabName(store.teamsData?.mode)} tabs={tabs} />
 
                     <div key={`stats-tables-${store.reRenderCounter}`}>
                         {!!(store.team1Name && store.team2Name) && <><StatsTable

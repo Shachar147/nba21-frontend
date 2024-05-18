@@ -161,7 +161,7 @@ function SemiFinalsStandings({ stats, teamsData, mode, teamsByName, store, max=8
 
     return (
         <div>
-            <div className="ui header margin-top-10">{mode} Standings</div>
+            <div className="ui header margin-top-10">{mode.replace("SemiFinals","Semi Finals")} Standings</div>
             <StatsTableInner
                 cols={['#', 'Series', 'Notes', 'MVPs 1', 'MVPs 2']}
                 stats={standingStats}
