@@ -12,12 +12,30 @@ interface AxisGraphProps {
     title?: string;
     subTitle?: string;
     axisY?: string;
-    dataPoints: AxisGraphDataPoint[];
+    dataPoints: AxisGraphDataPoint[][];
+    legends?: string[]
 }
 
 const AxisGraph = (props: AxisGraphProps) => {
-    const { title, subTitle = "Click Legend to Hide or Unhide Data Series", axisY, dataPoints } = props;
+    const { title, subTitle = "Click Legend to Hide or Unhide Data Series", axisY, dataPoints, legends } = props;
     const chartRef = useRef(null);
+
+    // const toggleDataSeries = (e) => {
+    //     chartRef.current.options.data.forEach(series => {
+    //         if (series.name === e.dataSeries.name) {
+    //             series.visible = true;
+    //         } else {
+    //             series.visible = false;
+    //         }
+    //     });
+    //     e.dataSeries.visible = true;
+    //     // if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    //     //     e.dataSeries.visible = false;
+    //     // } else {
+    //     //     e.dataSeries.visible = true;
+    //     // }
+    //     chartRef.current.render();
+    // };
 
     const toggleDataSeries = (e) => {
         if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -38,7 +56,7 @@ const AxisGraph = (props: AxisGraphProps) => {
             text: subTitle
         }] : undefined,
         axisX: {
-            title: "Date and Time",
+            // title: "Date and Time",
             // valueFormatString: "DD/MM/YYYY HH:mm:ss" // Display date and time
             // interval: 5,
             intervalType: "hour", // Adjust intervalType as needed (minute, second, etc.)
@@ -57,14 +75,14 @@ const AxisGraph = (props: AxisGraphProps) => {
             cursor: "pointer",
             itemclick: toggleDataSeries
         },
-        data: [{
+        data: dataPoints.map((_dataPoints, idx) => ({
             type: "line",
-            name: axisY,
+            name: legends?.[idx] ?? axisY,
             showInLegend: true,
             xValueFormatString: "DD/MM/YYYY HH:mm",
             yValueFormatString: "#,##0 Wins",
-            dataPoints: dataPoints // Use jittered data points
-        }]
+            dataPoints: _dataPoints // Use jittered data points
+        }))
     };
 
     useEffect(() => {

@@ -554,9 +554,13 @@ export default class OneOnOneSingleStats extends React.Component {
         );
 
         function renderGamesHistoryGraph() {
+            if (game_mode === "Three Points Contest" || game_mode === "Stopwatch Shootout") {
+                return null;
+            }
+
             const dataPoints = getGraphDataPoints(records.records, selected_player);
             return (
-                <AxisGraph title="Wins & Losses Over Time" axisY="Wins/Losses Diff" dataPoints={dataPoints} />
+                <AxisGraph title="Wins & Losses Over Time" axisY="Wins/Losses Diff" dataPoints={[dataPoints]} legends={[selected_player]} />
             );
         }
 

@@ -26,7 +26,7 @@ import {
 import DropdownInput from "@components/inputs/DropdownInput";
 import ButtonInput from "@components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
-import OneOnOneSingleStats from "./OneOnOneSingleStats";
+import OneOnOneSingleStats, {getGraphDataPoints} from "./OneOnOneSingleStats";
 import './OneOnOneStats.scss';
 
 // @ts-ignore
@@ -41,6 +41,7 @@ import {
     totalOTWinsSort
 } from "../../helpers/sort";
 import {DEFAULT_SEASON_STATS_ORDER} from "../../helpers/consts";
+import AxisGraph from "../../components/layout/AxisGraph";
 
 class OneOnOneStats extends React.Component {
 
@@ -460,6 +461,26 @@ class OneOnOneStats extends React.Component {
             `Here you can see all NBA ${what} that played on ${game_mode}, ordered from the one with best percentages to the worst.`;
 
 
+        function renderGraph() {
+
+            if (game_mode === "Three Points Contest" || game_mode === "Stopwatch Shootout") {
+                return null;
+            }
+
+            const dataPoints = [];
+            const legends = [];
+            players.forEach((player) => {
+                dataPoints.push(getGraphDataPoints(records[player.name].records, player.name));
+                legends.push(player.name);
+            })
+
+            return (
+                <div className="margin-block-20">
+                    <AxisGraph title="Wins & Losses Over Time" axisY="Wins/Losses Diff" dataPoints={dataPoints} legends={legends} />
+                </div>
+            );
+        }
+
         return (
             <div className="one-on-one-stats-page" style={{ paddingTop: "20px" }}>
                 <Header />
@@ -641,6 +662,8 @@ class OneOnOneStats extends React.Component {
                         }
                     </div> : "" }
                 </div>
+
+                {renderGraph()}
             </div>
         )
     }
