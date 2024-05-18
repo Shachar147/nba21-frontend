@@ -140,8 +140,12 @@ function RegularSeasonStandings({ stats, teamsData, mode, teamsByName, store }: 
             return 0;
         });
 
+        if (sorted_mvps.length == 0){
+            sorted_mvps.push("None");
+        }
+
         return (
-            <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => `${x} (${mvps[x]})`).slice(0, 3).join(", ")}</div>
+            <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]})`).slice(0, 3).join(", ")}</div>
         )
     }
 
