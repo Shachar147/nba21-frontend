@@ -38,7 +38,7 @@ import {
     totalGamesWithOTSort,
     totalOTLostSort,
     totalOTWinsPercentSort,
-    totalOTWinsSort
+    totalOTWinsSort, wonMatchupsSort, lostMatchupsSort, tieMatchupsSort
 } from "../../helpers/sort";
 import {DEFAULT_SEASON_STATS_ORDER} from "../../helpers/consts";
 import AxisGraph from "../../components/layout/AxisGraph";
@@ -196,6 +196,10 @@ class OneOnOneStats extends React.Component {
                     else return 0;
                     // specificSort('total_matchups',b,a)
                 } });
+
+            this.state.orderByOptions.push({ 'Total Matchups Won': wonMatchupsSort });
+            this.state.orderByOptions.push({ 'Total Matchups Lost': lostMatchupsSort });
+            this.state.orderByOptions.push({ 'Total Matchups Tied': tieMatchupsSort });
         }
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -540,6 +544,16 @@ class OneOnOneStats extends React.Component {
                         //     _2k_rating = undefined;
                         // }
 
+                        let highlights =
+                            (this.state.orderBy === 'Total Matchups Won') ?
+                                ['Total Matchups Won', 'Standing Against'] :
+                                (this.state.orderBy === 'Total Matchups Lost') ?
+                                    ['Total Matchups Lost', 'Standing Against'] :
+                                    (this.state.orderBy === 'Total Matchups Tied') ?
+                                        ['Total Matchups Tied', 'Standing Against'] :
+                                        (this.state.orderBy === 'Wins & Matchups') ? OVERALL_WINS_HIGHLIGHTS :
+                                    (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy];
+
                         return (<PlayerCard
                                 key={idx}
                                 style={{}}
@@ -578,7 +592,7 @@ class OneOnOneStats extends React.Component {
                                     lose_streak: records[player.name].lose_streak,
                                     max_win_streak: records[player.name].max_win_streak,
                                     max_lose_streak: records[player.name].max_lose_streak,
-                                    highlights: (this.state.orderBy === 'Wins & Matchups') ? OVERALL_WINS_HIGHLIGHTS : (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy],
+                                    highlights: highlights,
 
                                     // 3pt
                                     average_place: records[player.name].average_place,
@@ -636,6 +650,9 @@ class OneOnOneStats extends React.Component {
                                     total_tournaments: records[player.name].total_tournaments,
                                     total_tournament_wins: records[player.name].total_tournament_wins,
                                     total_matchups: (records[player.name]['matchups']) ? Object.keys(records[player.name]['matchups']).length : undefined,
+                                    total_won_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win > m.lose && m.total === 3).length : undefined,
+                                    total_lost_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win < m.lose && m.total >= 2).length : undefined,
+                                    total_tied_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win === m.lose).length : undefined,
                                     total_ot_wins: records[player.name].total_ot_wins,
                                     total_ot_lost: records[player.name].total_ot_lost,
                                     total_finals_appearances: records[player.name].total_finals_appearances,

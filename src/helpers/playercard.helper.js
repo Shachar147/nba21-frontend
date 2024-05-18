@@ -31,6 +31,57 @@ function highlightMatchups(matchups_string, highlight_matchups) {
     return matchups_string.replace("<br/><br/>","<br/>");
 }
 
+function highlightWonMatchups(matchups_string) {
+    const rows = matchups_string.split('<br/>');
+    rows.forEach((row, idx) => {
+        if (row.includes("3W") || row.includes("2W")) {
+            const parts = row.split(' - ');
+            parts.forEach((part, idx2) => {
+                parts[idx2] = `<u><b>${part.replace('- ', '')}</b></u>`;
+            });
+            rows[idx] = `- ${parts.join(" - ")}`.replace("opacity-04","");
+        }
+    });
+
+    matchups_string = "<br/>" + rows.sort((a, b) => b.indexOf("<b>") - a.indexOf("<b>")).join('<br/>');
+
+    return matchups_string.replace("<br/><br/>","<br/>");
+}
+
+function highlightLostMatchups(matchups_string) {
+    const rows = matchups_string.split('<br/>');
+    rows.forEach((row, idx) => {
+        if (row.includes("3L") || row.includes("2L")) {
+            const parts = row.split(' - ');
+            parts.forEach((part, idx2) => {
+                parts[idx2] = `<u><b>${part.replace('- ', '')}</b></u>`;
+            });
+            rows[idx] = `- ${parts.join(" - ")}`.replace("opacity-04","");
+        }
+    });
+
+    matchups_string = "<br/>" + rows.sort((a, b) => b.indexOf("<b>") - a.indexOf("<b>")).join('<br/>');
+
+    return matchups_string.replace("<br/><br/>","<br/>");
+}
+
+function highlightTiedMatchups(matchups_string) {
+    const rows = matchups_string.split('<br/>');
+    rows.forEach((row, idx) => {
+        if (row.includes("1W") && row.includes("1L")) {
+            const parts = row.split(' - ');
+            parts.forEach((part, idx2) => {
+                parts[idx2] = `<u><b>${part.replace('- ', '')}</b></u>`;
+            });
+            rows[idx] = `- ${parts.join(" - ")}`.replace("opacity-04","");
+        }
+    });
+
+    matchups_string = "<br/>" + rows.sort((a, b) => b.indexOf("<b>") - a.indexOf("<b>")).join('<br/>');
+
+    return matchups_string.replace("<br/><br/>","<br/>");
+}
+
 export function buildDetails(details, stats){
 
     const {
@@ -157,6 +208,9 @@ export function buildDetails(details, stats){
 
         // season
         matchups,
+        total_won_matchups,
+        total_lost_matchups,
+        total_tied_matchups,
         highlight_matchups
     } = stats;
 
@@ -279,6 +333,9 @@ export function buildDetails(details, stats){
         'Total Tournaments': `${total_tournaments}`,
         'Total Championships': `${total_tournament_wins}`,
         'Total Matchups': `${total_matchups}`,
+        'Total Matchups Won': `${total_won_matchups}`,
+        'Total Matchups Lost': `${total_lost_matchups}`,
+        'Total Matchups Tied': `${total_tied_matchups}`,
         'Standing Against': matchups ? buildMacthups(matchups) : undefined,
         'Total Finals Appearances': total_finals_appearances,
         'Total Finals Appearances Percents': calcPercents(total_finals_appearances, total_tournaments),
@@ -300,7 +357,18 @@ export function buildDetails(details, stats){
         Object.keys(settings).map((name) => {
             if(highlights.indexOf(name) !== -1){
                 if (name === 'Standing Against') {
-                    settings[name] = highlightMatchups(settings[name], highlight_matchups);
+                    if (highlights.indexOf('Total Matchups Won') !== -1) {
+                        settings[name] = highlightWonMatchups(settings[name]);
+                    }
+                    else if (highlights.indexOf('Total Matchups Lost') !== -1) {
+                        settings[name] = highlightLostMatchups(settings[name]);
+                    }
+                    else if (highlights.indexOf('Total Matchups Tied') !== -1) {
+                        settings[name] = highlightTiedMatchups(settings[name]);
+                    }
+                    else {
+                        settings[name] = highlightMatchups(settings[name], highlight_matchups);
+                    }
                 } else {
                     settings[name] = `<b><u>${settings[name]}</u></b>`
                 }
@@ -408,6 +476,9 @@ export function buildDetails(details, stats){
     if (isDefined(total_road_wins) || isDefined(total_road_lost)) stats_arr.push(`Total Road Wins/Lost: ${settings['Total Road Wins']}-${settings['Total Road Lost']}`);
 
     if (isDefined(total_matchups)) stats_arr.push(`Total Matchups: ${settings['Total Matchups']}`);
+    if (isDefined(total_won_matchups)) stats_arr.push(`Total Matchups Won: ${settings['Total Matchups Won']}`);
+    if (isDefined(total_lost_matchups)) stats_arr.push(`Total Matchups Lost: ${settings['Total Matchups Lost']}`);
+    if (isDefined(total_tied_matchups)) stats_arr.push(`Total Matchups Tied: ${settings['Total Matchups Tied']}`);
     if (isDefined(matchups)) stats_arr.push(`Standing Against: ${settings['Standing Against']}`);
 
     if (isDefined(total_ot_wins)) stats_arr.push(`Total Overtimes Wins: ${settings['Total Overtimes Wins']}`);

@@ -101,6 +101,42 @@ export function winsAndMatchupsSort(a, b){
     // return 0;
 }
 
+export function wonMatchupsSort(a, b){
+
+    // sort
+    const matchups1 = Object.values(b["matchups"]).filter((m) => m.total === 3 && m.win > m.lose)?.length;
+    const matchups2 = Object.values(a["matchups"]).filter((m) => m.total === 3 && m.win > m.lose)?.length;
+
+    if (matchups1 > matchups2) return 1;
+    else if (matchups1 < matchups2) return -1;
+
+    return 0;
+}
+
+export function lostMatchupsSort(a, b){
+
+    // sort
+    const matchups1 = Object.values(b["matchups"]).filter((m) => m.total >= 2 && m.win < m.lose)?.length;
+    const matchups2 = Object.values(a["matchups"]).filter((m) => m.total >= 2 && m.win < m.lose)?.length;
+
+    if (matchups1 > matchups2) return 1;
+    else if (matchups1 < matchups2) return -1;
+
+    return 0;
+}
+
+export function tieMatchupsSort(a, b){
+
+    // sort
+    const matchups1 = Object.values(b["matchups"]).filter((m) => m.win === m.lose)?.length;
+    const matchups2 = Object.values(a["matchups"]).filter((m) => m.win === m.lose)?.length;
+
+    if (matchups1 > matchups2) return 1;
+    else if (matchups1 < matchups2) return -1;
+
+    return 0;
+}
+
 export function overallTournamentSort(a,b){
 
     // console.log(a,b);
