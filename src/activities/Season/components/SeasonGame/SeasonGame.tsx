@@ -8,7 +8,14 @@ import {Player, SeasonGameTeam, SeasonMode, SeasonStats, Team} from "../../utils
 import PlayerCard from "../../../../components/PlayerCard";
 import {styles} from "../../../Tournament/Tournament";
 import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
-import {calcPercents, getClasses, getPlayerShortenPosition, nth, toPascalCase} from "../../../../helpers/utils";
+import {
+    calcPercents,
+    getClasses,
+    getPlayerShortenPosition,
+    isDefined,
+    nth,
+    toPascalCase
+} from "../../../../helpers/utils";
 import ButtonInput from "../../../../components/inputs/ButtonInput";
 import './SeasonGame.scss';
 import TextInput from "../../../../components/inputs/TextInput";
@@ -342,8 +349,22 @@ function SeasonGame({ match }: any){
             const played = store.teamsData.totals.totalPlayedGames;
             const total = store.teamsData.totals.totalGames;
 
+
+            // @ts-ignore
+            const { total_comebacks, total_knockouts, total_overtimes, days_since_last_knockout, games_since_last_knockout, last_knockout_by, last_knockout_on } = store.teamsData;
+            let moreStats = undefined;
+            if (isDefined(total_overtimes)) {
+                moreStats = `Comebacks: ${total_comebacks} | Knockouts: ${total_knockouts} | Overtimes: ${total_overtimes}`;
+                if (days_since_last_knockout !== -1) {
+                    moreStats += `<br><b>Last Knockout:</b> by <u>${last_knockout_by}</u> on the head of <u>${last_knockout_on}</u>, ${days_since_last_knockout} days ago, ${games_since_last_knockout} games ago`;
+                }
+            }
+
             return (
-                <span style={{ fontWeight: "normal" }}><b>Total Played Games:</b> {played}/{total} - {calcPercents(played, total, 0)}% | <b>Remaining Games:</b> {store.teamsData.totals.remainingGames}</span>
+                <div className="flex-column">
+                    <span style={{ fontWeight: "normal" }}><b>Total Played Games:</b> {played}/{total} - {calcPercents(played, total, 0)}% | <b>Remaining Games:</b> {store.teamsData.totals.remainingGames}</span>
+                    {!!moreStats && <span style={{ fontWeight: "normal" }} dangerouslySetInnerHTML={{ __html: moreStats }}/>}
+                </div>
             )
         }
 
