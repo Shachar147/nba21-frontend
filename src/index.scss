@@ -89,8 +89,16 @@ ul li.arrow:before {
   font-weight: bold;
 }
 
+.align-items-start {
+  align-items: start;
+}
+
 .align-items-center {
   align-items: center;
+}
+
+.justify-content-start {
+  justify-content: start;
 }
 
 .justify-content-center {

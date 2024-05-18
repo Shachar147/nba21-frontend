@@ -1,73 +1,97 @@
-import React from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 import Logo from "@components/layout/Logo";
 import {apiPut} from "@helpers/api";
 import Header from "@components/layout/Header";
+import DropdownInput from "../components/inputs/DropdownInput";
+import PlayersApiService from "../activities/shared/services/PlayersApiService";
+import TeamsApiService from "../activities/shared/services/TeamsApiService";
+import Card from "../components/Card";
+import ButtonInput from "../components/inputs/ButtonInput";
 
-export default class SyncPage extends React.Component {
+export default function SyncPage() {
 
-    constructor(props) {
-        super(props);
+    const [isMoving, setIsMoving] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
+    const [progress, setProgress] = useState(0);
 
-        this.state = {
-            syncing: false,
-            progress: 0,
-            state: {
-                teams: false,
-                players: false,
-                playersDetails: false,
-                ratings: false,
-            },
-            requests: [
-                '/team/sync',
-                '/player/sync',
-                '/team/sync/ratings',
-                '/playerdetails/sync/bulk/1',
-                '/playerdetails/sync/bulk/2',
-                '/playerdetails/sync/bulk/3',
-                '/playerdetails/sync/bulk/4',
-                '/playerdetails/sync/bulk/5',
-                '/playerdetails/sync/bulk/6',
-                '/playerdetails/sync/bulk/7',
-                '/playerdetails/sync/bulk/8',
-                '/playerdetails/sync/bulk/9',
-                '/playerdetails/sync/bulk/10',
-                '/playerdetails/sync/bulk/11',
-                '/playerdetails/sync/bulk/12',
-                '/playerdetails/sync/bulk/13',
-                '/playerdetails/sync/bulk/14',
-                '/playerdetails/sync/bulk/15',
-                '/playerdetails/sync/bulk/16',
-                '/playerdetails/sync/bulk/17',
-                '/playerdetails/sync/bulk/18',
-                '/playerdetails/sync/bulk/19',
-                '/playerdetails/sync/bulk/20',
-                '/playerdetails/sync/bulk/21',
-                '/playerdetails/sync/bulk/22',
-                '/playerdetails/sync/bulk/23',
-                '/playerdetails/sync/bulk/24',
-                '/playerdetails/sync/bulk/25',
-            ],
-            names: [
-                'Teams',
-                'Players',
-                '2K-Ratings',
-            ],
-            real_stats: 0,
-            synced: [],
-            failed: [],
-        };
+    const [state, setState] = useState({
+        state: {
+            teams: false,
+            players: false,
+            playersDetails: false,
+            ratings: false,
+        },
+        requests: [
+            '/team/sync',
+            '/player/sync',
+            '/team/sync/ratings',
+            '/playerdetails/sync/bulk/1',
+            '/playerdetails/sync/bulk/2',
+            '/playerdetails/sync/bulk/3',
+            '/playerdetails/sync/bulk/4',
+            '/playerdetails/sync/bulk/5',
+            '/playerdetails/sync/bulk/6',
+            '/playerdetails/sync/bulk/7',
+            '/playerdetails/sync/bulk/8',
+            '/playerdetails/sync/bulk/9',
+            '/playerdetails/sync/bulk/10',
+            '/playerdetails/sync/bulk/11',
+            '/playerdetails/sync/bulk/12',
+            '/playerdetails/sync/bulk/13',
+            '/playerdetails/sync/bulk/14',
+            '/playerdetails/sync/bulk/15',
+            '/playerdetails/sync/bulk/16',
+            '/playerdetails/sync/bulk/17',
+            '/playerdetails/sync/bulk/18',
+            '/playerdetails/sync/bulk/19',
+            '/playerdetails/sync/bulk/20',
+            '/playerdetails/sync/bulk/21',
+            '/playerdetails/sync/bulk/22',
+            '/playerdetails/sync/bulk/23',
+            '/playerdetails/sync/bulk/24',
+            '/playerdetails/sync/bulk/25',
+        ],
+        names: [
+            'Teams',
+            'Players',
+            '2K-Ratings',
+        ],
+        real_stats: 0,
+        synced: [],
+        failed: [],
+    })
 
-        this.sync = this.sync.bind(this);
-    }
+    const [selectedPlayer, setSelectedPlayer] = useState(undefined);
+    const [selectedTeam, setSelectedTeam] = useState(undefined);
+    const [allPlayers, setAllPlayers] = useState([]);
+    const [allTeams, setAllTeams] = useState([]);
 
-    sync() {
+    const [reRenderCounter, setReRenderCounter] = useState(0);
 
-        const { syncing, requests } = this.state;
+    useMemo(() => {
+        PlayersApiService.getAllPlayers().then((players) => {
+            setAllPlayers(players);
+            console.log('all players', players);
+        });
+    }, [reRenderCounter])
 
-        if (syncing) return;
+    useMemo(() => {
+        TeamsApiService.getAllTeams().then((teams) => {
+            setAllTeams(teams);
+            console.log('all teams', teams);
+        })
+    }, [reRenderCounter]);
 
-        this.setState({ syncing: true });
+    function sync() {
+
+        const { requests } = state;
+
+        if (isSyncing) {
+            return;
+        }
+
+        setIsSyncing(true);
 
         axios.defaults.timeout = 100000;
 
@@ -79,9 +103,11 @@ export default class SyncPage extends React.Component {
                     // success
                     console.log(res);
 
-                    let { progress, synced, names, failed, real_stats } = this.state;
+                    let { synced, names, failed, real_stats } = state;
 
-                    progress += Math.round((1/requests.length) * 100);
+                    let newProgress = progress;
+
+                    newProgress += Math.round((1/requests.length) * 100);
 
                     if (i >= 3) {
                         real_stats++;
@@ -95,38 +121,43 @@ export default class SyncPage extends React.Component {
                     }
 
                     if (synced.length + failed.length === names.length + 25){
-                        progress = 100;
+                        newProgress = 100;
                     }
-                    if (progress > 100) { progress = 100; }
+                    if (newProgress > 100) { newProgress = 100; }
 
-                    this.setState({ progress, synced, real_stats });
+                    setProgress(newProgress);
+
+                    setState({ ...state, synced, real_stats });
                 },
                 (err) => {
                     // error
                     console.log(err);
 
-                    let { progress, synced, names, failed, real_stats } = this.state;
+                    let { synced, names, failed, real_stats } = state;
+                    let newProgress = progress;
 
-                    progress += Math.round((1/requests.length) * 100);
+                    newProgress += Math.round((1/requests.length) * 100);
 
                     if (i >= 3) {
                         real_stats++;
 
-                        if (failed.indexOf("Real-Stats") === -1) {
+                        // if (failed.indexOf("Real-Stats") === -1) {
                             failed.push("Real-Stats");
-                        }
+                        // }
                     }
                     else {
                         failed.push(names[i]);
                     }
 
                     if (synced.length + failed.length === names.length + 25){
-                        progress = 100;
+                        newProgress = 100;
                     }
 
-                    if (progress > 100) { progress = 100; }
+                    if (newProgress > 100) { newProgress = 100; }
 
-                    this.setState({ progress, failed, real_stats });
+                    setProgress(newProgress);
+
+                    setState({ ...state, failed, real_stats });
                 },
                 function() {
                     // finally
@@ -135,13 +166,13 @@ export default class SyncPage extends React.Component {
         }
     }
 
-    render() {
+    function render() {
 
-        const { syncing, progress, synced, failed } = this.state;
+        const { synced, failed } = state;
 
-        let buttonStyle = (syncing) ? { opacity: 0.6 , cursor: "default", width: "150px", margin: "auto" } : { width: "150px", margin: "auto" };
+        let buttonStyle = (isSyncing) ? { opacity: 0.6 , cursor: "default", width: "150px", margin: "auto" } : { width: "150px", margin: "auto" };
 
-        const progress_bar = (syncing) ? (
+        const progress_bar = (isSyncing) ? (
             <div className="ui indicating progress">
                 <div className="bar" style={{ background: "#F10B45", transitionDuration: "300ms", width: progress + "%" }} />
                 <div className="label" style={{ margin: "8px 0px" }}>
@@ -150,11 +181,101 @@ export default class SyncPage extends React.Component {
                         (<div style={{ marginTop: "5px", fontWeight:"normal" }}>Already Synced: {synced.join(", ")}</div>) : undefined
                     }
                     { (failed.length > 0) ?
-                        (<div style={{ marginTop: "5px", fontWeight:"normal" }}>Failed: {failed.join(", ")}</div>) : undefined
+                        (<div style={{ marginTop: "5px", fontWeight:"normal" }}>Failed: {[...new Set(failed)].join(", ")}</div>) : undefined
                     }
                 </div>
             </div>
         ) : null;
+
+        function renderSelectedPlayerCard(){
+            const player = allPlayers.find((p) => p.name === selectedPlayer.name);
+            return (
+                <div className="ui link cards centered" style={{ margin: "auto" }}>
+                    <Card
+                        name={`${selectedPlayer?.name}<br/>Currently on: ${player?.team?.name}`}
+                        picture={player?.picture}
+                        style={{ width: "160px" }}
+                        onDelete={() => setSelectedPlayer(undefined)}
+                    />
+                </div>
+            )
+        }
+
+        function renderSelectedTeamCard(){
+            const team = allTeams.find((t) => t.name === selectedTeam.name);
+            return (
+                <div className="ui link cards centered" style={{ margin: "auto" }}>
+                    <Card
+                        name={`${selectedTeam?.name}`}
+                        picture={team?.logo}
+                        style={{ width: "160px" }}
+                        onDelete={() => setSelectedTeam(undefined)}
+                    />
+                </div>
+            )
+        }
+
+        function renderManualSync(){
+            const options = allPlayers.map((player) => ({ name: player.name }));
+            const options2 = allTeams.map((team) => ({ name: team.name }));
+            return (
+                <div className="flex-col gap-4">
+                    <b>Manually move players to other teams:</b>
+                    <br/>
+                    <div className="manual-sync-container flex-row gap-16 align-items-start justify-content-center">
+                        <div className="flex-col gap-4" key={selectedPlayer?.name}>
+                            <DropdownInput
+                                options={(options)}
+                                name={"select_player"}
+                                placeholder={"Select Player..."}
+                                nameKey={"name"}
+                                sortKey={"name"}
+                                sort={"asc"}
+                                selectedOption={selectedPlayer}
+                                valueKey={"name"}
+                                idKey={"name"}
+                                style={{ width: "300px" }}
+                                disabled={options.length === 0}
+                                onChange={(player) => {
+                                    setSelectedPlayer(player)
+                                }}
+                            />
+                            {!!selectedPlayer && renderSelectedPlayerCard()}
+                        </div>
+                        <div style={{ height: 40, lineHeight: "30px" }}><b>To:</b></div>
+                        <div className="flex-col gap-4" key={selectedTeam?.name}>
+                            <DropdownInput
+                                options={(options2)}
+                                name={"select_team"}
+                                placeholder={"Select Team..."}
+                                nameKey={"name"}
+                                sortKey={"name"}
+                                sort={"asc"}
+                                valueKey={"name"}
+                                idKey={"name"}
+                                selectedOption={selectedTeam}
+                                style={{ width: "300px" }}
+                                disabled={options2.length === 0}
+                                onChange={(team) => {
+                                    setSelectedTeam(team)
+                                }}
+                            />
+                            {!!selectedTeam && renderSelectedTeamCard()}
+                        </div>
+                    </div>
+                    <ButtonInput
+                        text={isMoving ? "Moving..." : "Move"}
+                        disabled={!selectedTeam || !selectedPlayer || isMoving}
+                        onClick={async (e) => {
+                            setIsMoving(true);
+                            await PlayersApiService.movePlayerToDifferentTeam(selectedPlayer.name, selectedTeam.name);
+                            setReRenderCounter(reRenderCounter+1);
+                            setIsMoving(false);
+                        }}
+                    />
+                </div>
+            )
+        }
 
         return (
             <div>
@@ -167,9 +288,11 @@ export default class SyncPage extends React.Component {
                                 Click on 'Sync' to sync app data with real stats, update teams and players details etc.
                                 <br/><br/>
                                 {progress_bar}
-                                { (syncing) ? (<div><br/><br/></div>) : "" }
+                                { (isSyncing) ? (<div><br/><br/></div>) : "" }
                                 { (failed.length > 0) ? (<div><br/><br/></div>) : "" }
-                                <div className="ui fluid large blue submit button" onClick={this.sync} style={buttonStyle}>Sync</div>
+                                <div className="ui fluid large blue submit button" onClick={() => sync()} style={buttonStyle}>Sync</div>
+                                <br/><br/>
+                                {renderManualSync()}
                             </div>
                         </div>
                     </div>
@@ -177,4 +300,6 @@ export default class SyncPage extends React.Component {
             </div>
         );
     }
+
+    return render();
 }
