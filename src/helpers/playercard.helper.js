@@ -18,7 +18,7 @@ function highlightMatchups(matchups_string, highlight_matchups) {
                     parts.forEach((part, idx2) => {
                         parts[idx2] = `<u><b>${part.replace('- ', '')}</b></u>`;
                     });
-                    rows[idx] = `- ${parts.join(" - ")}`
+                    rows[idx] = `- ${parts.join(" - ")}`.replace("opacity-04","");
                 }
             });
         });
@@ -165,6 +165,22 @@ export function buildDetails(details, stats){
     total_diff_per_game = total_diff_per_game || 'N/A';
     if(total_win_percents === 0) total_win_percents = "0.00%";
 
+    function buildMacthups(matchups) {
+        const arr = Object.keys(matchups).sort((a, b) => {
+            if (matchups[b].total === matchups[a].total) {
+                return matchups[b].win - matchups[a].win;
+            }
+            return matchups[b].total - matchups[a].total;
+        }).map((teamName) => {
+            let row = `- ${teamName} - ${matchups[teamName].win}W - ${matchups[teamName].lose}L`;
+            if (matchups[teamName].total === 3) {
+                row = '<span class="opacity-04">' + row + '</span>';
+            }
+            return row;
+        });
+        return `<br/>${arr.join("<br/>")}`;
+    }
+
     let settings = {
         '2K Rating': _2k_rating,
 
@@ -263,7 +279,7 @@ export function buildDetails(details, stats){
         'Total Tournaments': `${total_tournaments}`,
         'Total Championships': `${total_tournament_wins}`,
         'Total Matchups': `${total_matchups}`,
-        'Standing Against': matchups ? ("<br/>" + Object.keys(matchups).sort((a, b) => matchups[b].total - matchups[a].total).map((teamName) => `- ${teamName} - ${matchups[teamName].win}W - ${matchups[teamName].lose}L`).join("<br/>")) : undefined,
+        'Standing Against': matchups ? buildMacthups(matchups) : undefined,
         'Total Finals Appearances': total_finals_appearances,
         'Total Finals Appearances Percents': calcPercents(total_finals_appearances, total_tournaments),
         'Total Finals Wins Percents': calcPercents(total_tournament_wins, total_finals_appearances),
