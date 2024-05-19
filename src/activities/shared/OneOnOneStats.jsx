@@ -650,7 +650,7 @@ class OneOnOneStats extends React.Component {
                                     total_tournaments: records[player.name].total_tournaments,
                                     total_tournament_wins: records[player.name].total_tournament_wins,
                                     total_matchups: (records[player.name]['matchups']) ? Object.keys(records[player.name]['matchups']).length : undefined,
-                                    total_won_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win > m.lose && m.total === 3).length : undefined,
+                                    total_won_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win > m.lose && m.total >= 2).length : undefined,
                                     total_lost_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win < m.lose && m.total >= 2).length : undefined,
                                     total_tied_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win === m.lose).length : undefined,
                                     total_ot_wins: records[player.name].total_ot_wins,
