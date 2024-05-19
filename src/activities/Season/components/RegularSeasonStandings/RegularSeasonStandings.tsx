@@ -5,6 +5,7 @@ import {winsAndMatchupsSort} from "../../../../helpers/sort";
 import StatsTableInner from "../../../../components/StatsTableInner";
 import {nth} from "../../../../helpers/utils";
 import SeasonGameStore from "../../stores/SeasonGameStore";
+import './RegularSeasonStandings.scss';
 
 interface RegularSeasonStandingsProps {
     stats: SeasonStats;
@@ -52,7 +53,14 @@ function RegularSeasonStandings({ stats, teamsData, mode, teamsByName, store }: 
             textDecorationStyle += ' strike-through nba-red-color'
         }
 
-        return `<div class="flex-row align-items-center gap-4${textDecorationStyle}"><img src=${teamLogo} width="24" height="24" class="border-50-percents"/> ${teamName}</div>`;
+        let secured = "";
+        let isSecured = "";
+        if (teamsData.insights?.find((i) => i.includes("Secured"))?.includes(teamName)) {
+            secured += '<div title="secured a playoff spot!">🔒</div>';
+            isSecured += ' secured-playoff';
+        }
+
+        return `<div class="flex-row align-items-center gap-4${textDecorationStyle}${isSecured}"><img src=${teamLogo} width="24" height="24" class="border-50-percents"/> ${teamName} ${secured}</div>`;
     }
 
     function isTeamWon(x: ISeasonGame, teamName: string) {
@@ -149,10 +157,29 @@ function RegularSeasonStandings({ stats, teamsData, mode, teamsByName, store }: 
         )
     }
 
+    function renderInsights() {
+        const securedInsight = teamsData.insights?.find((i) => i.includes("Secured"));
+        let insights = [];
+        if (securedInsight) {
+            const parts = securedInsight.split(":");
+            insights.push(
+                <div><b>{parts[0]}</b>: {parts[1]}</div>
+            );
+        }
+        if (store.team1Name && store.team2Name) {
+            insights.push(...(teamsData.insights?.filter((i) => i !== securedInsight && (i.includes(store.team1Name) || i.includes(store.team2Name))) ?? []).map((s) => <span className="nba-red-color">{s}</span>));
+        }
+
+        return (
+            <div className="flex-column">{insights.map((s) => <span>{s}</span>)}</div>
+        )
+    }
+
     return (
         <div>
             <div className="ui header margin-top-10">{mode} Standings</div>
             {getMvpContenders()}
+            {renderInsights()}
             <StatsTableInner
                 cols={['Standing', 'Team', 'G', 'W', 'L', 'GB', 'Last 10 Games', 'MVPs']}
                 stats={standingStats}
