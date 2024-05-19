@@ -167,7 +167,9 @@ function RegularSeasonStandings({ stats, teamsData, mode, teamsByName, store }: 
             );
         }
         if (store.team1Name && store.team2Name) {
-            insights.push(...(teamsData.insights?.filter((i) => i !== securedInsight && (i.includes(store.team1Name) || i.includes(store.team2Name))) ?? []).map((s) => <span className="nba-red-color">{s}</span>));
+            const team1: string = store.team1Name;
+            const team2: string = store.team2Name;
+            insights.push(...(teamsData.insights?.filter((i) => i !== securedInsight && (i.includes(team1) || i.includes(team2))) ?? []).map((s) => <span className="nba-red-color">{s}</span>));
         }
 
         return (
