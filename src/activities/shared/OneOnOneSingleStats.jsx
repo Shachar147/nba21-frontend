@@ -15,6 +15,7 @@ import {
 import ButtonInput from "@components/inputs/ButtonInput";
 import {buildGeneralStats, BuildStatsTable} from "./OneOnOneHelper";
 import AxisGraph from "../../components/layout/AxisGraph";
+import {arrangeLowHighScoresRecords} from "./OneOnOneStats";
 
 export function getGraphDataPoints(games, selected_player){
     let dataPoints = [];
@@ -458,6 +459,14 @@ export default class OneOnOneSingleStats extends React.Component {
         }
 
         const { player } = this.state;
+
+        let { highest_scored_win,
+            highest_scored_lost,
+            highest_combined_scored_game,
+            lowest_scored_win,
+            lowest_scored_lost,
+            lowest_combined_scored_game } = arrangeLowHighScoresRecords(records, player, this.props.game_mode, true)
+
         const _2k_rating = player['_2k_rating'] || 'N/A';
         let player_block = (
              <PlayerCard
@@ -550,10 +559,19 @@ export default class OneOnOneSingleStats extends React.Component {
                     total_tournament_wins: records.total_tournament_wins,
 
                     // season
+                    matchups: game_mode === 'Season' ? records['matchups'] : undefined,
+                    highlight_matchups: game_mode === 'Season' ? records['highlight_matchups'] : undefined,
                     total_matchups: (records['matchups']) ? Object.keys(records['matchups']).length : undefined,
-                    total_won_matchups: (records['matchups']) ? Object.values(records['matchups']).filter((m) => m.win > m.lose && m.total === 3).length : undefined,
+                    total_won_matchups: (records['matchups']) ? Object.values(records['matchups']).filter((m) => m.win > m.lose && m.total >= 2).length : undefined,
                     total_lost_matchups: (records['matchups']) ? Object.values(records['matchups']).filter((m) => m.win < m.lose && m.total >= 2).length : undefined,
                     total_tied_matchups: (records['matchups']) ? Object.values(records['matchups']).filter((m) => m.win === m.lose).length : undefined,
+
+                    highest_scored_win,
+                    highest_scored_lost,
+                    highest_combined_scored_game,
+                    lowest_scored_win,
+                    lowest_scored_lost,
+                    lowest_combined_scored_game
                 }}
             />
         );

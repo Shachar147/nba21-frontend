@@ -211,8 +211,15 @@ export function buildDetails(details, stats){
         total_won_matchups,
         total_lost_matchups,
         total_tied_matchups,
-        highlight_matchups
+        highlight_matchups,
+        highest_scored_win,
+        highest_scored_lost,
+        highest_combined_scored_game,
+        lowest_scored_win,
+        lowest_scored_lost,
+        lowest_combined_scored_game,
     } = stats;
+
 
     const total_games_with_overtime = (total_ot_wins ?? 0) + (total_ot_lost ?? 0);
 
@@ -340,6 +347,12 @@ export function buildDetails(details, stats){
         'Total Finals Appearances': total_finals_appearances,
         'Total Finals Appearances Percents': calcPercents(total_finals_appearances, total_tournaments),
         'Total Finals Wins Percents': calcPercents(total_tournament_wins, total_finals_appearances),
+        'Highest Scored Win': highest_scored_win,
+        'Highest Scored Lost': highest_scored_lost,
+        'Highest Combined Scored Game': highest_combined_scored_game,
+        'Lowest Scored Win': lowest_scored_win,
+        'Lowest Scored Lost': lowest_scored_lost,
+        'Lowest Combined Scored Game': lowest_combined_scored_game,
     };
 
     // on fire / ice cold
@@ -369,7 +382,25 @@ export function buildDetails(details, stats){
                     else {
                         settings[name] = highlightMatchups(settings[name], highlight_matchups);
                     }
-                } else {
+                }
+                if ([
+                    'Highest Combined Scored Game',
+                    'Lowest Combined Scored Game'].includes(name)) {
+                    const row = settings[name];
+                    const parts = row.split('<br/>');
+                    parts[0] = `<b><u>${parts[0]}</u></b>`
+                    settings[name] = parts.join("<br/>");
+                }
+                else if (['Highest Scored Win',
+                    'Highest Scored Lost',
+                    'Lowest Scored Win',
+                    'Lowest Scored Lost',].includes(name)) {
+                    const row = settings[name];
+                    const parts = row.split(' - ');
+                    parts[0] = `<b><u>${parts[0]}</u></b>`
+                    settings[name] = parts.join(" - ");
+                }
+                else {
                     settings[name] = `<b><u>${settings[name]}</u></b>`
                 }
             }
@@ -491,6 +522,13 @@ export function buildDetails(details, stats){
     if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Appearances: ${settings['Total Finals Appearances']}`);
     if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Wins Percents: ${settings['Total Finals Wins Percents']}% (${total_tournament_wins} championships / ${total_finals_appearances} finals)`);
     if (isDefined(total_finals_appearances)) stats_arr.push(`Total Finals Appearances Percents: ${settings['Total Finals Appearances Percents']}% (${total_finals_appearances} finals / ${total_tournaments} tournaments)`);
+
+    if (isDefined(highest_scored_win)) stats_arr.push(`Highest Scored Win: ${settings['Highest Scored Win']}`);
+    if (isDefined(highest_scored_lost)) stats_arr.push(`Highest Scored Lost: ${settings['Highest Scored Lost']}`);
+    if (isDefined(highest_combined_scored_game)) stats_arr.push(`Highest Combined Scored Game: ${settings['Highest Combined Scored Game']}`);
+    if (isDefined(lowest_scored_win)) stats_arr.push(`Lowest Scored Win: ${settings['Lowest Scored Win']}`);
+    if (isDefined(lowest_scored_lost)) stats_arr.push(`Lowest Scored Lost: ${settings['Lowest Scored Lost']}`);
+    if (isDefined(lowest_combined_scored_game)) stats_arr.push(`Lowest Combined Scored Game: ${settings['Lowest Combined Scored Game']}`);
 
     // highlighted items first
     let first = [];
