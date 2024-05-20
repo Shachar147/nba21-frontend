@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/shared/OneOnOneStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/sort.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/sort.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/RegularSeasonStandings.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/RegularSeasonStandings.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,6 +217,7 @@
       <workItem from="1715579859474" duration="7601000" />
       <workItem from="1715711854328" duration="2915000" />
       <workItem from="1715842460843" duration="6211000" />
+      <workItem from="1716187313506" duration="159000" />
     </task>
     <servers />
   </component>
@@ -266,7 +267,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/helpers/sort.js</url>
           <line>50</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

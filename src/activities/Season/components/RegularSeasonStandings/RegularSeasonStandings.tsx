@@ -59,6 +59,9 @@ function RegularSeasonStandings({ stats, teamsData, mode, teamsByName, store }: 
             secured += '<div title="secured a playoff spot!">🔒</div>';
             isSecured += ' secured-playoff';
         }
+        else if (teamsData.insights?.find((i) => i.includes("out of playoff"))?.includes(teamName)) {
+            isSecured = " out-of-playoff";
+        }
 
         return `<div class="flex-row align-items-center gap-4${textDecorationStyle}${isSecured}"><img src=${teamLogo} width="24" height="24" class="border-50-percents"/> ${teamName} ${secured}</div>`;
     }

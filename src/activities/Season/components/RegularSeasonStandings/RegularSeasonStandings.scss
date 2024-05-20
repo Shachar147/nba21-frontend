@@ -1,3 +1,7 @@
 tr:has(.secured-playoff){
   background-color: aliceblue;
 }
+
+tr:has(.out-of-playoff){
+  background-color: rosybrown;
+}
