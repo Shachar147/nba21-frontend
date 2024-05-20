@@ -101,6 +101,17 @@ export function winsAndMatchupsSort(a, b){
     // return 0;
 }
 
+function getValue(obj, key) {
+    return obj[key].split('-')[0].trim().split('<br/>')[0].trim()
+}
+
+export function highestLowestScoresSort(key, desc = true, a, b) {
+    if (desc) {
+        return Number(getValue(a, key)) - Number(getValue(b, key))
+    }
+    return Number(getValue(b, key)) - Number(getValue(a, key))
+}
+
 export function wonMatchupsSort(a, b){
 
     // sort

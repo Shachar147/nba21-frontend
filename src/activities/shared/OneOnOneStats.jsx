@@ -30,7 +30,6 @@ import OneOnOneSingleStats, {getGraphDataPoints} from "./OneOnOneSingleStats";
 import './OneOnOneStats.scss';
 
 // @ts-ignore
-import { withRouter } from "react-router";
 import {
     OVERALL_WINS_HIGHLIGHTS,
     winsAndMatchupsSort,
@@ -38,10 +37,98 @@ import {
     totalGamesWithOTSort,
     totalOTLostSort,
     totalOTWinsPercentSort,
-    totalOTWinsSort, wonMatchupsSort, lostMatchupsSort, tieMatchupsSort
+    totalOTWinsSort, wonMatchupsSort, lostMatchupsSort, tieMatchupsSort, highestLowestScoresSort
 } from "../../helpers/sort";
 import {DEFAULT_SEASON_STATS_ORDER} from "../../helpers/consts";
 import AxisGraph from "../../components/layout/AxisGraph";
+
+export function arrangeLowHighScoresRecords(records, player, game_mode, is_single_stats = false){
+    let highest_scored_win,
+        highest_scored_lost,
+        highest_combined_scored_game,
+        lowest_scored_win,
+        lowest_scored_lost,
+        lowest_combined_scored_game;
+
+    let hsw = 0, hsl = 0, hcsg = 0, lsw = 1000, lsl = 1000, lcsg = 1000;
+
+    const arr = is_single_stats ? records : records[player.name];
+
+    if (game_mode === "Season") {
+        arr["records"].forEach((game) => {
+            const {team1_name, team2_name, is_comeback, total_overtimes} = game;
+
+            let { score1, score2 } = game;
+
+            let other_team_name = team2_name;
+            if (team2_name === player.name) {
+                let temp = score1;
+                score1 = score2;
+                score2 = temp;
+                other_team_name = team1_name;
+            }
+            const is_winner = score1 > score2;
+
+            let moreInfo = [];
+            if (is_comeback) {
+                moreInfo.push("comeback");
+            }
+            if (total_overtimes > 0) {
+                moreInfo.push(`${total_overtimes} ot`);
+            }
+
+            const moreInfoContent = moreInfo.join(" | ");
+            const moreInfoBlock = moreInfo?.length > 0 ? `<span class="opacity-04">(${moreInfoContent})</span><br/>` : "";
+            const moreInfoBlockSameLine = moreInfoContent ? ` | ${moreInfoContent}` : "";
+
+            if (is_winner) {
+                if (score1 > hsw) {
+                    hsw = score1;
+                    highest_scored_win = `${score1} - ${score2}<br/>${moreInfoBlock}<span class="opacity-04">(vs ${other_team_name})</span>`;
+                }
+                if (score1 < lsw) {
+                    lsw = score1;
+                    lowest_scored_win = `${score1} - ${score2}<br/>${moreInfoBlock}<span class="opacity-04">(vs ${other_team_name})</span>`;
+                }
+            } else {
+                if (score1 > hsl) {
+                    hsl = score1;
+                    highest_scored_lost = `${score1} - ${score2}<br/>${moreInfoBlock}<span class="opacity-04">(vs ${other_team_name})</span>`;
+                }
+                if (score1 < lsl) {
+                    lsl = score1;
+                    lowest_scored_lost = `${score1} - ${score2}<br/>${moreInfoBlock}<span class="opacity-04">(vs ${other_team_name})</span>`;
+                }
+            }
+
+            if (score1 + score2 > hcsg) {
+                hcsg = score1 + score2;
+                highest_combined_scored_game = `${score1 + score2}<br/><span class="opacity-04">(${score1} - ${score2}${moreInfoBlockSameLine} | ${score1 > score2 ? 'won' : 'loss'})</span><br/><span class="opacity-04">(vs ${other_team_name})</span>`;
+            }
+
+            if (score1 + score2 < lcsg) {
+                lcsg = score1 + score2;
+                lowest_combined_scored_game = `${score1 + score2}<br/><span class="opacity-04">(${score1} - ${score2}${moreInfoBlockSameLine} | ${score1 > score2 ? 'won' : 'loss'})</span><br/><span class="opacity-04">(vs ${other_team_name})</span>`;
+            }
+        })
+    }
+
+    arr.highest_scored_win = highest_scored_win;
+    arr.highest_scored_lost = highest_scored_lost;
+    arr.highest_combined_scored_game = highest_combined_scored_game;
+    arr.lowest_scored_win = lowest_scored_win;
+    arr.lowest_scored_lost = lowest_scored_lost;
+    arr.lowest_combined_scored_game = lowest_combined_scored_game;
+
+    return {
+        highest_scored_win,
+        highest_scored_lost,
+        highest_combined_scored_game,
+        lowest_scored_win,
+        lowest_scored_lost,
+        lowest_combined_scored_game
+    };
+}
 
 class OneOnOneStats extends React.Component {
 
@@ -200,6 +287,12 @@ class OneOnOneStats extends React.Component {
             this.state.orderByOptions.push({ 'Total Matchups Won': wonMatchupsSort });
             this.state.orderByOptions.push({ 'Total Matchups Lost': lostMatchupsSort });
             this.state.orderByOptions.push({ 'Total Matchups Tied': tieMatchupsSort });
+            this.state.orderByOptions.push({ 'Highest Scored Win': (a, b) => highestLowestScoresSort('highest_scored_win', false, a, b) });
+            this.state.orderByOptions.push({ 'Highest Scored Lost': (a, b) => highestLowestScoresSort('highest_scored_lost', false, a, b) });
+            this.state.orderByOptions.push({ 'Highest Combined Scored Game': (a, b) => highestLowestScoresSort('highest_combined_scored_game', false, a, b) });
+            this.state.orderByOptions.push({ 'Lowest Scored Win': (a, b) => highestLowestScoresSort('lowest_scored_win', false, a, b) });
+            this.state.orderByOptions.push({ 'Lowest Scored Lost': (a, b) => highestLowestScoresSort('lowest_scored_lost', false, a, b) });
+            this.state.orderByOptions.push({ 'Lowest Combined Scored Game': (a, b) => highestLowestScoresSort('lowest_combined_scored_game', false, a, b) });
         }
 
         this.applyFilters = this.applyFilters.bind(this);
@@ -554,6 +647,13 @@ class OneOnOneStats extends React.Component {
                                         (this.state.orderBy === 'Wins & Matchups') ? OVERALL_WINS_HIGHLIGHTS :
                                     (this.state.orderBy === 'Overall') ? OVERALL_HIGHLIGHTS : [this.state.orderBy];
 
+                        let { highest_scored_win,
+                            highest_scored_lost,
+                            highest_combined_scored_game,
+                            lowest_scored_win,
+                            lowest_scored_lost,
+                            lowest_combined_scored_game } = arrangeLowHighScoresRecords(records, player, this.props.game_mode)
+
                         return (<PlayerCard
                                 key={idx}
                                 style={{}}
@@ -649,15 +749,24 @@ class OneOnOneStats extends React.Component {
                                     // tournament
                                     total_tournaments: records[player.name].total_tournaments,
                                     total_tournament_wins: records[player.name].total_tournament_wins,
+                                    total_ot_wins: records[player.name].total_ot_wins,
+                                    total_ot_lost: records[player.name].total_ot_lost,
+                                    total_finals_appearances: records[player.name].total_finals_appearances,
+
+                                    // season
+                                    matchups: game_mode === 'Season' ? records[player.name]['matchups'] : undefined,
+                                    highlight_matchups: game_mode === 'Season' ? records[player.name]['highlight_matchups'] : undefined,
                                     total_matchups: (records[player.name]['matchups']) ? Object.keys(records[player.name]['matchups']).length : undefined,
                                     total_won_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win > m.lose && m.total >= 2).length : undefined,
                                     total_lost_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win < m.lose && m.total >= 2).length : undefined,
                                     total_tied_matchups: (records[player.name]['matchups']) ? Object.values(records[player.name]['matchups']).filter((m) => m.win === m.lose).length : undefined,
-                                    total_ot_wins: records[player.name].total_ot_wins,
-                                    total_ot_lost: records[player.name].total_ot_lost,
-                                    total_finals_appearances: records[player.name].total_finals_appearances,
-                                    matchups: game_mode === 'Season' ? records[player.name]['matchups'] : undefined,
-                                    highlight_matchups: game_mode === 'Season' ? records[player.name]['highlight_matchups'] : undefined
+
+                                    highest_scored_win,
+                                    highest_scored_lost,
+                                    highest_combined_scored_game,
+                                    lowest_scored_win,
+                                    lowest_scored_lost,
+                                    lowest_combined_scored_game
                                 }}
 
                                 onImageClick={() => {
