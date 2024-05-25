@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/loaders/beardfinal.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/loaders/butler.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/loaders/curry-over-the-defense.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/loaders/curry-swish.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/loaders/curry-yellow.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/loaders/ja-morant.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/loaders/trae-young.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/loaders/wemby.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SemiFinalsStandings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SemiFinalsStandings.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/consts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/consts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/SeasonGame/SeasonGame.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
