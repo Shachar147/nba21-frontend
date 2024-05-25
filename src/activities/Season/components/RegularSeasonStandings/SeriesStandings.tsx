@@ -120,7 +120,19 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
     function getTeamCell(teamName: string, totalWins: number, otherTeamWins: number): string {
         const teamLogo = teamsByName[teamName].logo;
 
-        const teamCell = `<div class="flex-row align-items-center"><img src=${teamLogo} width="24" height="24" class="border-50-percents"/> ${teamName} (${totalWins}W)</div>`;
+        const awards = [];
+        if (isTeamWonMvp(teamName, 'regularSeason')) {
+            awards.push(`<img src="/trophies/mvp.png" width="24" height="24" />`);
+        }
+        if (isTeamWonMvp(teamName, 'finals')) {
+            awards.push(`<img src="/trophies/fmvp.png" width="24" height="24" />`);
+        }
+        if (teamsData.winner && teamsData.isSeasonOver && teamsData.winner === teamName) {
+            awards.push(`<img src="/trophies/championship.png" width="24" height="24" />`);
+        }
+        const awardsBlock = awards.length > 0 ? `<span class='flex-row gap-4 margin-inline-start-4'>${awards.join("")}</span>` : "";
+
+        const teamCell = `<div class="flex-row align-items-center"><img src=${teamLogo} width="24" height="24" class="border-50-percents"/> ${teamName} (${totalWins}W)${awardsBlock}</div>`;
         if (otherTeamWins == 4){
             return `<span class='strike-through nba-red-color'>${teamCell}</span>`;
         }
@@ -147,6 +159,14 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
         } else {
             return `${mvp} - ${mvps[mvp]},<br/>${secondMvp} - ${mvps[secondMvp]}`;
         }
+    }
+
+    function isTeamWonMvp(teamName: string, mvpType: 'regularSeason' | 'finals'){
+        const rMvp = mvpType === 'regularSeason' ? teamsData.regularSeasonMvpName : teamsData.finalsMvpName;
+        if (!rMvp) {
+            return false;
+        }
+        return !!teamsByName[teamName].players.find((player) => player.name == rMvp);
     }
 
     function getPlayerCell(playerName: string): React.ReactNode {
