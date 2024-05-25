@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/RegularSeasonStandings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/RegularSeasonStandings.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SeriesStandings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SeriesStandings.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/config.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/activities/Season/utils/interfaces.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/utils/interfaces.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +219,7 @@
       <workItem from="1715711854328" duration="2915000" />
       <workItem from="1715842460843" duration="6211000" />
       <workItem from="1716187313506" duration="5028000" />
-      <workItem from="1716653984074" duration="3299000" />
+      <workItem from="1716653984074" duration="6549000" />
     </task>
     <servers />
   </component>
