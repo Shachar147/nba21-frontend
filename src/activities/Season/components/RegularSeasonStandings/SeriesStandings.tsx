@@ -156,15 +156,19 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
         return (
             <div className="flex-row align-items-center justify-content-center width-100-percents gap-4">
                 <b>Regular Season MVP:</b>
-                <img src={playerLogo} width="28" height="24" className="border-50-percents"/>
+                <img src={playerLogo} width="36" height="24" className="border-50-percents"/>
                 <u><b><span>{playerName}</span></b></u>
             </div>
         );
     }
 
     function getMvpContenders(){
+        if (mode !== "Finals"){
+            return null;
+        }
+        let mvpBlock = null;
         if (teamsData.finalsMvpName) {
-            return getPlayerCell(teamsData.finalsMvpName);
+            mvpBlock = getPlayerCell(teamsData.finalsMvpName);
         }
         const mvps: Record<string, number> = {};
         const playerToTeam: Record<string, string> = {};
@@ -221,7 +225,10 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
         }
 
         return (
-            <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}</div>
+            <div className="flex-column">
+                {mvpBlock}
+                <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}</div>
+            </div>
         )
     }
 
