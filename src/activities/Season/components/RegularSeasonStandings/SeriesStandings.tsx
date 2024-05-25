@@ -149,9 +149,86 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
         }
     }
 
+    function getPlayerCell(playerName: string): React.ReactNode {
+        const allPlayers = Object.values(teamsByName).map((teamData) => teamData.players).flat();
+        const playerLogo = allPlayers.find((player) => player.name == playerName)?.picture;
+
+        return (
+            <div className="flex-row align-items-center justify-content-center width-100-percents gap-4">
+                <b>Regular Season MVP:</b>
+                <img src={playerLogo} width="28" height="24" className="border-50-percents"/>
+                <u><b><span>{playerName}</span></b></u>
+            </div>
+        );
+    }
+
+    function getMvpContenders(){
+        if (teamsData.finalsMvpName) {
+            return getPlayerCell(teamsData.finalsMvpName);
+        }
+        const mvps: Record<string, number> = {};
+        const playerToTeam: Record<string, string> = {};
+        teamsByStanding.slice(0,2).forEach((stat, idx) => {
+            const teamName = stat.teamName;
+            if (teamName) {
+                stat.records.forEach((game) => {
+                    if (isTeamWon(game, teamName) && game.mvp_player_name) {
+                        // mvps[game.mvp_player_name] = mvps[game.mvp_player_name] || 0;
+                        // mvps[game.mvp_player_name] += 1;
+
+                        mvps[game.mvp_player_name] = mvps[game.mvp_player_name] || 0;
+                        // mvps[game.mvp_player_name] += 1;
+                        mvps[game.mvp_player_name] +=
+                            Math.max(game.score1, game.score2) -
+                            Math.min(game.score1, game.score2);
+                        if (game.is_comeback) {
+                            mvps[game.mvp_player_name] += 3;
+                            mvps[game.mvp_player_name] += game.total_overtimes;
+                        }
+                        // knockout
+                        if (game.score1 == 0 || game.score2 == 0) {
+                            mvps[game.mvp_player_name] += 3;
+                        }
+
+                        playerToTeam[game.mvp_player_name] = teamName;
+                    }
+                });
+            }
+        });
+
+        const teams_order = teamsByStanding.map((x) => x.teamName);
+        const sorted_mvps = Object.keys(mvps).sort((a, b) => {
+            if (mvps[a] > mvps[b]){
+                return -1;
+            } else if (mvps[a] < mvps[b]) {
+                return 1;
+            }
+
+            const team1Standing = teams_order.indexOf(playerToTeam[a]);
+            const team2Standing = teams_order.indexOf(playerToTeam[b]);
+
+            if (team1Standing < team2Standing) {
+                return -1;
+            } else if (team1Standing > team2Standing) {
+                return 1;
+            }
+
+            return 0;
+        });
+
+        if (sorted_mvps.length == 0){
+            sorted_mvps.push("None");
+        }
+
+        return (
+            <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}</div>
+        )
+    }
+
     return (
         <div>
             <div className="ui header margin-top-10">{mode} Standings</div>
+            {getMvpContenders()}
             <StatsTableInner
                 cols={['#', 'Series', 'Notes', 'MVPs 1', 'MVPs 2']}
                 stats={standingStats}
