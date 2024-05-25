@@ -89,6 +89,7 @@ export interface NextGameDataResponse {
     semiFinalsStats?: any;
     finalsStats: any;
     regularSeasonMvpName?: string;
+    finalsMvpName?: string;
     insights?: string[];
 }
 
