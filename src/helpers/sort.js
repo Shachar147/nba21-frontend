@@ -51,8 +51,8 @@ export function overallSort(a,b){
 export function winsAndMatchupsSort(a, b){
 
     // first sort
-    const total1 = parseFloat(b['total_regular_season_wins']?.toString().replace('%', ''));
-    const total2 = parseFloat(a['total_regular_season_wins']?.toString().replace('%', ''));
+    const total1 = parseFloat(b['total_wins']?.toString().replace('%', ''));
+    const total2 = parseFloat(a['total_wins']?.toString().replace('%', ''));
 
     if (total1 > total2) return 1;
     else if (total1 < total2) return -1;
