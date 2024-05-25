@@ -370,7 +370,57 @@ export const LOADERS = {
         top: '20px',
         textColor: 'white',
     },
-}
+    'curry-yellow.gif': {
+        backgroundColor: "#F7CA3C",
+        top: '20px',
+        textColor: '#102031',
+    },
+    'curry-swish.gif': {
+        backgroundColor: "#F3C70E",
+        top: '20px',
+        textColor: '#102031',
+    },
+    'curry-over-the-defense.gif': {
+        backgroundColor: "#FFBF23",
+        top: '20px',
+        textColor: '#102031',
+    },
+    'wemby.gif': {
+        backgroundColor: "gray",
+        top: '20px',
+        textColor: '#102031',
+    },
+    'trae-young.gif': {
+        backgroundColor: "white",
+        top: '20px',
+        textColor: '#102031',
+    },
+    'beardfinal.gif': {
+        backgroundColor: "white",
+        top: '20px',
+        textColor: '#102031',
+    },
+    'ja-morant.gif': {
+        backgroundColor: "#A9D5E2",
+        top: '20px',
+        textColor: '#102031',
+    },
+    'lbj.gif': {
+        backgroundColor: "gold",
+        top: '20px',
+        textColor: 'purple',
+    },
+    'jamal.gif': {
+        backgroundColor: "#B61936",
+        top: '20px',
+        textColor: 'gold',
+    },
+    'butler.gif': {
+        backgroundColor: "#B61936",
+        top: '20px',
+        textColor: 'white',
+    },
+};
 export const LOADER_DETAILS = () => {
     const options = shuffle(Object.keys(LOADERS));
     let option = LOADERS[options[0]];

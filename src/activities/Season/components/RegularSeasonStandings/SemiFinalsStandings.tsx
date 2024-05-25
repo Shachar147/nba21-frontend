@@ -148,7 +148,7 @@ function SemiFinalsStandings({ stats, teamsData, mode, teamsByName, store, max=8
         }
         if (teamsData.winner && teamsData.isSeasonOver && teamsData.winner === teamName) {
             awards.push(`<img src="/trophies/championship.png" width="24" height="24" />`);
-        }fmvp (1).png
+        }
         const awardsBlock = awards.length > 0 ? `<span class='flex-row gap-4 margin-inline-start-4'>${awards.join("")}</span>` : "";
 
         const teamCell = `<div class="flex-row align-items-center"><img src=${teamLogo} width="24" height="24" class="border-50-percents"/> ${teamName} (${totalWins}W)${awardsBlock}</div>`;
