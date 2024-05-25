@@ -91,6 +91,7 @@ export interface NextGameDataResponse {
     regularSeasonMvpName?: string;
     finalsMvpName?: string;
     insights?: string[];
+    finalsInsights?: string[];
 }
 
 export interface MatchupsStats {

@@ -155,11 +155,25 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
 
         return (
             <div className="flex-row align-items-center justify-content-center width-100-percents gap-4">
-                <b>Regular Season MVP:</b>
+                <b>Finals MVP:</b>
                 <img src={playerLogo} width="36" height="24" className="border-50-percents"/>
                 <u><b><span>{playerName}</span></b></u>
             </div>
         );
+    }
+
+    function renderInsights() {
+        if (mode !== "Finals"){
+            return null;
+        }
+
+        let insights = teamsData.finalsInsights ?? [];
+        if (!insights.length) {
+            return null;
+        }
+        return (
+            <div className="flex-column" key={mode} id={mode}>{insights.map((s) => <span className="nba-red-color">{s}</span>)}</div>
+        )
     }
 
     function getMvpContenders(){
@@ -172,6 +186,13 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
         }
         const mvps: Record<string, number> = {};
         const playerToTeam: Record<string, string> = {};
+
+        const teamStats = {...stats};
+        Object.keys(teamStats).forEach((teamName) => {
+            teamStats[teamName]["teamName"] = teamName;
+        });
+        const teamsByStanding = Object.values(teamStats).sort(winsAndMatchupsSort);
+
         teamsByStanding.slice(0,2).forEach((stat, idx) => {
             const teamName = stat.teamName;
             if (teamName) {
@@ -236,6 +257,7 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
         <div>
             <div className="ui header margin-top-10">{mode} Standings</div>
             {getMvpContenders()}
+            {renderInsights()}
             <StatsTableInner
                 cols={['#', 'Series', 'Notes', 'MVPs 1', 'MVPs 2']}
                 stats={standingStats}
