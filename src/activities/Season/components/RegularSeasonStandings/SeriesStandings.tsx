@@ -3,7 +3,7 @@ import {observer} from "mobx-react";
 import {ISeasonGame, NextGameDataResponse, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
 import {winsAndMatchupsSort} from "../../../../helpers/sort";
 import StatsTableInner from "../../../../components/StatsTableInner";
-import {nth} from "../../../../helpers/utils";
+import {calcPercents, nth} from "../../../../helpers/utils";
 import SeasonGameStore from "../../stores/SeasonGameStore";
 import {ON_FIRE_COLOR} from "../../../../helpers/consts";
 
@@ -265,10 +265,15 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
             sorted_mvps.push("None");
         }
 
+        let total = 0;
+        Object.values(mvps).forEach((pts) => {
+            total += pts;
+        });
+
         return (
             <div className="flex-column">
                 {mvpBlock}
-                <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}</div>
+                <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts, ${calcPercents(mvps[x], total, 0)}%)`).slice(0, 3).join(", ")}</div>
             </div>
         )
     }
