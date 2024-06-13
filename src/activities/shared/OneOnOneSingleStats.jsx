@@ -223,7 +223,17 @@ export default class OneOnOneSingleStats extends React.Component {
         records.records.reverse().forEach((game) => {
 
             let { team1_name, team2_name, player1_name, player2_name } = game;
-            const { score1, score2, is_comeback, total_overtimes, mvp_player, addedAt } = game;
+            const { score1, score2, is_comeback, total_overtimes, addedAt } = game;
+            let { mvp_player } = game;
+
+            if (game_mode === "Tournament" || game_mode === "Season"){
+                if (!mvp_player) {
+                    mvp_player = {
+                        "name": game.mvp_player_name,
+                        "id": game.mvpPlayerId
+                    }
+                }
+            }
 
             player1_name = player1_name || team1_name;
             player2_name = player2_name || team2_name;
@@ -239,7 +249,7 @@ export default class OneOnOneSingleStats extends React.Component {
 
             const dt = formatDate(new Date(addedAt));
 
-            // 1on1, random
+            // 1on1, random, tournament, season
             if (player1_name && player2_name) {
 
                 const home_or_road = (player2_name === selected_player) ? "home game" : "road game";
@@ -247,7 +257,10 @@ export default class OneOnOneSingleStats extends React.Component {
                 const game_record = (score1 > score2) ? `${score1}-${score2}` : `${score2}-${score1}`;
                 const comeback = is_comeback ? "Comeback.<br/>" : "";
 
-                const mvp_name = (mvp_player && typeof(mvp_player) === 'object' && mvp_player.name) ? mvp_player.name : mvp_player;
+                let mvp_name = (mvp_player && typeof(mvp_player) === 'object' && mvp_player.name) ? mvp_player.name : mvp_player;
+                if (typeof(mvp_name) === 'object') {
+                    mvp_name = undefined;
+                }
 
                 const mvp = mvp_name ? `MVP: ${mvp_name}.<br/>` : "";
                 const overtimes = total_overtimes ? `Overtimes: ${total_overtimes}.<br/>` : "";
@@ -261,11 +274,13 @@ export default class OneOnOneSingleStats extends React.Component {
                 myscore = (player1_name === selected_player) ? score1 : score2;
                 opponent_score = (player1_name === selected_player) ? score2 : score1;
 
+                const game_mode = game.mode ? ` | ${game.mode}` : undefined;
+
                 option = `<div class="item">
                     <img class="ui avatar image" style="${style}" src="${opponent_image}">
                     <div class="content">
-                        <a class="header">${lost_or_won} ${game_record} against ${opponent} (${home_or_road})</a>
-                        <div class="description">${overtimes}${comeback}${mvp}Played at ${dt}</div>
+                        <a class="header">${lost_or_won} ${game_record} against ${opponent} (${home_or_road})${game_mode}</a>
+                        <div class="description">${overtimes}${comeback}${mvp}Played at ${dt} mvp:${mvp_name ?? "-"}</div>
                     </div>
                 </div>`;
             }
