@@ -159,9 +159,48 @@ function SemiFinalsStandings({ stats, teamsData, mode, teamsByName, store, max=8
         }
     }
 
+    function getPlayerCell(playerName: string): React.ReactNode {
+        const allPlayers = Object.values(teamsByName).map((teamData) => teamData.players).flat();
+        const playerLogo = allPlayers.find((player) => player.name == playerName)?.picture;
+
+        return (
+            <div className="flex-row align-items-center justify-content-center width-100-percents gap-4">
+                <b>Regular Season MVP:</b>
+                <img src={playerLogo} width="36" height="24" className="border-50-percents"/>
+                <u><b><span>{playerName}</span></b></u>
+            </div>
+        );
+    }
+
+    function getMvpContenders() {
+        if (mode === "SemiFinals") {
+            let mvpBlock = null;
+            if (teamsData.postSeasonMvpName) {
+                mvpBlock = getPlayerCell(teamsData.postSeasonMvpName);
+            }
+            const mvps = store.postSeasonMvpContenders?.mvps ?? {};
+            const sorted_mvps = store.postSeasonMvpContenders?.sorted_mvps ?? [];
+            const details = store.postSeasonMvpContenders?.details ?? {};
+            return (
+                <div className="flex-column">
+                    {mvpBlock}
+                    <div className="flex-row width-100-percents justify-content-center"><b>Post Season MVP
+                        Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x : `${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}
+                    </div>
+                    <div className="flex-row width-100-percents justify-content-center opacity-06">
+                        <b>Details:</b> &nbsp;{
+                        sorted_mvps.map((playerName) => `${playerName} (${details[playerName]['mvps']}w / ${details[playerName]['diff']}+- / ${details[playerName]['comebacks']}cb / ${details[playerName]['overtimes']}ot / ${details[playerName]['knockouts']}ko)`).slice(0, 3).join(", ")}
+                    </div>
+                </div>
+            )
+        }
+        return null;
+    }
+
     return (
         <div>
             <div className="ui header margin-top-10">{mode.replace("SemiFinals","Semi Finals")} Standings</div>
+            {getMvpContenders()}
             <StatsTableInner
                 cols={['#', 'Series', 'Notes', 'MVPs 1', 'MVPs 2']}
                 stats={standingStats}

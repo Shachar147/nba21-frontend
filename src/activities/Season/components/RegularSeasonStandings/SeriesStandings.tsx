@@ -177,6 +177,23 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
     }
 
     function getMvpContenders(){
+        if (mode === "Playoff") {
+            let mvpBlock = null;
+            if (teamsData.postSeasonMvpName) {
+                mvpBlock = getPlayerCell(teamsData.postSeasonMvpName);
+            }
+            const mvps = store.postSeasonMvpContenders?.mvps ?? {};
+            const sorted_mvps = store.postSeasonMvpContenders?.sorted_mvps ?? [];
+            const details = store.postSeasonMvpContenders?.details ?? {};
+            return (
+                <div className="flex-column">
+                    {mvpBlock}
+                    <div className="flex-row width-100-percents justify-content-center"><b>Post Season MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}</div>
+                    <div className="flex-row width-100-percents justify-content-center opacity-06"><b>Details:</b> &nbsp;{
+                        sorted_mvps.map((playerName) => `${playerName} (${details[playerName]['mvps']}w / ${details[playerName]['diff']}+- / ${details[playerName]['comebacks']}cb / ${details[playerName]['overtimes']}ot / ${details[playerName]['knockouts']}ko)`).slice(0, 3).join(", ")}</div>
+                </div>
+            )
+        }
         if (mode !== "Finals"){
             return null;
         }
