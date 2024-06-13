@@ -89,9 +89,26 @@ export interface NextGameDataResponse {
     semiFinalsStats?: any;
     finalsStats: any;
     regularSeasonMvpName?: string;
+    postSeasonMvpName?: string;
     finalsMvpName?: string;
     insights?: string[];
     finalsInsights?: string[];
+    postSeasonMvpContenders?: PostSeasonMvpContendersData;
+}
+
+export interface PostSeasonMvpContendersData {
+    mvps: Record<string, number>;
+    options: string[];
+    sorted_mvps: string[];
+    details: Record<string, PostSeasonMvpContendersDataDetails>
+}
+
+interface PostSeasonMvpContendersDataDetails {
+    mvps: number;
+    diff: number;
+    knockouts: number;
+    comebacks: number;
+    overtimes: number;
 }
 
 export interface MatchupsStats {

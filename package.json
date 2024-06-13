@@ -53,8 +53,9 @@
   },
   "scripts": {
     "start": "craco start",
-    "start:dev": "SET PORT=3001 && SET REACT_APP_MODE=development && craco start",
+    "start:dev:windows": "SET PORT=3001 && SET REACT_APP_MODE=development && craco start",
     "start:dev:mac": "PORT=3001 REACT_APP_MODE=development craco start",
+    "start:dev": "npm run start:dev:mac",
     "build": "craco build",
     "eject": "react-scripts eject",
     "storybook": "SET STORYBOOK_APP_MODE=development && start-storybook -p 6006 -s public",
