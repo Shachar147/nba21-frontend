@@ -122,13 +122,16 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
 
         const awards = [];
         if (isTeamWonMvp(teamName, 'regularSeason')) {
-            awards.push(`<img src="/trophies/mvp.png" width="24" height="24" />`);
+            awards.push(`<img src="/trophies/mvp.png" width="16" height="16" />`);
+        }
+        if (isTeamWonMvp(teamName, 'postSeason')) {
+            awards.push(`<img src="/trophies/post-season.png" width="16" height="16" />`);
         }
         if (isTeamWonMvp(teamName, 'finals')) {
-            awards.push(`<img src="/trophies/fmvp.png" width="24" height="24" />`);
+            awards.push(`<img src="/trophies/fmvp.png" width="16" height="16" />`);
         }
         if (teamsData.winner && teamsData.isSeasonOver && teamsData.winner === teamName) {
-            awards.push(`<img src="/trophies/championship.png" width="24" height="24" />`);
+            awards.push(`<img src="/trophies/championship.png" width="16" height="16" />`);
         }
         const awardsBlock = awards.length > 0 ? `<span class='flex-row gap-4 margin-inline-start-4'>${awards.join("")}</span>` : "";
 
@@ -161,8 +164,8 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
         }
     }
 
-    function isTeamWonMvp(teamName: string, mvpType: 'regularSeason' | 'finals'){
-        const rMvp = mvpType === 'regularSeason' ? teamsData.regularSeasonMvpName : teamsData.finalsMvpName;
+    function isTeamWonMvp(teamName: string, mvpType: 'regularSeason' | 'finals' | 'postSeason'){
+        const rMvp = mvpType === 'regularSeason' ? teamsData.regularSeasonMvpName : mvpType === 'postSeason' ? teamsData.postSeasonMvpName : teamsData.finalsMvpName;
         if (!rMvp) {
             return false;
         }
