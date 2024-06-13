@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SeriesStandings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/components/RegularSeasonStandings/SeriesStandings.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/activities/Season/utils/interfaces.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/activities/Season/utils/interfaces.ts" afterDir="false" />
-    </list>
+    <list default="true" id="b65de0ce-d2e5-460f-b107-a0a03b346c26" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,6 +58,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/loaders" />
+      <recent name="$PROJECT_DIR$/public/trophies" />
       <recent name="$PROJECT_DIR$/src/activities" />
       <recent name="C:\repos\node-js\nba21-frontend\src\activities" />
       <recent name="C:\repos\node-js\nba21-frontend\src\components" />
@@ -220,6 +218,17 @@
       <workItem from="1715842460843" duration="6211000" />
       <workItem from="1716187313506" duration="5028000" />
       <workItem from="1716653984074" duration="6549000" />
+      <workItem from="1716719258959" duration="597000" />
+      <workItem from="1717163213724" duration="3061000" />
+      <workItem from="1717354642006" duration="457000" />
+      <workItem from="1717355450220" duration="684000" />
+      <workItem from="1718110973132" duration="1070000" />
+      <workItem from="1718140973847" duration="683000" />
+      <workItem from="1718207318859" duration="909000" />
+      <workItem from="1718294863298" duration="344000" />
+      <workItem from="1718295804950" duration="3448000" />
+      <workItem from="1718309769815" duration="43000" />
+      <workItem from="1718309828491" duration="2221000" />
     </task>
     <servers />
   </component>

@@ -92,6 +92,13 @@ export interface NextGameDataResponse {
     finalsMvpName?: string;
     insights?: string[];
     finalsInsights?: string[];
+    postSeasonMvpContenders?: PostSeasonMvpContendersData;
+}
+
+export interface PostSeasonMvpContendersData {
+    mvps: Record<string, number>;
+    options: string[];
+    sorted_mvps: string[];
 }
 
 export interface MatchupsStats {
