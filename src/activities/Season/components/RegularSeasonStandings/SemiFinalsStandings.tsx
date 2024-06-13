@@ -211,7 +211,7 @@ function SemiFinalsStandings({ stats, teamsData, mode, teamsByName, store, max=8
                         Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x : `${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}
                     </div>
                     <div className="flex-row width-100-percents justify-content-center opacity-06">
-                        <b>Details:</b> &nbsp;{
+                        {
                         sorted_mvps.map((playerName) => `${playerName} (${details[playerName]['mvps']}w / ${details[playerName]['diff']}+- / ${details[playerName]['comebacks']}cb / ${details[playerName]['overtimes']}ot / ${details[playerName]['knockouts']}ko)`).slice(0, 3).join(", ")}
                     </div>
                 </div>
