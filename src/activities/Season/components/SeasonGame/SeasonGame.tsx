@@ -597,7 +597,11 @@ function SeasonGame({ match }: any){
 
         let advancedTeams: string[] = Object.keys(store.allTeamsByName);
         // @ts-ignore
-        const maxTeams = mode == 'Playoff' ? 8 : mode == 'SemiFinals' ? 4 : mode == 'Finals' ? 2 : undefined;
+        let maxTeams = mode == 'Playoff' ? 8 : mode == 'SemiFinals' ? 4 : mode == 'Finals' ? 2 : undefined;
+        if (store.teamsData?.isSeasonOver) {
+            maxTeams = 1;
+        }
+
         if (maxTeams) {
             // @ts-ignore
             const teamStats = mode == 'Playoff' ? store.regularSeasonStats : mode == 'SemiFinals' ? store.playoffStats : mode == 'Finals' ? store.semiStats : undefined;
@@ -617,7 +621,7 @@ function SeasonGame({ match }: any){
                 stats_title={undefined}
                 game_mode={game_mode}
                 get_route={"/team"}
-                get_stats_route={`/records/season/${seasonId}/stats?mode=Regular Season`} // ?mode=Regular Season
+                get_stats_route={`/records/season/${seasonId}/stats`} // ?mode=Regular Season
                 get_stats_specific_route={`${get_stats_specific_route}`} // ?mode=${mode}`} // ?mode=Regular Season
                 mvp_block={true}
                 onBack={() => { store.setViewStatsPage(false) }}

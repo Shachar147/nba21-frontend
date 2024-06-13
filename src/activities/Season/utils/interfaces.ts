@@ -119,6 +119,8 @@ export interface MatchupsStats {
 export interface SeasonTeamStats {
     total_games: number;
     total_wins: number;
+    total_regular_season_wins: number;
+    total_regular_season_lost: number;
     total_lost: number;
     total_win_percents: string;
     total_scored: number;
