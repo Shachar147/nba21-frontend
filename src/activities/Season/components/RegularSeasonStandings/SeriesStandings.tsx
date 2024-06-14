@@ -208,12 +208,22 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
             const mvps = store.postSeasonMvpContenders?.mvps ?? {};
             const sorted_mvps = store.postSeasonMvpContenders?.sorted_mvps ?? [];
             const details = store.postSeasonMvpContenders?.details ?? {};
+
+            const other_two = Object.keys(mvps).filter((k) => !sorted_mvps.includes(k)).sort((b, a) => mvps[a] - mvps[b]);
+
+            const currMode = store.teamsData?.mode;
+            const isSeasonOver = store.teamsData?.isSeasonOver;
+
             return (
                 <div className="flex-column">
                     {mvpBlock}
                     <div className="flex-row width-100-percents justify-content-center"><b>Post Season MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}</div>
                     <div className="flex-row width-100-percents justify-content-center opacity-06">{
                         sorted_mvps.map((playerName) => `${playerName} (${details[playerName]['mvps']}w / ${details[playerName]['diff']}+- / ${details[playerName]['comebacks']}cb / ${details[playerName]['overtimes']}ot / ${details[playerName]['knockouts']}ko)`).slice(0, 3).join(", ")}</div>
+                    {(currMode != "Finals" && !isSeasonOver) && <div className="flex-row width-100-percents justify-content-center opacity-06">
+                        <b>In the race:</b> &nbsp;{
+                        other_two.map((x) => `${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}
+                    </div>}
                 </div>
             )
         }
