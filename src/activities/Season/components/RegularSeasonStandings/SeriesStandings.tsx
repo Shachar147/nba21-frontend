@@ -221,7 +221,7 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
                     <div className="flex-row width-100-percents justify-content-center opacity-06">{
                         sorted_mvps.map((playerName) => `${playerName} (${details[playerName]['mvps']}w / ${details[playerName]['diff']}+- / ${details[playerName]['comebacks']}cb / ${details[playerName]['overtimes']}ot / ${details[playerName]['knockouts']}ko)`).slice(0, 3).join(", ")}</div>
                     {(currMode != "Finals" && !isSeasonOver) && <div className="flex-row width-100-percents justify-content-center opacity-06">
-                        <b>In the race:</b> &nbsp;{
+                        <b>On the race:</b> &nbsp;{
                         other_two.map((x) => `${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}
                     </div>}
                 </div>
