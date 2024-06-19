@@ -93,17 +93,18 @@ export interface NextGameDataResponse {
     finalsMvpName?: string;
     insights?: string[];
     finalsInsights?: string[];
-    postSeasonMvpContenders?: PostSeasonMvpContendersData;
+    postSeasonMvpContenders?: MvpContendersData;
+    regularSeasonMvpContenders?: MvpContendersData
 }
 
-export interface PostSeasonMvpContendersData {
+export interface MvpContendersData {
     mvps: Record<string, number>;
     options: string[];
     sorted_mvps: string[];
-    details: Record<string, PostSeasonMvpContendersDataDetails>
+    details: Record<string, MvpContendersDataDetails>
 }
 
-interface PostSeasonMvpContendersDataDetails {
+interface MvpContendersDataDetails {
     mvps: number;
     diff: number;
     knockouts: number;

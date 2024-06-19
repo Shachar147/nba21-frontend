@@ -1,5 +1,5 @@
 import {observable, action, runInAction, makeObservable, computed} from 'mobx';
-import {NextGameDataResponse, Player, PostSeasonMvpContendersData, SeasonStats, Team} from "../utils/interfaces";
+import {NextGameDataResponse, Player, MvpContendersData, SeasonStats, Team} from "../utils/interfaces";
 import SeasonApiService, {SaveGamePayload} from "../services/SeasonApiService";
 import {apiGet} from "../../../helpers/apiV2";
 import {buildStatsInformation} from "../../shared/OneOnOneHelper";
@@ -37,7 +37,8 @@ export default class SeasonGameStore {
     @observable isComeback: boolean = false;
     @observable reRenderCounter: number = 0;
 
-    @observable postSeasonMvpContenders: PostSeasonMvpContendersData | undefined = undefined;
+    @observable postSeasonMvpContenders: MvpContendersData | undefined = undefined;
+    @observable regularSeasonMvpContenders: MvpContendersData | undefined = undefined;
 
     constructor(seasonId: number) {
         makeObservable(this);
@@ -124,6 +125,7 @@ export default class SeasonGameStore {
             this.scores = newScores;
 
             this.postSeasonMvpContenders = teamsData.postSeasonMvpContenders;
+            this.regularSeasonMvpContenders = teamsData.regularSeasonMvpContenders;
         })
     }
 

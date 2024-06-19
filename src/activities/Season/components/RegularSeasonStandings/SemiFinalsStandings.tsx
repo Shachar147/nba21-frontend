@@ -211,7 +211,7 @@ function SemiFinalsStandings({ stats, teamsData, mode, teamsByName, store, max=8
             const isSeasonOver = store.teamsData?.isSeasonOver;
 
             return (
-                <div className="flex-column">
+                <div className="flex-column" key={`mvp-contenders-${mode}`}>
                     {mvpBlock}
                     <div className="flex-row width-100-percents justify-content-center"><b>Post Season MVP
                         Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x : `${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}
