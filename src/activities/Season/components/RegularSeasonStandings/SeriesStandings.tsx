@@ -195,7 +195,7 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
             return null;
         }
         return (
-            <div className="flex-column" key={mode} id={mode}>{insights.map((s) => <span className="nba-red-color">{s}</span>)}</div>
+            <div className="flex-column" key={`insights-${mode}`} id={mode}>{insights.map((s) => <span className="nba-red-color">{s}</span>)}</div>
         )
     }
 
@@ -215,7 +215,7 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
             const isSeasonOver = store.teamsData?.isSeasonOver;
 
             return (
-                <div className="flex-column">
+                <div className="flex-column" key={`mvp-contenders-${mode}`}>
                     {mvpBlock}
                     <div className="flex-row width-100-percents justify-content-center"><b>Post Season MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts)`).slice(0, 3).join(", ")}</div>
                     <div className="flex-row width-100-percents justify-content-center opacity-06">{
@@ -301,9 +301,9 @@ function SeriesStandings({ rStats, teamsData, stats, mode, teamsByName, store, m
         });
 
         return (
-            <div className="flex-column">
+            <div className="flex-column" key={`mvp-contenders-${mode}`}>
                 {mvpBlock}
-                <div className="flex-row width-100-percents justify-content-center"><b>MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts, ${calcPercents(mvps[x], total, 0)}%)`).slice(0, 3).join(", ")}</div>
+                <div className="flex-row width-100-percents justify-content-center"><b>Finals MVP Contenders:</b> &nbsp;{sorted_mvps.map((x) => x === "None" ? x :`${x} (${mvps[x]} pts, ${calcPercents(mvps[x], total, 0)}%)`).slice(0, 3).join(", ")}</div>
             </div>
         )
     }

@@ -58,6 +58,9 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
 
         // console.log(general_stats);
 
+        let cols = (percents) ? ["","Days with most games", "Days with most percents"] : false;
+        let defaultCols = ["","Days with most games", "Days with most points"];
+
         const key2 = (percents) ? 'total_percents' : 'total_points';
         description.push(`Games: ${total_games_today}`);
         description.push(`${what_stat}: ${total_points_today}`);
@@ -66,10 +69,16 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
         total_description.push(`Games: ${general_stats['total_games']}`);
         total_description.push(`${what_stat}: ${general_stats[key2]}`);
 
+        const withPointsPerGame = what_stat === "Points";
+        // withPointsPerGame = game_mode === "Season" || game_mode === "Tournament";
+        if (withPointsPerGame) {
+            description.push(`Points/Game: ${total_games_today === 0 ? 0 : Number(total_points_today/total_games_today).toFixed(2)}`);
+            total_description.push(`Points/Game: ${general_stats['total_games'] === 0 ? 0 : Number(general_stats[key2] / general_stats['total_games']).toFixed(2)}`);
+            defaultCols.push("Points/Game");
+        }
+
         const values = {};
         const mvp_values = {};
-
-        let cols = (percents) ? ["","Days with most games", "Days with most percents"] : false;
 
         const ppd = Object.keys(general_stats[key1]).sort((a, b) => {
             return general_stats[key1][b] - general_stats[key1][a];
@@ -78,6 +87,20 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
         const gpd = Object.keys(general_stats['total_games_per_day']).sort((a, b) => {
             return general_stats['total_games_per_day'][b] - general_stats['total_games_per_day'][a];
         });
+
+        // points per game
+        const points_per_game_per_day = {};
+        let ppgpd = [];
+        if (withPointsPerGame) {
+            const ppd_dict = general_stats['total_points_per_day'];
+            const gpd_dict = general_stats['total_games_per_day'];
+            Object.keys(ppd_dict).forEach((day) => {
+                points_per_game_per_day[day] = Number(ppd_dict[day] / gpd_dict[day]).toFixed(2);
+            })
+            ppgpd = Object.keys(points_per_game_per_day).sort((a, b) => {
+                return points_per_game_per_day[b] - points_per_game_per_day[a];
+            });
+        }
 
         if (gpd.length === 0) {
             values['#1'] = values['#1'] || [];
@@ -121,6 +144,19 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             values[`#${i+1}`].push(row);
         }
 
+        if (withPointsPerGame) {
+            for (let i = 0; i < ppgpd.length && i <= TOP_STATS_MAX_VIEW_MORE - 1; i++) {
+                values[`#${i + 1}`] = values[`#${i + 1}`] || [];
+                const date = ppgpd[i];
+                let value = points_per_game_per_day[ppgpd[i]];
+                let row = `${date} - ${value}`;
+                if (date === dtToday) {
+                    row = `<span style="font-weight:bold">${row}</span>`;
+                }
+                values[`#${i + 1}`].push(row);
+            }
+        }
+
         let descriptionText = '<b>Today: </b>' + description.join(' | ') + '<br><b>Totals: </b>' + total_description.join(' | ');
 
         if (general_stats['shortest_game']){
@@ -138,7 +174,7 @@ export function BuildStatsTable(general_stats, wrap, game_mode, mvp_block, mvp_s
             <StatsTable
                 title={`${game_mode} Stats`}
                 description={descriptionText}
-                cols={cols || ["","Days with most games", "Days with most points"]}
+                cols={cols || defaultCols}
                 stats={values}
             />
         );
