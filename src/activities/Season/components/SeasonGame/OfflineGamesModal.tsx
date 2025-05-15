@@ -29,22 +29,10 @@ const OfflineGamesModal: React.FC<OfflineGamesModalProps> = observer(({ store, v
         const winner = game.score1 > game.score2 ? team1 : team2;
         const players = winner?.players || [];
 
-        const playerOptions = players.map(player => ({
-            name: player.name,
-            picture: player.picture,
-            position: player.position,
-            rate: player.rate,
-            _2k_rating: player._2k_rating
-        }));
+        const playerOptions = players.map(player => player.name);
 
         const selectedPlayer = players.find(p => p.name === game.mvp_player);
-        const selectedOption = selectedPlayer ? {
-            name: selectedPlayer.name,
-            picture: selectedPlayer.picture,
-            position: selectedPlayer.position,
-            rate: selectedPlayer.rate,
-            _2k_rating: selectedPlayer._2k_rating
-        } : undefined;
+        const selectedOption = selectedPlayer ? selectedPlayer.name : undefined;
 
         stats[`Game ${index + 1}`] = [
             game.team1,
