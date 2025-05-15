@@ -363,8 +363,10 @@ export default class SeasonGameStore {
 
     @action
     checkOfflineGames() {
-        const offlineGames = localStorage.getItem(OFFLINE_GAMES_KEY);
-        this.hasOfflineGames = !!offlineGames;
+        const offlineGames = JSON.parse(localStorage.getItem(OFFLINE_GAMES_KEY) || '[]');
+        const seasonGames = offlineGames.filter((game: any) => game.seasonId === this.seasonId);
+        this.hasOfflineGames = seasonGames.length > 0;
+        return seasonGames.length;
     }
 
     @action
@@ -380,9 +382,9 @@ export default class SeasonGameStore {
     }
 
     @action
-    async syncOfflineGames() {
+    async syncOfflineGames(editedGames?: any[]) {
         const offlineGames = JSON.parse(localStorage.getItem(OFFLINE_GAMES_KEY) || '[]');
-        const seasonGames = offlineGames.filter((game: any) => game.seasonId === this.seasonId);
+        const seasonGames = editedGames || offlineGames.filter((game: any) => game.seasonId === this.seasonId);
         
         if (seasonGames.length === 0) {
             this.hasOfflineGames = false;

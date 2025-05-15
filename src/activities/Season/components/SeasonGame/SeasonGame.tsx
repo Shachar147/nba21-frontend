@@ -4,7 +4,7 @@ import NbaPage, {renderSmallLogo} from "../../../../components/NbaPage";
 import LoadingPage from "../../../../pages/LoadingPage";
 import {errorTestId} from "../../../../pages/Login/Model";
 import style from "../../../../pages/Login/style";
-import {Player, SeasonGameTeam, SeasonMode, SeasonStats, Team} from "../../utils/interfaces";
+import {Player, SeasonGameTeam, SeasonMode, Team} from "../../utils/interfaces";
 import PlayerCard from "../../../../components/PlayerCard";
 import {styles} from "../../../Tournament/Tournament";
 import {PLAYER_NO_PICTURE} from "../../../../helpers/consts";
@@ -33,12 +33,15 @@ import SeriesStandings from "../RegularSeasonStandings/SeriesStandings";
 import {winsAndMatchupsSort} from "../../../../helpers/sort";
 import SemiFinalsStandings from "../RegularSeasonStandings/SemiFinalsStandings";
 import TabMenu, {Tab} from "../../../../components/layout/TabMenu";
+import OfflineGamesModal from './OfflineGamesModal';
 
 function SeasonGame({ match }: any){
 
     const [shouldShowSaveToastr, setShouldShowSaveToastr] = useState(false);
     const [updateClickCount, setUpdateClickCount] = useState(0);
     const [showSyncToastr, setShowSyncToastr] = useState(false);
+    const [showOfflineModal, setShowOfflineModal] = useState(false);
+    const [offlineGamesCount, setOfflineGamesCount] = useState(0);
 
     const { seasonId } = match.params;
     const get_stats_specific_route = `/records/season/stats/${seasonId}/:name`;
@@ -62,6 +65,7 @@ function SeasonGame({ match }: any){
     useEffect(() => {
         if (store.hasOfflineGames && !store.isOffline) {
             setShowSyncToastr(true);
+            setOfflineGamesCount(store.checkOfflineGames());
         }
     }, [store.hasOfflineGames, store.isOffline]);
 
@@ -136,11 +140,8 @@ function SeasonGame({ match }: any){
     function renderSyncMessage() {
         if (!showSyncToastr) return null;
         return (
-            <div className="sync-message" onClick={async () => {
-                await store.syncOfflineGames();
-                setShowSyncToastr(false);
-            }}>
-                You have games saved locally. <span className="sync-message__link">Click here to sync them with the server</span>
+            <div className="sync-message" onClick={() => setShowOfflineModal(true)}>
+                You have {offlineGamesCount} game{offlineGamesCount !== 1 ? 's' : ''} saved locally. <span className="sync-message__link">Click here to review and sync them</span>
             </div>
         );
     }
@@ -669,6 +670,11 @@ function SeasonGame({ match }: any){
         <div className="season-game">
             <NbaPage renderContent={renderContent} />
             {renderSavedMessageIfNeeded()}
+            <OfflineGamesModal 
+                store={store}
+                visible={showOfflineModal}
+                onClose={() => setShowOfflineModal(false)}
+            />
         </div>
     );
 }
