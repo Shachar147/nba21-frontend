@@ -20,7 +20,7 @@ export default class Notification extends React.Component {
             opacity = Math.max(0,opacity);
             this.setState({ opacity });
 
-            setTimeout(() => { this.fadeOut() }, 100);
+            setTimeout(() => { this.fadeOut() }, 500);
         }
     }
 
@@ -28,7 +28,9 @@ export default class Notification extends React.Component {
 
         const { delay } = this.props;
 
-        setTimeout(this.fadeOut,delay)
+        setTimeout(() => {
+            this.fadeOut();
+        },delay);
     }
 
     render() {
@@ -44,7 +46,7 @@ export default class Notification extends React.Component {
             <div className="ui-alert-content ui-alert-content-bottom-right" style={{ width: "400px", float:"Right", bottom: "20px", position: "fixed", right: "20px", zIndex: 999 }}>
                 <div id="messages" className="ui icon message" style={{
                     display: "flex", flexDirection: "column", alignItems: "center", gap: "8", padding: 8,
-                    backgroundColor: "rgb(85, 169, 238)", boxShadow: "rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset, transparent 0px 0px 0px 0px", opacity: {opacity} }}>
+                    backgroundColor: this.props.backgroundColor ?? "rgb(85, 169, 238)", boxShadow: "rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset, transparent 0px 0px 0px 0px", opacity: {opacity} }}>
                     <i className="info circle icon" style={{"color": "white"}} />
                     <div style={{"color": "#fff", marginRight: "10px"}}>
                         <div className="header">{title}</div>
@@ -62,11 +64,13 @@ Notification.propTypes = {
     delay: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    key: PropTypes.string
+    key: PropTypes.string,
+    backgroundColor: PropTypes.string
 };
 
 Notification.defaultProps = {
     delay: 1000*2,
     title: "Notification",
     description: "",
+    backgroundColor: "rgb(85, 169, 238)"
 };

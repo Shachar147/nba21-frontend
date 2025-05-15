@@ -14,7 +14,7 @@ export default class ConfirmationModal extends React.Component {
 
     render() {
 
-        const { title, description, okFunc, cancelFunc } = this.props;
+        const { title, description, okFunc, cancelFunc, descriptionComponent } = this.props;
         let { okText, cancelText, okColor } = this.props;
 
         okText = okText || "Submit";
@@ -34,7 +34,7 @@ export default class ConfirmationModal extends React.Component {
                 }}>
                     <div className="header">{title}</div>
                     <div className="content">
-                        <p dangerouslySetInnerHTML={{ __html: description }} />
+                        {descriptionComponent ? descriptionComponent : <p dangerouslySetInnerHTML={{ __html: description }} />}
                     </div>
                     <div className="actions">
                         <div className={`ui ${okColor} button`} style={{ color: "white" }} onClick={() => {
@@ -55,6 +55,7 @@ export default class ConfirmationModal extends React.Component {
 ConfirmationModal.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    descriptionComponent: PropTypes.any,
     okFunc: PropTypes.func,
     cancelFunc: PropTypes.func,
     okText: PropTypes.string,
