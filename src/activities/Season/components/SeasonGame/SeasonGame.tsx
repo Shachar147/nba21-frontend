@@ -38,6 +38,7 @@ function SeasonGame({ match }: any){
 
     const [shouldShowSaveToastr, setShouldShowSaveToastr] = useState(false);
     const [updateClickCount, setUpdateClickCount] = useState(0);
+    const [showSyncToastr, setShowSyncToastr] = useState(false);
 
     const { seasonId } = match.params;
     const get_stats_specific_route = `/records/season/stats/${seasonId}/:name`;
@@ -57,6 +58,12 @@ function SeasonGame({ match }: any){
             }, 2000);
         }
     }, [store.isSaved, store.isSaving, store.isUpdated, updateClickCount])
+
+    useEffect(() => {
+        if (store.hasOfflineGames && !store.isOffline) {
+            setShowSyncToastr(true);
+        }
+    }, [store.hasOfflineGames, store.isOffline]);
 
     const statsBlock = useMemo(renderStats, [store.reRenderCounter, store.isLoading, store.teamsData, store.statsInfo, store.showStats]);
 
@@ -111,17 +118,32 @@ function SeasonGame({ match }: any){
         }
 
         const title = store.isUpdated ? "Game Updated!" : "Game Saved!";
-        const description = "This game was saved. you can take a look at stats page to see details about past games.";
+        const description = store.isOffline 
+            ? "This game was saved to local storage. It will be synced when internet connection is restored."
+            : "This game was saved. You can take a look at stats page to see details about past games.";
         const key = `${title}-${JSON.stringify(store.payload ?? {})}`;
 
-        // @ts-ignore
-        return <Notification title={title} description={description} key={key}/>
+        return <Notification 
+            title={title} 
+            description={description} 
+            key={key} 
+            type={store.isOffline ? "warning" : "info"} 
+        />
+    }
 
-        // return (
-        //     <div className="margin-top-20">
-        //         <style.Message className={"field"} data-testid={messageTestId}>{store.isUpdated ? "Game Updated!" : "Game Saved!"}</style.Message>
-        //     </div>
-        // )
+    function renderSyncMessage() {
+        if (!showSyncToastr) return null;
+        return (
+            <Notification 
+                title="Unsynced Games" 
+                description="You have games saved locally. Click here to sync them with the server."
+                type="success"
+                onClick={() => {
+                    store.syncOfflineGames();
+                    setShowSyncToastr(false);
+                }}
+            />
+        );
     }
 
     function renderSeasonAlreadyOverIfNeeded(){
@@ -647,6 +669,7 @@ function SeasonGame({ match }: any){
         <div className="season-game">
             <NbaPage renderContent={renderContent} />
             {renderSavedMessageIfNeeded()}
+            {renderSyncMessage()}
         </div>
     );
 }

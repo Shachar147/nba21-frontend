@@ -6,6 +6,8 @@ import {buildStatsInformation} from "../../shared/OneOnOneHelper";
 import {percents, what} from "../utils/consts";
 import {winsAndMatchupsSort} from "../../../helpers/sort";
 
+const OFFLINE_GAMES_KEY = 'offline_games';
+
 export default class SeasonGameStore {
 
     seasonId: number;
@@ -40,6 +42,9 @@ export default class SeasonGameStore {
     @observable postSeasonMvpContenders: MvpContendersData | undefined = undefined;
     @observable regularSeasonMvpContenders: MvpContendersData | undefined = undefined;
 
+    @observable isOffline = false;
+    @observable hasOfflineGames = false;
+
     constructor(seasonId: number) {
         makeObservable(this);
         this.seasonId = seasonId;
@@ -53,6 +58,9 @@ export default class SeasonGameStore {
         }
 
         this.loadStuff();
+        this.checkOfflineGames();
+        window.addEventListener('online', this.handleOnline);
+        window.addEventListener('offline', this.handleOffline);
     }
 
     // -- init ------------------------------------------------------------
@@ -343,7 +351,57 @@ export default class SeasonGameStore {
     }
 
     @action
-    async saveGame(): Promise<void>{
+    private handleOnline = () => {
+        this.isOffline = false;
+        this.checkOfflineGames();
+    }
+
+    @action
+    private handleOffline = () => {
+        this.isOffline = true;
+    }
+
+    @action
+    private checkOfflineGames = () => {
+        const offlineGames = localStorage.getItem(OFFLINE_GAMES_KEY);
+        this.hasOfflineGames = !!offlineGames;
+    }
+
+    @action
+    private saveToLocalStorage = (payload: SaveGamePayload) => {
+        const offlineGames = JSON.parse(localStorage.getItem(OFFLINE_GAMES_KEY) || '[]');
+        offlineGames.push({
+            ...payload,
+            seasonId: this.seasonId,
+            timestamp: Date.now()
+        });
+        localStorage.setItem(OFFLINE_GAMES_KEY, JSON.stringify(offlineGames));
+        this.hasOfflineGames = true;
+    }
+
+    @action
+    async syncOfflineGames = async () => {
+        const offlineGames = JSON.parse(localStorage.getItem(OFFLINE_GAMES_KEY) || '[]');
+        const seasonGames = offlineGames.filter((game: any) => game.seasonId === this.seasonId);
+        
+        if (seasonGames.length === 0) return;
+
+        for (const game of seasonGames) {
+            try {
+                await SeasonApiService.saveGame(this.seasonId, game);
+                // Remove synced game from local storage
+                const remainingGames = offlineGames.filter((g: any) => g !== game);
+                localStorage.setItem(OFFLINE_GAMES_KEY, JSON.stringify(remainingGames));
+            } catch (error) {
+                console.error('Failed to sync game:', error);
+            }
+        }
+
+        this.checkOfflineGames();
+    }
+
+    @action
+    async saveGame(): Promise<void> {
         const payload = this.payload;
         if (!this.team1Name || !this.team2Name || !this.teamsData || !payload) {
             return;
@@ -351,16 +409,29 @@ export default class SeasonGameStore {
 
         this.isSaving = true;
 
-        const createdGame = await SeasonApiService.saveGame(this.seasonId, payload);
-        runInAction(() => {
-            this.isSaving = false;
-            this.isSaved = true;
-            this.savedGameId = createdGame.id;
-        });
-
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 1);
+        try {
+            if (navigator.onLine) {
+                const createdGame = await SeasonApiService.saveGame(this.seasonId, payload);
+                runInAction(() => {
+                    this.isSaving = false;
+                    this.isSaved = true;
+                    this.savedGameId = createdGame.id;
+                });
+            } else {
+                this.saveToLocalStorage(payload);
+                runInAction(() => {
+                    this.isSaving = false;
+                    this.isSaved = true;
+                    this.isOffline = true;
+                });
+            }
+        } catch (error) {
+            runInAction(() => {
+                this.isSaving = false;
+                this.isOffline = true;
+                this.saveToLocalStorage(payload);
+            });
+        }
     }
 
     @action
