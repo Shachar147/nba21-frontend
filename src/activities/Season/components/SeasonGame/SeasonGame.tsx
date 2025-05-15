@@ -141,7 +141,7 @@ function SeasonGame({ match }: any){
         if (!showSyncToastr) return null;
         return (
             <div className="sync-message" onClick={() => setShowOfflineModal(true)}>
-                You have {offlineGamesCount} game{offlineGamesCount !== 1 ? 's' : ''} saved locally. <span className="sync-message__link">Click here to review and sync them</span>
+                You have {offlineGamesCount} game{offlineGamesCount !== 1 ? 's' : ''} saved locally. <span className="sync-message__link">Click here to review and sync {offlineGamesCount !== 1 ? 'them' : 'it'}</span>
             </div>
         );
     }
