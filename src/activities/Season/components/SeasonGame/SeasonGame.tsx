@@ -673,7 +673,10 @@ function SeasonGame({ match }: any){
             <OfflineGamesModal 
                 store={store}
                 visible={showOfflineModal}
-                onClose={() => setShowOfflineModal(false)}
+                onClose={() => {
+                    setShowOfflineModal(false);
+                    setOfflineGamesCount(store.checkOfflineGames());
+                }}
             />
         </div>
     );
