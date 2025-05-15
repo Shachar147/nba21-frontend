@@ -55,7 +55,7 @@ function SeasonGame({ match }: any){
                 runInAction(() => {
                     setShouldShowSaveToastr(false);
                 })
-            }, 2000);
+            }, 1500);
         }
     }, [store.isSaved, store.isSaving, store.isUpdated, updateClickCount])
 
@@ -127,22 +127,21 @@ function SeasonGame({ match }: any){
             title={title} 
             description={description} 
             key={key} 
-            type={store.isOffline ? "warning" : "info"} 
+            type={store.isOffline ? "warning" : "info"}
+            backgroundColor={store.isOffline ? "orange" : "rgb(85, 169, 238)"}
+            delay={7000}
         />
     }
 
     function renderSyncMessage() {
         if (!showSyncToastr) return null;
         return (
-            <Notification 
-                title="Unsynced Games" 
-                description="You have games saved locally. Click here to sync them with the server."
-                type="success"
-                onClick={() => {
-                    store.syncOfflineGames();
-                    setShowSyncToastr(false);
-                }}
-            />
+            <div className="sync-message" onClick={async () => {
+                await store.syncOfflineGames();
+                setShowSyncToastr(false);
+            }}>
+                You have games saved locally. <span className="sync-message__link">Click here to sync them with the server</span>
+            </div>
         );
     }
 
@@ -585,6 +584,7 @@ function SeasonGame({ match }: any){
         const home_team_background = store.allTeamsById[store.teamsData?.team2?.teamId]?.logo;
         return (
             <>
+                {renderSyncMessage()}
                 <div className="content flex-column gap-8">
                     {renderSmallLogo()}
                     {renderHeaderButtons()}
@@ -669,7 +669,6 @@ function SeasonGame({ match }: any){
         <div className="season-game">
             <NbaPage renderContent={renderContent} />
             {renderSavedMessageIfNeeded()}
-            {renderSyncMessage()}
         </div>
     );
 }

@@ -351,24 +351,24 @@ export default class SeasonGameStore {
     }
 
     @action
-    private handleOnline = () => {
+    handleOnline(){
         this.isOffline = false;
         this.checkOfflineGames();
     }
 
     @action
-    private handleOffline = () => {
+    handleOffline() {
         this.isOffline = true;
     }
 
     @action
-    private checkOfflineGames = () => {
+    checkOfflineGames() {
         const offlineGames = localStorage.getItem(OFFLINE_GAMES_KEY);
         this.hasOfflineGames = !!offlineGames;
     }
 
     @action
-    private saveToLocalStorage = (payload: SaveGamePayload) => {
+    saveToLocalStorage(payload: SaveGamePayload) {
         const offlineGames = JSON.parse(localStorage.getItem(OFFLINE_GAMES_KEY) || '[]');
         offlineGames.push({
             ...payload,
@@ -380,24 +380,35 @@ export default class SeasonGameStore {
     }
 
     @action
-    async syncOfflineGames = async () => {
+    async syncOfflineGames() {
         const offlineGames = JSON.parse(localStorage.getItem(OFFLINE_GAMES_KEY) || '[]');
         const seasonGames = offlineGames.filter((game: any) => game.seasonId === this.seasonId);
         
-        if (seasonGames.length === 0) return;
+        if (seasonGames.length === 0) {
+            this.hasOfflineGames = false;
+            return;
+        }
 
+        let remainingGames = [...offlineGames];
+        
         for (const game of seasonGames) {
             try {
                 await SeasonApiService.saveGame(this.seasonId, game);
-                // Remove synced game from local storage
-                const remainingGames = offlineGames.filter((g: any) => g !== game);
-                localStorage.setItem(OFFLINE_GAMES_KEY, JSON.stringify(remainingGames));
+                // Remove synced game from remaining games using timestamp as identifier
+                remainingGames = remainingGames.filter((g: any) => g.timestamp !== game.timestamp);
             } catch (error) {
                 console.error('Failed to sync game:', error);
             }
         }
 
-        this.checkOfflineGames();
+        // Update local storage with remaining games
+        if (remainingGames.length === 0) {
+            localStorage.removeItem(OFFLINE_GAMES_KEY);
+        } else {
+            localStorage.setItem(OFFLINE_GAMES_KEY, JSON.stringify(remainingGames));
+        }
+
+        this.hasOfflineGames = remainingGames.length > 0;
     }
 
     @action
