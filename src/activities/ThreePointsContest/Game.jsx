@@ -114,6 +114,10 @@ export default class Game extends React.Component {
             return;
         }
 
+        if (this.state.game_type !== 'team_target_score') {
+            this.state.targetScore = 10000; // so we won't reach it
+        }
+
         let round_players = this.state.round_players;
         if (round_players.length === 0) {
             this.EndRound();
