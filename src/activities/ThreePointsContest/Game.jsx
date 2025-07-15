@@ -114,7 +114,7 @@ export default class Game extends React.Component {
             return;
         }
 
-        if (this.state.game_type !== 'team_target_score') {
+        if (['target_score', 'team_target_score'].indexOf(this.state.game_type) === -1){
             this.state.targetScore = 10000; // so we won't reach it
         }
 
