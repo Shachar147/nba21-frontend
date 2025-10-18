@@ -44,7 +44,7 @@ export default class Game extends React.Component {
             game_started_at: Date.now(),
             finished_at : undefined,
             game_type: this.props.game_type || "tournament",
-            targetScore: 10,
+            targetScore: this.props.target_score || 10,
         };
 
         this.onScore = this.onScore.bind(this);
