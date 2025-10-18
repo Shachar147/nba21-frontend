@@ -44,7 +44,7 @@ export default class Game extends React.Component {
             game_started_at: Date.now(),
             finished_at : undefined,
             game_type: this.props.game_type || "tournament",
-            targetScore: 10,
+            targetScore: this.props.target_score || 10,
         };
 
         this.onScore = this.onScore.bind(this);
@@ -114,7 +114,7 @@ export default class Game extends React.Component {
             return;
         }
 
-        if (this.state.game_type !== 'team_target_score') {
+        if (this.state.game_type !== 'team_target_score' && this.state.game_type != 'target_score') {
             this.state.targetScore = 10000; // so we won't reach it
         }
 
@@ -653,6 +653,11 @@ export default class Game extends React.Component {
                 <div className="ui header" style={{lineHeight: "38px"}}>
                     Game Mode: {THREE_POINTS_GAME_MODES.filter((iter) => iter.value === this.state.game_type)[0].label}
                 </div>
+                {this.state.game_type != 'tournament' && (
+                    <div>
+                        Target Score: {this.state.target_score}
+                    </div>
+                )} 
             </div>
         )
 
